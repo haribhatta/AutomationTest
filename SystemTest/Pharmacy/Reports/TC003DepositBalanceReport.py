@@ -1,0 +1,20 @@
+from TestActionLibrary import A
+
+dbr = A()
+
+dbr.openBrowser()
+dbr.login('billing1', 'pass123')
+dbr.counteractivation()
+dbr.patientquickentry(0, 'Cash')
+dbr.logout()
+dbr.login('pharmacy1', 'pass123')
+dbr.activatePharmacyCounter()
+dbr.addPharmacyDeposit(deposit=1000)
+dbr.getPharmacyDepositBalanceReport()
+dbr.addPharmacyDeposit(deposit=1000)
+dbr.verifyPharmacyDepositBalanceReport(deposit=1000, depositreturn=0)
+dbr.getPharmacyDepositBalanceReport()
+dbr.returnPharmacyDeposit(depositreturn=500)
+dbr.verifyPharmacyDepositBalanceReport(deposit=0, depositreturn=500)
+dbr.logout()
+dbr.closeBrowser()
