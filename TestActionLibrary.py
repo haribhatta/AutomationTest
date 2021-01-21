@@ -32,7 +32,11 @@ class A:
       self.danpheEMR = webdriver.Chrome('D:/svn/DanpheEMR/drivers/chromedriver.exe')
       self.danpheEMR.set_window_position(-2000, 0)
       self.danpheEMR.maximize_window()
-      self.danpheEMR.get("http://localhost:56326/")
+      self.danpheEMR.get("https://demo.danphehealth.com/")
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//button[contains(text(),'Advanced')]").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Proceed to demo.danphehealth.com (unsafe)')]").click()
       time.sleep(3)
       print("Open Browser: END<<")
    def closeBrowser(self):
