@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 dsr = A()
 
 dsr.openBrowser()
-dsr.login('billing1', 'pass123')
+dsr.login(foUserId, foUserPwd)
 dsr.counteractivation()
 dsr.getDepartmentSummary()
 dsr.patientquickentry(0, 'Cash')

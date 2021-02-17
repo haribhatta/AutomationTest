@@ -1,5 +1,9 @@
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 cpgr = A()
 qty = 5
 drugname = "test"
@@ -9,7 +13,7 @@ rate = 270
 amount = qty * rate
 
 cpgr.openBrowser()
-cpgr.login('pharmacy1', 'pass123')
+cpgr.login(pharmacyUserId, pharmacyUserPwd)
 cpgr.activatePharmacyCounter()
 cpgr.addPharmacyItem()
 cpgr.verifyPharmacyItem()

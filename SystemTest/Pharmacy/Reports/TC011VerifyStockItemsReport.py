@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 si = A()
 
 drug = 'SINEX TAB'
 
 si.openBrowser()
-si.login("pharmacy1", "pass123")
+si.login(pharmacyUserId, pharmacyUserPwd)
 si.getStockDetail(drugname=drug)
 si.getStoreDetail(drugname=drug)
 si.verifyStockItemsReport(drugname=drug)

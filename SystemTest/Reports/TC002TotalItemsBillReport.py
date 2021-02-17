@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 tibr = A()
 
 tibr.openBrowser()
-tibr.login('billing1', 'pass123')
+tibr.login(foUserId, foUserPwd)
 tibr.counteractivation()
 tibr.patientquickentry(0, 'Cash')
 tibr.getTotalItemsBill()

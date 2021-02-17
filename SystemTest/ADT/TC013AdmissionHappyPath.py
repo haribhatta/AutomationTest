@@ -3,6 +3,10 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 #------------Local Veriables-------------------
 #labitem = "Urine RE/ME"
 #imagingitem ="USG ABDOMEN & PELVIS"
@@ -14,7 +18,7 @@ deposit = 0
 ADT = A()
 
 ADT.openBrowser()
-ADT.login("billing1", "pass123")
+ADT.login(foUserId, foUserPwd)
 ADT.patientRegistration()
 ADT.counteractivation()
 ADT.admitDisTrans(1, 0, 0, deposit)

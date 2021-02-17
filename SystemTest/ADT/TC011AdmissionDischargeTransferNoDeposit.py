@@ -3,6 +3,13 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+# front desk user login
+nurseUserId = A.nurseUserID
+nurseUserPwd = A.nurseUserPwD
+
 #------------Local Veriables-------------------
 labitem = "Urine RE/ME"
 imagingitem ="USG ABDOMEN & PELVIS"
@@ -14,18 +21,18 @@ deposit = 0
 ADT = A()
 
 ADT.openBrowser()
-ADT.login("billing1", "pass123")
+ADT.login(foUserId, foUserPwd)
 ADT.patientRegistration()
 ADT.counteractivation()
 ADT.createlabxrayinvoice(labitem, imagingitem)
 ADT.logout()
 
-ADT.login("nurse", "pass123")
+ADT.login(nurseUserId, nurseUserPwd)
 ADT.counteractivation()
 ADT.admitDisTrans(1, 0, 0, deposit)
 ADT.logout()
 
-ADT.login("billing1", "pass123")
+ADT.login(foUserId, foUserPwd)
 ADT.counteractivation()
 ADT.billingIP(deposit)
 ADT.logout()

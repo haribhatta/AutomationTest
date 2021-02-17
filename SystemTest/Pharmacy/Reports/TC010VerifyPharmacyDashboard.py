@@ -1,8 +1,10 @@
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 pd = A()
-userid = 'pharmacy1'
-pwd = 'pass123'
 drug = 'testdrugreport'
 rate = 10
 qty = 2
@@ -10,7 +12,7 @@ amount = rate*qty
 print("Amount", amount)
 
 pd.openBrowser()
-pd.login(userid, pwd)
+pd.login(pharmacyUserId, pharmacyUserPwd)
 pd.activatePharmacyCounter()
 pd.getPharmacyDashboard()
 pd.preSystemPharmacyDashboard()

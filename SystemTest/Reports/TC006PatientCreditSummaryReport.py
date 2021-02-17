@@ -14,10 +14,14 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 pcsr = A()
 
 pcsr.openBrowser()
-pcsr.login('billing1', 'pass123')
+pcsr.login(foUserId, foUserPwd)
 pcsr.counteractivation()
 pcsr.patientquickentry(0, "CREDIT")
 pcsr.getPatientCreditSummary()

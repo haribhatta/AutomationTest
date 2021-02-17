@@ -1,11 +1,16 @@
 from TestActionLibrary import A
+
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 usgtest = "USG ABDOMEN & PELVIS"
 usgprice = 1050
 
 
 CPB = A()
 CPB.openBrowser()
-CPB.login("billing1", "pass123")
+CPB.login(foUserId, foUserPwd)
 CPB.counteractivation()
 CPB.getBillingDashboard()
 CPB.patientRegistration()

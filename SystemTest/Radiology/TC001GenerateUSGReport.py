@@ -1,17 +1,25 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
+# radiologist user login
+radioUserId = A.radioUserID
+radioUserPwd = A.radioUserPwD
+
 GUSGR = A()
 
 labitem = "LDH"
-imagingtest ="USG ABDOMEN & PELVIS"
+usgtest ="USG (Abdomen / pelvis)"
 
 GUSGR.openBrowser()
-GUSGR.login('billing1', 'pass123')
+GUSGR.login(foUserId, foUserPwd)
 GUSGR.counteractivation()
 GUSGR.patientRegistration()
-GUSGR.createlabxrayinvoice(labitem, imagingtest)
+GUSGR.createUSGinvoice(usgtest)
 GUSGR.logout()
-GUSGR.login('radio1', 'pass123')
-GUSGR.generateUSGReport(imagingtest)
+GUSGR.login(radioUserId, radioUserPwd)
+GUSGR.generateUSGReport(usgtest)
 #GUSGR.logout()
 GUSGR.closeBrowser()

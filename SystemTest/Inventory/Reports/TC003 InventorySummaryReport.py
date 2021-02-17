@@ -3,15 +3,19 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+adminUserId = A.adminUserID
+adminUserPwd = A.adminUserPwD
+
 isr = A()
 item = "PHOTOCOPY PAPER (CUTTING)"
-rate = 1
+rate = 430
 qty = 1
 store1 = "Main Store"
 store2 = "OT Store"
 
 isr.openBrowser()
-isr.login('admin', 'pass123')
+isr.login(adminUserId, adminUserPwd)
 
 isr.getInventorySummaryReport()
 isr.preInventorySummaryReport()

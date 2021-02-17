@@ -1,8 +1,12 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 pcr = A()
 pcr.openBrowser()
-pcr.login('billing1', 'pass123')
+pcr.login(foUserId, foUserPwd)
 pcr.getPatientCensus()
 pcr.counteractivation()
 pcr.patientquickentry(0, 'Cash')

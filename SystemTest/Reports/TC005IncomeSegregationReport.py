@@ -9,12 +9,16 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 usgtest = "USG (Abdomen / pelvis)"
 usgprice = 1050
 
 isr = A()
 isr.openBrowser()
-isr.login('billing1', 'pass123')
+isr.login(foUserId, foUserPwd)
 isr.counteractivation()
 isr.getIncomeSegregation()
 isr.patientquickentry(0, 'Cash')

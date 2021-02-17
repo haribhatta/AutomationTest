@@ -1,8 +1,11 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 af = A()
 
 af.openBrowser()
-af.login("billing", "pass123")
+af.login(foUserId, foUserPwd)
 af.counteractivation()
-af.

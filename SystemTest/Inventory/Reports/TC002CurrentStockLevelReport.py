@@ -4,6 +4,10 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+adminUserId = A.adminUserID
+adminUserPwd = A.adminUserPwD
+
 cs = A()
 item = "10 ML DIS.SYRINGE"
 qty = 1
@@ -12,7 +16,7 @@ store1 = "Main Store"
 store2 = "OT Store"
 
 cs.openBrowser()
-cs.login('admin', 'pass123')
+cs.login(adminUserId, adminUserPwd)
 cs.getInventoryCurrentStockLevelReport(store=store1)
 cs.preInventoryCurrentStockLevelReport()
 cs.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)

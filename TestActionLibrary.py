@@ -474,6 +474,9 @@ class A:
          print(syssubtotal)
          print(presyssubtotal)
          assert int(syssubtotal) == presyssubtotal
+         print("sysreturnamount", sysreturnamount)
+         print("presysreturnamount", presysreturnamount)
+         print("creditReturn", creditReturn)
          assert int(sysreturnamount) == presysreturnamount + creditReturn
          assert int(systotalamount) == presystotalamount - creditReturn
          assert int(sysnetcashcollection) == presysnetcashcollection
@@ -2056,6 +2059,7 @@ class A:
       time.sleep(5)
 
    def cancelDischarge(self):
+      print("Start: cancel discharge")
       self.danpheEMR.find_element_by_link_text("ADT").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Discharged Patients").click()
@@ -2065,8 +2069,10 @@ class A:
       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Cancel Discharge')]").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_id("DischargeCancelNote").send_keys("Cancel Discharge")
+      time.sleep(2)
       self.danpheEMR.find_element_by_id("Approve").click()
-      time.sleep(9)
+      time.sleep(5)
+      print("End: cancel discharge")
 
    def dischargeRandomPatient(self):
       self.danpheEMR.find_element_by_link_text("Billing").click()
@@ -2869,12 +2875,6 @@ class A:
       self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").clear()
       self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys("OPD")
       time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
-         Keys.RETURN)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
-         Keys.ARROW_DOWN)
-      time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
          Keys.ARROW_DOWN)
       time.sleep(2)

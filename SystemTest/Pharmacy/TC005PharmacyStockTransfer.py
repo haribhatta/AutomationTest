@@ -1,5 +1,8 @@
 from TestActionLibrary import A
 
+# pharmacy desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
 
 PST = A()
 
@@ -8,7 +11,7 @@ qty = 10
 transferqty = 1
 
 PST.openBrowser()
-PST.login("pharmacy1", "pass123")
+PST.login(pharmacyUserId, pharmacyUserPwd)
 PST.activatePharmacyCounter()
 PST.getStoreDetail(drugname=drug)
 PST.getStockDetail(drugname=drug)

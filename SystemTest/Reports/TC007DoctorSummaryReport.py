@@ -5,12 +5,17 @@
 # 3. Discharge Patient
 # 4. Repeat above case for different day.
 from TestActionLibrary import A
+
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 doctorname = "Dr. Doctor Doctor"
 
 pcsr = A()
 
 pcsr.openBrowser()
-pcsr.login('billing1', 'pass123')
+pcsr.login(foUserId, foUserPwd)
 pcsr.counteractivation()
 pcsr.getDoctorSummary(doctorname)
 pcsr.preSystemDoctorSummary()

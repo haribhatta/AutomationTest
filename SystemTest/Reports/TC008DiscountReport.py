@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 dr = A()
 
 dr.openBrowser()
-dr.login('billing1', 'pass123')
+dr.login(foUserId, foUserPwd)
 dr.counteractivation()
 dr.patientquickentry(50, 'Cash')
 dr.verifyDiscountReport(cash=500, discountpc=50)

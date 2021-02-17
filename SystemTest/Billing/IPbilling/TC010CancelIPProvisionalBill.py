@@ -1,5 +1,9 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 usgtest = "USG (Abdomen / pelvis)"
 usgprice = 1050
 deposit = 0
@@ -8,7 +12,7 @@ admisioncharge = 1500
 
 CPB = A()
 CPB.openBrowser()
-CPB.login("billing1", "pass123")
+CPB.login(foUserId, foUserPwd)
 
 # 9. Cancel Provisional Bill
 # 8.2 Provisional IP Bill

@@ -2,10 +2,15 @@
 # Parameter value should be from ACC_MST_Hospital table col name: HospitalShortName
 
 from TestActionLibrary import A
+
+# front desk user login
+adminUserId = A.adminUserID
+adminUserPwd = A.adminUserPwD
+
 ip = A()
 
 ip.openBrowser()
-ip.login("admin", "pass123")
+ip.login(adminUserId, adminUserPwd)
 ip.getIncentivePaymentReport()
 ip.preIncentivePaymentReport()
 #ip.createLedgerIncentivePayment()

@@ -2,13 +2,17 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 DepositAmount = 5000
 testname = "CBC(Hb,TC,DC,PLT)"
 
 bsdd = A()
 
 bsdd.openBrowser()
-bsdd.login("billing1", "pass123")
+bsdd.login(foUserId, foUserPwd)
 bsdd.counteractivation()
 bsdd.patientRegistration()
 bsdd.opDeposit(DepositAmount)

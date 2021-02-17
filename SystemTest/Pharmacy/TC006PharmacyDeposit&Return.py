@@ -1,12 +1,19 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+# pharmacy desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 pd = A()
 
 pd.openBrowser()
-pd.login('billing1', 'pass123')
+pd.login(foUserId, foUserPwd)
 pd.patientRegistration()
 pd.logout()
-pd.login('pharmacy1', 'pass123')
+pd.login(pharmacyUserId, pharmacyUserPwd)
 pd.activatePharmacyCounter()
 pd.getPharmacyDashboard()
 pd.preSystemPharmacyDashboard()

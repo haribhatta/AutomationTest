@@ -1,8 +1,12 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 bil = A()
 bil.openBrowser()
-bil.login('billing1', 'pass123')
+bil.login(foUserId, foUserPwd)
 bil.counteractivation()
 bil.patientquickentry(0, 'Cash')
 bil.returnBillingInvoice("This is cash return 1.")

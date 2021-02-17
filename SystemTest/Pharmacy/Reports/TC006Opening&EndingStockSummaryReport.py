@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 quantity = 5
 drug = 'SINEX TAB'
 
 oess = A()
 oess.openBrowser()
-oess.login('pharmacy1', 'pass123')
+oess.login(pharmacyUserId, pharmacyUserPwd)
 oess.activatePharmacyCounter()
 oess.getPharmacyOpeningEndingStockSummaryReport(drugname=drug)
 oess.getRandomPatient()

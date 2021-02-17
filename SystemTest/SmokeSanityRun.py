@@ -4,13 +4,13 @@ import os
 
 def files(file,file1,rows,*args):
     if not args:
-        sc.copyoriginal(file,file1)
+        sc.copyoriginal(file, file1)
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
         if Status != 'Passed':
-            base_dir = str(pathlib.PureWindowsPath(r'D:\svn\DanpheEMR\SystemTest'))
+            base_dir = str(pathlib.PureWindowsPath(r'E:\QA\AutomationTest\SystemTest'))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
 
@@ -21,11 +21,24 @@ def files(file,file1,rows,*args):
                 sc.writeData(file1, 'test', r, 2, 'Failed')
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
-Originalfile= "SmokeSanityTestCases.xlsx"
-duplicatefile = "SmokeSanityExecutionResultV1.48.8.xlsx"
+
+smokesanityresult = "SmokeSanityExecutionResultV"
+userinput = input("Please entry current version number")
+scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
+
+if scheduletype == 'A':
+    Originalfile = "SmokeSanityTestCases.xlsx"
+
+else:
+    Originalfile = smokesanityresult + userinput + ".xlsx"
+
+print(userinput)
+duplicatefile = smokesanityresult + userinput + ".xlsx"
+print("This is test", duplicatefile)
+print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'test')
-files(Originalfile,duplicatefile,rows)
-files(Originalfile,duplicatefile,rows,2) #if you don't want to do test twice then you should comment this
+files(Originalfile, duplicatefile, rows)
+files(Originalfile, duplicatefile, rows,2) #if you don't want to do test twice then you should comment this
 
 
 

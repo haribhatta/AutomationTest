@@ -15,6 +15,10 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 opdticket = 500
 #discountpct = 50
 #discountamount = (discountpct*opdticket/100)
@@ -28,7 +32,7 @@ deposit = 0
 CBDS = A()
 
 CBDS.openBrowser()
-CBDS.login("billing1", "pass123")
+CBDS.login(foUserId, foUserPwd)
 CBDS.counteractivation()
 
 # 1. Cash Invoice

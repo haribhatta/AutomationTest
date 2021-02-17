@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 vsdbr = A()
 
 vsdbr.openBrowser()
-vsdbr.login('billing1', 'pass123')
+vsdbr.login(foUserId, foUserPwd)
 vsdbr.counteractivation()
 vsdbr.getSalesDayBook()
 vsdbr.patientquickentry(0, 'Cash')

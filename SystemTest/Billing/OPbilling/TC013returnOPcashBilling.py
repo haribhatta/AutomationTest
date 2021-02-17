@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 rb = A()
 paymode = "Cash"
 itemrate = 500
 
 rb.openBrowser()
-rb.login("billing1", "pass123")
+rb.login(foUserId, foUserPwd)
 rb.counteractivation()
 rb.patientquickentry(discountpc=0, paymentmode=paymode)
 rb.getBillingDashboard()

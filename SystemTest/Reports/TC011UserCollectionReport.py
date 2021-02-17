@@ -1,10 +1,14 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 uc = A()
-user = 'Mr. GURVEER RAMEL'
+user = 'Ms. Billing Billing'
 
 uc.openBrowser()
-uc.login('billing1', 'pass123')
+uc.login(foUserId, foUserPwd)
 uc.counteractivation()
 uc.getUserCollectionReport(user)
 uc.patientquickentry(0, 'Cash')

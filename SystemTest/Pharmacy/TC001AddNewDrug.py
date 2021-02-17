@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 AND = A()
 
 drugname = "Auto Test Drug"
 
 AND.openBrowser()
-AND.login("pharmacy1", "pass123")
+AND.login(pharmacyUserId, pharmacyUserPwd)
 AND.activatePharmacyCounter()
 AND.addPharmacyItem()
 AND.verifyPharmacyItem()

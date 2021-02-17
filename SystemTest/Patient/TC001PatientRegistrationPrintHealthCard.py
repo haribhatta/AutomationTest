@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 pr = A()
 
 pr.openBrowser()
-pr.login("billing1", "pass123")
+pr.login(foUserId, foUserPwd)
 pr.counteractivation()
 pr.patientRegistration()
 #pr.logout()

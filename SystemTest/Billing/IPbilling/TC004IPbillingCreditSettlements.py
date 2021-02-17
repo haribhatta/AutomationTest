@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 ip = A()
 paymode = "CREDIT"
 itemprice = 1500
 
 ip.openBrowser()
-ip.login("billing1", "pass123")
+ip.login(foUserId, foUserPwd)
 ip.counteractivation()
 ip.patientRegistration()
 ip.getBillingDashboard()

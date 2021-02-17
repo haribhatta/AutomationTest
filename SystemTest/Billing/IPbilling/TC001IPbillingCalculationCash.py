@@ -1,5 +1,9 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 ip = A()
 test1 = "USG (Abdomen / pelvis)"
 test1rate = 1050
@@ -8,7 +12,7 @@ test2rate = 200
 paymode = "Cash"
 
 ip.openBrowser()
-ip.login("billing1", "pass123")
+ip.login(foUserId, foUserPwd)
 ip.counteractivation()
 ip.dischargeRandomPatient()  # This action is to free bed to admit new patient (Pre-condition to run test script).
 

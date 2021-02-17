@@ -2,6 +2,9 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
 
 PSMI = A()
 
@@ -9,7 +12,7 @@ drug = "testdrugreport"
 qty = 10
 
 PSMI.openBrowser()
-PSMI.login("pharmacy1", "pass123")
+PSMI.login(pharmacyUserId, pharmacyUserPwd)
 PSMI.activatePharmacyCounter()
 PSMI.addPharmacyItem()
 PSMI.createPharmacyGoodsReceipt(qty=qty)

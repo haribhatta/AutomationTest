@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
 rvi = A()
 
 rvi.openBrowser()
-rvi.login("billing1", "pass123")
+rvi.login(foUserId, foUserPwd)
 rvi.counteractivation()
 rvi.patientquickentry(0, 'Cash')
 rvi.verifyopdinvoice(deposit=0, billamt=500)

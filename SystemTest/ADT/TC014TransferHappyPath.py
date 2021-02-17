@@ -3,6 +3,10 @@
 
 from TestActionLibrary import A
 
+# nurse user
+nurseUserID = 'nurse'
+nurseUserPwD = 'pass123'
+
 #------------Local Veriables-------------------
 #labitem = "Urine RE/ME"
 #imagingitem ="USG ABDOMEN & PELVIS"
@@ -14,7 +18,7 @@ deposit = 0
 ADT = A()
 
 ADT.openBrowser()
-ADT.login("nurse1", "pass123")
+ADT.login(nurseUserID, nurseUserPwD)
 ADT.counteractivation()
 ADT.admitDisTrans(0, 0, 1, deposit)
 ADT.logout()

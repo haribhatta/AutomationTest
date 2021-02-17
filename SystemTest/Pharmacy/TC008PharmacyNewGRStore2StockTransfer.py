@@ -1,11 +1,15 @@
 from TestActionLibrary import A
 
+# pharmacy desk user login
+pharmacyUserId = A.pharmacyUserID
+pharmacyUserPwd = A.pharmacyUserPwD
+
 qty = 50
 
 pst = A()
 
 pst.openBrowser()
-pst.login('pharmacy1', 'pass123')
+pst.login(pharmacyUserId, pharmacyUserPwd)
 pst.activatePharmacyCounter()
 pst.addPharmacyItem()
 pst.verifyPharmacyItem()

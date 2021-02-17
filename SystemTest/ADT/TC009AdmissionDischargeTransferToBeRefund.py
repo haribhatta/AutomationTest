@@ -3,6 +3,14 @@
 
 from TestActionLibrary import A
 
+# front desk user login
+foUserId = A.foUserID
+foUserPwd = A.foUserPwD
+
+# admin  user login
+admUserId = A.adminUserID
+admUserPwd = A.adminUserPwD
+
 #------------Local Veriables-------------------
 labitem = "Urine RE/ME"
 imagingitem ="USG ABDOMEN & PELVIS"
@@ -12,9 +20,13 @@ deposit = 5000
 #Scripted on: 10.05.2077
 
 ADT = A()
-
 ADT.openBrowser()
-ADT.login("billing1", "pass123")
+#Check application default added items for admitted patient
+ADT.login(admUserId, admUserPwd)
+ADT.checkAutoAddItems()
+ADT.logout()
+
+ADT.login(foUserId, foUserPwd)
 ADT.patientRegistration()
 ADT.counteractivation()
 ADT.createlabxrayinvoice(labitem, imagingitem)

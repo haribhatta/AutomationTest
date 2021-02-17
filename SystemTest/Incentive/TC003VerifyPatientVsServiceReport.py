@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 
+# front desk user login
+adminUserId = A.adminUserID
+adminUserPwd = A.adminUserPwD
+
 pvs = A()
 
 pvs.openBrowser()
-pvs.login("admin", "pass123")
+pvs.login(adminUserId, adminUserPwd)
 pvs.getIncentivePatientVsServiceReport()
 pvs.preIncentivePatientVsServiceReport()
 pvs.counteractivation()
