@@ -3,6 +3,7 @@ import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.action_chains import ActionChains
+from webdriver_manager.chrome import ChromeDriverManager
 import random
 import string
 import winsound
@@ -21,7 +22,7 @@ class A:
    foUserPwD = 'pass123'
 
    #Lab user
-   labUserID = 'lab'
+   labUserID = 'labs'
    labUserPwD = 'pass123'
 
    #radiologist user
@@ -40,8 +41,25 @@ class A:
    storeUserID = 'inventory'
    storeUserPwD = 'pass123'
 
+   global appPort
+   global appURL
+
    @classmethod
+   def applicationSelection(cls):
+      global appURL
+      global appPort
+      appPort = input("Please enter application port."
+            "81 for DanpheEMR Core"
+            "82 for Danphe Lumbini")
+      if appPort == "81":
+         appURL = "http://10.0.0.103:81/"
+      if appPort == "82":
+         appURL = "http://10.0.0.103:82/"
+      print("Starting", appURL)
+
    def openBrowser(self):
+
+      global appURL
 
       global TFT
       global CBC
@@ -60,9 +78,11 @@ class A:
 
       print(">>Open Browser: START")
       self.danpheEMR = webdriver.Chrome('E:/QA/AutomationTest/drivers/chromedriver.exe')
+      #danpheEMR = webdriver.Chrome(ChromeDriverManager().install())
       self.danpheEMR.set_window_position(-2000, 0)
       self.danpheEMR.maximize_window()
-      self.danpheEMR.get("http://10.0.0.103:81/")
+      print("Opening browser for", appURL)
+      self.danpheEMR.get(appURL)
       time.sleep(2)
       #self.danpheEMR.find_element_by_xpath("//button[contains(text(),'Advanced')]").click()   --- This is to add SSL exceptional
       #time.sleep(2)
@@ -97,21 +117,39 @@ class A:
       global InvoiceNo
       global contactno
       global HospitalNo
+      global FullName
       #doctorname = "Dr. JAMAAL MORGAN"
       print(">>Create New Appointment: START")
       self.danpheEMR.find_element_by_link_text("Appointment").click()
       time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),' New Patient')]").click()
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),' New Patient')]").click()
+      if appPort == "82":
+         self.danpheEMR.find_element_by_id("btnNewPatient").click()
+
       time.sleep(1)
       self.danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
       self.danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")
-      sname = random.randint(1111, 9999)
+      sname = str(random.randint(1111, 9999))
       self.danpheEMR.find_element_by_css_selector(".col-md-3:nth-child(4) > .form-control").send_keys("pqe", sname)
+      fname = "auto "
+      mname = "test "
+      z = "pqe"
+      sname1 = z+sname
+      print("Sir name", sname1)
+      FullName = fname + mname + sname1
+      print("Full name of patient:",FullName)
       age = random.randint(5, 99)
       self.danpheEMR.find_element_by_css_selector(".row > .form-control").send_keys(33)
       time.sleep(1)
-      self.danpheEMR.find_element_by_css_selector(".rad-holder > .mt-radio:nth-child(1) > span").click()
       #gender.send_keys('Male')
+      if appPort == "81":
+         self.danpheEMR.find_element_by_css_selector(".rad-holder > .mt-radio:nth-child(1) > span").click()
+      if appPort == "82":
+         gender = Select(self.danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
+         gender.select_by_visible_text("Male")
+
       #self.danpheEMR.find_element_by_css_selector(".rad-holder > .mt-radio:nth-child(1) > span").click()
       #self.danpheEMR.find_element_by_css_selector(".col-md-3 > .ng-invalid").click()
       contactno = random.randint(9841111111, 9849999999)
@@ -245,12 +283,27 @@ class A:
       self.danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
    def createlabxrayinvoice(self, labtest, imagingtest):
       print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
+      time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Billing").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Billing Request").click()
+      if appPort == "81":
+         self.danpheEMR.find_element_by_id("quickFilterInput").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
+         self.danpheEMR.find_element_by_link_text("Billing Request").click()
+         time.sleep(2)
+      if appPort == "82":
+         self.danpheEMR.find_element_by_id("srch_PatientList").click()
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(FullName)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_id("srch_PatientList").clear()
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(FullName)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
+         time.sleep(2)
       self.danpheEMR.find_element_by_id("items-box0").click()
       self.danpheEMR.find_element_by_id("items-box0").send_keys(xrayChest)
       time.sleep(2)
@@ -269,8 +322,12 @@ class A:
       print("Total Price:", totalprice)
       time.sleep(1)
       self.danpheEMR.find_element_by_id("items-box1").send_keys(Keys.TAB)
-      self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").clear()
-      self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").send_keys(doctor1)
+      if appPort == "81":
+         self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").clear()
+         self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").send_keys(doctor1)
+      #if appPort == "82":
+         #self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").clear()
+         #self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").send_keys(doctor1)
       self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
       time.sleep(3)
       print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
@@ -650,11 +707,27 @@ class A:
    def createUSGinvoice(self, usgAbdomenPelvis):
       print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
       self.danpheEMR.find_element_by_link_text("Billing").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Billing Request").click()
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_id("quickFilterInput").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
+         self.danpheEMR.find_element_by_link_text("Billing Request").click()
+         time.sleep(2)
+      if appPort == "82":
+         self.danpheEMR.find_element_by_id("srch_PatientList").click()
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(FullName)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_id("srch_PatientList").clear()
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(FullName)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+         self.danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
+         time.sleep(2)
+
       self.danpheEMR.find_element_by_id("items-box0").click()
       self.danpheEMR.find_element_by_id("items-box0").send_keys(usgAbdomenPelvis)
       time.sleep(2)
@@ -663,11 +736,15 @@ class A:
       price1 = self.danpheEMR.find_element_by_xpath("//input[@name='total']").get_attribute('value')
       totalprice = int(price1)
       time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Name' and @formcontrolname='ProviderId']").clear()
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Name' and @formcontrolname='ProviderId']").send_keys(doctor1)
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Name' and @formcontrolname='ProviderId']").clear()
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Name' and @formcontrolname='ProviderId']").send_keys(doctor1)
+
       self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
       time.sleep(3)
       print("Create OPD Invoice: USG Items: END<<")
+
    #Module: IP Billing -----------------
    def createIPprovisionalBill(self, test):
       global testrate
@@ -885,8 +962,16 @@ class A:
    def activatePharmacyCounter(self):
       print(">>Pharmacy Counter Activate: START")
       time.sleep(7)
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(3)
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(3)
+      if appPort == "82":
+         self.danpheEMR.find_element_by_link_text("Dispensary").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
+         time.sleep(3)
+
       self.danpheEMR.find_element_by_link_text("Counter").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//h5").click()
@@ -986,7 +1071,6 @@ class A:
       print("drugqtySS:", drugqtySS)
       print("sysdrugqty", sysdrugqty)
       assert int(drugqtySS) == int(sysdrugqty)
-
    def verifyStockDetailTC(self):
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(5)
@@ -1017,7 +1101,6 @@ class A:
       print("drugqtyMS", drugqtyMS)
       drugqtySS = drugqtySS + tqty
       print("drugqtySS", drugqtySS)
-
    def transferStore2DispensaryTC(self, tqty):
       self.danpheEMR.find_element_by_link_text("Store").click()
       time.sleep(3)
@@ -1052,7 +1135,6 @@ class A:
       drugqtyMS = int(drugqtyMS) + tqty
       print("drugqtyMS", drugqtyMS)
       #self.danpheEMR.find_element_by_link_text("Store").click()
-
    def transferDispensary2StoreTC(self, tqty):
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(3)
@@ -1166,9 +1248,16 @@ class A:
       self.danpheEMR.find_element_by_id("item-box0").send_keys(drugname)
       self.danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
       time.sleep(5)
-      self.danpheEMR.find_element_by_id("qty-box0").click()
-      self.danpheEMR.find_element_by_id("qty-box0").clear()
-      self.danpheEMR.find_element_by_id("qty-box0").send_keys(qty)
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_id("qty-box0").click()
+         self.danpheEMR.find_element_by_id("qty-box0").clear()
+         self.danpheEMR.find_element_by_id("qty-box0").send_keys(qty)
+      if appPort == "82":
+         self.danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
+         self.danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
+         self.danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
+
       time.sleep(3)
       if paymentmode == 'Credit':
          paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select"))
@@ -1225,7 +1314,6 @@ class A:
       #print("Verify Pharmacy Invoice: END<<", "Pharmacy Invoice No: ", pInvoiceNo)
       #self.danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success']").click()
       self.danpheEMR.find_element_by_xpath("//i[@class='fa fa-close']").click()
-
    def returnPharmacyInvoice(self, qty, returnremark):
       print(">>Return Pharmacy Invoice: START")
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -1348,7 +1436,6 @@ class A:
       time.sleep(3)
       goodsReceiptNo = self.danpheEMR.find_element_by_xpath("(//div[@col-id='GoodReceiptPrintId'])[2]").text
       print("goodsReceiptNo:", goodsReceiptNo)
-
    def cancelPharmacyGoodsReceipt(self):
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(2)
@@ -1366,7 +1453,6 @@ class A:
       time.sleep(3)
       self.danpheEMR.switch_to.alert.accept()
       time.sleep(7)
-
    def getPharmacyGoodsReceiptListAmount(self):
       global SubTotal
       global DiscountTotal
@@ -1386,7 +1472,6 @@ class A:
       TotalAmount = self.danpheEMR.find_element_by_xpath(
       "//b[contains(text(),'Total Amount :')]/parent::td/following-sibling::td").text
       print("TotalAmount", TotalAmount)
-
    def XgetPharmacyGoodsReceiptListAmount(self):
       global xSubTotal
       global xDiscountTotal
@@ -1394,7 +1479,6 @@ class A:
       xSubTotal = SubTotal
       xDiscountTotal = DiscountTotal
       xTotalAmount = TotalAmount
-
    def verifygetPharmacyGoodsReceiptListAmount(self, amount, discount):
       x = float(xSubTotal) + amount
       print("x", x)
@@ -1404,7 +1488,6 @@ class A:
       assert float(SubTotal) == float(x)
       assert float(DiscountTotal) == float(xDiscountTotal) + discount
       assert float(TotalAmount) == float(xTotalAmount) + amount - discount
-
    def verifyDispensaryStock(self, qty):
        self.danpheEMR.find_element_by_link_text("Pharmacy").click()
        time.sleep(2)
@@ -1459,7 +1542,7 @@ class A:
       self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
       time.sleep(3)
 
-#Pharmacy Reports: User Collection Report*********
+   #Pharmacy Reports: User Collection Report*********
    def getPharmacyDashboard(self):
       global TotalSale
       global TotalReturn
@@ -1507,7 +1590,6 @@ class A:
       UnpaidInvoices = UnpaidInvoices.partition("Rs.")[2]
       UnpaidInvoices = float(UnpaidInvoices)
       print("UnpaidInvoices", UnpaidInvoices)
-
    def preSystemPharmacyDashboard(self):
       global xTotalSale
       global xTotalReturn
@@ -1523,7 +1605,6 @@ class A:
       xDepositReturned = DepositReturned
       xProvisionalItems = ProvisionalItems
       xUnpaidInvoices = UnpaidInvoices
-
    def verifyPharmacyDashboard(self, cash, cashreturn, credit, creditreturn, deposit, depositreturn, provisional, provisionacancel):
       assert TotalSale == xTotalSale + cash + credit
       assert TotalReturn == xTotalReturn + cashreturn + creditreturn
@@ -1532,7 +1613,6 @@ class A:
       assert DepositReturned == xDepositReturned + depositreturn
       assert ProvisionalItems == xProvisionalItems + provisional - provisionacancel
       assert UnpaidInvoices == xUnpaidInvoices + credit - creditreturn
-
    def getPharmacyCashCollectionSummary(self, user):
       global sysinvoiceamount
       global sysinvoicereturned
@@ -1563,7 +1643,6 @@ class A:
       print(sysnetamount)
       sysdiscountamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       print(sysdiscountamount)
-
    def preSystemPharmacyCashCollectionSummary(self):
       global presysinvoiceamount
       global presysinvoicereturned
@@ -1577,7 +1656,6 @@ class A:
       presysdepositreturn = int(sysdepositreturn)
       presysnetamount = float(sysnetamount)
       presysdiscountamount = int(sysdiscountamount)
-
    def verifyPharmacyCashCollectionSummary(self, cash, cashreturn, credit, creditreturn, deposit, depositreturn, discount):
       print("presysinvoiceamount:", presysinvoiceamount)
       print("sysinvoiceamount:", sysinvoiceamount)
@@ -1597,7 +1675,6 @@ class A:
       print("netamount", netamount)
       assert float(sysnetamount) == float(netamount)
       assert int(sysdiscountamount) == presysdiscountamount + discount
-
    def getPharmacyUserCollectionReport(self, user):
       global sysPnetcashcollection
       global sysPgrosstotalsales
@@ -1653,7 +1730,6 @@ class A:
       print(sysPlesscashdiscount)
       sysPtotalcollection = self.danpheEMR.find_element_by_xpath("//tr[13]/td[2]").text
       print(sysPtotalcollection)
-
    def preSystemPharmacyUserCollectionReport(self):
       global presysPnetcashcollection
       global presysPgrosstotalsales
@@ -1683,7 +1759,6 @@ class A:
       presysPaddcollectionfromreceivables = float(sysPaddcollectionfromreceivables)
       presysPlesscashdiscount = float(sysPlesscashdiscount)
       presysPtotalcollection = float(sysPtotalcollection)
-
    def verifySystemPharmacyUserCollectionReport(self, cash, cashreturn, credit, creditreturn, creditsettlement, discount, deposit, depositreturn, provisional, provisionalcancel):
       print(">>START: verifySystemPharmacyUserCollectionReport")
       global sysPgrosstotalsales
@@ -1727,6 +1802,76 @@ class A:
       print("result2", result2)
       assert float(sysPtotalcollection) == round(result2)
 
+   # Module: Dispensary ------------------
+   def createDispensarySale(self, qty, paymentmode):
+      print(">>Create Dispensary Sale to Hospital Patient: START")
+      global pInvoiceNo
+      self.danpheEMR.find_element_by_link_text("Dispensary").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_link_text("Sale").click()
+      self.danpheEMR.find_element_by_id("patient-search").click()
+      self.danpheEMR.find_element_by_id("patient-search").send_keys(HospitalNo)
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("patient-search").send_keys(Keys.TAB)
+      self.danpheEMR.find_element_by_id("patient-search").send_keys(Keys.RETURN)
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("item-box0").click()
+      self.danpheEMR.find_element_by_id("item-box0").clear()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("item-box0").send_keys()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
+      time.sleep(5)
+      drugavlqty = self.danpheEMR.find_element_by_xpath("(//input[@value=''])[6]").get_attribute("Value")
+      print("Drug Available qty:", drugavlqty)
+      drugavlqty = self.danpheEMR.find_element_by_css_selector("td:nth-child(8) > .form-control").text
+      print("Drug Available qty:", drugavlqty)
+      self.danpheEMR.find_element_by_id("qty-box0").click()
+      self.danpheEMR.find_element_by_id("qty-box0").clear()
+      self.danpheEMR.find_element_by_id("qty-box0").send_keys(qty)
+      drugremainingqty = int(drugqtySS) - qty
+      print("Remaining qty:", drugremainingqty)
+      newdrugqtySS = drugremainingqty
+      time.sleep(3)
+      if paymentmode == 'Credit':
+         paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select"))
+         paymentoptions.select_by_visible_text("CREDIT")
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@name='Remarks']").send_keys("This is credit bill")
+
+      self.danpheEMR.find_element_by_xpath("//input[@value='Print Invoice']").click()
+      time.sleep(5)
+      pInvoiceNo = self.danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
+      pInvoiceNo = pInvoiceNo.partition("PH")[2]
+
+      print("Create Pharmacy OPD Invoice: END<<")
+   def createDispensarySaleRandomPatient(self, drugname, qty, paymentmode):
+      print("<<START: Create Dispensary sales to random customer.")
+      global pInvoiceNo
+      self.danpheEMR.find_element_by_link_text("Patient").click()
+      time.sleep(5)
+      self.danpheEMR.find_element_by_xpath("(//a[contains(text(),'Sale') and @class='grid-action'])[2]").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("item-box0").click()
+      self.danpheEMR.find_element_by_id("item-box0").clear()
+      self.danpheEMR.find_element_by_id("item-box0").send_keys(drugname)
+      self.danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
+      time.sleep(5)
+      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname= 'Quantity']").click()
+      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname= 'Quantity']").clear()
+      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname= 'Quantity']").send_keys(qty)
+      time.sleep(3)
+      if paymentmode == 'CREDIT':
+         paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select"))
+         paymentoptions.select_by_visible_text("CREDIT")
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@name='Remarks']").send_keys("This is credit bill")
+      self.danpheEMR.find_element_by_xpath("//input[@value='Print Invoice']").click()
+      time.sleep(5)
+      pInvoiceNo = self.danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
+      pInvoiceNo = pInvoiceNo.partition("PH")[2]
+      print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
+
 #------------------- Module: Laboratory -------------------------
    def getPharmacyDepositBalanceReport(self):
       global sysdepositamt
@@ -1740,7 +1885,6 @@ class A:
       time.sleep(9)
       assert HospitalNo == self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
       sysdepositamt = int(self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
-
    def verifyPharmacyDepositBalanceReport(self, deposit, depositreturn):
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
@@ -1753,7 +1897,6 @@ class A:
       assert HospitalNo == self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
       depositbalance = int(self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
       assert  depositbalance == sysdepositamt + deposit - depositreturn
-
    def getPharmacyOpeningEndingStockSummaryReport(self, drugname):
       global sysdrugname
       global sysopeningstock
@@ -1774,7 +1917,6 @@ class A:
       print("sysopeningstock", sysopeningstock)
       sysendingstock = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       print("sysendingstock", sysendingstock)
-
    def preSystemPharmacyOpeningEndingStockSummaryReport(self):
       global presysdrugname
       global presysdrugbatch
@@ -1786,7 +1928,6 @@ class A:
       presysdrugname = sysdrugname
       presysdrugbatch = sysdrugbatch
       presysdrugexpiry = sysdrugexpiry
-
    def verifyPharmacyOpeningEndingStockSummaryReport(self, qty):
       self.danpheEMR.find_element_by_link_text('Pharmacy').click()
       time.sleep(2)
@@ -1803,7 +1944,6 @@ class A:
       assert presysopeningstock == self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
       sysendingstock = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       assert int(sysendingstock) == int(presysendingstock) - qty
-
    def getPharmacyStockManageDetailReport(self, drugname):
       global ManageQuantity
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -1818,14 +1958,11 @@ class A:
       time.sleep(5)
       ManageQuantity = self.danpheEMR.find_element_by_xpath("(//div[@col-id='Quantity'])[2]").text #There is open bug (EMR-2588) to list down latest manage record to top.
       print("Manage Quantity", ManageQuantity)
-
    def preSystemPharmacyStockManageDetailReport(self):
       global xManageQuantity
       xManageQuantity = ManageQuantity
-
    def verifyPharmacyStockManageDetailReport(self, In, Out):
       assert int(ManageQuantity) == int(xManageQuantity) + In - Out
-
    def verifyStockItemsReport(self, drugname):
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(2)
@@ -1850,8 +1987,13 @@ class A:
       global barcodeno
       time.sleep(2)
       self.danpheEMR.find_element_by_link_text("Laboratory").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Lab Requisition").click()
+      time.sleep(5)
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_link_text("Lab Requisition").click()
+      if appPort == "82":
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),' Sample Collection ')]").click()
+
       self.danpheEMR.find_element_by_id("quickFilterInput").click()
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
@@ -1917,20 +2059,33 @@ class A:
    def patientRegistration(self):
       global contactno
       global HospitalNo
+      global FullName
       self.danpheEMR.find_element_by_link_text("Patient").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_link_text("Register Patient").click()
       self.danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
-      sname = random.randint(1111, 9999)
+      sname = str(random.randint(1111, 9999))
       self.danpheEMR.find_element_by_xpath("(//input[@value=''])[3]").send_keys("preg", sname)
+
+      fname = "auto "
+      z = "preg"
+      sname1 = z+sname
+      print("Sir name", sname1)
+      FullName = fname + sname1
+      print("Full name of patient:", FullName)
+
       age = random.randint(1, 99)
       self.danpheEMR.find_element_by_xpath("//input[@type='number']").send_keys(age)
       contactno = random.randint(9811111111, 9899999999)
       self.danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
       print(contactno)
-      self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .form-group:nth-child(1) .mt-checkbox:nth-child(1) > span").click()
-      #gender.send_keys('Male')
-      #self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div/label/span").click()
+
+      if appPort == "81":
+         self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .form-group:nth-child(1) .mt-checkbox:nth-child(1) > span").click()
+      if appPort == "82":
+         gender = Select(self.danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
+         gender.select_by_visible_text("Female")
+
       self.danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
       time.sleep(5)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
@@ -2521,7 +2676,7 @@ class A:
    def InventoryConsumption(self, item, qty):
       self.danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Billing Store')]").click()
+      self.danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_link_text("Consumption").click()
       time.sleep(2)
@@ -2564,7 +2719,7 @@ class A:
       time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER A4")
+      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
       availableQty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
       availableQty = int(availableQty)
@@ -2576,7 +2731,7 @@ class A:
       print("Unit Price", UnitPrice)
       self.danpheEMR.find_element_by_xpath("//i[@class='fa fa-backward']").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER A4")
+      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Manage Stock')]").click()
       time.sleep(3)
@@ -2596,8 +2751,9 @@ class A:
       if managetype == "out":
          self.danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyOut)
          print("Manage Out done")
+         time.sleep(3)
       self.danpheEMR.find_element_by_xpath("//input[@value='Update Stock']").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER A4")
+      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
       newavailableQty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
       print("newavailableQty", newavailableQty)         #
@@ -2798,10 +2954,29 @@ class A:
       assert int(StockManageInQty) == int(preStockManageInQty) + manageinqty
       assert StockManageOutValue == preStockManageOutValue + manageoutamount
       assert int(StockManageOutQty) == int(preStockManageOutQty) + manageoutqty
-      assert float(ConsumptionValue) == float(preConsumptionValue) + float(consumeamount)
+      print("ConsumptionValue", ConsumptionValue)
+      print("preConsumptionValue", preConsumptionValue)
+      print("consumeamount", consumeamount)
+      tempSum = float(preConsumptionValue) + float(consumeamount)
+      print("TempSum", tempSum)
+      assert float(ConsumptionValue) == tempSum
       assert int(ConsumptionQty) == int(preConsumptionQty) + consumeqty
-      assert float(ClosingValue) == float(preClosingValue) + float(purchaseamount) - float(consumeamount)
-      assert int(ClosingQty) == int(preClosingQty) + purchaseqty - consumeqty
+      print("ClosingValue", ClosingValue)
+      print("preClosingValue", preClosingValue)
+      print("purchaseamount", purchaseamount)
+      print("consumeamount", consumeamount)
+      print("manageinamount", manageinamount)
+      tempclosing = float(preClosingValue) + float(purchaseamount) + float(manageinamount) - float(consumeamount) - float(manageoutamount)
+      print("tempclosing", tempclosing)
+      assert float(ClosingValue) == tempclosing
+      print("ClosingQty", ClosingQty)
+      print("preClosingQty", preClosingQty)
+      print("purchaseqty", purchaseqty)
+      print("consumeqty", consumeqty)
+      print("manageinqty", manageinqty)
+      tempclosingqty = int(preClosingQty) + purchaseqty +manageinqty - consumeqty -manageoutqty
+      print("tempclosingqty", tempclosingqty)
+      assert int(ClosingQty) == tempclosingqty
 
 #Module: Billing report: Discount Report**********************
    def verifyDiscountReport(self, cash, discountpc):
