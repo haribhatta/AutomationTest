@@ -7,7 +7,7 @@ phuserid = A.pharmacyUserID
 phuserpwd = A.pharmacyUserPwD
 
 ds = A()
-ds.applicationSelection()
+#ds.applicationSelection()
 ds.openBrowser()
 ds.login(phuserid, phuserpwd)
 ds.activatePharmacyCounter()

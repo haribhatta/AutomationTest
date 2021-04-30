@@ -15,6 +15,7 @@ labitem = "TFT(T3,T4,TSH)"
 #imagingtest ="XRAY-3155"
 imagingtest = "CHEST APICAL VIEW 10*12 -1F1V"
 
+#glr.applicationSelection()
 glr.openBrowser()
 glr.login(foUserId, foUserPwd)
 glr.counteractivation()

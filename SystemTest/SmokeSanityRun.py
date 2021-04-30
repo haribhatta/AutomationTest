@@ -1,10 +1,12 @@
 from SystemTest import shortcut as sc
+from TestActionLibrary import A
 import pathlib
 import os
 
 def files(file,file1,rows,*args):
     if not args:
         sc.copyoriginal(file, file1)
+        A.applicationSelection()
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
@@ -22,18 +24,17 @@ def files(file,file1,rows,*args):
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
 
-smokesanityresult = "SmokeSanityExecutionResultV"
-userinput = input("Please entry current version number")
+smokesanityresult = "SmokeSanityExecutionResult_"
 scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
+appVersion = input("Please entry (name+veresion) for Test Summary Report")
 
 if scheduletype == 'A':
     Originalfile = "SmokeSanityTestCases.xlsx"
 
 else:
-    Originalfile = smokesanityresult + userinput + ".xlsx"
+    Originalfile = smokesanityresult + appVersion + ".xlsx"
 
-print(userinput)
-duplicatefile = smokesanityresult + userinput + ".xlsx"
+duplicatefile = smokesanityresult + appVersion + ".xlsx"
 print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'test')

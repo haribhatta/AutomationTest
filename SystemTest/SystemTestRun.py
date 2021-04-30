@@ -14,7 +14,6 @@ def files(file,file1,rows,*args):
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
 
-
             try:
                 exec(open(Pythonfilepath).read())
                 sc.writeData(file1, 'Sheet1', r, 2, 'Passed')
@@ -22,18 +21,17 @@ def files(file,file1,rows,*args):
                 sc.writeData(file1, 'Sheet1', r, 2, 'Failed')
                 sc.writeData(file1, 'Sheet1', r, 4, RunNoR + 1)
 
-systemtestresult = "SystemTestExecutionResult_LPH_V"
-userinput = input("Please entry current version number")
+systemtestresult = "SystemTestExecutionResult_"
 scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
+appVersion = input("Please entry (name+veresion) for Test Summary Report")
 
 if scheduletype == 'A':
     Originalfile = "SystemTestCases.xlsx"
 
 else:
-    Originalfile = systemtestresult + userinput + ".xlsx"
+    Originalfile = systemtestresult + appVersion + ".xlsx"
 
-print(userinput)
-duplicatefile = systemtestresult + userinput + ".xlsx"
+duplicatefile = systemtestresult + appVersion + ".xlsx"
 print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'Sheet1')

@@ -9,7 +9,7 @@ adminUserPwd = A.adminUserPwD
 
 isr = A()
 item = "PHOTOCOPY PAPER (CUTTING)"
-rate = 430
+rate = 2300
 qty = 1
 store1 = "Main Store"
 store2 = "OT Store"
@@ -46,5 +46,7 @@ isr.preInventorySummaryReport()
 isr.InventoryStockManage(managetype='out')
 manageoutamount = rate*qty
 isr.getInventorySummaryReport()
-isr.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=0,consumeamount=0,manageinqty=0,
-                                 manageinamount=0,manageoutqty=qty,manageoutamount=manageoutamount)
+isr.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=0, consumeamount=0, manageinqty=0,
+                                 manageinamount=0, manageoutqty=qty, manageoutamount=manageoutamount)
+isr.logout()
+isr.closeBrowser()

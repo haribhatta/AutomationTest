@@ -13,6 +13,7 @@ GUSGR = A()
 labitem = "LDH"
 usgtest ="USG (Abdomen / pelvis)"
 
+#GUSGR.applicationSelection()
 GUSGR.openBrowser()
 GUSGR.login(foUserId, foUserPwd)
 GUSGR.counteractivation()
