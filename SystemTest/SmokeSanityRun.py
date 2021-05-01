@@ -12,7 +12,7 @@ def files(file,file1,rows,*args):
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
         if Status != 'Passed':
-            base_dir = str(pathlib.PureWindowsPath(r'E:\QA\AutomationTest\SystemTest'))
+            base_dir = str(pathlib.PureWindowsPath(r'D:\AutomationGIT\SystemTest'))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
 

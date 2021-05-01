@@ -6,7 +6,7 @@ storeUserPwd = A.storeUserPwD
 
 cgr = A()
 
-itemname = "BALL PEN"
+itemname = "PENCIL"
 qty = 1
 
 cgr.openBrowser()

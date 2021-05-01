@@ -5,8 +5,8 @@ pharmacyUserId = A.pharmacyUserID
 pharmacyUserPwd = A.pharmacyUserPwD
 
 pd = A()
-drug = 'testdrugreport'
-rate = 2.28
+drug = 'ASTHALIN 2 MG TAB'
+rate = 1.14
 qty = 2
 amount = rate*qty
 print("Amount", amount)

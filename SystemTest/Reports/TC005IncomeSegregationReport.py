@@ -13,8 +13,9 @@ from TestActionLibrary import A
 foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
+rateOPD = 30
 usgtest = "USG (Abdomen / pelvis)"
-usgprice = 1050
+usgprice = 700
 
 isr = A()
 isr.openBrowser()
@@ -24,19 +25,23 @@ isr.getIncomeSegregation()
 isr.patientquickentry(0, 'Cash')
 isr.preSystemIncomeSegregation()
 isr.getIncomeSegregation()
-isr.verifyIncomeSegregation(cash=500, cashreturn=0, credit=0, creditreturn=0, provision=0)
+isr.verifyIncomeSegregation(cash=rateOPD, cashreturn=0, credit=0, creditreturn=0, provision=0)
+print("Start>Cash Return")
 isr.preSystemIncomeSegregation()
 isr.returnBillingInvoice(returnmsg="this is bill return 1")
 isr.getIncomeSegregation()
-isr.verifyIncomeSegregation(cash=0, cashreturn=500, credit=0, creditreturn=0, provision=0)
+isr.verifyIncomeSegregation(cash=0, cashreturn=rateOPD, credit=0, creditreturn=0, provision=0)
+
 isr.patientquickentry(0, 'CREDIT')
 isr.preSystemIncomeSegregation()
 isr.getIncomeSegregation()
-isr.verifyIncomeSegregation(cash=0, cashreturn=0, credit=500, creditreturn=0, provision=0)
+isr.verifyIncomeSegregation(cash=0, cashreturn=0, credit=rateOPD, creditreturn=0, provision=0)
+
 isr.preSystemIncomeSegregation()
 isr.returnBillingInvoice(returnmsg="this is bill return 2")
 isr.getIncomeSegregation()
-isr.verifyIncomeSegregation(cash=0, cashreturn=0, credit=0, creditreturn=500, provision=0)
+isr.verifyIncomeSegregation(cash=0, cashreturn=0, credit=0, creditreturn=rateOPD, provision=0)
+
 isr.patientquickentry(0, 'Cash')
 isr.admitDisTrans(1, 0, 0, 0)
 isr.getIncomeSegregation()

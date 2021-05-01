@@ -19,13 +19,13 @@ from TestActionLibrary import A
 foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
-opdticket = 500
+opdticket = 30
 #discountpct = 50
 #discountamount = (discountpct*opdticket/100)
 returnamount = opdticket
 usgtest = "USG (Abdomen / pelvis)"
-usgprice = 1050
-admisioncharge = 1500
+usgprice = 700
+admisioncharge = 30
 deposit = 0
 
 
@@ -43,6 +43,7 @@ CBDS.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 2. Return Cash Invoice
+print("2. Return Cash Invoice")
 CBDS.getBillingDashboard()
 CBDS.returnBillingInvoice("This is cash invoice return")
 CBDS.preSystemDataBillingDashboard()
