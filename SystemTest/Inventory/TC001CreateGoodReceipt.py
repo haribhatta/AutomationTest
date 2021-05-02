@@ -12,6 +12,7 @@ qty = 1
 cgr.openBrowser()
 cgr.login(storeUserId, storeUserPwd)
 cgr.createInventoryGoodReceipt(qty=qty, item=itemname, rate=1)
+cgr.editInventoryGoodsReceipt()
 cgr.createInventoryDirectDispatch(itemname, qty=qty, store=1)
 cgr.logout()
 cgr.closeBrowser()

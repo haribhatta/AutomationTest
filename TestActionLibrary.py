@@ -2932,6 +2932,7 @@ class A:
 # Module: Inventory---------------------------------------------------------
    def createInventoryGoodReceipt(self, qty, item, rate):
       print(">>START: createGoodReceipt")
+      global BillNo
       self.danpheEMR.find_element_by_link_text("Inventory").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_link_text("Procurement").click()
@@ -2945,8 +2946,8 @@ class A:
       self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
-      billno = random.randint(1, 99999)
-      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(billno)
+      BillNo = random.randint(100, 99999)
+      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo)
       self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
       self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
       self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
@@ -2956,6 +2957,26 @@ class A:
       self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
       time.sleep(3)
       print("<<END: createGoodReceipt")
+
+   def editInventoryGoodsReceipt(self):
+      print(">>START: edit GoodReceipt")
+      time.sleep(2)
+      self.danpheEMR.find_element_by_link_text("Procurement").click()
+      time.sleep(2)
+      #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
+      #time.sleep(5)
+      self.danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(BillNo)
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//button[contains(text(),' Edit Receipt ')]").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_id("qtyip0").clear() #Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
+      self.danpheEMR.find_element_by_id("qtyip0").send_keys(2)
+      self.danpheEMR.find_element_by_id("SaveGoodsReceiptbtn").click()
+
 
    def InventoryConsumption(self, item, qty):
       self.danpheEMR.find_element_by_link_text("SubStore").click()
@@ -2992,7 +3013,7 @@ class A:
        self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
        time.sleep(1)
        self.danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.TAB)
-       self.danpheEMR.find_element_by_xpath("//textarea[@name='Remarks']").send_keys("Direct dispatch test") #LPH-867: GR edit item qty is disable.
+       self.danpheEMR.find_element_by_xpath("//textarea[@name='Remarks']").send_keys("Direct dispatch test")
        time.sleep(1)
        self.danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
        print("<<END: directDispatch")
