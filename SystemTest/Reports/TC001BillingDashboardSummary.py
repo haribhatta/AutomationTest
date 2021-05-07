@@ -20,7 +20,7 @@ foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
 opdticket = 30
-#discountpct = 50
+discountpct = 50
 #discountamount = (discountpct*opdticket/100)
 returnamount = opdticket
 usgtest = "USG (Abdomen / pelvis)"
@@ -53,10 +53,10 @@ CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credi
 
 # 3. Cash Discount Invoice
 CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=30, paymentmode="Cash")
+CBDS.patientquickentry(discountpc=discountpct, paymentmode="Cash")
 CBDS.preSystemDataBillingDashboard()
 CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=opdticket, discountpc=30, cashReturn=0, credit=0, creditReturn=0,
+CBDS.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 4. Return Cash Discount Invoice
@@ -64,10 +64,11 @@ CBDS.getBillingDashboard()
 CBDS.returnBillingInvoice("This is cash discount invoice return")
 CBDS.preSystemDataBillingDashboard()
 CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=30, cashReturn=returnamount, credit=0, creditReturn=0,
+CBDS.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 5. Credit Invoice
+print("##### Credit Invoice #####")
 CBDS.getBillingDashboard()
 CBDS.patientquickentry(discountpc=0, paymentmode="CREDIT")
 #CBDS.verifyopdinvoice()

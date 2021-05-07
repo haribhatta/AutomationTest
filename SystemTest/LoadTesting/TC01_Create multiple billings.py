@@ -16,9 +16,12 @@ LPT = A()
 LPT.openBrowser()
 LPT.login(foUserId, foUserPwd)
 LPT.counteractivation()
+i = 0
 # Scenario-1
-for number in range(30):
+for number in range(20):
     LPT.patientquickentry(0, 'Cash')
+    i = i+1
+    print("$$$$$ We are in number#######", i)
 
 LPT.logout()
 LPT.closeBrowser()

@@ -195,6 +195,8 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_id("btnNewPatient").click()
          time.sleep(2)
+         self.danpheEMR.find_element_by_id("txtDepartment").send_keys("GYNAE & OBS")
+         self.danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
          self.danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
          self.danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")
          sname = str(random.randint(1111, 9999))
@@ -214,11 +216,21 @@ class A:
          self.danpheEMR.find_element_by_css_selector(".ng-dirty").click()#
          gender = Select(self.danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
          gender.select_by_visible_text("Male")
-         #membershipType = Select(
-         #self.danpheEMR.find_element_by_xpath("(//select[@class='ng-untouched ng-pristine ng-valid'])[2]"))
-         #membershipType.select_by_visible_text(" Staff Family (30%)")
-         self.danpheEMR.find_element_by_id("txtDepartment").send_keys("GYNAE & OBS")
-         self.danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+         if discountpc > 0:
+            self.danpheEMR.find_element_by_css_selector(".comm-list").click()
+            dropdown = self.danpheEMR.find_element_by_css_selector(".comm-list")
+            time.sleep(3)
+            dropdown.find_element_by_xpath("//option[. = 'SOCIAL SERVICE UNIT']").click()
+            time.sleep(7)
+            self.danpheEMR.find_element_by_css_selector(".comm-list").click()
+            time.sleep(5)
+            self.danpheEMR.find_element_by_css_selector(".membership-list").click()
+            time.sleep(4)
+            dropdown = self.danpheEMR.find_element_by_css_selector(".membership-list")
+            time.sleep(5)
+            dropdown.find_element_by_xpath("//option[. = ' Child Under Nutrition (50%)']").click()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_css_selector(".membership-list").click()
          self.danpheEMR.find_element_by_css_selector(".btn-success").click()
          time.sleep(5)
 
@@ -304,17 +316,21 @@ class A:
       time.sleep(2)
       self.danpheEMR.find_element_by_css_selector(".fa-search").click()
       time.sleep(9)
-      self.danpheEMR.find_element_by_xpath("//input[@type='checkbox']").click()
-      self.danpheEMR.find_element_by_xpath("//textarea").send_keys(returnmsg)
-      self.danpheEMR.find_element_by_xpath("//div[2]/button").click()
-      time.sleep(7)
-      returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), 'Remarks :')]").text
+      self.danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
+      self.danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
+      self.danpheEMR.find_element_by_id("btnSubmit").click()
+      time.sleep(3)
+      returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), ' Remarks:')]").text
+      returnTotalAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount ')]/following-sibling::td").text
+      #self.danpheEMR.find_element_by_id("btnPrintRecipt").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click() # This is to close print window.
+      time.sleep(3)
       print("returnmsgTemp", returnremark)
-      returnremark = returnremark.partition("s : ")[2]
+      returnremark = returnremark.partition("Remarks: ")[2]
       print("returnremark", returnremark)
       print("returnmsg", returnmsg)
       assert returnremark == returnmsg
-      returnTotalAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount ')]/following-sibling::td").text
       print("returnTotalAmount", returnTotalAmount)
       print("<<END: Return OPD Invoice.")
    def creditPayment(self):
@@ -529,12 +545,19 @@ class A:
       global presysunpaidcreditinvoices
 
       presyssubtotal = int(syssubtotal)
+      print("presyssubtotal", presyssubtotal)
       presysdiscountamount = int(sysdiscountamount)
+      print("presysdiscountamount", presysdiscountamount)
       presysreturnamount = int(sysreturnamount)
+      print("presysreturnamount", presysreturnamount)
       presystotalamount = int(systotalamount)
+      print("presystotalamount", presystotalamount)
       presysnetcashcollection = int(sysnetcashcollection)
+      print("presysnetcashcollection", presysnetcashcollection)
       presysprovisionalitems = float(sysprovisionalitems)
+      print("presysprovisionalitems", presysprovisionalitems)
       presysunpaidcreditinvoices = float(sysunpaidcreditinvoices)
+      print("presysunpaidcreditinvoices", presysunpaidcreditinvoices)
       print("<<END:")
    def verifyBillingDashboard(self, cash, discountpc, cashReturn, credit, creditReturn, settlement, provisional, provisionalcancel):
       print(">>START: Verify Billing Dashboard new updated amounts")
@@ -565,7 +588,10 @@ class A:
       elif cash > 0 and cashReturn == 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
          time.sleep(3)
          assert int(syssubtotal) == presyssubtotal + cash
-         assert int(sysdiscountamount) == presysdiscountamount + (discountpc*cash/100)
+         calctemp = presysdiscountamount + (discountpc*cash/100)
+         print("calctemp", calctemp)
+         print("sysdiscountamount", sysdiscountamount)
+         assert int(sysdiscountamount) == calctemp
          assert int(sysreturnamount) == presysreturnamount
          assert int(systotalamount) == presystotalamount + cash - (discountpc*cash/100)
          assert int(sysnetcashcollection) == presysnetcashcollection + cash - (discountpc*cash/100)
@@ -588,6 +614,8 @@ class A:
          assert int(sysdiscountamount) == presysdiscountamount
          assert int(sysreturnamount) == presysreturnamount
          assert int(systotalamount) == presystotalamount + credit
+         print("presysnetcashcollection", presysnetcashcollection)
+         print("sysnetcashcollection", sysnetcashcollection)
          assert int(sysnetcashcollection) == presysnetcashcollection
          print("End of credit invoice check")
 
@@ -1514,10 +1542,10 @@ class A:
          # self.danpheEMR.find_element_by_xpath("//button[@value='Search Invoice']").click()
          time.sleep(3)
          # self.danpheEMR.find_element_by_xpath("//input[@type='checkbox']").click()
-         self.danpheEMR.find_element_by_css_selector("th > input").click()
-         time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='ReturnedQty']").clear()
-         self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='ReturnedQty']").send_keys(qty)
+         #self.danpheEMR.find_element_by_css_selector("th > input").click()
+         #time.sleep(3)
+         self.danpheEMR.find_element_by_id("ReturnedQty0").clear()
+         self.danpheEMR.find_element_by_id("ReturnedQty0").send_keys(qty)
          self.danpheEMR.find_element_by_xpath("//textarea[@name='Remark']").send_keys(returnremark)
          self.danpheEMR.find_element_by_id("return").click()
          time.sleep(5)
@@ -1800,7 +1828,7 @@ class A:
       print("temp", temp)
       print("temp", float(temp))
       print("TotalSale", TotalSale)
-      assert TotalSale == float(round(xTotalSale + cash + credit))
+      assert float(round(TotalSale)) == float(round(xTotalSale + cash + credit))
       print("TotalReturn-cash", CashReturn)
       print("xCashReturn", xCashReturn)
       #a = float(round(xTotalReturn + cashreturn + creditreturn))
@@ -1811,14 +1839,14 @@ class A:
       netcoltemp = float(round(xNetCashCollection + cash - cashreturn))
       print("netcollectiontemp", netcoltemp)
       print("xNetCollection", xNetCashCollection)
-      assert NetCashCollection == float(round(xNetCashCollection + cash - cashreturn))
+      assert float(round(NetCashCollection)) == float(round(xNetCashCollection + cash - cashreturn))
       assert DepositAmount == xDepositAmount + deposit
       assert DepositReturned == xDepositReturned + depositreturn
       assert ProvisionalItems == xProvisionalItems + provisional - provisionacancel
       c = float(round(xUnpaidInvoices + credit - creditreturn))
       print("c", c)
       print("UnpaidInvoices", UnpaidInvoices)
-      assert UnpaidInvoices == c
+      assert float(round(UnpaidInvoices)) == c
    def getPharmacyCashCollectionSummary(self, user):
       global sysinvoiceamount
       global sysinvoicereturned
