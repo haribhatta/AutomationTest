@@ -1,11 +1,11 @@
 import pyodbc
-conn = pyodbc.connect('Driver={SQL Server};'
-                      'Server=DESKTOP-68UCKA5\SQLEXPRESS;'
-                      'Database=LumbiniEMR_QA_V1.8.0;'
-                      'Trusted_Connection=yes;')
+conn = pyodbc.connect("Driver={SQL Server};"
+                      "Server=DESKTOP-LCQ7JSQ;"
+                      "Database=Danphe_LPH_V1.9.0;"
+                      "Trusted_Connection=yes;")
 
 cursor = conn.cursor()
-cursor.execute('SELECT * FROM LumbiniEMR_QA_V1.8.0.dbo.ADT_Bed')
+cursor.execute('select * from PAT_Patient where PatientCode = 2105000198')
 
 for row in cursor:
-    print(row)
+    print('row = %r' % (row,))
