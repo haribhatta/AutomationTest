@@ -2450,7 +2450,7 @@ class A:
          self.danpheEMR.find_element_by_link_text("ADT").click()
          time.sleep(3)
          self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-         time.sleep(3)
+         time.sleep(5)
          self.danpheEMR.find_element_by_link_text("Admit").click()
          time.sleep(3)
          self.danpheEMR.find_element_by_id("RequestingDeptId").send_keys("GENERAL MEDICINE")
@@ -2542,8 +2542,10 @@ class A:
       print(netTotalAct)
       depositBalanceExp = int(deposit)
       depositBalanceAct = self.danpheEMR.find_element_by_xpath("//tr[6]/td[2]/label").text
-      print(depositBalanceAct)
-      print(depositBalanceExp)
+      print("depositBalanceAct", depositBalanceAct)
+      depositBalanceAct = depositBalanceAct.replace(',', '')
+      print("depositBalanceAct", depositBalanceAct)
+      print("depositBalanceExp", depositBalanceExp)
       assert depositBalanceExp == int(depositBalanceAct)
       if depositBalanceExp > netTotalExp:
          toBeRefundExp = depositBalanceExp - netTotalExp
@@ -3038,7 +3040,7 @@ class A:
       self.danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
       BillNo = random.randint(100, 99999)
       print("Bill No", BillNo)
-      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo) # LPH-
+      self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo) # LPH-934, LPH_V1.9.3
       self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
       self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
       self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
@@ -3836,8 +3838,36 @@ class A:
       self.danpheEMR.find_element_by_xpath("//button[contains(.,'Receive')]").click()
       self.danpheEMR.find_element_by_xpath("//button[contains(.,' Back to Requisition List')]").click()
 
-
-
+   def createManualVoucher(self):
+      self.danpheEMR.find_element_by_link_text("Accounting").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_link_text("Transaction").click()
+      self.danpheEMR.find_element_by_link_text("Voucher Entry").click()
+      dropdown = self.danpheEMR.find_element_by_id("voucher")
+      dropdown.find_element_by_xpath("//option[. = 'Purchase Voucher']").click()
+      assert self.danpheEMR.switch_to.alert.text == "Are you sure you want to change the Voucher Type?"
+      self.danpheEMR.switch_to.alert.accept()
+      self.danpheEMR.find_element_by_css_selector(".fa-question").click()
+      assert self.danpheEMR.switch_to.alert.text == "Do you want to create new Ledger?"
+      self.danpheEMR.switch_to.alert.accept()
+      time.sleep(4)
+      self.danpheEMR.find_element_by_id("primarygroup").click()
+      time.sleep(3)
+      dropdown = self.danpheEMR.find_element_by_id("primarygroup")
+      time.sleep(3)
+      dropdown.find_element_by_xpath("//option[. = 'Assets']").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("primarygroup").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("primarygroup").click()
+      self.danpheEMR.find_element_by_css_selector(".div-relative .ng-untouched").click()
+      self.danpheEMR.find_element_by_css_selector(".col-md-8 > .danphe-auto-complete-wrapper > .ng-untouched").click()
+      self.danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .ng-dirty").send_keys("Test Dr. 1")
+      self.danpheEMR.find_element_by_css_selector(".btn-primary").click()
+      self.danpheEMR.find_element_by_id("Amount_1").send_keys(100)
+      time.sleep(2)
+      self.danpheEMR.find_element_by_css_selector(".fa-plus").click()
+      self.danpheEMR.find_element_by_id("DrCr_2").click()
 
 
 
