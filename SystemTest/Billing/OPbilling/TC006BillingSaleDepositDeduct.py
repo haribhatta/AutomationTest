@@ -6,8 +6,9 @@ from TestActionLibrary import A
 foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
+CBC = A.LabTest1
+
 DepositAmount = 5000
-testname = "CBC(Hb,TC,DC,PLT)"
 
 bsdd = A()
 
@@ -16,6 +17,6 @@ bsdd.login(foUserId, foUserPwd)
 bsdd.counteractivation()
 bsdd.patientRegistration()
 bsdd.opDeposit(DepositAmount)
-bsdd.opDepositDbiling(DepositAmount, testname)
+bsdd.opDepositDbiling(DepositAmount, CBC)
 bsdd.logout()
 bsdd.closeBrowser()

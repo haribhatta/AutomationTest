@@ -7,8 +7,8 @@ foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
 deposit = 50
-billamt = 500
-testname = "CBC(Hb,TC,DC,PLT)"
+billamt = A.opdRate
+testname = A.LabTest1
 
 bsddpt = A()
 bsddpt.openBrowser()

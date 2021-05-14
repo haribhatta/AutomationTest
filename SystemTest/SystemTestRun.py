@@ -1,16 +1,18 @@
 from SystemTest import shortcut as sc
+from TestActionLibrary import A
 import pathlib
 import os
 
 def files(file,file1,rows,*args):
     if not args:
         sc.copyoriginal(file,file1)
+        A.applicationSelection()
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'Sheet1', r, 1))
         Status = sc.readData(file1, 'Sheet1', r, 2)
         RunNoR = (sc.readData(file1, 'Sheet1', r, 4))
         if Status != 'Passed':
-            base_dir = str(pathlib.PureWindowsPath(r'E:\QA\AutomationTest\SystemTest'))
+            base_dir = str(pathlib.PureWindowsPath(r'D:\AutomationGIT\SystemTest'))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
 

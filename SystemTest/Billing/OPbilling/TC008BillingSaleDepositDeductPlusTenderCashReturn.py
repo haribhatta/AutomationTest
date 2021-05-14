@@ -5,8 +5,8 @@ from TestActionLibrary import A
 foUserId = A.foUserID
 foUserPwd = A.foUserPwD
 
-deposit = "300"
-testname = "LDH"
+deposit = "200"
+testname = A.LabTest3
 
 bsddpt = A()
 bsddpt.openBrowser()
