@@ -21,7 +21,7 @@ class A:
    foUserPwD = 'pass123'
 
    #Lab user
-   labUserID = 'lab'
+   labUserID = 'labs'
    labUserPwD = 'pass123'
 
    #radiologist user
@@ -45,11 +45,13 @@ class A:
    CBCLPH = "CBC"
    TFTLPH = "TFT"
    LDHLPH = "LDH"
+   USGLPH = "USG (Abdomen / pelvis)"
 
    opdRate = opdRateLPH
    LabTest1 = CBCLPH
    LabTest2 = TFTLPH
    LabTest3 = LDHLPH
+   USGTest1 = USGLPH
 
    # Variables for Charak Hospital ( need to uncomment for Charak run)
    #opdRateCharak = 500
@@ -157,7 +159,8 @@ class A:
 
       if appPort == "81":
          self.danpheEMR.find_element_by_link_text("Appointment").click()
-         self.danpheEMR.find_element_by_xpath("//a[contains(text(),' New Patient')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("New Patient").click()
          self.danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
          self.danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")
          sname = str(random.randint(1111, 9999))
@@ -380,6 +383,46 @@ class A:
       assert returnremark == returnmsg
       print("returnTotalAmount", returnTotalAmount)
       print("<<END: Return OPD Invoice.")
+   def returnBillingInvoicePartial(self, returnmsg):
+      print(">>START: Partial Return of billing invoice.", InvoiceNo)
+      global returnTotalAmount
+      self.danpheEMR.find_element_by_link_text("Billing").click()
+      self.danpheEMR.find_element_by_link_text("Return Bills").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_name("TransactionId").clear()
+      self.danpheEMR.find_element_by_name("TransactionId").send_keys(InvoiceNo)
+      time.sleep(2)
+      self.danpheEMR.find_element_by_css_selector(".fa-search").click()
+      time.sleep(9)
+      self.danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
+      self.danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
+      self.danpheEMR.find_element_by_id("btnSubmit").click()
+      time.sleep(3)
+      #returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), ' Remarks:')]").text
+      #returnTotalAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount ')]/following-sibling::td").text
+      #self.danpheEMR.find_element_by_id("btnPrintRecipt").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click() # This is to close print window.
+   def verifyCreditNoteDuplicateInvoice(self):
+      print("Verify partial return of bill invoice")
+      #global returnTotalAmount
+      self.danpheEMR.find_element_by_link_text("Billing").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Duplicate Prints')]").click()
+      time.sleep(2)
+      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Returned Invoice')]").click()
+      time.sleep(3)
+      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(InvoiceNo)
+      time.sleep(5)
+      RefInvoiceNumber = self.danpheEMR.find_element_by_xpath("(//div[@col-id='RefInvoiceNum'])[2]").text
+      print("RefInvoiceNumber", RefInvoiceNumber)
+      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Show Details')]").click()
+      time.sleep(3)
+      ReturnAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount')]/following-sibling::td").text
+      print("ReturnAmount", ReturnAmount)
+      self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
+      time.sleep(2)
+
    def creditPayment(self):
       print(">>START: Credit Payment")
       self.danpheEMR.find_element_by_link_text("Billing").click()
@@ -393,6 +436,7 @@ class A:
       self.danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
    def createlabxrayinvoice(self, labtest, imagingtest):
       print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
+      global InvoiceNo
 
       if appPort == "81":
          self.danpheEMR.find_element_by_link_text("Billing").click()
@@ -423,6 +467,10 @@ class A:
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").send_keys(doctor1)
          self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
          time.sleep(2)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+         print("InvoiceNoTemp", InvoiceNo)
+         InvoiceNo = InvoiceNo.partition("BL")[2]
+         print("InvoiceNo", InvoiceNo)
 
       if appPort == "82":
          self.danpheEMR.find_element_by_link_text("Billing").click()
@@ -450,9 +498,13 @@ class A:
          price2 = self.danpheEMR.find_element_by_xpath("(//input[@name='total'])[2]").get_attribute('value')
          totalprice = int(price1) + int(price2)
          print("Total Price:", totalprice)
-         time.sleep(1)
+         time.sleep(3)
          self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
-         time.sleep(2)
+         time.sleep(3)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+         print("InvoiceNoTemp", InvoiceNo)
+         InvoiceNo = InvoiceNo.partition("BL")[2]
+         print("InvoiceNo", InvoiceNo)
 
       print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
    def verifylabxrayinvoice(self):
