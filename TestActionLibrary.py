@@ -206,6 +206,14 @@ class A:
             paymentoptions.select_by_visible_text(paymentmode)
             self.danpheEMR.find_element_by_xpath("//div[2]/div[2]/input").send_keys("Credit in request of chairman")
          self.danpheEMR.find_element_by_css_selector(".btn-success").click()
+         time.sleep(5)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+         print("InvoiceNoTemp", InvoiceNo)
+         InvoiceNo = InvoiceNo.partition("BL")[2]
+         print("InvoiceNo", InvoiceNo)
+         HospitalNo = self.danpheEMR.find_element_by_xpath(
+            "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
+         print("HospitalNo:", HospitalNo)
 
       if appPort == "82":
          time.sleep(2)
@@ -255,14 +263,15 @@ class A:
             self.danpheEMR.find_element_by_xpath("//div[2]/div[2]/input").send_keys("Credit in request of chairman")
          self.danpheEMR.find_element_by_css_selector(".btn-success").click()
          time.sleep(5)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+         print("InvoiceNoTemp", InvoiceNo)
+         InvoiceNo = InvoiceNo.partition("BL")[2]
+         print("InvoiceNo", InvoiceNo)
+         HospitalNo = self.danpheEMR.find_element_by_xpath(
+            "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
+         print("HospitalNo:", HospitalNo)
+         print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
 
-      InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
-      print("InvoiceNoTemp", InvoiceNo)
-      InvoiceNo = InvoiceNo.partition("BL")[2]
-      print("InvoiceNo", InvoiceNo)
-      HospitalNo = self.danpheEMR.find_element_by_xpath(
-         "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
-      print("HospitalNo:", HospitalNo)
       print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
       print("Create New Appointment: END<<")
 
