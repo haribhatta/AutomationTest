@@ -367,30 +367,58 @@ class A:
    def returnBillingInvoice(self, returnmsg):
       print(">>START: Returning OPD Invoice.", InvoiceNo)
       global returnTotalAmount
-      self.danpheEMR.find_element_by_link_text("Billing").click()
-      self.danpheEMR.find_element_by_link_text("Return Bills").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_name("TransactionId").clear()
-      self.danpheEMR.find_element_by_name("TransactionId").send_keys(InvoiceNo)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_css_selector(".fa-search").click()
-      time.sleep(9)
-      self.danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
-      self.danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
-      self.danpheEMR.find_element_by_id("btnSubmit").click()
-      time.sleep(3)
-      returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), ' Remarks:')]").text
-      returnTotalAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount ')]/following-sibling::td").text
-      #self.danpheEMR.find_element_by_id("btnPrintRecipt").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click() # This is to close print window.
-      time.sleep(3)
-      print("returnmsgTemp", returnremark)
-      returnremark = returnremark.partition("Remarks: ")[2]
-      print("returnremark", returnremark)
-      print("returnmsg", returnmsg)
-      assert returnremark == returnmsg
-      print("returnTotalAmount", returnTotalAmount)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         self.danpheEMR.find_element_by_link_text("Return Bills").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_name("TransactionId").clear()
+         self.danpheEMR.find_element_by_name("TransactionId").send_keys(InvoiceNo)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_css_selector(".fa-search").click()
+         time.sleep(9)
+         self.danpheEMR.find_element_by_xpath("//input[@type='checkbox']").click()
+         self.danpheEMR.find_element_by_xpath("//textarea").send_keys(returnmsg)
+         self.danpheEMR.find_element_by_xpath("//button[@class='btn btn-primary']").click()
+         time.sleep(3)
+         returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), 'Remarks')]").text
+         returnTotalAmount = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Amount')]/following-sibling::td").text
+         #self.danpheEMR.find_element_by_id("btnPrintRecipt").click()
+         time.sleep(2)
+         #self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click() # This is to close print window.
+         time.sleep(3)
+         print("returnmsgTemp", returnremark)
+         returnremark = returnremark.partition("Remarks : ")[2]
+         print("returnremark", returnremark)
+         print("returnmsg", returnmsg)
+         assert returnremark == returnmsg
+         print("returnTotalAmount", returnTotalAmount)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         self.danpheEMR.find_element_by_link_text("Return Bills").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_name("TransactionId").clear()
+         self.danpheEMR.find_element_by_name("TransactionId").send_keys(InvoiceNo)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_css_selector(".fa-search").click()
+         time.sleep(9)
+         self.danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
+         self.danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
+         self.danpheEMR.find_element_by_id("btnSubmit").click()
+         time.sleep(3)
+         returnremark = self.danpheEMR.find_element_by_xpath("//div[contains(text(), ' Remarks:')]").text
+         returnTotalAmount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Total Amount ')]/following-sibling::td").text
+         # self.danpheEMR.find_element_by_id("btnPrintRecipt").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath(
+            "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
+         time.sleep(3)
+         print("returnmsgTemp", returnremark)
+         returnremark = returnremark.partition("Remarks: ")[2]
+         print("returnremark", returnremark)
+         print("returnmsg", returnmsg)
+         assert returnremark == returnmsg
+         print("returnTotalAmount", returnTotalAmount)
       print("<<END: Return OPD Invoice.")
    def returnBillingInvoicePartial(self, returnmsg):
       print(">>START: Partial Return of billing invoice.", InvoiceNo)
@@ -475,7 +503,7 @@ class A:
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").clear()
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[9]").send_keys(doctor1)
          self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
-         time.sleep(2)
+         time.sleep(5)
          InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
          print("InvoiceNoTemp", InvoiceNo)
          InvoiceNo = InvoiceNo.partition("BL")[2]
@@ -2680,8 +2708,9 @@ class A:
       global contactno
       global HospitalNo
       global FullName
+      time.sleep(5)
       self.danpheEMR.find_element_by_link_text("Patient").click()
-      time.sleep(2)
+      time.sleep(5)
       self.danpheEMR.find_element_by_link_text("Register Patient").click()
       time.sleep(2)
 
@@ -2699,6 +2728,9 @@ class A:
       print(contactno)
 
       if appPort == "81":
+         self.danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
+         sname = str(random.randint(1111, 9999))
+         self.danpheEMR.find_element_by_xpath("(//input[@value=''])[3]").send_keys("preg", sname)
          self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .form-group:nth-child(1) .mt-checkbox:nth-child(1) > span").click()
       if appPort == "82":
          self.danpheEMR.find_element_by_link_text("Register Patient").click()
@@ -2709,9 +2741,9 @@ class A:
          gender.select_by_visible_text("Female")
 
       self.danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
-      time.sleep(5)
+      time.sleep(7)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
-      time.sleep(2)
+      time.sleep(5)
       assert str(contactno) == self.danpheEMR.find_element_by_xpath("//ag-grid-angular[@id='myGrid']"
                                                                     "/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
       global HospitalNo
@@ -2727,45 +2759,86 @@ class A:
 #Module: ADT -----------------------------
    def admitDisTrans(self, admit, discharge, trasfer, deposit):
       if admit == 1:
-         time.sleep(5)
-         self.danpheEMR.find_element_by_link_text("ADT").click()
-         time.sleep(3)
-         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-         time.sleep(5)
-         self.danpheEMR.find_element_by_link_text("Admit").click()
-         time.sleep(3)
-         self.danpheEMR.find_element_by_id("RequestingDeptId").send_keys("GENERAL MEDICINE")
-         self.danpheEMR.find_element_by_id("RequestingDeptId").send_keys(Keys.RETURN)
-         #self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys("Dr. Dr Dr")
-         self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys(Keys.TAB)
-         time.sleep(3)
-         #self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .ng-dirty").click()
-         self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
-         self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
-         self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
-         time.sleep(3)
-         #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
-         #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.ARROW_DOWN)
-         #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
-         self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
-         time.sleep(1)
-         self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ARROW_DOWN)
-         time.sleep(2)
-         self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
-         time.sleep(2)
-         self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
-         self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.ARROW_DOWN)
-         self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
-         self.danpheEMR.find_element_by_xpath("//input[@name='amount']").send_keys(deposit)
-         time.sleep(3)
-         caseDropdownValue = self.danpheEMR.find_element_by_id("admissionCase")
-         caseDropdownValue.find_element_by_xpath("//option[. = 'General']").click()
-         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Save Admission')]").click()
-         print("Patient successfully admitted.")
-         time.sleep(5)
-         self.danpheEMR.find_element_by_xpath("(//a[@class='btn btn-danger history-del-btn'])[1]").click()
-         #self.danpheEMR.find_element_by_css_selector(".col-md-6 > .modelbox-div > .btn").click()
-         time.sleep(2)
+         if appPort == "81":
+            time.sleep(5)
+            self.danpheEMR.find_element_by_link_text("ADT").click()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+            time.sleep(5)
+            self.danpheEMR.find_element_by_link_text("Admit").click()
+            time.sleep(15)
+            self.danpheEMR.find_element_by_xpath("//label[contains(text(),'Requesting Department')]/following-sibling::div").send_keys("Surgery")
+            self.danpheEMR.find_element_by_id("//label[contains(text(),'Requesting Department')]/following-sibling::div").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_xpath("//label[contains(text(),'Admitting Doctor')]/following-sibling::div").send_keys("Dr. ARLEY I RAHEEM")
+            self.danpheEMR.find_element_by_xpath("//label[contains(text(),'Admitting Doctor')]/following-sibling::div").send_keys(Keys.TAB)
+            time.sleep(3)
+            # self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .ng-dirty").click()
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+            time.sleep(3)
+            # self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
+            # self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.ARROW_DOWN)
+            # self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
+            time.sleep(1)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ARROW_DOWN)
+            time.sleep(2)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
+            time.sleep(2)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.ARROW_DOWN)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_xpath("//input[@name='amount']").send_keys(deposit)
+            time.sleep(3)
+            caseDropdownValue = self.danpheEMR.find_element_by_id("admissionCase")
+            caseDropdownValue.find_element_by_xpath("//option[. = 'General']").click()
+            self.danpheEMR.find_element_by_xpath("//button[contains(.,'Save Admission')]").click()
+            print("Patient successfully admitted.")
+            time.sleep(5)
+            self.danpheEMR.find_element_by_xpath("(//a[@class='btn btn-danger history-del-btn'])[1]").click()
+            # self.danpheEMR.find_element_by_css_selector(".col-md-6 > .modelbox-div > .btn").click()
+            time.sleep(2)
+         if appPort == "82":
+            time.sleep(5)
+            self.danpheEMR.find_element_by_link_text("ADT").click()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+            time.sleep(5)
+            self.danpheEMR.find_element_by_link_text("Admit").click()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_id("RequestingDeptId").send_keys("GENERAL MEDICINE")
+            self.danpheEMR.find_element_by_id("RequestingDeptId").send_keys(Keys.RETURN)
+            #self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys("Dr. Dr Dr")
+            self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys(Keys.TAB)
+            time.sleep(3)
+            #self.danpheEMR.find_element_by_css_selector(".col-md-6:nth-child(2) > .ng-dirty").click()
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
+            self.danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+            time.sleep(3)
+            #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
+            #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.ARROW_DOWN)
+            #self.danpheEMR.find_element_by_xpath("//div[3]/div/select").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
+            time.sleep(1)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ARROW_DOWN)
+            time.sleep(2)
+            self.danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.RETURN)
+            time.sleep(2)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.ARROW_DOWN)
+            self.danpheEMR.find_element_by_id("BedId").send_keys(Keys.RETURN)
+            self.danpheEMR.find_element_by_xpath("//input[@name='amount']").send_keys(deposit)
+            time.sleep(3)
+            caseDropdownValue = self.danpheEMR.find_element_by_id("admissionCase")
+            caseDropdownValue.find_element_by_xpath("//option[. = 'General']").click()
+            self.danpheEMR.find_element_by_xpath("//button[contains(.,'Save Admission')]").click()
+            print("Patient successfully admitted.")
+            time.sleep(5)
+            self.danpheEMR.find_element_by_xpath("(//a[@class='btn btn-danger history-del-btn'])[1]").click()
+            #self.danpheEMR.find_element_by_css_selector(".col-md-6 > .modelbox-div > .btn").click()
+            time.sleep(2)
       elif discharge == 1:
          time.sleep(3)
          self.danpheEMR.find_element_by_link_text("Billing").click()
@@ -3110,6 +3183,7 @@ class A:
       global systotalgrosssales
       global systotaldiscount
       global systotalnetsales
+      time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Reports").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -3248,7 +3322,7 @@ class A:
       global syscancelamount
       global syscreditamount
       self.danpheEMR.find_element_by_link_text("Reports").click()
-      time.sleep(2)
+      time.sleep(7)
       self.danpheEMR.find_element_by_link_text("Billing Reports").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//i[contains(.,'Doctor Summary')]").click()
