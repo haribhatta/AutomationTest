@@ -14,20 +14,20 @@
 # 12. Deposit Refund.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-opdticket = 30
+opdticket = GSV.opdRate
 discountpct = 50
 #discountamount = (discountpct*opdticket/100)
 returnamount = opdticket
-usgtest = "USG (Abdomen / pelvis)"
-usgprice = 700
-admisioncharge = 30
+usgtest = GSV.USG
+usgprice = GSV.usgRate
+admisioncharge = GSV.admitRate
 deposit = 0
-
 
 CBDS = A()
 CBDS.openBrowser()

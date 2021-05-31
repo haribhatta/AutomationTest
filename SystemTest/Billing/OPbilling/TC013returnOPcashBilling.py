@@ -1,12 +1,13 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 rb = A()
 paymode = "Cash"
-itemrate = 500
+itemrate = GSV.opdRate
 
 rb.openBrowser()
 rb.login(foUserId, foUserPwd)

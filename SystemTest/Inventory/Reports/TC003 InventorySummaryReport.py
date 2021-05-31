@@ -2,14 +2,15 @@
 
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-adminUserId = A.adminUserID
-adminUserPwd = A.adminUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 
 isr = A()
-item = "PHOTOCOPY PAPER (CUTTING)"
-rate = 2300
+item = GSV.PhotocopyPaper
+rate = GSV.photocopypaperRate
 qty = 1
 store1 = "Main Store"
 store2 = "OT Store"

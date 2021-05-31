@@ -1,17 +1,20 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
-drugname = "ASTHALIN 2 MG TAB"
-genericname = "SALBUTAMOL 2 MG TAB"
+#Drug name for billing
+drugname = GSV.Asthalin
+genericname = GSV.Generic_Asthalin
+rate = GSV.asthalinRate
 quantity = 1
 mode = "Cash"
-rate = 1.14
+
 
 phaoB = A()
 

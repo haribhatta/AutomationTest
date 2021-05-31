@@ -1,11 +1,12 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 smdr = A()
-drug = 'testdrugreport'
+drug = GSV.Testdrug
 setupqty = 5
 testqty = 7
 

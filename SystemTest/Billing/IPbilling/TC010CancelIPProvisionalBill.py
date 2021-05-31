@@ -1,13 +1,14 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-usgtest = "USG (Abdomen / pelvis)"
-usgprice = 1050
+usgtest = GSV.USG
+usgprice = GSV.usgRate
 deposit = 0
-admisioncharge = 1500
+admisioncharge = GSV.admitRate
 
 
 CPB = A()

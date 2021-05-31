@@ -1,14 +1,15 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 ip = A()
-test1 = "USG (Abdomen / pelvis)"
-test1rate = 1050
-test2 = "BT/CT"
-test2rate = 200
+test1 = GSV.USG
+test1rate = GSV.usgRate
+test2 = GSV.BTCT
+test2rate = GSV.btctRate
 paymode = "CREDIT"
 
 ip.openBrowser()

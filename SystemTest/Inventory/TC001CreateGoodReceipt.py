@@ -1,12 +1,13 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-storeUserId = A.storeUserID
-storeUserPwd = A.storeUserPwD
+storeUserId = GSV.storeUserID
+storeUserPwd = GSV.storeUserPwD
 
 cgr = A()
 
-itemname = "PENCIL"
+itemname = GSV.Pencil
 qty = 1
 
 cgr.openBrowser()

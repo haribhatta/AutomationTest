@@ -2,10 +2,11 @@
 # Parameter value should be from ACC_MST_Hospital table col name: HospitalShortName
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-adminUserId = A.adminUserID
-adminUserPwd = A.adminUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 
 ip = A()
 

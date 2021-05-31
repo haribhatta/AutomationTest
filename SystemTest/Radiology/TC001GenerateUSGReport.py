@@ -1,19 +1,19 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 # radiologist user login
-radioUserId = A.radioUserID
-radioUserPwd = A.radioUserPwD
+radioUserId = GSV.radioUserID
+radioUserPwd = GSV.radioUserPwD
+
+# calling billing item name
+usgtest = GSV.USG
 
 GUSGR = A()
 
-labitem = "LDH"
-usgtest ="USG (Abdomen / pelvis)"
-
-#GUSGR.applicationSelection()
 GUSGR.openBrowser()
 GUSGR.login(foUserId, foUserPwd)
 GUSGR.counteractivation()

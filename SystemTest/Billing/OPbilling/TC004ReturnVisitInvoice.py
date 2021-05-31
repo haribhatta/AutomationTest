@@ -1,10 +1,11 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-OPD = A.opdRate
+OPD = GSV.opdRate
 
 rvi = A()
 

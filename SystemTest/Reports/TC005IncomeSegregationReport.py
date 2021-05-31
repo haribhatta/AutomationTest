@@ -8,14 +8,15 @@
 # 11.Repeat Scenarios 1-10 for different date.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-rateOPD = 30
-usgtest = "USG (Abdomen / pelvis)"
-usgprice = 700
+rateOPD = GSV.opdRate
+usgtest = GSV.USG
+usgprice = GSV.usgRate
 
 isr = A()
 isr.openBrowser()

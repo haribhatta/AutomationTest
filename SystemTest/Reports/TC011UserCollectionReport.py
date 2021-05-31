@@ -1,11 +1,12 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 uc = A()
-user = 'Ms. Billing Billing'
+user = GSV.UserBilling
 
 uc.openBrowser()
 uc.login(foUserId, foUserPwd)

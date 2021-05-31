@@ -1,8 +1,9 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # pharmacy desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 qty = 50
 

@@ -1,32 +1,33 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # admin user desk user login
-admUserId = A.adminUserID
-admUserPwd = A.adminUserPwD
+admUserId = GSV.adminUserID
+admUserPwd = GSV.adminUserPwD
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 # lab desk user login
-labUserId = A.labUserID
-labUserPwd = A.labUserPwD
+labUserId = GSV.labUserID
+labUserPwd = GSV.labUserPwD
 
 # radiologist desk user login
-radUserId = A.radioUserID
-radUserPwd = A.radioUserPwD
+radUserId = GSV.radioUserID
+radUserPwd = GSV.radioUserPwD
 
 # pharmacy desk user login
-phaUserId = A.pharmacyUserID
-phaUserPwd = A.pharmacyUserPwD
+phaUserId = GSV.pharmacyUserID
+phaUserPwd = GSV.pharmacyUserPwD
 
 # nurse desk user login
-nurUserId = A.nurseUserID
-nurUserPwd = A.nurseUserPwD
+nurUserId = GSV.nurseUserID
+nurUserPwd = GSV.nurseUserPwD
 
 # store desk user login
-stoUserId = A.storeUserID
-stoUserPwd = A.storeUserPwD
+stoUserId = GSV.storeUserID
+stoUserPwd = GSV.storeUserPwD
 
 config = A()
 

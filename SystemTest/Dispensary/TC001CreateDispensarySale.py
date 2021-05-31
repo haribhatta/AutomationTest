@@ -1,10 +1,11 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 mode = 'Cash'
-drug = 'Sinex tab'
+drug = GSV.Sinex
 
-phuserid = A.pharmacyUserID
-phuserpwd = A.pharmacyUserPwD
+phuserid = GSV.pharmacyUserID
+phuserpwd = GSV.pharmacyUserPwD
 
 ds = A()
 #ds.applicationSelection()

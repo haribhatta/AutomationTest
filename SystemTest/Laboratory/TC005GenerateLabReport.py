@@ -1,21 +1,20 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 # lab user login
-labUserId = A.labUserID
-labUserPwd = A.labUserPwD
-
+labUserId = GSV.labUserID
+labUserPwd = GSV.labUserPwD
 
 glr = A()
 
-labitem = "TFT"
-#imagingtest ="XRAY-3155"
-imagingtest = "CHEST APICAL VIEW 10*12 -1F1V"
+labitem = GSV.TFT
+imagingtest = GSV.USG
 
-#glr.applicationSelection()
 glr.openBrowser()
 glr.login(foUserId, foUserPwd)
 glr.counteractivation()
@@ -27,7 +26,7 @@ glr.logout()
 glr.login(labUserId, labUserPwd)
 glr.collectLabSample("sample collected")
 glr.addLabResult()
-glr.verifyLabReport()
+#glr.verifyLabReport()
 glr.printLabReport("2.23", "15.0", "4.05")
 glr.logout()
 glr.closeBrowser()

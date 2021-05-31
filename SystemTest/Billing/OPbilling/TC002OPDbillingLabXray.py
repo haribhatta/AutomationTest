@@ -1,15 +1,15 @@
 from TestActionLibrary import A
+from TestActionLibrary import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-#------------Local Variables --------------
-labitem = "TFT(T3,T4,TSH)"
-imagingitem = "XRAY-3155"
+#-------- Billing Items ---------
+labitem = GSV.TFT
+imagingitem = GSV.USG
 
 oblx = A()
-#oblx.applicationSelection()
 oblx.openBrowser()
 oblx.login(foUserId, foUserPwd)
 oblx.counteractivation()

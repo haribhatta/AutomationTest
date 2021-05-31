@@ -2,10 +2,11 @@
 # To verify successful admission of newly registered patient.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # nurse user
-nurseUserID = 'nurse'
-nurseUserPwD = 'pass123'
+nurseUserID = GSV.nurseUserID
+nurseUserPwD = GSV.nurseUserPwD
 
 #------------Local Veriables-------------------
 #labitem = "Urine RE/ME"

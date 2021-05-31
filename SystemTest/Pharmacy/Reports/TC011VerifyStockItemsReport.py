@@ -1,12 +1,13 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 si = A()
 
-drug = 'SINEX TAB'
+drug = GSV.Sinex
 
 si.openBrowser()
 si.login(pharmacyUserId, pharmacyUserPwd)

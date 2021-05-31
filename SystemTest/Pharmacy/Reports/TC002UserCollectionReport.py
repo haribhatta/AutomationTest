@@ -1,14 +1,15 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 ucc = A()
-drugname = 'MONOTRATE-20MG TAB'
+drugname = GSV.Monotrate20MG
 qty = 1
 paymode = 'Cash'
-rate = 4.86
+rate = GSV.monotrate20mgRate
 amount = qty*rate
 totalamount = amount
 remark = "This is test return."

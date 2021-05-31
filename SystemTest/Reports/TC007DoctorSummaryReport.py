@@ -5,12 +5,13 @@
 # 3. Discharge Patient
 # 4. Repeat above case for different day.
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
-doctorname = "Dr. Doctor Doctor"
+doctorname = GSV.Doctor1
 
 pcsr = A()
 

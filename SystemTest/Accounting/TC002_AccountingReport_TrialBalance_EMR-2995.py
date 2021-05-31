@@ -2,14 +2,15 @@
 # To verify Accounting-Reports-Trial Balance Report: Transaction amount should be on both Dr and Cr side for each Ledgers
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 # admin  user login
-admUserId = A.adminUserID
-admUserPwd = A.adminUserPwD
+admUserId = GSV.adminUserID
+admUserPwd = GSV.adminUserPwD
 
 #-------------Script Owner: Hari---------------- Log-log-log (333)
 #Scripted on: 29.01.2078

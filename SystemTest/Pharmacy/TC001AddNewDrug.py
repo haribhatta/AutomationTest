@@ -1,12 +1,13 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 AND = A()
 
-drugname = "Auto Test Drug"
+drugname = GSV.Testdrug
 
 AND.openBrowser()
 AND.login(pharmacyUserId, pharmacyUserPwd)

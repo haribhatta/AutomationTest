@@ -2,14 +2,15 @@
 # To verify admission, transfer and discharge of newly registered patient. Patient has to get refund money from deposit left.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 #------------Local Veriables-------------------
-labitem = "Urine RE/ME"
-imagingitem ="USG ABDOMEN & PELVIS"
+labitem = GSV.UrineRE
+imagingitem = GSV.USG
 deposit = 1000
 
 #-------------Script Owner: Hari----------------

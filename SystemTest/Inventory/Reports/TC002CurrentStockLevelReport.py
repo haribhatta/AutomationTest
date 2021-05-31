@@ -10,15 +10,16 @@
 # 4. Verify stock level for goods receipt case.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-adminUserId = A.adminUserID
-adminUserPwd = A.adminUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 
 cs = A()
-item = "10 ML DIS.SYRINGE"
+item = GSV.Syringe
 qty = 1
-rate = 6.49
+rate = GSV.syringeRate
 store1 = "Main Store"
 store2 = "OT Store"
 

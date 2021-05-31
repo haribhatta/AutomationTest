@@ -1,14 +1,15 @@
 #Objective: To cover the OPD bill amount deduction from deposit balance where deposit balance < Total Amount.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 deposit = 50
-billamt = A.opdRate
-testname = A.LabTest1
+billamt = GSV.opdRate
+testname = GSV.TFT
 
 bsddpt = A()
 bsddpt.openBrowser()

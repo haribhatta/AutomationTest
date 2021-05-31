@@ -1,12 +1,13 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 pd = A()
-drug = 'ASTHALIN 2 MG TAB'
-rate = 1.14
+drug = GSV.Asthalin2MG
+rate = GSV.asthalin2mgRate
 qty = 2
 amount = rate*qty
 print("Amount", amount)

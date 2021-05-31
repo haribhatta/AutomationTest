@@ -1,17 +1,17 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
+a = A()
 
-can = A()
-
-can.openBrowser()
-can.login(foUserId, foUserPwd)
-can.counteractivation()
-can.patientquickentry(discountpc=0, paymentmode='Cash')
+a.openBrowser()
+a.login(foUserId, foUserPwd)
+a.counteractivation()
+a.patientquickentry(discountpc=0, paymentmode='Cash')
 #can.verifyopdinvoice(deposit=0, billamt=500)
-can.logout()
-can.closeBrowser()
+a.logout()
+a.closeBrowser()
 print("Status:Passed - > TC001 CreateAppointmentNew")

@@ -1,15 +1,16 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
-drugname = "ASTHALIN 2 MG TAB"
+drugname = GSV.Asthalin2MG
 quantity = 2
-rate = 1.14
+rate = GSV.asthalin2mgRate
 paymentmode = "CREDIT"
 returnremark = "This is auto return"
 

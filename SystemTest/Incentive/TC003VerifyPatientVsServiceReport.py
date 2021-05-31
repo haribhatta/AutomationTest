@@ -1,8 +1,9 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-adminUserId = A.adminUserID
-adminUserPwd = A.adminUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 
 pvs = A()
 

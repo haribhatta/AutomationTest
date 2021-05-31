@@ -1,4 +1,5 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 paymentmode = "Cash"
 qty = 50

@@ -2,10 +2,11 @@
 # To verify successful discharge of already admitted patient.
 
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-foUserId = A.foUserID
-foUserPwd = A.foUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 
 #------------Local Veriables-------------------
 #labitem = "Urine RE/ME"

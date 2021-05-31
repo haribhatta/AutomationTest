@@ -1,11 +1,12 @@
 from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
-pharmacyUserId = A.pharmacyUserID
-pharmacyUserPwd = A.pharmacyUserPwD
+pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserPwd = GSV.pharmacyUserPwD
 
 quantity = 5
-drug = 'SINEX TAB'
+drug = GSV.Sinex
 
 oess = A()
 oess.openBrowser()

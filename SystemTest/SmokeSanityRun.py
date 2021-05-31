@@ -1,5 +1,6 @@
 from SystemTest import shortcut as sc
 from TestActionLibrary import A
+from LocalShareVariables import LSV
 import pathlib
 import os
 
@@ -12,7 +13,7 @@ def files(file,file1,rows,*args):
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
         if Status != 'Passed':
-            base_dir = str(pathlib.PureWindowsPath(r'D:\AutomationGIT\SystemTest'))
+            base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
 
