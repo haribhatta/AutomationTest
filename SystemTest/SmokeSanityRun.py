@@ -12,7 +12,8 @@ def files(file,file1,rows,*args):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
-        if Status != 'Passed':
+        if Status != ['Passed', 'Blocked']:
+            print(" Status is Norun or Failed")
             base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
@@ -40,7 +41,7 @@ print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'test')
 files(Originalfile, duplicatefile, rows)
-files(Originalfile, duplicatefile, rows,2) #if you don't want to do test twice then you should comment this
+#files(Originalfile, duplicatefile, rows,2) #if you don't want to do test twice then you should comment this
 
 
 

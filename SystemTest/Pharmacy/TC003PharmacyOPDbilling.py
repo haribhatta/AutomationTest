@@ -9,9 +9,9 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 #Drug name for billing
-drugname = GSV.Asthalin
-genericname = GSV.Generic_Asthalin
-rate = GSV.asthalinRate
+drugname = GSV.drug1BrandName
+genericname = GSV.drug1GenericName
+rate = GSV.drug1Rate
 quantity = 1
 mode = "Cash"
 

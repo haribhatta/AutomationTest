@@ -15,7 +15,8 @@ admUserPwd = GSV.adminUserPwD
 #------------Local Veriables-------------------
 labitem = GSV.UrineRE
 imagingitem = GSV.USG
-deposit = 5000
+deposit = 1000
+admitCharge = GSV.admitRate
 
 #-------------Script Owner: Hari----------------
 #Scripted on: 10.05.2077
@@ -32,7 +33,7 @@ ADT.patientRegistration()
 ADT.counteractivation()
 ADT.createlabxrayinvoice(labitem, imagingitem)
 ADT.admitDisTrans(1, 0, 0, deposit)
-ADT.billingIP(deposit)
+ADT.billingIP(admitCharge, deposit)
 ADT.verifyDuplicateBill()
 ADT.logout()
 ADT.closeBrowser()

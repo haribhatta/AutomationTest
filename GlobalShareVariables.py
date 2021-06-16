@@ -21,7 +21,7 @@ class GSV:
    foUserPwD = 'pass123'
 
    #Lab user
-   labUserID = 'labs'
+   labUserID = 'lab'
    labUserPwD = 'pass123'
 
    #radiologist user
@@ -47,16 +47,17 @@ class GSV:
    UserBilling = 'Ms. Billing Billing'
 
    # Bill Items Name variables for LPH Hospital
-   '''
+
    opdRate = 30
    CBC = "CBC"
    TFT = "TFT"
    LDH = "LDH"
-   USG = "USG (Abdomen / pelvis)"
+   USG = "USG ABDOMEN/PELVIS"
    usgRate = 700
    admitRate = 30
-   '''
+   UrineRE = "URINE R/E"
 
+   '''
    # Bill Items Name variables for Charak Hospital
    opdRate = 500
    CBC = "CBC"
@@ -68,28 +69,31 @@ class GSV:
    USG = "USG (Abdomen / pelvis)"
    usgRate = 1050
    admitRate = 1500
+   '''
 
    #Drug name for charak pharmacy billing
-   Asthalin = "ASTHALIN ROTACAPS"
-   Generic_Asthalin = "SALBUTAMOL"
-   asthalinRate = 1.14
+   drug1BrandName = "MACLAR 500MG TAB"
+   drug1GenericName = "CLARITHROMYCIN"
+   drug1Rate = 563.5
 
-   Asthalin2MG = 'ASTHALIN 2 MG TAB'
-   asthalin2mgRate = 1.14
+   drug2BrandName = 'ASTHALIN 2 MG TAB'
+   drug2BrandRate = 1.14
 
-   Sinex = "Sinex tab"
-   Syringe = "10 ML DIS.SYRINGE"
-   syringeRate = 6.49
-   Monotrate20MG = 'MONOTRATE-20MG TAB'
-   monotrate20mgRate = 4.86
+   drug3BrandName = "Sinex tab"
+
+   drug4BrandName = "10 ML DIS.SYRINGE"
+   drug4BrandRate = 6.49
+
+   drug5BrandName = 'MONOTRATE-20MG TAB'
+   drug5BrandRate = 4.86
+
    Testdrug = "testdrugreport"
-
 
    #Inventory Item name list
    A4Paper = 'Paper A4'
    PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
    photocopypaperRate = 2300
-   Pencil = "PENCIL"
+   stationaryItem1 = "DOTPEN"
 
    #Drug name for Lumbini pharmacy billing
    '''

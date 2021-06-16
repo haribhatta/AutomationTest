@@ -20,7 +20,7 @@ glr.login(foUserId, foUserPwd)
 glr.counteractivation()
 glr.patientquickentry(0, 'Cash')
 glr.createlabxrayinvoice(labitem, imagingtest)
-glr.verifylabxrayinvoice()
+#glr.verifylabxrayinvoice()
 glr.logout()
 
 glr.login(labUserId, labUserPwd)

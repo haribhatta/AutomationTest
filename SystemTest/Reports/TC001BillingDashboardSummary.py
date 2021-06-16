@@ -27,7 +27,7 @@ returnamount = opdticket
 usgtest = GSV.USG
 usgprice = GSV.usgRate
 admisioncharge = GSV.admitRate
-deposit = 0
+deposit = 1000
 
 CBDS = A()
 CBDS.openBrowser()

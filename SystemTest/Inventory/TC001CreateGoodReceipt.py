@@ -7,7 +7,7 @@ storeUserPwd = GSV.storeUserPwD
 
 cgr = A()
 
-itemname = GSV.Pencil
+itemname = GSV.stationaryItem1
 qty = 1
 
 cgr.openBrowser()

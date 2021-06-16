@@ -6,8 +6,8 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 pd = A()
-drug = GSV.Asthalin2MG
-rate = GSV.asthalin2mgRate
+drug = GSV.drug1BrandName
+rate = GSV.drug1Rate
 qty = 2
 amount = rate*qty
 print("Amount", amount)
