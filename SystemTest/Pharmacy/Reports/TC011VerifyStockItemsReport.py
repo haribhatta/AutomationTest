@@ -7,7 +7,7 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 
 si = A()
 
-drug = GSV.Sinex
+drug = GSV.drug1BrandName
 
 si.openBrowser()
 si.login(pharmacyUserId, pharmacyUserPwd)

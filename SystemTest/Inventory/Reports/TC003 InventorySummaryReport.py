@@ -31,8 +31,9 @@ isr.verifyInventorySummaryReport(purchaseqty=qty, purchaseamount=purchaseamount,
 # dispatch from inventory
 # received by substore person
 isr.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)
+isr.receivedStoreDispatch(store2)
 isr.preInventorySummaryReport()
-isr.InventoryConsumption(item=item, qty=qty)
+isr.InventoryConsumption(item=item, qty=qty, store=store2)
 consumptionamount = rate*qty
 isr.getInventorySummaryReport()
 isr.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=qty, consumeamount=consumptionamount, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)

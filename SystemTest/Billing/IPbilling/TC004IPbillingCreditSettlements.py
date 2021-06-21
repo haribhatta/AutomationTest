@@ -7,7 +7,7 @@ foUserPwd = GSV.foUserPwD
 
 ip = A()
 paymode = "CREDIT"
-itemprice = 1500
+itemprice = GSV.admitRate
 
 ip.openBrowser()
 ip.login(foUserId, foUserPwd)

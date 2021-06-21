@@ -39,7 +39,7 @@ print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'Sheet1')
 files(Originalfile, duplicatefile, rows)
-files(Originalfile, duplicatefile, rows,2) #if you don't want to do test twice then you should comment this
+#files(Originalfile, duplicatefile, rows,2) #if you don't want to do test twice then you should comment this
 
 
 

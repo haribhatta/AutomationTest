@@ -5,9 +5,9 @@ from GlobalShareVariables import GSV
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
-drugname = 'MONOTRATE-20MG TAB'
+drugname = GSV.drug1BrandName
 qty = 1
-rate = 4.86
+rate = GSV.drug1Rate
 amount = qty*rate
 totalamount = round(amount)
 remark = "This is test return."

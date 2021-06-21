@@ -8,9 +8,9 @@ foUserPwd = GSV.foUserPwD
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
-drugname = GSV.Asthalin2MG
+drugname = GSV.drug1BrandName
 quantity = 2
-rate = GSV.asthalin2mgRate
+rate = GSV.drug1Rate
 paymentmode = "CREDIT"
 returnremark = "This is auto return"
 

@@ -6,7 +6,7 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 quantity = 5
-drug = GSV.Sinex
+drug = GSV.drug1BrandName
 
 oess = A()
 oess.openBrowser()

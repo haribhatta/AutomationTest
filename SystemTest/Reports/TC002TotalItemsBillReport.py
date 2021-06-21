@@ -4,6 +4,7 @@ from GlobalShareVariables import GSV
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
+opdAmt = GSV.opdRate
 
 tibr = A()
 
@@ -15,6 +16,6 @@ tibr.getTotalItemsBill()
 tibr.returnBillingInvoice("This is cash return.")
 tibr.preSystemTotalItemsBill()
 tibr.getTotalItemsBill()
-tibr.verifyTotalItemsBill(returnamt=500, discountamt=0)
+tibr.verifyTotalItemsBill(returnamt=opdAmt, discountamt=0)
 tibr.logout()
 tibr.closeBrowser()

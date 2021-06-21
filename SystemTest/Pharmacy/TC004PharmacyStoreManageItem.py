@@ -10,12 +10,14 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 PSMI = A()
 
 drug = GSV.Testdrug
+drugGenericName = GSV.drug1GenericName
+
 qty = 10
 
 PSMI.openBrowser()
 PSMI.login(pharmacyUserId, pharmacyUserPwd)
 PSMI.activatePharmacyCounter()
-PSMI.addPharmacyItem()
+PSMI.addPharmacyItem(drugGenericName)
 PSMI.createPharmacyGoodsReceipt(qty=qty)
 PSMI.getStoreDetail(drugname=drug)
 PSMI.manageStoreStock(drugname=drug, type="In", qty=qty)

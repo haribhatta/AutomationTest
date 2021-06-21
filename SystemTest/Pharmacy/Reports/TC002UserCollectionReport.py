@@ -6,10 +6,10 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 ucc = A()
-drugname = GSV.Monotrate20MG
+drugname = GSV.drug1BrandName
 qty = 1
 paymode = 'Cash'
-rate = GSV.monotrate20mgRate
+rate = GSV.drug1Rate
 amount = qty*rate
 totalamount = amount
 remark = "This is test return."

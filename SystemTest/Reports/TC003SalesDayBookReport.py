@@ -4,7 +4,7 @@ from GlobalShareVariables import GSV
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-rateOPD = 30
+rateOPD = GSV.opdRate
 
 vsdbr = A()
 

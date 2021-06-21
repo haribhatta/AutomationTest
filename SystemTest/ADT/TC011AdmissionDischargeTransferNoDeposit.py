@@ -15,6 +15,7 @@ nurseUserPwd = GSV.nurseUserPwD
 labitem = GSV.UrineRE
 imagingitem = GSV.USG
 deposit = 0
+admitcharge = GSV.admitRate
 
 #-------------Script Owner: Hari----------------
 #Scripted on: 10.05.2077
@@ -26,15 +27,15 @@ ADT.login(foUserId, foUserPwd)
 ADT.patientRegistration()
 ADT.counteractivation()
 ADT.createlabxrayinvoice(labitem, imagingitem)
-ADT.logout()
+#ADT.logout()
 
-ADT.login(nurseUserId, nurseUserPwd)
-ADT.counteractivation()
+#ADT.login(nurseUserId, nurseUserPwd)
+#ADT.counteractivation()
 ADT.admitDisTrans(1, 0, 0, deposit)
-ADT.logout()
+#ADT.logout()
 
-ADT.login(foUserId, foUserPwd)
-ADT.counteractivation()
-ADT.billingIP(deposit)
+#ADT.login(foUserId, foUserPwd)
+#ADT.counteractivation()
+ADT.billingIP(admitcharge, deposit)
 ADT.logout()
 ADT.closeBrowser()

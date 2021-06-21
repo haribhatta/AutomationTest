@@ -17,9 +17,9 @@ adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
 
 cs = A()
-item = GSV.Syringe
+item = GSV.PhotocopyPaper
 qty = 1
-rate = GSV.syringeRate
+rate = GSV.photocopypaperRate
 store1 = "Main Store"
 store2 = "OT Store"
 
@@ -35,7 +35,7 @@ cs.getInventoryCurrentStockLevelReport(store=store2)
 cs.preInventoryCurrentStockLevelReport()
 cs.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)
 # store need to received the items to increase in it's store
-cs.receivedStoreDispatch()
+cs.receivedStoreDispatch(store=store2)
 cs.getInventoryCurrentStockLevelReport(store=store2)
 print("Start: Store In process")
 cs.verifyInventoryCurrentStockLevelReport(type="in", qty=qty, unitprice=rate)

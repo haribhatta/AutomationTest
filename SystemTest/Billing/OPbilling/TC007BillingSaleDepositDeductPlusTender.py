@@ -8,8 +8,8 @@ foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
 deposit = 50
-billamt = GSV.opdRate
 testname = GSV.TFT
+testbillamt = GSV.TFTRate
 
 bsddpt = A()
 bsddpt.openBrowser()
@@ -18,7 +18,7 @@ bsddpt.counteractivation()
 bsddpt.patientRegistration()
 bsddpt.opDeposit(deposit)
 bsddpt.opDepositDbiling(deposit, testname)
-bsddpt.verifyopdinvoice(deposit, billamt)
+bsddpt.verifyopdinvoice(deposit, testbillamt)
 bsddpt.logout()
 bsddpt.closeBrowser()
 
