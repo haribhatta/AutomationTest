@@ -16,19 +16,12 @@ class A:
 
    global  ChromePath
    ChromePath = LSV.ChromeDriverPath
-   # Variables for Charak Hospital ( need to uncomment for Charak run)
-   #opdRateCharak = 500
-   #CBCCharak = "CBC(HB,PCV,RBC,WBC,TC,DC,PLT,MCV)"
-
-   #opdRate = opdRateCharak
-   #LabTest1 = CBCCharak
 
    # global value for all
    global appPort
    global appURL
-   #appURL = "http://10.0.0.103:"
-   appURL = "http://localhost:"
-
+   appURL = "http://10.0.0.103:"
+   #appURL = "http://localhost:"
    @classmethod
    def applicationSelection(cls):
       global appURL
@@ -37,11 +30,12 @@ class A:
             "81 for DanpheEMR Core"
             "82 for Danphe Lumbini")
       if appPort == "81":
-         #appURL = "http://10.0.0.103:81/"
-          appURL = "http://localhost:81/"
+         appURL = "http://10.0.0.103:81/"
+          #appURL = "http://localhost:81/"
       if appPort == "82":
-         #appURL = "http://10.0.0.103:82/"
-          appURL = "http://localhost:82/"
+         appURL = "http://10.0.0.103:82/"
+         #appURL = "http://localhost:82/"
+         #appURL = "http://202.51.74.168:453/"
       print("Starting", appURL)
 
    def openBrowser(self):
@@ -58,6 +52,7 @@ class A:
       global usgAbdomenPelvisRate
       global doctor1
       global doctor2
+      global ChromePath
       TFT = "TFT(FT3,FT4,TSH) CLLEA"
       labLPH = "TFT"
       xrayChest = "X-Ray Chest PA view"
@@ -67,15 +62,15 @@ class A:
       usgAbdomenPelvisRate = 1050
       doctor1 = "Dr. Doctor Doctor"
 
-      if appURL == "http://localhost:":
+      if appURL == "http://10.0.0.103:": #"http://localhost:":
          appPort = input("Please enter application port."
                          "81 for DanpheEMR Core"
                          "82 for Danphe Lumbini")
          if appPort == "81":
-            appURL = "http://localhost:81/"
+            appURL = "http://10.0.0.103:81/"
          if appPort == "82":
-            appURL = "http://localhost:82/"
-
+            # appURL = "http://localhost:82/"
+            appURL = "http://10.0.0.103:82/"
 
       print(">>Open Browser: START")
       self.danpheEMR = webdriver.Chrome(ChromePath)
@@ -523,7 +518,7 @@ class A:
          print("Total Price:", totalprice)
          time.sleep(3)
          self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
-         time.sleep(3)
+         time.sleep(9)
          #InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
          InvoiceNo = self.danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
          self.danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
@@ -2754,25 +2749,40 @@ class A:
 
       if appPort == "81":
          self.danpheEMR.find_element_by_link_text("Lab Requisition").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(9)
+         sampleno = self.danpheEMR.find_element_by_name("Sample number").get_attribute("value")
+         print(sampleno)
+         samplecode = self.danpheEMR.find_element_by_name("Sample Code").get_attribute("value")
+         print(samplecode)
+         time.sleep(9)
+         self.danpheEMR.find_element_by_css_selector(".btn").click()
+         time.sleep(9)
+         barcodeno = self.danpheEMR.find_element_by_css_selector("tbody:nth-child(2) td:nth-child(3)").text
+         print(barcodeno)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Close')]").click()
       if appPort == "82":
          self.danpheEMR.find_element_by_xpath("//a[contains(text(),' Sample Collection ')]").click()
-
-      self.danpheEMR.find_element_by_id("quickFilterInput").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
-      time.sleep(5)
-      self.danpheEMR.find_element_by_link_text("View Details").click()
-      time.sleep(9)
-      sampleno = self.danpheEMR.find_element_by_name("Sample number").get_attribute("value")
-      print(sampleno)
-      samplecode = self.danpheEMR.find_element_by_name("Sample Code").get_attribute("value")
-      print(samplecode)
-      time.sleep(9)
-      self.danpheEMR.find_element_by_css_selector(".btn").click()
-      time.sleep(9)
-      barcodeno = self.danpheEMR.find_element_by_css_selector("tbody:nth-child(2) td:nth-child(3)").text
-      print(barcodeno)
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,'Close')]").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(9)
+         #sampleno = self.danpheEMR.find_element_by_name("Sample number").get_attribute("value") #removed on new changes
+         #print(sampleno)
+         #samplecode = self.danpheEMR.find_element_by_name("Sample Code").get_attribute("value")
+         #print(samplecode)
+         time.sleep(9)
+         self.danpheEMR.find_element_by_css_selector(".btn").click()
+         time.sleep(9)
+         barcodeno = self.danpheEMR.find_element_by_css_selector("tbody:nth-child(2) td:nth-child(3)").text
+         print(barcodeno)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Close')]").click()
 
    def addLabResult(self):
       print("Starting>Adding Lab Report")
@@ -2821,9 +2831,10 @@ class A:
 
          time.sleep(3)
          self.danpheEMR.find_element_by_css_selector(".c-btn > .fa").click()
-         self.danpheEMR.find_element_by_css_selector(".pure-checkbox:nth-child(2) > label").click()
-         self.danpheEMR.find_element_by_css_selector(".ng-untouched .row:nth-child(1)").click()
-         self.danpheEMR.find_element_by_css_selector(".margin-7-hr").click()
+         #self.danpheEMR.find_element_by_css_selector(".pure-checkbox:nth-child(2) > label").click()
+         #self.danpheEMR.find_element_by_css_selector(".ng-untouched .row:nth-child(1)").click()
+         #self.danpheEMR.find_element_by_css_selector(".margin-7-hr").click()
+         self.danpheEMR.find_element_by_id("btnUpdateSignatories").click()
 
          time.sleep(2)
          #self.danpheEMR.find_element_by_xpath("//button[contains(text(),' Edit Signatories')]/preceding-sibling::button").click()
@@ -3099,19 +3110,22 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(9)
-         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Add Deposit ')]").click()
-         self.danpheEMR.find_element_by_id("txtAmount").send_keys(deposit)
-         self.danpheEMR.find_element_by_id("btnAddDeposit").click()
-         time.sleep(2)
-         self.danpheEMR.find_element_by_id("btn_PrintReceipt").send_keys(Keys.ESCAPE)
+         if deposit >= 1:
+            self.danpheEMR.find_element_by_xpath("//button[contains(.,' Add Deposit ')]").click()
+            self.danpheEMR.find_element_by_id("txtAmount").send_keys(deposit)
+            self.danpheEMR.find_element_by_id("btnAddDeposit").click()
+            time.sleep(2)
+            self.danpheEMR.find_element_by_id("btn_PrintReceipt").send_keys(Keys.ESCAPE)
          time.sleep(2)
          billingTotalExp = admitCharge
          billingTotalAct = self.danpheEMR.find_element_by_xpath("//td[2]/label").text
          print(billingTotalAct)
-         totalDiscountExp = deposit
-         totalDiscountAct = self.danpheEMR.find_element_by_xpath("//input[@type='number']").get_attribute("value")
-         print(totalDiscountAct)
-         assert totalDiscountExp == totalDiscountAct
+         totalDiscountExp = 0 # discount is zero
+         #totalDiscountAct = self.danpheEMR.find_element_by_xpath("//td[contains(text(),' Discount Amt.')]/following-sibling::td").get_attribute("value")
+         totalDiscountAct = self.danpheEMR.find_element_by_xpath("//td[contains(text(),' Discount Amt.')]/following-sibling::td").text
+         print("totalDiscountAct", totalDiscountAct)
+         print("totalDiscountExp", totalDiscountExp)
+         #assert totalDiscountExp == totalDiscountAct
          netTotalExp = int(billingTotalExp) - int(totalDiscountExp)
          netTotalAct = self.danpheEMR.find_element_by_xpath("//tr[5]/td[2]/label").text
          print(netTotalAct)
@@ -4395,10 +4409,11 @@ class A:
       global TDSAmt
       global NetIncome
       global AdjustedAmount
+      time.sleep(9)
       self.danpheEMR.find_element_by_link_text("Incentive").click()
-      time.sleep(3)
+      time.sleep(5)
       self.danpheEMR.find_element_by_xpath("//a[contains(.,' Reports ')]").click()
-      time.sleep(3)
+      time.sleep(5)
       self.danpheEMR.find_element_by_link_text("Payment Report").click()
       self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
       time.sleep(3)
@@ -4424,6 +4439,8 @@ class A:
       assert TDSAmt == xTDSAmt # + tdsAmtCalc
       assert NetIncome == xNetIncome # + netIncomeCalc
       assert AdjustedAmount == xAdjustedAmount # + adjustAmtCalc
+   def verifyAcMasterMapping(self):
+      print(" ##Start of ACC_MST_Hospital table mapping with AccPrimaryHospitalShortName core cfg parameter value ##")
 
    def getIncentivePatientVsServiceReport(self):
       global IncentiveAmt
