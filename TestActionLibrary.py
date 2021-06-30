@@ -787,7 +787,8 @@ class A:
       global presysprovisionalitems
       global presysunpaidcreditinvoices
 
-      presyssubtotal = float(syssubtotal)
+      #presyssubtotal = float(syssubtotal)
+      presyssubtotal = int(syssubtotal)
       print("presyssubtotal", presyssubtotal)
       presysdiscountamount = float(sysdiscountamount)
       print("presysdiscountamount", presysdiscountamount)
@@ -854,14 +855,24 @@ class A:
       # 5. Credit Invoice
       elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit > 0 and creditReturn == 0:
          time.sleep(7)
-         assert int(syssubtotal) == presyssubtotal + credit
-         assert int(sysdiscountamount) == presysdiscountamount
-         assert int(sysreturnamount) == presysreturnamount
-         assert int(systotalamount) == presystotalamount + credit
-         print("presysnetcashcollection", presysnetcashcollection)
-         print("sysnetcashcollection", sysnetcashcollection)
-         assert int(sysnetcashcollection) == presysnetcashcollection
-         print("End of credit invoice check")
+         if appPort == '81':
+            assert int(syssubtotal) == presyssubtotal + credit
+            assert int(sysdiscountamount) == presysdiscountamount
+            assert int(sysreturnamount) == presysreturnamount
+            assert int(systotalamount) == presystotalamount + credit
+            print("presysnetcashcollection", presysnetcashcollection)
+            print("sysnetcashcollection", sysnetcashcollection)
+            assert int(sysnetcashcollection) == presysnetcashcollection
+            print("End of credit invoice check")
+         if appPort == '82':
+            assert int(syssubtotal) == presyssubtotal + credit
+            assert int(sysdiscountamount) == presysdiscountamount
+            assert int(sysreturnamount) == presysreturnamount
+            assert int(systotalamount) == presystotalamount + credit
+            print("presysnetcashcollection", presysnetcashcollection)
+            print("sysnetcashcollection", sysnetcashcollection)
+            assert int(sysnetcashcollection) == presysnetcashcollection
+            print("End of credit invoice check")
 
       # 6. Return Credit Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
       elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn > 0:
