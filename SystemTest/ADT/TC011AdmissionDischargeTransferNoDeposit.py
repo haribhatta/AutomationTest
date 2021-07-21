@@ -16,6 +16,8 @@ labitem = GSV.UrineRE
 imagingitem = GSV.USG
 deposit = 0
 admitcharge = GSV.admitRate
+doctor = GSV.doctor1
+department = GSV.department1
 
 #-------------Script Owner: Hari----------------
 #Scripted on: 10.05.2077
@@ -31,7 +33,7 @@ ADT.createlabxrayinvoice(labitem, imagingitem)
 
 #ADT.login(nurseUserId, nurseUserPwd)
 #ADT.counteractivation()
-ADT.admitDisTrans(1, 0, 0, deposit)
+ADT.admitDisTrans(1, 0, 0, deposit, doctor=doctor, department=department)
 #ADT.logout()
 
 #ADT.login(foUserId, foUserPwd)

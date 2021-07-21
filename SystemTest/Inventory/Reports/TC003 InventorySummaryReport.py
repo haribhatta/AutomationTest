@@ -5,8 +5,8 @@ from TestActionLibrary import A
 from GlobalShareVariables import GSV
 
 # front desk user login
-adminUserId = GSV.adminUserID
-adminUserPwd = GSV.adminUserPwD
+storeUserId = GSV.storeUserID
+storeUserPwd = GSV.storeUserPwD
 
 isr = A()
 item = GSV.PhotocopyPaper
@@ -16,8 +16,8 @@ store1 = "Main Store"
 store2 = "OT Store"
 
 isr.openBrowser()
-isr.login(adminUserId, adminUserPwd)
-
+isr.login(storeUserId, storeUserPwd)
+isr.selectInventory(inventory="General Inventory")
 isr.getInventorySummaryReport()
 isr.preInventorySummaryReport()
 isr.createInventoryGoodReceipt(qty=qty, item=item, rate=rate)

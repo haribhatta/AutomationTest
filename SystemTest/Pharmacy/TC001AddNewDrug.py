@@ -8,11 +8,12 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 AND = A()
 
 drugname = GSV.Testdrug
+drugGeneric = GSV.drug1GenericName
 
 AND.openBrowser()
 AND.login(pharmacyUserId, pharmacyUserPwd)
 AND.activatePharmacyCounter()
-AND.addPharmacyItem()
+AND.addPharmacyItem(genericName=drugGeneric)
 AND.verifyPharmacyItem()
 AND.logout()
 AND.closeBrowser()

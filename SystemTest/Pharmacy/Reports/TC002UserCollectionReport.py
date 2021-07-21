@@ -1,9 +1,13 @@
 from TestActionLibrary import A
 from GlobalShareVariables import GSV
 
-# front desk user login
+# pharmacy desk user login
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
+
+# front desk user login
+billingId = GSV.foUserID
+billingPwd = GSV.foUserPwD
 
 ucc = A()
 drugname = GSV.drug1BrandName
@@ -15,12 +19,16 @@ totalamount = amount
 remark = "This is test return."
 
 ucc.openBrowser()
+# To get random patient information
+ucc.login(userid=billingId, pwd=billingPwd)
+ucc.getRandomPatient()
+ucc.logout()
+# Start of User collection report
 ucc.login(pharmacyUserId, pharmacyUserPwd)
 ucc.activatePharmacyCounter()
 ucc.createPharmacyInvoiceAnonymous(drugname=drugname, qty=qty, paymentmode=paymode)
 ucc.getPharmacyUserCollectionReport(pharmacyUserId)
 ucc.getStockDetail(drugname=drugname)
-ucc.getRandomPatient()
 ucc.createPharmacyInvoiceTC(qty=qty, drugname=drugname, paymentmode='Cash')
 ucc.preSystemPharmacyUserCollectionReport()
 ucc.getPharmacyUserCollectionReport(pharmacyUserId)

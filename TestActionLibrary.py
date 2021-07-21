@@ -996,10 +996,10 @@ class A:
             time.sleep(2)
             self.danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
             time.sleep(2)
-            self.danpheEMR.find_element_by_id("items-box0").click()
-            self.danpheEMR.find_element_by_id("items-box0").send_keys(testname)
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(testname)
             time.sleep(2)
-            self.danpheEMR.find_element_by_id("items-box0").send_keys(Keys.TAB)
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
             itemAprice = self.danpheEMR.find_element_by_xpath("//input[@name='price']").get_attribute("value")
             SubTotal = itemAprice
             DepositBalance = self.danpheEMR.find_element_by_xpath("//tr[4]/td[2]").text
@@ -1038,6 +1038,9 @@ class A:
 
             self.danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
             time.sleep(3)
+            self.danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+            time.sleep(3)
+
 
    def opDepositDbilingTenderCashReturn(self, deposit, testname):
          global ChangeReturn
@@ -1139,16 +1142,19 @@ class A:
             time.sleep(2)
             self.danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
             time.sleep(2)
-            self.danpheEMR.find_element_by_id("items-box0").click()
-            self.danpheEMR.find_element_by_id("items-box0").send_keys(testname)
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(testname)
             time.sleep(2)
-            self.danpheEMR.find_element_by_id("items-box0").send_keys(Keys.TAB)
+            self.danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
             itemAprice = self.danpheEMR.find_element_by_xpath("//input[@name='price']").get_attribute("value")
             SubTotal = itemAprice
             DepositBalance = self.danpheEMR.find_element_by_xpath("//tr[4]/td[2]").text
-            assert deposit == DepositBalance
+            print("DepositBalance", DepositBalance)
+            print("Deposit", deposit)
+            assert int(deposit) == int(DepositBalance)
             BalanceAmount = self.danpheEMR.find_element_by_xpath("//td[2]/span").text
-            assert deposit == BalanceAmount
+            print("BalanceAmount", BalanceAmount)
+            assert int(deposit) == int(BalanceAmount)
             TotalAmount = self.danpheEMR.find_element_by_xpath("//tr[4]/td[2]/input").get_attribute("value")
             print("TotalAmount", TotalAmount)
             assert TotalAmount == SubTotal
@@ -1226,6 +1232,7 @@ class A:
                print("DepositBalance", DepositBalance)
                print("NewDepositBalance", NewDepositBalance)
                assert DepositBalance == NewDepositBalance
+            self.danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
          print(">>>opDepositDbilingTenderCashReturn>>End")
 
    def createUSGinvoice(self, USGtest):
@@ -1309,7 +1316,7 @@ class A:
          self.danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(2)
          self.danpheEMR.find_element_by_xpath("//button[contains(.,' New Item')]").click()
-         self.danpheEMR.find_element_by_xpath("//input[@id='items-box0']").send_keys(usgLPH)
+         self.danpheEMR.find_element_by_xpath("//input[@id='items-box0']").send_keys(test)
          time.sleep(2)
          testrate = int(self.danpheEMR.find_element_by_xpath("//input[@name='price']").get_attribute("value"))
          print("testrate", testrate)
@@ -1326,7 +1333,7 @@ class A:
          self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.RETURN)
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("View Details").click()
-         time.sleep(2)
+         time.sleep(5)
          self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(canceltest)
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("Edit").click()
@@ -1349,7 +1356,7 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(usgLPH)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(canceltest)
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("Edit").click()
          self.danpheEMR.find_element_by_xpath("//div/textarea").send_keys("Auto cancel of IP provisional bill items")
@@ -1361,9 +1368,10 @@ class A:
          self.danpheEMR.switch_to.alert.accept()
          time.sleep(2)
          self.danpheEMR.find_element_by_css_selector(".fa-times").click()
-      print("End of calcel IP Provisional Bill")
+      print("End of cancel IP Provisional Bill")
 
    def getIPbillingDetails(self, paymentmode):
+      print("Start>>getIPbillingDetails")
       global BillingTotal
       global NetTotal
       global ToBePaid
@@ -1371,28 +1379,53 @@ class A:
       Tender = 0
       global ChangeReturn
       ChangeReturn = 0
-      self.danpheEMR.find_element_by_link_text("Billing").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("IPBilling").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(5)
-      self.danpheEMR.find_element_by_link_text("View Details").click()
-      time.sleep(5)
-      if paymentmode == "CREDIT":
-         paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-         paymentoptions.select_by_visible_text("CREDIT")
-      BillingTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Billing Total')]/following-sibling::td").text
-      print("BillingTotal", BillingTotal)
-      NetTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Net Total')]/following-sibling::td").text
-      print("NetTotal", NetTotal)
-      ToBePaid = self.danpheEMR.find_element_by_xpath("//td[contains(.,'To Be Paid')]/following-sibling::td").text
-      print("ToBePaid", ToBePaid)
-      if paymentmode != "CREDIT":
-         Tender = self.danpheEMR.find_element_by_name("Tender").get_attribute("value")
-         print("Tender1", Tender)
-         ChangeReturn = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Change/Return :')]/following-sibling::td").text
-         print("ChangeReturn", ChangeReturn)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(5)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+         BillingTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Billing Total')]/following-sibling::td").text
+         print("BillingTotal", BillingTotal)
+         NetTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Net Total')]/following-sibling::td").text
+         print("NetTotal", NetTotal)
+         ToBePaid = self.danpheEMR.find_element_by_xpath("//td[contains(.,'To Be Paid')]/following-sibling::td").text
+         print("ToBePaid", ToBePaid)
+         if paymentmode != "CREDIT":
+            Tender = self.danpheEMR.find_element_by_name("Tender").get_attribute("value")
+            print("Tender1", Tender)
+            ChangeReturn = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Change/Return :')]/following-sibling::td").text
+            print("ChangeReturn", ChangeReturn)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(5)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+         BillingTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,' Sub Total ')]/following-sibling::td").text
+         print("BillingTotal", BillingTotal)
+         NetTotal = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Total Amount')]/following-sibling::td").text
+         print("NetTotal", NetTotal)
+         ToBePaid = self.danpheEMR.find_element_by_xpath("//td[contains(.,'To Be Paid')]/following-sibling::td").text
+         print("ToBePaid", ToBePaid)
+         if paymentmode != "CREDIT":
+            Tender = self.danpheEMR.find_element_by_name("Tender").get_attribute("value")
+            print("Tender1", Tender)
+            ChangeReturn = self.danpheEMR.find_element_by_xpath("//td[contains(.,'Change/Return :')]/following-sibling::td").text
+            print("ChangeReturn", ChangeReturn)
+      print("End<<getIPbillingDetails")
    def preIPbillingDetails(self):
       global xBillingTotal
       global xNetTotal
@@ -1407,7 +1440,15 @@ class A:
       xTender = int(Tender)
       xChangeReturn = int(ChangeReturn)
    def verifyIPbillingDetails(self, testrate, canceltest, paymentmode):
-      assert int(BillingTotal) == xBillingTotal + testrate - canceltest
+      x = BillingTotal.replace(',','')
+      x = int(x)
+      print("x", x)
+      print("xBillingTotal", xBillingTotal)
+      print("testrate", testrate)
+      print("canceltest", canceltest)
+      y = int(xBillingTotal + testrate - canceltest)
+      print("y", y)
+      assert  x == y
       assert int(NetTotal) == xNetTotal + testrate - canceltest
       assert int(ToBePaid) == xToBePaid + testrate - canceltest
       if paymentmode != "CREDIT":
@@ -1425,73 +1466,168 @@ class A:
       #self.danpheEMR.find_element_by_xpath("//input[@name='day']").send_keys(Keys.ARROW_DOWN)
       #self.danpheEMR.find_element_by_xpath("//input[@name='day']").send_keys(Keys.ARROW_DOWN)
    def verifyConfirmDischarge(self, paymentmode):
-      self.danpheEMR.find_element_by_link_text("Billing").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("IPBilling").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("View Details").click()
-      time.sleep(3)
-      if paymentmode == "CREDIT":
-         paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-         paymentoptions.select_by_visible_text("CREDIT")
-         self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,'Confirm Discharge')]").click()
-      time.sleep(3)
-      if paymentmode == "CREDIT":
-         assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
          time.sleep(3)
-         self.danpheEMR.switch_to.alert.accept()
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_css_selector(".btn-danger").click()
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(3)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+            self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Confirm Discharge')]").click()
+         time.sleep(3)
+         if paymentmode == "CREDIT":
+            assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
+            time.sleep(3)
+            self.danpheEMR.switch_to.alert.accept()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_css_selector(".btn-danger").click()
+            time.sleep(2)
+         tobepaid = self.danpheEMR.find_element_by_xpath("(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
+         print("tobepaid", tobepaid)
+         print("ToBePaid", ToBePaid)
+         assert int(ToBePaid) == int(tobepaid)
+         tender = self.danpheEMR.find_element_by_xpath("(//td[text()='Tender']/following-sibling::td)[1]").text
+         assert int(Tender) == int(tender)
+         change = self.danpheEMR.find_element_by_xpath("(//td[text()='Change']/following-sibling::td)[1]").text
+         assert int(ChangeReturn) == int(change)
+         self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
          time.sleep(2)
-      tobepaid = self.danpheEMR.find_element_by_xpath("(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
-      print("tobepaid", tobepaid)
-      print("ToBePaid", ToBePaid)
-      assert int(ToBePaid) == int(tobepaid)
-      tender = self.danpheEMR.find_element_by_xpath("(//td[text()='Tender']/following-sibling::td)[1]").text
-      assert int(Tender) == int(tender)
-      change = self.danpheEMR.find_element_by_xpath("(//td[text()='Change']/following-sibling::td)[1]").text
-      assert int(ChangeReturn) == int(change)
-      self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Discharge ']").click()
-      time.sleep(7)
+         self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Discharge ']").click()
+         time.sleep(7)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(3)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+            self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
+         time.sleep(3)
+         if paymentmode == "CREDIT":
+            assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
+            time.sleep(3)
+            self.danpheEMR.switch_to.alert.accept()
+            time.sleep(3)
+            self.danpheEMR.find_element_by_css_selector(".btn-danger").click()
+            time.sleep(2)
+         tobepaid = self.danpheEMR.find_element_by_xpath("(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
+         print("tobepaid", tobepaid)
+         print("ToBePaid", ToBePaid)
+         assert int(ToBePaid) == int(tobepaid)
+         tender = self.danpheEMR.find_element_by_xpath("(//td[text()='Tender']/following-sibling::td)[1]").text
+         assert int(Tender) == int(tender)
+         change = self.danpheEMR.find_element_by_xpath("(//td[text()='Change']/following-sibling::td)[1]").text
+         assert int(ChangeReturn) == int(change)
+         self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Confirm Discharge ']").click()
+         time.sleep(7)
+
    def verifyDischargeInvoice(self, paymentmode):
       time.sleep(3)
-      grosstotal = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Gross Total']//parent::td//following-sibling::td").text
-      grosstotal = grosstotal.partition(".")[0]
-      grosstotal = grosstotal.replace(',', '')
-      print("grosstotal", grosstotal)
-      print("BillingTotal:", BillingTotal)
-      assert int(BillingTotal) == int(grosstotal)
-      totalamount = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Total Amount']//parent::td//following-sibling::td").text
-      totalamount = totalamount.partition(".")[0]
-      totalamount = totalamount.replace(',', '')
-      print("totalamount", totalamount)
-      assert int(NetTotal) == int(totalamount)
-      depositedamount = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Deposited Amount']//parent::td//following-sibling::td").text
-      print("depositedamount", depositedamount)
-      if paymentmode == "Cash":
-         paidamount = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Paid Amount ']//parent::td//following-sibling::td").text
-         paidamount = paidamount.partition(".")[0]
-         paidamount = paidamount.replace(',', '')
-         print("paidamount", paidamount)
-         assert int(ToBePaid) == int(paidamount)
-         tender = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Tender']//parent::td//following-sibling::td").text
-         print("tender", tender)
-         assert int(Tender) == int(tender)
-      else:
-         amounttobepaid = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Amount to be Paid ']//parent::td//following-sibling::td").text
-         amounttobepaid = amounttobepaid.partition(".")[0]
-         amounttobepaid = amounttobepaid.replace(',', '')
-         print("amounttobepaid", amounttobepaid)
-         assert int(amounttobepaid) == int(ToBePaid)
-      element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
-      time.sleep(2)
-      self.danpheEMR.execute_script("arguments[0].click();", element)
+      print("Start>>verifyDischargeInvoice")
+      if appPort == '81':
+         grosstotal = self.danpheEMR.find_element_by_xpath(
+            "//td/strong[text()='Gross Total']//parent::td//following-sibling::td").text
+         grosstotal = grosstotal.partition(".")[0]
+         grosstotal = grosstotal.replace(',', '')
+         print("grosstotal", grosstotal)
+         print("BillingTotal:", BillingTotal)
+         assert int(BillingTotal) == int(grosstotal)
+         totalamount = self.danpheEMR.find_element_by_xpath(
+            "//td/strong[text()='Total Amount']//parent::td//following-sibling::td").text
+         totalamount = totalamount.partition(".")[0]
+         totalamount = totalamount.replace(',', '')
+         print("totalamount", totalamount)
+         assert int(NetTotal) == int(totalamount)
+         depositedamount = self.danpheEMR.find_element_by_xpath(
+            "//td/strong[text()='Deposited Amount']//parent::td//following-sibling::td").text
+         print("depositedamount", depositedamount)
+         if paymentmode == "Cash":
+            paidamount = self.danpheEMR.find_element_by_xpath(
+               "//td/strong[text()='Paid Amount ']//parent::td//following-sibling::td").text
+            paidamount = paidamount.partition(".")[0]
+            paidamount = paidamount.replace(',', '')
+            print("paidamount", paidamount)
+            assert int(ToBePaid) == int(paidamount)
+            tender = self.danpheEMR.find_element_by_xpath(
+               "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
+            print("tender", tender)
+            assert int(Tender) == int(tender)
+         else:
+            amounttobepaid = self.danpheEMR.find_element_by_xpath(
+               "//td/strong[text()='Amount to be Paid ']//parent::td//following-sibling::td").text
+            amounttobepaid = amounttobepaid.partition(".")[0]
+            amounttobepaid = amounttobepaid.replace(',', '')
+            print("amounttobepaid", amounttobepaid)
+            assert int(amounttobepaid) == int(ToBePaid)
+         element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+         time.sleep(2)
+         self.danpheEMR.execute_script("arguments[0].click();", element)
+
+      if appPort == '82':
+         AMOUNT = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'Amount:')]//parent::div").text
+         print("GrandTotal", AMOUNT)
+         Amount1 = AMOUNT.partition(": ")[2]
+         #grosstotal = grosstotal.replace(',', '')
+         print("Amount1", Amount1)
+         #randTotal2 = GrandTotal.partition("TOTAL: ")[0]
+         print("BillingTotal:", BillingTotal)
+         x = int(BillingTotal)
+         print("x", x)
+         Amount = Amount1.partition(".")[0]
+         print("Amount", Amount1)
+         y = int(Amount)
+         print("y", y)
+         assert x == y
+         GRANDTOTAL = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'Grand Total:')]//parent::div").text
+         print("GRANDTOTAL", GRANDTOTAL)
+         GrandTotal1 = GRANDTOTAL.partition(": ")[2]
+         print("GrandTotal1", GrandTotal1)
+         GrandTotal = GrandTotal1.partition(".")[0]
+         x = int(GrandTotal)
+         print("x", x)
+         y = int(NetTotal)
+         assert y == x
+         #depositedamount = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'Grand Total:')]//parent::div").text
+         #print("depositedamount", depositedamount)
+         if paymentmode == "Cash":
+            TOBEPAID = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'To Be Paid:')]//parent::div").text
+            ToBePaid = TOBEPAID.partition(": ")[2]
+            paidamount = ToBePaid.partition(".")[0]
+            x = int(paidamount)
+            print("x", x)
+            print("paidamount", paidamount)
+            y = int(ToBePaid)
+            print("y", y)
+            assert x == y
+            tender = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Tender']//parent::td//following-sibling::td").text
+            print("tender", tender)
+            assert int(Tender) == int(tender)
+         else:
+            amounttobepaid = self.danpheEMR.find_element_by_xpath("//td/strong[text()='Amount to be Paid ']//parent::td//following-sibling::td").text
+            amounttobepaid = amounttobepaid.partition(".")[0]
+            amounttobepaid = amounttobepaid.replace(',', '')
+            print("amounttobepaid", amounttobepaid)
+            assert int(amounttobepaid) == int(ToBePaid)
+         element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+         time.sleep(2)
+         self.danpheEMR.execute_script("arguments[0].click();", element)
+      print("End>>verifyDischargeInvoice")
    def creditSettlements(self):
+      print("Start: creditSettlements")
       self.danpheEMR.find_element_by_link_text("Billing").click()
       self.danpheEMR.find_element_by_link_text("Settlements").click()
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
@@ -1499,45 +1635,80 @@ class A:
       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Show Details')]").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
+      print("End: creditSettlements")
    def generateDischargeInvoice(self, paymentmode):
+      print("Start: generateDischargeInvoice")
       global InvoiceNo
-      self.danpheEMR.find_element_by_link_text("Billing").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("IPBilling").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("View Details").click()
-      time.sleep(7)
-      if paymentmode == "CREDIT":
-         paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-         paymentoptions.select_by_visible_text("CREDIT")
-         self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,'Confirm Discharge')]").click()
-      if paymentmode == "CREDIT":
-         time.sleep(4)
-         assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
-         time.sleep(3)
-         self.danpheEMR.switch_to.alert.accept()
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
          time.sleep(2)
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Discharge ']").click()
-      time.sleep(7)
-      InvoiceNo = self.danpheEMR.find_element_by_xpath("//td[contains(text(),' Invoice No:')]").text
-      InvoiceNo = InvoiceNo.partition("- ")[2]
-      print("InvoiceNo", InvoiceNo)
-      time.sleep(2)
-      element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
-      time.sleep(2)
-      self.danpheEMR.execute_script("arguments[0].click();", element)
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(7)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+            self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Confirm Discharge')]").click()
+         if paymentmode == "CREDIT":
+            time.sleep(4)
+            assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
+            time.sleep(3)
+            self.danpheEMR.switch_to.alert.accept()
+            time.sleep(2)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Discharge ']").click()
+         time.sleep(7)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//td[contains(text(),' Invoice No:')]").text
+         InvoiceNo = InvoiceNo.partition("- ")[2]
+         print("InvoiceNo", InvoiceNo)
+         time.sleep(2)
+         element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+         time.sleep(2)
+         self.danpheEMR.execute_script("arguments[0].click();", element)
 
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Billing").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("IPBilling").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("View Details").click()
+         time.sleep(7)
+         if paymentmode == "CREDIT":
+            paymentoptions = Select(self.danpheEMR.find_element_by_xpath("//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            paymentoptions.select_by_visible_text("CREDIT")
+            self.danpheEMR.find_element_by_xpath("//textarea").send_keys("This is credit bill")
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
+         if paymentmode == "CREDIT":
+            time.sleep(4)
+            assert self.danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
+            time.sleep(3)
+            self.danpheEMR.switch_to.alert.accept()
+            time.sleep(2)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Confirm Discharge ']").click()
+         time.sleep(7)
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'2077/2078-')]").text
+         InvoiceNo = InvoiceNo.partition("- ")[2]
+         print("InvoiceNo", InvoiceNo)
+         time.sleep(2)
+         element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+         time.sleep(2)
+         self.danpheEMR.execute_script("arguments[0].click();", element)
+      print("End: generateDischargeInvoice")
    #Module: Pharmacy ------------------
    def activatePharmacyCounter(self):
-      print(">>Pharmacy Counter Activate: START")
+      print(">>Start: Pharmacy Counter Activate: START")
       time.sleep(7)
-
       if appPort == "81":
          self.danpheEMR.find_element_by_link_text("Pharmacy").click()
          time.sleep(3)
@@ -1546,14 +1717,14 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
          time.sleep(3)
-
       self.danpheEMR.find_element_by_link_text("Counter").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//h5").click()
       time.sleep(2)
       print("Pharmacy Counter Activate: END")
+      print("End>> generateDischargeInvoice")
    def addPharmacyItem(self, genericName):  # incomplete
-      print(">>START: Start add new drug")
+      print(">>START: addPharmacyItem")
       global DrugName
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
@@ -1585,7 +1756,10 @@ class A:
       time.sleep(3)
       self.danpheEMR.find_element_by_id("save").click()
       time.sleep(9)
+      print("End>>addPharmacyItem")
    def verifyPharmacyItem(self):
+       print(">>Start:verifyPharmacyItem")
+       time.sleep(2)
        self.danpheEMR.find_element_by_link_text("Pharmacy").click()
        time.sleep(2)
        self.danpheEMR.find_element_by_link_text("Setting").click()
@@ -1593,36 +1767,71 @@ class A:
        self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(DrugName)
        time.sleep(9)
        assert DrugName == self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
+       print("End>>verifyPharmacyItem")
    def getStoreDetail(self, drugname):
+      print(">>Start: getStoreDetail")
       global drugqtyMS
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Store").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
-      time.sleep(5)
-      drugnameMS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
-      print("drugnameMS:", drugnameMS)
-      print("drugname:", drugname)
-      assert drugnameMS == drugname
-      sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQty'])[2]").text
-      drugqtyMS = int(sysdrugqty)
-      print("drugqtyMS:", drugqtyMS)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Store").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+         time.sleep(5)
+         drugnameMS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
+         print("drugnameMS:", drugnameMS)
+         print("drugname:", drugname)
+         assert drugnameMS == drugname
+         sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQty'])[2]").text
+         drugqtyMS = int(sysdrugqty)
+         print("drugqtyMS:", drugqtyMS)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Store").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+         time.sleep(5)
+         drugnameMS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
+         print("drugnameMS:", drugnameMS)
+         print("drugname:", drugname)
+         assert drugnameMS == drugname
+         sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
+         drugqtyMS = int(sysdrugqty)
+         print("drugqtyMS:", drugqtyMS)
+      print("End>>getStoreDetail")
    def getStockDetail(self, drugname):
+      print(">>Start: getStockDetail")
       global drugqtySS
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(5)
-      self.danpheEMR.find_element_by_link_text("Stock").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
-      time.sleep(3)
-      drugnameSS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
-      print("drugnameSS:", drugnameSS)
-      sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
-      drugqtySS = int(sysdrugqty)
-      print("drugqtySS:", drugqtySS)
+      if appPort == '81':
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("Stock").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+         time.sleep(3)
+         drugnameSS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
+         print("drugnameSS:", drugnameSS)
+         sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
+         drugqtySS = int(sysdrugqty)
+         print("drugqtySS:", drugqtySS)
+      if appPort == '82':
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Dispensary").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_link_text("Stock").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+         time.sleep(3)
+         drugnameSS = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemName'])[2]").text
+         print("drugnameSS:", drugnameSS)
+         sysdrugqty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
+         drugqtySS = int(sysdrugqty)
+         print("drugqtySS:", drugqtySS)
+      print("End>>getStockDetail")
    def verifyStoreDetail(self, drugname):
+      print(">>Start:verifyStoreDetail")
       self.danpheEMR.find_element_by_link_text("Store").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_id("quickFilterInput").clear()
@@ -1636,7 +1845,9 @@ class A:
       print("sysdrugqty", sysdrugqty)
       print("newdrugqtyMS", drugqtyMScalc)
       assert int(drugqtyMScalc) == int(sysdrugqty)
+      print("End>>verifyStoreDetail")
    def verifyStockDetail(self, drugname):
+      print(">>Start: verifyStockDetail")
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(5)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
@@ -1648,7 +1859,9 @@ class A:
       print("drugqtySS:", drugqtySS)
       print("sysdrugqty", sysdrugqty)
       assert int(drugqtySS) == int(sysdrugqty)
+      print("End>>: verifyStockDetail")
    def verifyStockDetailTC(self):
+      print(">>Start: verifyStockDetailTC")
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(5)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(DrugName)
@@ -1656,7 +1869,9 @@ class A:
       sysdrugqty = self.danpheEMR.find_element_by_xpath(
          "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
       assert sysdrugqty == '0'
+      print("End>>verifyStockDetailTC")
    def transferStore2Dispensary(self, drugname, tqty):
+      print(">>Start:transferStore2Dispensary")
       global drugqtyMS
       global drugqtySS
       self.danpheEMR.find_element_by_link_text("Store").click()
@@ -1678,7 +1893,9 @@ class A:
       print("drugqtyMS", drugqtyMS)
       drugqtySS = drugqtySS + tqty
       print("drugqtySS", drugqtySS)
+      print("End>>transferStore2Dispensary")
    def transferStore2DispensaryTC(self, tqty, DrugName):
+      print(">>Start:transferStore2DispensaryTC")
       self.danpheEMR.find_element_by_link_text("Store").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_id("quickFilterInput").clear()
@@ -1694,7 +1911,9 @@ class A:
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//button[contains(.,'Transfer')]").click()
       time.sleep(2)
+      print("End>>transferStore2DispensaryTC")
    def transferDispensary2Store(self, drugname, tqty):
+      print(">>Start: transferDispensary2Store")
       global drugqtySS
       global drugqtyMS
       self.danpheEMR.find_element_by_link_text("Stock").click()
@@ -1712,7 +1931,9 @@ class A:
       drugqtyMS = int(drugqtyMS) + tqty
       print("drugqtyMS", drugqtyMS)
       #self.danpheEMR.find_element_by_link_text("Store").click()
+      print("End>>transferDispensary2Store")
    def transferDispensary2StoreTC(self, tqty):
+      print(">>Start: transferDispensary2StoreTC")
       self.danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(DrugName)
@@ -1723,6 +1944,7 @@ class A:
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//button[contains(.,'Transfer')]").click()
       time.sleep(2)
+      print("End>>transferDispensary2StoreTC")
    def manageStoreStock(self, drugname, type, qty):
       print(">>START: Manage Store Stock")
       global drugqtyMScalc
@@ -1794,6 +2016,7 @@ class A:
          time.sleep(3)
          self.danpheEMR.find_element_by_id("patient-search").click()
          self.danpheEMR.find_element_by_id("patient-search").send_keys('test')
+         time.sleep(4)
          self.danpheEMR.find_element_by_id("patient-search").send_keys(Keys.TAB)
          time.sleep(3)
          self.danpheEMR.find_element_by_id("item-box0").click()
@@ -1821,7 +2044,8 @@ class A:
          self.danpheEMR.find_element_by_xpath("//a[contains(text(),' Sale ')]").click()
          time.sleep(3)
          self.danpheEMR.find_element_by_id("patient-search").click()
-         self.danpheEMR.find_element_by_id("patient-search").send_keys('test')
+         self.danpheEMR.find_element_by_id("patient-search").send_keys('Auto Test')
+         time.sleep(5)
          self.danpheEMR.find_element_by_id("patient-search").send_keys(Keys.TAB)
          time.sleep(2)
          self.danpheEMR.find_element_by_id("item-box0").click()
@@ -2078,18 +2302,32 @@ class A:
 
       print(">>Verify Return Pharmacy Invoice: END")
    def addPharmacyDeposit(self, deposit):
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Patient')]").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Deposit").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@name='DepositAmount']").send_keys(deposit)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//input[@value='Add Deposit']").click()
-      time.sleep(3)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Patient')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Deposit").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@name='DepositAmount']").send_keys(deposit)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@value='Add Deposit']").click()
+         time.sleep(3)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Patient')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Deposit").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@name='DepositAmount']").send_keys(deposit)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@value='Add Deposit']").click()
+         time.sleep(3)
    def returnPharmacyDeposit(self, depositreturn):
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
@@ -2107,7 +2345,7 @@ class A:
       time.sleep(3)
    def createPharmacyGoodsReceipt(self, qty, DrugName, grPrice):
       global goodsReceiptNo
-      if appPort == '81':
+      if appPort == '82':
          self.danpheEMR.find_element_by_link_text("Pharmacy").click()
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("Order").click()
@@ -2131,10 +2369,10 @@ class A:
          self.danpheEMR.find_element_by_id("Margin").send_keys(14)
          self.danpheEMR.find_element_by_id("btn_Save").click()
          #self.danpheEMR.find_element_by_xpath("//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
-         self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
+         self.danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success tooltip']").click()
          time.sleep(14)
          goodsReceiptNo = self.danpheEMR.find_element_by_xpath("(//div[@col-id='GoodReceiptPrintId'])[2]").text
-      if appPort == '82':
+      if appPort == '81':
          self.danpheEMR.find_element_by_link_text("Pharmacy").click()
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("Order").click()
@@ -2145,6 +2383,7 @@ class A:
          self.danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys(Keys.TAB)
          gRNo = random.randint(1, 9999)
          self.danpheEMR.find_element_by_xpath("//input[@placeholder='Invoice No']").send_keys(gRNo)
+
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys(DrugName)
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys(Keys.ARROW_DOWN)
          self.danpheEMR.find_element_by_xpath("(//input[@onclick='this.select();'])[2]").send_keys(Keys.RETURN)
@@ -2194,24 +2433,45 @@ class A:
       self.danpheEMR.switch_to.alert.accept()
       time.sleep(7)
    def getPharmacyGoodsReceiptListAmount(self):
+      print(">>Start:getPharmacyGoodsReceiptListAmount")
       global SubTotal
       global DiscountTotal
       global TotalAmount
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Order").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Goods Receipt List").click()
-      time.sleep(2)
-      SubTotal = self.danpheEMR.find_element_by_xpath(
-      "//b[contains(text(),'Sub Total :')]/parent::td/following-sibling::td[1]").text
-      print("SubTotal", SubTotal)
-      DiscountTotal = self.danpheEMR.find_element_by_xpath(
-         "//b[contains(text(),'Discount Total :')]/parent::td/following-sibling::td[1]").text
-      print("DiscountTotal", DiscountTotal)
-      TotalAmount = self.danpheEMR.find_element_by_xpath(
-      "//b[contains(text(),'Total Amount :')]/parent::td/following-sibling::td").text
-      print("TotalAmount", TotalAmount)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Order").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+         time.sleep(2)
+         SubTotal = self.danpheEMR.find_element_by_xpath(
+         "//b[contains(text(),'Sub Total :')]/parent::td/following-sibling::td[1]").text
+         print("SubTotal", SubTotal)
+         DiscountTotal = self.danpheEMR.find_element_by_xpath(
+            "//b[contains(text(),'Discount Total :')]/parent::td/following-sibling::td[1]").text
+         print("DiscountTotal", DiscountTotal)
+         TotalAmount = self.danpheEMR.find_element_by_xpath(
+         "//b[contains(text(),'Total Amount :')]/parent::td/following-sibling::td").text
+         print("TotalAmount", TotalAmount)
+
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Order").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+         time.sleep(2)
+         SubTotal = self.danpheEMR.find_element_by_xpath(
+         "(//b[contains(text(),'Sub Total')]//parent::span//parent::td//following-sibling::td)[1]").text
+         print("SubTotal", SubTotal)
+         DiscountTotal = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Discount Total')]//parent::span//parent::td//following-sibling::td)[1]").text
+         print("DiscountTotal", DiscountTotal)
+         TotalAmount = self.danpheEMR.find_element_by_xpath(
+         "(//b[contains(text(),' Total Amount ')]//parent::span//parent::td//following-sibling::td)[1]").text
+         print("TotalAmount", TotalAmount)
+         print(">>Start:getPharmacyGoodsReceiptListAmount")
+
    def XgetPharmacyGoodsReceiptListAmount(self):
       global xSubTotal
       global xDiscountTotal
@@ -2357,29 +2617,61 @@ class A:
       xProvisionalItems = ProvisionalItems
       xUnpaidInvoices = UnpaidInvoices
    def verifyPharmacyDashboard(self, cash, cashreturn, credit, creditreturn, deposit, depositreturn, provisional, provisionacancel):
-      temp = round(xTotalSale + cash + credit)
-      print("temp", temp)
-      print("temp", float(temp))
-      print("TotalSale", TotalSale)
-      assert float(round(TotalSale)) == float(round(xTotalSale + cash + credit))
-      print("TotalReturn-cash", CashReturn)
-      print("xCashReturn", xCashReturn)
-      #a = float(round(xTotalReturn + cashreturn + creditreturn))
-      a = float(round(xCashReturn + cashreturn))
-      b = float(round(xCreditReturn + creditreturn))
-      assert CashReturn == a
-      assert CreditReturn == b
-      netcoltemp = float(round(xNetCashCollection + cash - cashreturn))
-      print("netcollectiontemp", netcoltemp)
-      print("xNetCollection", xNetCashCollection)
-      assert float(round(NetCashCollection)) == float(round(xNetCashCollection + cash - cashreturn))
-      assert DepositAmount == xDepositAmount + deposit
-      assert DepositReturned == xDepositReturned + depositreturn
-      assert ProvisionalItems == xProvisionalItems + provisional - provisionacancel
-      c = float(round(xUnpaidInvoices + credit - creditreturn))
-      print("c", c)
-      print("UnpaidInvoices", UnpaidInvoices)
-      assert float(round(UnpaidInvoices)) == c
+      if appPort == '81':
+         temp = round(xTotalSale + cash + credit)
+         print("temp", temp)
+         print("temp", float(temp))
+         print("TotalSale", TotalSale)
+         assert float(round(TotalSale)) == float(round(xTotalSale + cash + credit))
+         print("TotalReturn-cash", CashReturn)
+         print("xCashReturn", xCashReturn)
+         #a = float(round(xTotalReturn + cashreturn + creditreturn))
+         a = float(round(xCashReturn + cashreturn))
+         b = float(round(xCreditReturn + creditreturn))
+         assert CashReturn == a
+         assert CreditReturn == b
+         netcoltemp = float(round(xNetCashCollection + cash - cashreturn))
+         print("netcollectiontemp", netcoltemp)
+         print("xNetCollection", xNetCashCollection)
+         assert float(round(NetCashCollection)) == float(round(xNetCashCollection + cash - cashreturn))
+         assert DepositAmount == xDepositAmount + deposit
+         assert DepositReturned == xDepositReturned + depositreturn
+         assert ProvisionalItems == xProvisionalItems + provisional - provisionacancel
+         c = float(round(xUnpaidInvoices + credit - creditreturn))
+         print("c", c)
+         print("UnpaidInvoices", UnpaidInvoices)
+         assert float(round(UnpaidInvoices)) == c
+      if appPort == '82':
+         temp = round(xTotalSale + cash + credit)
+         print("temp", temp)
+         print("temp", float(temp))
+         print("TotalSale", TotalSale)
+         assert float(round(TotalSale)) == float(round(xTotalSale + cash + credit))
+         print("CashReturn", CashReturn)
+         print("xCashReturn", xCashReturn)
+         #a = float(round(xTotalReturn + cashreturn + creditreturn))
+         a = float(round(xCashReturn + cashreturn))
+         print("a", a)
+         print("CashReturn", CashReturn)
+         b = float(round(xCreditReturn + creditreturn))
+         print("b", b)
+         print("CreditReturn", CreditReturn)
+         assert CashReturn == a
+         assert CreditReturn == b
+
+         print("xNetCollection", xNetCashCollection)
+         x = int(xNetCashCollection + cash - cashreturn)
+         print("x:", x)
+         y = int(NetCashCollection)
+         print("Y", y)
+         assert y == x
+         assert DepositAmount == xDepositAmount + deposit
+         assert DepositReturned == xDepositReturned + depositreturn
+         assert ProvisionalItems == xProvisionalItems + provisional - provisionacancel
+         c = float(round(xUnpaidInvoices + credit - creditreturn))
+         print("c", c)
+         print("UnpaidInvoices", UnpaidInvoices)
+         assert float(round(UnpaidInvoices)) == c
    def getPharmacyCashCollectionSummary(self, user):
       global sysinvoiceamount
       global sysinvoicereturned
@@ -2460,7 +2752,9 @@ class A:
       self.danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
       self.danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
+      time.sleep(4)
+      self.danpheEMR.find_element_by_link_text("Sales").click()
+      time.sleep(4)
       self.danpheEMR.find_element_by_xpath("//i[contains(.,'User Collection')]").click()
       time.sleep(2)
       self.danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
@@ -2527,47 +2821,92 @@ class A:
       presysPlesscashdiscount = float(sysPlesscashdiscount)
       presysPtotalcollection = float(sysPtotalcollection)
    def verifySystemPharmacyUserCollectionReport(self, cash, cashreturn, credit, creditreturn, creditsettlement, discount, deposit, depositreturn, provisional, provisionalcancel):
-      print(">>START: verifySystemPharmacyUserCollectionReport")
       global sysPgrosstotalsales
-      print("cash", cash)
-      print("cashreturn", cashreturn)
-      print("presysPnetcashcollection", presysPnetcashcollection)
-      print("sysPnetcashcollection", sysPnetcashcollection)
-      newCashCollection = presysPnetcashcollection + cash - cashreturn
-      print("newCashCollection", newCashCollection)
-      #assert round(float(sysPnetcashcollection)) == round(float(newCashCollection))
-      assert int(sysPnetcashcollection) == int(round(newCashCollection))
-      result = str(float(presysPgrosstotalsales) + cash + credit)
-      print("result", result)
-      print("sysPgrosstotalsales", sysPgrosstotalsales)
-      print("presysPgrosstotalsales", presysPgrosstotalsales)
-      #sysPgrosstotalsales = sysPgrosstotalsales.partition(".")[0]
-      #result = result.partition(".")[0]
-      #print("result", result)
-      print("sysPgrosstotalsales", sysPgrosstotalsales)
-      assert sysPgrosstotalsales == result
-      assert float(sysPdiscount) == presysPdiscount + discount
-      print("sysPreturnsubtotal", sysPreturnsubtotal)
-      print("presysPreturnsubtotal", presysPreturnsubtotal)
-      assert round(float(sysPreturnsubtotal)) == round(float(presysPreturnsubtotal + cashreturn + creditreturn))
-      assert float(sysPreturndiscount) == presysPreturndiscount + discount
-      assert round(float(sysPreturnamount)) == round(float(presysPreturnamount + cashreturn + creditreturn + discount))
-      print("presysPnetsales", presysPnetsales)
-      print("sysPnetsales", sysPnetsales)
-      assert round(float(sysPnetsales)) == round(float(presysPnetsales + cash + credit - cashreturn - creditreturn - discount))
-      print("sysPlesscreditamount", sysPlesscreditamount)
-      print("presysPlesscreditamount", presysPlesscreditamount)
-      print("Credit", credit)
-      assert round(float(sysPlesscreditamount)) == round(presysPlesscreditamount + credit)
-      assert float(sysPadddepositreceived) == presysPadddepositreceived + deposit
-      assert float(sysPdepositdeducted) == presysPdepositdeducted
-      assert float(sysPlessdepositrefund) == presysPlessdepositrefund - depositreturn
-      assert float(sysPaddcollectionfromreceivables) == presysPaddcollectionfromreceivables + creditsettlement
-      assert float(sysPlesscashdiscount) == presysPlesscashdiscount + discount
-      print("sysPtotalcollection", sysPtotalcollection)
-      result2 = presysPtotalcollection + cash - cashreturn + deposit - depositreturn + creditsettlement
-      print("result2", result2)
-      assert float(sysPtotalcollection) == round(result2)
+      if appPort == '81':
+         print(">>START: verifySystemPharmacyUserCollectionReport")
+         print("cash", cash)
+         print("cashreturn", cashreturn)
+         print("presysPnetcashcollection", presysPnetcashcollection)
+         print("sysPnetcashcollection", sysPnetcashcollection)
+         newCashCollection = presysPnetcashcollection + cash - cashreturn
+         print("newCashCollection", newCashCollection)
+         #assert round(float(sysPnetcashcollection)) == round(float(newCashCollection))
+         assert int(sysPnetcashcollection) == int(round(newCashCollection))
+         result = str(float(presysPgrosstotalsales) + cash + credit)
+         print("result", result)
+         print("sysPgrosstotalsales", sysPgrosstotalsales)
+         print("presysPgrosstotalsales", presysPgrosstotalsales)
+         #sysPgrosstotalsales = sysPgrosstotalsales.partition(".")[0]
+         #result = result.partition(".")[0]
+         #print("result", result)
+         print("sysPgrosstotalsales", sysPgrosstotalsales)
+         assert sysPgrosstotalsales == result
+         assert float(sysPdiscount) == presysPdiscount + discount
+         print("sysPreturnsubtotal", sysPreturnsubtotal)
+         print("presysPreturnsubtotal", presysPreturnsubtotal)
+         assert round(float(sysPreturnsubtotal)) == round(float(presysPreturnsubtotal + cashreturn + creditreturn))
+         assert float(sysPreturndiscount) == presysPreturndiscount + discount
+         assert round(float(sysPreturnamount)) == round(float(presysPreturnamount + cashreturn + creditreturn + discount))
+         print("presysPnetsales", presysPnetsales)
+         print("sysPnetsales", sysPnetsales)
+         assert round(float(sysPnetsales)) == round(float(presysPnetsales + cash + credit - cashreturn - creditreturn - discount))
+         print("sysPlesscreditamount", sysPlesscreditamount)
+         print("presysPlesscreditamount", presysPlesscreditamount)
+         print("Credit", credit)
+         assert round(float(sysPlesscreditamount)) == round(presysPlesscreditamount + credit)
+         assert float(sysPadddepositreceived) == presysPadddepositreceived + deposit
+         assert float(sysPdepositdeducted) == presysPdepositdeducted
+         assert float(sysPlessdepositrefund) == presysPlessdepositrefund - depositreturn
+         assert float(sysPaddcollectionfromreceivables) == presysPaddcollectionfromreceivables + creditsettlement
+         assert float(sysPlesscashdiscount) == presysPlesscashdiscount + discount
+         print("sysPtotalcollection", sysPtotalcollection)
+         result2 = presysPtotalcollection + cash - cashreturn + deposit - depositreturn + creditsettlement
+         print("result2", result2)
+         assert float(sysPtotalcollection) == round(result2)
+      if appPort == '82':
+         print(">>START: verifySystemPharmacyUserCollectionReport")
+         print("cash", cash)
+         print("cashreturn", cashreturn)
+         print("presysPnetcashcollection", presysPnetcashcollection)
+         print("sysPnetcashcollection", sysPnetcashcollection)
+         newCashCollection = presysPnetcashcollection + cash - cashreturn
+         print("newCashCollection", newCashCollection)
+         assert round(float(sysPnetcashcollection)) == round(float(newCashCollection))
+         result = str(float(presysPgrosstotalsales) + cash + credit)
+         print("result", result)
+         print("sysPgrosstotalsales", sysPgrosstotalsales)
+         print("presysPgrosstotalsales", presysPgrosstotalsales)
+         #sysPgrosstotalsales = sysPgrosstotalsales.partition(".")[0]
+         #result = result.partition(".")[0]
+         #print("result", result)
+         print("sysPgrosstotalsales", sysPgrosstotalsales)
+         assert sysPgrosstotalsales == result
+         assert float(sysPdiscount) == presysPdiscount + discount
+         print("sysPreturnsubtotal", sysPreturnsubtotal)
+         print("presysPreturnsubtotal", presysPreturnsubtotal)
+         assert round(float(sysPreturnsubtotal)) == round(float(presysPreturnsubtotal + cashreturn + creditreturn))
+         assert float(sysPreturndiscount) == presysPreturndiscount + discount
+         assert round(float(sysPreturnamount)) == round(float(presysPreturnamount + cashreturn + creditreturn + discount))
+         print("presysPnetsales", presysPnetsales)
+         print("sysPnetsales", sysPnetsales)
+         assert round(float(sysPnetsales)) == round(float(presysPnetsales + cash + credit - cashreturn - creditreturn - discount))
+         print("sysPlesscreditamount", sysPlesscreditamount)
+         print("presysPlesscreditamount", presysPlesscreditamount)
+         print("Credit", credit)
+         assert round(float(sysPlesscreditamount)) == round(presysPlesscreditamount + credit)
+         assert float(sysPadddepositreceived) == presysPadddepositreceived + deposit
+         assert float(sysPdepositdeducted) == presysPdepositdeducted
+         assert float(sysPlessdepositrefund) == presysPlessdepositrefund - depositreturn
+         assert float(sysPaddcollectionfromreceivables) == presysPaddcollectionfromreceivables + creditsettlement
+         assert float(sysPlesscashdiscount) == presysPlesscashdiscount + discount
+         print("sysPtotalcollection", sysPtotalcollection)
+         result2 = presysPtotalcollection + cash - cashreturn + deposit - depositreturn + creditsettlement
+         print("result2", result2)
+         x = float(sysPtotalcollection)
+         print("X", x)
+         y = float(result2)
+         print("Y", x)
+         assert x == y
 
    # Module: Dispensary ------------------
    def createDispensarySale(self, qty, paymentmode):
@@ -2936,7 +3275,7 @@ class A:
       HospitalNo = self.danpheEMR.find_element_by_xpath("(//div[@col-id='PatientCode'])[2]").text
 
 #Module: ADT -----------------------------
-   def admitDisTrans(self, admit, discharge, trasfer, deposit):
+   def admitDisTrans(self, admit, discharge, trasfer, deposit, doctor, department):
       if admit == 1:
          if appPort == "81":
             time.sleep(5)
@@ -2946,11 +3285,11 @@ class A:
             time.sleep(5)
             self.danpheEMR.find_element_by_link_text("Admit").click()
             time.sleep(9)
-            self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys("Medicine")
+            self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(department)
             time.sleep(2)
             self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(Keys.TAB)
             time.sleep(5)
-            self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Doctor Name']").send_keys("Dr. JAMAAL MORGAN")
+            self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Doctor Name']").send_keys(doctor)
             time.sleep(2)
             #self.danpheEMR.find_element_by_xpath("//label[contains(text(),'Admitting Doctor')]/following-sibling::div").send_keys(Keys.TAB)
             self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Doctor Name']").send_keys(Keys.TAB)
@@ -3206,9 +3545,10 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(9)
-         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Confirm Discharge')]").click()
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
          time.sleep(2)
          self.danpheEMR.find_element_by_xpath("//div[3]/textarea").send_keys("Patient discharging")
+         time.sleep(3)
          self.danpheEMR.find_element_by_xpath("(//button[@type='button'])[5]").click()
          time.sleep(10)
          element = self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
@@ -3455,47 +3795,90 @@ class A:
       global systotaldiscount
       global systotalnetsales
       time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Reports").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Billing Reports").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Income Segregation')]").click()
-      time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      time.sleep(15)
-      sysunit = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[1]").text
-      print("sysunit", sysunit)
-      syscashgrosssales = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[2]").text
-      print("syscashgrosssales", syscashgrosssales)
-      syscashdiscount = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[3]").text
-      print("syscashdiscount", syscashdiscount)
-      syscreditgrosssales = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[4]").text
-      print("syscreditgrosssales", syscreditgrosssales)
-      syscreditdiscount = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[5]").text
-      print("syscreditdiscount", syscreditdiscount)
-      sysreturnqty = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[6]").text
-      print("sysreturnqty", sysreturnqty)
-      sysreturnamount = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[7]").text
-      print("sysreturnamount", sysreturnamount)
-      sysreturndiscount = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[8]").text
-      print("sysreturndiscount", sysreturndiscount)
-      systotalgrosssales = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[9]").text
-      print("systotalgrosssales", systotalgrosssales)
-      systotaldiscount = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[10]").text
-      print("systotaldiscount", systotaldiscount)
-      systotalnetsales = self.danpheEMR.find_element_by_xpath(
-         "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
-      print("systotalnetsales", systotalnetsales)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Income Segregation')]").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+         time.sleep(15)
+         sysunit = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[1]").text
+         print("sysunit", sysunit)
+         syscashgrosssales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[2]").text
+         print("syscashgrosssales", syscashgrosssales)
+         syscashdiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[3]").text
+         print("syscashdiscount", syscashdiscount)
+         syscreditgrosssales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[4]").text
+         print("syscreditgrosssales", syscreditgrosssales)
+         syscreditdiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[5]").text
+         print("syscreditdiscount", syscreditdiscount)
+         sysreturnqty = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[6]").text
+         print("sysreturnqty", sysreturnqty)
+         sysreturnamount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[7]").text
+         print("sysreturnamount", sysreturnamount)
+         sysreturndiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[8]").text
+         print("sysreturndiscount", sysreturndiscount)
+         systotalgrosssales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[9]").text
+         print("systotalgrosssales", systotalgrosssales)
+         systotaldiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[10]").text
+         print("systotaldiscount", systotaldiscount)
+         systotalnetsales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
+         print("systotalnetsales", systotalnetsales)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Income Segregation')]").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+         time.sleep(15)
+         #sysunit = self.danpheEMR.find_element_by_xpath(
+         #   "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[1]").text
+         #print("sysunit", sysunit)
+         #syscashgrosssales = self.danpheEMR.find_element_by_xpath(
+         #   "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[2]").text
+         #print("syscashgrosssales", syscashgrosssales)
+         syscashdiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[3]").text
+         print("syscashdiscount", syscashdiscount)
+         syscreditgrosssales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[4]").text
+         print("syscreditgrosssales", syscreditgrosssales)
+         syscreditdiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[5]").text
+         print("syscreditdiscount", syscreditdiscount)
+         sysreturnqty = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[6]").text
+         print("sysreturnqty", sysreturnqty)
+         sysreturnamount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[7]").text
+         print("sysreturnamount", sysreturnamount)
+         sysreturndiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[8]").text
+         print("sysreturndiscount", sysreturndiscount)
+         systotalgrosssales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[9]").text
+         print("systotalgrosssales", systotalgrosssales)
+         systotaldiscount = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[10]").text
+         print("systotaldiscount", systotaldiscount)
+         systotalnetsales = self.danpheEMR.find_element_by_xpath(
+            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
+         print("systotalnetsales", systotalnetsales)
       print("<<END getIncomeSegregation")
 
    def preSystemIncomeSegregation(self):
@@ -3698,11 +4081,11 @@ class A:
          self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
          time.sleep(3)
       if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("Inventory").click()
-         time.sleep(2)
+         #self.danpheEMR.find_element_by_link_text("Inventory").click()
+         #time.sleep(2)
          self.danpheEMR.find_element_by_link_text("Procurement").click()
-         time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
+         #time.sleep(3)
+         #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
          time.sleep(5)
          self.danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
          time.sleep(5)
@@ -3721,6 +4104,7 @@ class A:
          self.danpheEMR.find_element_by_id("rateip0").clear()
          self.danpheEMR.find_element_by_id("rateip0").send_keys(rate)
          self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
+
          time.sleep(3)
       print("<<END: createGoodReceipt")
 
@@ -3984,7 +4368,24 @@ class A:
       calcTotalStockValue = float(calcTotalStockValue)
       TotalStockValuec = float(TotalStockValue)
       assert round(float(TotalStockValuec)) == round(float(calcTotalStockValue))
-
+   def selectInventory(self, inventory):
+      time.sleep(5)
+      if appPort == '81':
+         print("This is test")
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Inventory").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+         time.sleep(3)
+   def selectDispensary(self, dispensary):
+      time.sleep(5)
+      if appPort == '81':
+         print("This is test")
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Dispensary").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
+         time.sleep(3)
    def getInventorySummaryReport(self):
       global OpeningValue
       global OpeningQty
@@ -3999,56 +4400,111 @@ class A:
       global ClosingValue
       global ClosingQty
       time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Inventory").click()
-      time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
-      time.sleep(7)
-      OpeningValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      OpeningValue = float(OpeningValue.replace(',', ''))
-      print("OpeningValue", OpeningValue)
-      OpeningQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("OpeningQty", OpeningQty)
-      PurchaseValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      PurchaseValue = float(PurchaseValue.replace(',', ''))
-      print("PurchaseValue", PurchaseValue)
-      PurchaseQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("PurchaseQty", PurchaseQty)
-      StockManageInValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      StockManageInValue = float(StockManageInValue.replace(',', ''))
-      print("StockManageInValue", StockManageInValue)
-      StockManageInQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("StockManageInQty", StockManageInQty)
-      StockManageOutValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      StockManageOutValue = float(StockManageOutValue.replace(',', ''))
-      print("StockManageOutValue", StockManageOutValue)
-      StockManageOutQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("StockManageOutQty", StockManageOutQty)
-      ConsumptionValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      ConsumptionValue = float(ConsumptionValue.replace(',', ''))
-      print("ConsumptionValue", ConsumptionValue)
-      ConsumptionQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("ConsumptionQty", ConsumptionQty)
-      ClosingValue = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      ClosingValue = float(ClosingValue.replace(',', ''))
-      print("ClosingValue", ClosingValue)
-      ClosingQty = self.danpheEMR.find_element_by_xpath(
-         "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      print("ClosingQty", ClosingQty)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("ssInventory").click()
+         time.sleep(5)
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
+         time.sleep(7)
+         OpeningValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         OpeningValue = float(OpeningValue.replace(',', ''))
+         print("OpeningValue", OpeningValue)
+         OpeningQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("OpeningQty", OpeningQty)
+         PurchaseValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         PurchaseValue = float(PurchaseValue.replace(',', ''))
+         print("PurchaseValue", PurchaseValue)
+         PurchaseQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("PurchaseQty", PurchaseQty)
+         StockManageInValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         StockManageInValue = float(StockManageInValue.replace(',', ''))
+         print("StockManageInValue", StockManageInValue)
+         StockManageInQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("StockManageInQty", StockManageInQty)
+         StockManageOutValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         StockManageOutValue = float(StockManageOutValue.replace(',', ''))
+         print("StockManageOutValue", StockManageOutValue)
+         StockManageOutQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("StockManageOutQty", StockManageOutQty)
+         ConsumptionValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         ConsumptionValue = float(ConsumptionValue.replace(',', ''))
+         print("ConsumptionValue", ConsumptionValue)
+         ConsumptionQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("ConsumptionQty", ConsumptionQty)
+         ClosingValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         ClosingValue = float(ClosingValue.replace(',', ''))
+         print("ClosingValue", ClosingValue)
+         ClosingQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("ClosingQty", ClosingQty)
+
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Inventory").click()
+         time.sleep(5)
+         #self.danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
+         time.sleep(7)
+         OpeningValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         OpeningValue = float(OpeningValue.replace(',', ''))
+         print("OpeningValue", OpeningValue)
+         OpeningQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("OpeningQty", OpeningQty)
+         PurchaseValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         PurchaseValue = float(PurchaseValue.replace(',', ''))
+         print("PurchaseValue", PurchaseValue)
+         PurchaseQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("PurchaseQty", PurchaseQty)
+         StockManageInValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         StockManageInValue = float(StockManageInValue.replace(',', ''))
+         print("StockManageInValue", StockManageInValue)
+         StockManageInQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("StockManageInQty", StockManageInQty)
+         StockManageOutValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         StockManageOutValue = float(StockManageOutValue.replace(',', ''))
+         print("StockManageOutValue", StockManageOutValue)
+         StockManageOutQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("StockManageOutQty", StockManageOutQty)
+         ConsumptionValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         ConsumptionValue = float(ConsumptionValue.replace(',', ''))
+         print("ConsumptionValue", ConsumptionValue)
+         ConsumptionQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("ConsumptionQty", ConsumptionQty)
+         ClosingValue = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         ClosingValue = float(ClosingValue.replace(',', ''))
+         print("ClosingValue", ClosingValue)
+         ClosingQty = self.danpheEMR.find_element_by_xpath(
+            "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+         print("ClosingQty", ClosingQty)
 
    def preInventorySummaryReport(self):
       global preOpeningValue
@@ -4082,7 +4538,11 @@ class A:
       time.sleep(3)
       assert OpeningValue == preOpeningValue
       assert OpeningQty == preOpeningQty
-      assert PurchaseValue == prePurchaseValue + purchaseamount
+      x = PurchaseValue
+      print("x", x)
+      y = prePurchaseValue + purchaseamount
+      print("y", y)
+      assert x == y
       assert int(PurchaseQty) == int(prePurchaseQty) + purchaseqty
       calcNewStockManageInValue = preStockManageInValue + manageinamount   #
       print("calcNewStockManageInValue", calcNewStockManageInValue)        #
@@ -4156,20 +4616,41 @@ class A:
 #Module: Billing report: Deposit Report*********************
    def verifyDepositBalanceReport(self, deposit):
       print(">>START: verifyDepositBalanceReport")
-      self.danpheEMR.find_element_by_link_text("Reports").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Billing Reports").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Deposit Balance')]").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(3)
-      hospitalno = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-      #assert HospitalNo == hospitalno
-      depositamt = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
-      print(depositamt)
-      print(deposit)
-      assert int(depositamt) == deposit
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Deposit Balance')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         hospitalno = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+         #assert HospitalNo == hospitalno
+         depositamt = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
+         x = int(depositamt)
+         y = int(deposit)
+         print("x", x)
+         print("y", y)
+         assert x == y
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Deposit Balance')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+         time.sleep(3)
+         hospitalno = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+         #assert HospitalNo == hospitalno
+         time.sleep(4)
+         depositamt = self.danpheEMR.find_element_by_xpath("(//div[@col-id='DepositBalance'])[2]").text
+         x = int(depositamt)
+         y = int(deposit)
+         print("x", x)
+         print("y", y)
+         assert x == y
       print("<<END: verifyDepositBalanceReport")
 
 #Module: Billing report: Department Summary Report**********
@@ -4181,39 +4662,75 @@ class A:
       global sysprovisionalamount
       global syscancelamount
       global syscreditamount
-      self.danpheEMR.find_element_by_link_text("Reports").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Billing Reports").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Department Summary')]").click()
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").clear()
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys("OPD")
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
-         Keys.ARROW_DOWN)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
-      time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
-         Keys.RETURN)
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      time.sleep(9)
-      sysgrosstotal = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td").text
-      print(sysgrosstotal)
-      sysdiscountamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[2]").text
-      print(sysdiscountamount)
-      sysreturnamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[3]").text
-      print(sysreturnamount)
-      sysnetsales = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[4]").text
-      print(sysnetsales)
-      sysprovisionalamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td").text
-      print(sysprovisionalamount)
-      syscancelamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[2]").text
-      print(syscancelamount)
-      syscreditamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[3]").text
-      print(syscreditamount)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Department Summary')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").clear()
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys("OPD")
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
+            Keys.ARROW_DOWN)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
+            Keys.RETURN)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+         time.sleep(9)
+         sysgrosstotal = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td").text
+         print(sysgrosstotal)
+         sysdiscountamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[2]").text
+         print(sysdiscountamount)
+         sysreturnamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[3]").text
+         print(sysreturnamount)
+         sysnetsales = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[4]").text
+         print(sysnetsales)
+         sysprovisionalamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td").text
+         print(sysprovisionalamount)
+         syscancelamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[2]").text
+         print(syscancelamount)
+         syscreditamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[3]").text
+         print(syscreditamount)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Billing Reports").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Department Summary')]").click()
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").clear()
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys("Department OPD")
+         time.sleep(3)
+         #self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
+         #   Keys.ARROW_DOWN)
+         #time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
+         time.sleep(3)
+         self.danpheEMR.find_element_by_xpath("//input[@placeholder='Enter Service Department Name']").send_keys(
+            Keys.RETURN)
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+         time.sleep(9)
+         sysgrosstotal = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td").text
+         print(sysgrosstotal)
+         sysdiscountamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[2]").text
+         print(sysdiscountamount)
+         sysreturnamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[3]").text
+         print(sysreturnamount)
+         sysnetsales = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr/td[4]").text
+         print(sysnetsales)
+         sysprovisionalamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td").text
+         print(sysprovisionalamount)
+         syscancelamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[2]").text
+         print(syscancelamount)
+         syscreditamount = self.danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[3]").text
+         print(syscreditamount)
+
 
    def preSystemDepartmentSummary(self):
       global presysgrosstotal

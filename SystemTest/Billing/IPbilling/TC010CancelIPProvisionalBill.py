@@ -7,9 +7,10 @@ foUserPwd = GSV.foUserPwD
 
 usgtest = GSV.USG
 usgprice = GSV.usgRate
-deposit = 0
 admisioncharge = GSV.admitRate
-
+Deposit1 = GSV.deposit
+Department1 = GSV.department1
+Doctor1 = GSV.doctor1
 
 CPB = A()
 CPB.openBrowser()
@@ -21,7 +22,7 @@ CPB.patientRegistration()
 CPB.counteractivation()
 CPB.dischargeRandomPatient()
 CPB.getBillingDashboard()
-CPB.admitDisTrans(1, 0, 0, deposit)
+CPB.admitDisTrans(1, 0, 0, deposit=Deposit1, doctor=Doctor1, department=Department1)
 CPB.preSystemDataBillingDashboard()
 CPB.getBillingDashboard()
 CPB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,

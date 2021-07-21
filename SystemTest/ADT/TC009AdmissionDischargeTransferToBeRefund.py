@@ -11,6 +11,8 @@ foUserPwd = GSV.foUserPwD
 # admin  user login
 admUserId = GSV.adminUserID
 admUserPwd = GSV.adminUserPwD
+doctor = GSV.doctor1
+department = GSV.department1
 
 #------------Local Veriables-------------------
 labitem = GSV.UrineRE
@@ -32,7 +34,7 @@ ADT.login(foUserId, foUserPwd)
 ADT.patientRegistration()
 ADT.counteractivation()
 ADT.createlabxrayinvoice(labitem, imagingitem)
-ADT.admitDisTrans(1, 0, 0, deposit)
+ADT.admitDisTrans(1, 0, 0, deposit, doctor=doctor, department=department)
 ADT.billingIP(admitCharge, deposit)
 ADT.verifyDuplicateBill()
 ADT.logout()

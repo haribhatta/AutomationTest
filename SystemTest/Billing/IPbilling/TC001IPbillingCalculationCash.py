@@ -11,6 +11,8 @@ test1rate = GSV.usgRate
 test2 = GSV.BTCT
 test2rate = GSV.btctRate
 paymode = "Cash"
+doctor1 = GSV.doctor1
+department1 = GSV.department1
 
 ip.openBrowser()
 ip.login(foUserId, foUserPwd)
@@ -18,7 +20,7 @@ ip.counteractivation()
 ip.dischargeRandomPatient()  # This action is to free bed to admit new patient (Pre-condition to run test script).
 
 ip.patientquickentry(discountpc=0, paymentmode="Cash")
-ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0)
+ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0,doctor=doctor1, department=department1)
 ip.getIPbillingDetails(paymentmode=paymode)
 ip.preIPbillingDetails()
 ip.createIPprovisionalBill(test=test1)

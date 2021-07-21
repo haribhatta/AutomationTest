@@ -8,6 +8,8 @@ foUserPwd = GSV.foUserPwD
 ip = A()
 paymode = "CREDIT"
 itemprice = GSV.admitRate
+doctor = GSV.doctor1
+department = GSV.department1
 
 ip.openBrowser()
 ip.login(foUserId, foUserPwd)
@@ -15,7 +17,7 @@ ip.counteractivation()
 ip.patientRegistration()
 ip.getBillingDashboard()
 ip.preSystemDataBillingDashboard()
-ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0)
+ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0,doctor=0,department=0)
 ip.getBillingDashboard()
 ip.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0, provisional=itemprice, provisionalcancel=0)
 ip.preSystemDataBillingDashboard()

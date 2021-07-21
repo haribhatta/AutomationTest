@@ -9,9 +9,11 @@ cgr = A()
 
 itemname = GSV.stationaryItem1
 qty = 1
+inventory1 = GSV.Inventory1
 
 cgr.openBrowser()
 cgr.login(storeUserId, storeUserPwd)
+cgr.selectInventory(inventory=inventory1)
 cgr.createInventoryGoodReceipt(qty=qty, item=itemname, rate=1)
 cgr.editInventoryGoodsReceipt()
 cgr.createInventoryDirectDispatch(itemname, qty=qty, store=1)

@@ -12,7 +12,7 @@ def files(file,file1,rows,*args):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
-        if Status != ['Passed', 'Blocked']:
+        if Status != 'Passed':
             print(" Status is Norun or Failed")
             base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
@@ -25,8 +25,7 @@ def files(file,file1,rows,*args):
                 sc.writeData(file1, 'test', r, 2, 'Failed')
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
-
-smokesanityresult = "SmokeSanityExecutionResult_"
+smokesanityresult = "SmokeSanity_ExecutionResult_"
 scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
 appVersion = input("Please entry (name+veresion) for Test Summary Report")
 

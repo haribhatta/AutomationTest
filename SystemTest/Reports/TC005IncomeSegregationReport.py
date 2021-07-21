@@ -17,6 +17,8 @@ foUserPwd = GSV.foUserPwD
 rateOPD = GSV.opdRate
 usgtest = GSV.USG
 usgprice = GSV.usgRate
+doctor = GSV.doctor1
+department = GSV.department1
 
 isr = A()
 isr.openBrowser()
@@ -44,7 +46,7 @@ isr.getIncomeSegregation()
 isr.verifyIncomeSegregation(cash=0, cashreturn=0, credit=0, creditreturn=rateOPD, provision=0)
 
 isr.patientquickentry(0, 'Cash')
-isr.admitDisTrans(1, 0, 0, 0)
+isr.admitDisTrans(1, 0, 0, 0, doctor=doctor, department=department)
 isr.getIncomeSegregation()
 isr.createIPprovisionalBill(usgtest)
 isr.preSystemIncomeSegregation()

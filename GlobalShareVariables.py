@@ -9,7 +9,6 @@ import decimal
 import string
 import winsound
 
-
 class GSV:
 
    #defining global veriables for login users
@@ -43,29 +42,33 @@ class GSV:
    storeUserPwD = 'pass123'
 
    # Doctor Name List
-   Doctor1 = "Dr. Doctor Doctor"
+   #Doctor1 = "Dr. Doctor Doctor"
 
    # User Name List
-   UserBilling = 'Ms. Billing Billing'
+   UserBilling = 'Billing Billing'
 
    # Bill Items Name variables for LPH Hospital
-
+   #'''
    opdRate = 30
    CBC = "CBC"
    TFT = "TFT"
+   TFTRate = 800
    LDH = "LDH"
    USG = "USG ABDOMEN/PELVIS"
    usgRate = 700
    admitRate = 30
    UrineRE = "URINE R/E"
+   BTCT = "BT/CT"
+   btctRate = 100
    
    #Drug name
-   drug1BrandName = "MACLAR 500MG TAB"
-   drug1GenericName = "CLARITHROMYCIN"
-   drug1Rate = 563.5
+   drug1BrandName = 'ASTHALIN 2 MG TAB'
+   drug1GenericName = 'SALBUTAMOL 2 MG TAB'
+   drug1Rate = 2.1
 
-   drug2BrandName = 'ASTHALIN 2 MG TAB'
-   drug2BrandRate = 1.14
+   drug2BrandName = "MACLAR 500MG TAB"
+   drug2GenericName = "CLARITHROMYCIN"
+   drug2Rate = 563.5
 
    drug3BrandName = "Sinex tab"
 
@@ -78,19 +81,31 @@ class GSV:
    Testdrug = "testdrugreport"
 
    #Inventory Item name list
+   Inventory1 = "General Inventory"
+   Dispensary1 = "MainDispensary"
    A4Paper = 'Paper A4'
    PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
    photocopypaperRate = 2300
    stationaryItem1 = "DOTPEN"
-   '''
+   
+   doctor1 = "Dr. doctor doctor"
+   department1 = "Medicine"
 
+   # User Name List
+   UserBilling = 'Mr. Bhagawati Pandey'
+
+   deposit = 100
+   #'''
+
+   '''
    # Bill Items Name variables for Charak Hospital
    opdRate = 500
    CBC = "CBC"
    TFT = "TFT"   #TFT(FT3,FT4,TSH) CLLEA
    TFTRate = 1100
    LDH = "LDH"
-   UrineRE = "Urine RE/ME"
+   #UrineRE = "Urine RE/ME"
+   UrineRE = "URINE R/E,M/E" # this gets changed on V1.49.3
    BTCT = "BT/CT"
    btctRate = 200
    USG = "USG (Abdomen / pelvis)"
@@ -98,9 +113,9 @@ class GSV:
    admitRate = 1500
 
    #Drug name for charak pharmacy billing
-   drug1BrandName = "ASTHALIN ROTACAPS"
-   drug1GenericName = "Salbutamol"
-   drug1Rate = 34.59
+   drug1BrandName = "SINEX TAB"
+   drug1GenericName = "quinapril"
+   drug1Rate = 1.15
 
    drug2BrandName = 'ASTHALIN 2 MG TAB'
    drug2BrandRate = 1.14
@@ -116,12 +131,22 @@ class GSV:
    Testdrug = "Testdrugreport"
 
    #Inventory Item name list
+   Inventory1 = "General Inventory"
+   Dispensary1 = "General Inventory"
+
    A4Paper = 'Paper A4'
    PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
    photocopypaperRate = 2300
    stationaryItem1 = "PENCIL"
 
-'''
+   doctor1 = "Dr. doctor doctor"
+   department1 = "Medicine"
+   
+   # User Name List
+   UserBilling = 'Billing Billing'
+   
+   deposit = 200
+#'''
 
    #def __str__(self):
     #  return

@@ -22,9 +22,11 @@ qty = 1
 rate = GSV.photocopypaperRate
 store1 = "Main Store"
 store2 = "OT Store"
+Inventory1 = GSV.Inventory1
 
 cs.openBrowser()
 cs.login(adminUserId, adminUserPwd)
+cs.selectInventory(inventory=Inventory1)
 cs.getInventoryCurrentStockLevelReport(store=store1)
 cs.preInventoryCurrentStockLevelReport()
 cs.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)

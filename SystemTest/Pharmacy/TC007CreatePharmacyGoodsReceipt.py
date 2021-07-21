@@ -5,6 +5,8 @@ from GlobalShareVariables import GSV
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 genericName = GSV.drug1GenericName
+drugName = GSV.drug1BrandName
+drugRate = GSV.drug1Rate
 
 cpgr = A()
 qty = 50
@@ -14,8 +16,8 @@ cpgr.login(pharmacyUserId, pharmacyUserPwd)
 cpgr.activatePharmacyCounter()
 cpgr.addPharmacyItem(genericName)
 cpgr.verifyPharmacyItem()
-cpgr.createPharmacyGoodsReceipt(qty)
-cpgr.verifyPharmacyGoodsReceipt(qty)
+cpgr.createPharmacyGoodsReceipt(qty=qty, DrugName=drugName, grPrice=drugRate)
+cpgr.verifyPharmacyGoodsReceipt(qty=qty, DrugName=drugName)
 cpgr.logout()
 cpgr.closeBrowser()
 #Blocked by bug EMR-2591

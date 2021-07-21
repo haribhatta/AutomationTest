@@ -11,6 +11,7 @@ PSMI = A()
 
 drug = GSV.Testdrug
 drugGenericName = GSV.drug1GenericName
+drugPrice = GSV.drug1Rate
 
 qty = 10
 
@@ -18,7 +19,7 @@ PSMI.openBrowser()
 PSMI.login(pharmacyUserId, pharmacyUserPwd)
 PSMI.activatePharmacyCounter()
 PSMI.addPharmacyItem(drugGenericName)
-PSMI.createPharmacyGoodsReceipt(qty=qty)
+PSMI.createPharmacyGoodsReceipt(qty=qty, drug, grPrice=drugPrice)
 PSMI.getStoreDetail(drugname=drug)
 PSMI.manageStoreStock(drugname=drug, type="In", qty=qty)
 PSMI.verifyStoreDetail(drugname=drug)

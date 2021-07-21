@@ -7,7 +7,7 @@ from GlobalShareVariables import GSV
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-deposit = "200"
+deposit = GSV.deposit
 testname = GSV.CBC
 
 bsddpt = A()

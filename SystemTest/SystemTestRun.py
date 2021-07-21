@@ -24,7 +24,7 @@ def files(file,file1,rows,*args):
                 sc.writeData(file1, 'Sheet1', r, 2, 'Failed')
                 sc.writeData(file1, 'Sheet1', r, 4, RunNoR + 1)
 
-systemtestresult = "SystemTestExecutionResult_"
+systemtestresult = "System_ExecutionResult_"
 scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
 appVersion = input("Please entry (name+veresion) for Test Summary Report")
 

@@ -19,6 +19,8 @@ from GlobalShareVariables import GSV
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
+doctor = GSV.doctor1
+department = GSV.department1
 
 opdticket = GSV.opdRate
 discountpct = 50
@@ -108,7 +110,7 @@ CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, credit
 # 8.2 Provisional IP Bill
 CBDS.patientRegistration()
 CBDS.getBillingDashboard()
-CBDS.admitDisTrans(1, 0, 0, deposit)
+CBDS.admitDisTrans(1, 0, 0, deposit, doctor=doctor, department=department)
 CBDS.preSystemDataBillingDashboard()
 CBDS.getBillingDashboard()
 CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
