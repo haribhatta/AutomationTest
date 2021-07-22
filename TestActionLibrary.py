@@ -1697,7 +1697,7 @@ class A:
          time.sleep(2)
          self.danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Confirm Discharge ']").click()
          time.sleep(7)
-         InvoiceNo = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'2077/2078-')]").text
+         InvoiceNo = self.danpheEMR.find_element_by_xpath("//span[contains(text(),'2078/2079-')]").text
          InvoiceNo = InvoiceNo.partition("- ")[2]
          print("InvoiceNo", InvoiceNo)
          time.sleep(2)
@@ -2679,29 +2679,56 @@ class A:
       global sysdepositreturn
       global sysnetamount
       global sysdiscountamount
-      self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Cash Collection Summary')]").click()
-      time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
-      time.sleep(9)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
-      time.sleep(2)
-      username = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-      sysinvoiceamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
-      print(sysinvoiceamount)
-      sysinvoicereturned = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
-      print(sysinvoicereturned)
-      sysdeposit = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[5]").text
-      print(sysdeposit)
-      sysdepositreturn = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[6]").text
-      print(sysdepositreturn)
-      sysnetamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
-      print(sysnetamount)
-      sysdiscountamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
-      print(sysdiscountamount)
+      if appPort == '81':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Report").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Cash Collection Summary')]").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+         time.sleep(9)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
+         time.sleep(2)
+         username = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+         sysinvoiceamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
+         print(sysinvoiceamount)
+         sysinvoicereturned = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
+         print(sysinvoicereturned)
+         sysdeposit = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[5]").text
+         print(sysdeposit)
+         sysdepositreturn = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[6]").text
+         print(sysdepositreturn)
+         sysnetamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+         print(sysnetamount)
+         sysdiscountamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+         print(sysdiscountamount)
+      if appPort == '82':
+         self.danpheEMR.find_element_by_link_text("Pharmacy").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Report").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_link_text("Sales").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Cash Collection Summary')]").click()
+         time.sleep(2)
+         self.danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+         time.sleep(9)
+         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
+         time.sleep(2)
+         username = self.danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+         sysinvoiceamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
+         print(sysinvoiceamount)
+         sysinvoicereturned = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
+         print(sysinvoicereturned)
+         sysdeposit = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[5]").text
+         print(sysdeposit)
+         sysdepositreturn = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[6]").text
+         print(sysdepositreturn)
+         sysnetamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+         print(sysnetamount)
+         sysdiscountamount = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+         print(sysdiscountamount)
    def preSystemPharmacyCashCollectionSummary(self):
       global presysinvoiceamount
       global presysinvoicereturned
@@ -2902,9 +2929,11 @@ class A:
          print("sysPtotalcollection", sysPtotalcollection)
          result2 = presysPtotalcollection + cash - cashreturn + deposit - depositreturn + creditsettlement
          print("result2", result2)
-         x = float(sysPtotalcollection)
+         x = str(sysPtotalcollection)
+         x = x.replace(" ", "")
          print("X", x)
-         y = float(result2)
+         y = str(result2)
+         y = y.replace(" ", "")
          print("Y", x)
          assert x == y
 
