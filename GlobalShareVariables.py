@@ -87,7 +87,12 @@ class GSV:
    PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
    photocopypaperRate = 2300
    stationaryItem1 = "DOTPEN"
-   
+
+   #Sub Store Name list
+   SubStore1 = "General"
+   SubStore2 = "PostOps"
+
+   #Doctor/Department List
    doctor1 = "Dr. doctor doctor"
    department1 = "Medicine"
 
@@ -138,7 +143,12 @@ class GSV:
    PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
    photocopypaperRate = 2300
    stationaryItem1 = "PENCIL"
+   
+   #Sub Store Name list
+   SubStore1 = "General"
+   SubStore2 = "PostOps"
 
+   #Doctor/Department List
    doctor1 = "Dr. doctor doctor"
    department1 = "Medicine"
    
@@ -146,7 +156,7 @@ class GSV:
    UserBilling = 'Billing Billing'
    
    deposit = 200
-#'''
+'''
 
    #def __str__(self):
     #  return
