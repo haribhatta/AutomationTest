@@ -2,6 +2,7 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+# from selenium.webdriver.common.action_chains import ActionChains
 from GlobalShareVariables import GSV
 from LocalShareVariables import LSV
 from decimal import Decimal
@@ -73,15 +74,14 @@ class A:
 
       print(">>Open Browser: START")
       self.danpheEMR = webdriver.Chrome(ChromePath)
-
-      #self.danpheEMR = webdriver.Chrome('D:/AutomationGIT/drivers/chromedriver.exe')
-      #danpheEMR = webdriver.Chrome(ChromeDriverManager().install())
+      # self.danpheEMR = webdriver.Chrome('E:/chromedriver_win32/chromedriver.exe')
+      # self.danpheEMR = webdriver.Chrome(ChromeDriverManager().install())
       self.danpheEMR.set_window_position(-2000, 0)
       self.danpheEMR.maximize_window()
       print("App url", appURL)
       print("Opening browser for", appURL)
       self.danpheEMR.get(appURL)
-      #self.danpheEMR.find_element_by_xpath("//button[contains(text(),'Advanced')]").click()   --- This is to add SSL exceptional
+      #self.danpheEMR.find_ element_by_xpath("//button[contains(text(),'Advanced')]").click()   --- This is to add SSL exceptional
       #time.sleep(2)
       #self.danpheEMR.find_element_by_xpath("//button[contains(text(),'Advanced')]").click()
       #time.sleep(2)
@@ -5125,6 +5125,27 @@ class A:
       self.danpheEMR.find_element_by_css_selector(".fa-plus").click()
       self.danpheEMR.find_element_by_id("DrCr_2").click()
    #def insuranceBilling(self, itemName):
+     # Emergency Module
+   def EmergencyRegistration(self):
+       self.danpheEMR.find_element_by_link_text("Emergency").click()
+       time.sleep(3)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'New patient')]").click()
+       time.sleep(3)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'New Registration ')]").click()
+       time.sleep(5)
+       # self.danpheEMR.find_element_by_id("erPatFirstName").send_keys("ram")
+       self.danpheEMR.find_element_by_xpath("//span[contains(text(),'Add Unknown ER-Patient')]").click()
+       time.sleep(2)
+       self.danpheEMR.find_element_by_id("erPatGender").send_keys("M")
+       self.danpheEMR.find_element_by_xpath("//button[@id='register']").click()
+   # Setting Module
+
+   def Setting(self):
+       self.danpheEMR.find_element_by_link_text("Settings").click()
+       time.sleep(5)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Security')]").click()
+       time.sleep(3)
+
 
    def wait_for_window(self, timeout=2):
       time.sleep(round(timeout / 1000))
