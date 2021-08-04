@@ -95,6 +95,7 @@ class GSV:
    #Doctor/Department List
    doctor1 = "Dr. doctor doctor"
    department1 = "Medicine"
+   doctor2 = "Mr. admin admin"
 
    # User Name List
    UserBilling = 'Mr. Bhagawati Pandey'

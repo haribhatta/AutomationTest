@@ -2095,7 +2095,7 @@ class A:
       pInvoiceNo = self.danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
       print("pInvoiceNo", pInvoiceNo)
       self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
-      pInvoiceNo = pInvoiceNo.partition("PH")[2]
+      epInvoiceNo = pInvoiceNo.partition("PH")[2]
       print("Create Pharmacy OPD Invoice: END<<")
    def createPharmacyInvoiceAnonymous(self, drugname, qty, paymentmode):
       print(">>Create Pharmacy OPD Invoice: START")
@@ -5139,12 +5139,46 @@ class A:
        self.danpheEMR.find_element_by_id("erPatGender").send_keys("M")
        self.danpheEMR.find_element_by_xpath("//button[@id='register']").click()
    # Setting Module
+   # Adding user
+   def Setting_add_employee(self):
+       global randomnum
+       self.danpheEMR.find_element_by_link_text("Settings").click()
+       time.sleep(5)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Employee')]").click()
+       time.sleep(5)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Add Employee')]").click()
+       time.sleep(5)
+       randomnum = str(random.randint(1111, 9999))
+       self.danpheEMR.find_element_by_id("FirstName").send_keys("DR. Ankit", randomnum)
+       self.danpheEMR.find_element_by_id("LastName").send_keys("lastname")
+       dropdown = self.danpheEMR.find_element_by_id("Gender")
+       dropdown.send_keys("M")
+       self.danpheEMR.find_element_by_id("EmployeeDepartment").send_keys("admin")
+       # self.danpheEMR.find_element_by_id("isApptApplicable").click()
+       self.danpheEMR.find_element_by_id("Add").click()
 
-   def Setting(self):
+   def Setting_Adding_User(self):
+       global randomnum
+
        self.danpheEMR.find_element_by_link_text("Settings").click()
        time.sleep(5)
        self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Security')]").click()
-       time.sleep(3)
+       time.sleep(5)
+       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Add User')]").click()
+       time.sleep(5)
+       Select_emp= self.danpheEMR.find_element_by_id("EmployeeId")
+       Select_emp.send_keys(Keys.TAB)
+       user_name = self.danpheEMR.find_element_by_id("UserName")
+       user_name.send_keys("Ankit", randomnum)
+       Email = self.danpheEMR.find_element_by_id("EmailId")
+       Email.send_keys("ankit", randomnum, "@gmail.com")
+       password = self.danpheEMR.find_element_by_id("Password").send_keys("pass123")
+       self.danpheEMR.find_element_by_id("Addbtn").click()
+
+
+
+
+
 
 
    def wait_for_window(self, timeout=2):
