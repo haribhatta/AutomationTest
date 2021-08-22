@@ -38,7 +38,7 @@ class GSV:
    nurseUserPwD = 'pass123'
 
    #store user
-   storeUserID = 'inventory'
+   storeUserID = 'store'
    storeUserPwD = 'pass123'
 
    # Doctor Name List
@@ -48,7 +48,7 @@ class GSV:
    UserBilling = 'Billing Billing'
 
    # Bill Items Name variables for LPH Hospital
-   #'''
+   '''
    opdRate = 30
    CBC = "CBC"
    TFT = "TFT"
@@ -101,9 +101,9 @@ class GSV:
    UserBilling = 'Mr. Bhagawati Pandey'
 
    deposit = 100
-   #'''
-
    '''
+
+   #'''
    # Bill Items Name variables for Charak Hospital
    opdRate = 500
    CBC = "CBC"
@@ -152,12 +152,9 @@ class GSV:
    #Doctor/Department List
    doctor1 = "Dr. doctor doctor"
    department1 = "Medicine"
-   
-   # User Name List
-   UserBilling = 'Billing Billing'
-   
+
    deposit = 200
-'''
+#'''
 
    #def __str__(self):
     #  return
