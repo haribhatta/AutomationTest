@@ -1,10 +1,10 @@
 from selenium import webdriver
 import time
-#from selenium.webdriver.common.keys import Keys
-#from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 # from selenium.webdriver.common.action_chains import ActionChains
-from AutomationTest.GlobalShareVariables import GSV
-from AutomationTest.LocalShareVariables import LSV
+from GlobalShareVariables import GSV
+from LocalShareVariables import LSV
 from decimal import Decimal
 import random
 class A:
@@ -68,10 +68,15 @@ class A:
       usgLPH = "USG ABDOMEN/PELVIS"
       usgAbdomenPelvisRate = 1050
       doctor1 = "Dr. Doctor Doctor"
-      appURL = "http://10.0.0.103:"
+      #appURL = "http://10.0.0.103:"
+      appURL = "http://202.51.74.168:"
       appPort = input(print("Enter Application port:"))
+      '''
       if appPort == "82":
          appURL = "http://10.0.0.103:81"
+         '''
+      if appPort == "129":
+         appURL = "http://202.51.74.168:129"
 
       #if appPort == "81":
       print(">>Open Browser: START")
@@ -175,13 +180,16 @@ class A:
       #       "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
       #    print("HospitalNo:", HospitalNo)
 
-      if appPort == "82":
+      #if appPort == "82":
+      if appPort == "129":
          time.sleep(2)
-         self.danpheEMR.find_element_by_link_text("Registration").click()
+         #self.danpheEMR.find_element_by_link_text("Registration").click()
+         self.danpheEMR.find_element_by_link_text("Appointment").click()
          time.sleep(2)
          self.danpheEMR.find_element_by_id("btnNewPatient").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_id("txtDepartment").send_keys("GYNAE & OBS")
+         #self.danpheEMR.find_element_by_id("txtDepartment").send_keys("GYNAE & OBS")
+         self.danpheEMR.find_element_by_id("txtDepartment").send_keys("OBG Gynae")
          self.danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
          self.danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
          self.danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")

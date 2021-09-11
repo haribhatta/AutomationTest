@@ -1,5 +1,5 @@
-from AutomationTest.TestActionLibrary import A
-from AutomationTest.GlobalShareVariables import GSV
+from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
 foUserId = GSV.foUserID
