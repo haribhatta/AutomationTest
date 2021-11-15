@@ -1,22 +1,25 @@
-from TestActionLibrary import A
-from TestActionLibrary import GSV
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
 
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
-#-------- Billing Items ---------
-labitem = GSV.TFT
-imagingitem = GSV.USG
-
-oblx = A()
-oblx.openBrowser()
-oblx.login(foUserId, foUserPwd)
-oblx.counteractivation()
-oblx.patientquickentry(0, 'Cash')
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+labTestTFT = GSV.TFT
+radioTestUSG = GSV.USG
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae)
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
-oblx.createlabxrayinvoice(labitem, imagingitem)
+LB.createlabxrayinvoice(labTestTFT, radioTestUSG)
 #oblx.verifylabxrayinvoice()
-oblx.logout()
-oblx.closeBrowser()
+AC.logout()
+AC.closeBrowser()
 print("Status:Passed -> TC002OPDbillingLabXray.py")

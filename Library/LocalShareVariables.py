@@ -11,5 +11,5 @@ import winsound
 class LSV:
 
     # local paths
-    ChromeDriverPath = 'D:/QA/Automation/AutomationTest/drivers/chromedriver.exe'
-    SystemTestPath = 'D:\QA\Automation\AutomationTest\SystemTest'
+    ChromeDriverPath = 'E:/QA/AutomationTest/drivers/chromedriver.exe'
+    SystemTestPath = 'E:\QA\AutomationTest\SystemTest'

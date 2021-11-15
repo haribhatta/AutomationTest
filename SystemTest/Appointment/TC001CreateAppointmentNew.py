@@ -1,7 +1,7 @@
-import AutomationTest.Library.ApplicationConfiguration as AC
-import AutomationTest.Library.GlobalShareVariables as GSV
-import AutomationTest.Library.LibModuleBilling as LB
-import AutomationTest.Library.LibModuleAppointment as LA
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
 
 AC.applicationSelection()
 AC.openBrowser()

@@ -1,15 +1,14 @@
 from selenium import webdriver
 import time
 import random
-import AutomationTest.Library.ApplicationConfiguration as AC
+import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 
 danpheEMR = AC.danpheEMR
 print("DanpheEMR", danpheEMR)
 AppName = AC.appName
-
-
+HospitalNo = None
 # Module:Appointment --------------------
 def patientquickentry(discountpc, paymentmode, department, doctor):
    global InvoiceNo
@@ -24,12 +23,15 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       danpheEMR.find_element_by_link_text("Appointment").click()
       time.sleep(2)
       danpheEMR.find_element_by_id("btnNewPatient").click()
-      time.sleep(2)
+      time.sleep(4)
       danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+      time.sleep(3)
       danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
       time.sleep(3)
       danpheEMR.find_element_by_id("doctorName").send_keys(doctor)
-      danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+      time.sleep(3)
+      #danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+      time.sleep(3)
       danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
       danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")
       sname = str(random.randint(1111, 9999))
@@ -85,6 +87,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       # self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
       # self.danpheEMR.find_element_by_xpath("//a[contains(.,'X')]").click()
       time.sleep(9)
+      return HospitalNo
 
    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
    print("Create New Appointment: END<<")
@@ -103,7 +106,7 @@ def followUpAppointment(self):
       #    time.sleep(2)
       #    self.danpheEMR.find_element_by_css_selector(".btn-success").click()
       #    time.sleep(3)
-      if appPort == '82':
+      if AppName == "SNCH":
           self.danpheEMR.find_element_by_link_text("Registration").click()
           time.sleep(5)
           self.danpheEMR.find_element_by_link_text("List Visits").click()

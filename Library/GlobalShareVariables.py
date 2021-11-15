@@ -1,4 +1,4 @@
-import AutomationTest.Library.ApplicationConfiguration as AC
+import Library.ApplicationConfiguration as AC
 
 application = AC.appName
 

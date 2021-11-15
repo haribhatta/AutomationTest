@@ -1,6 +1,6 @@
 from selenium import webdriver
 import time
-from AutomationTest.Library.LocalShareVariables import LSV
+from Library.LocalShareVariables import LSV
 
 appName = input("Please enter project/application name:\n"
             "SNCH\n"
