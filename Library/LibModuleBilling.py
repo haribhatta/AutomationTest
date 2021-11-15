@@ -1,6 +1,8 @@
 from selenium import webdriver
 import time
 import Library.ApplicationConfiguration as AC
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
@@ -134,6 +136,7 @@ def creditPayment(HospitalNo):
 def createlabxrayinvoice(labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     global InvoiceNo
+    print("Hospital Number:", HospitalNo)
     if AppName == "SNCH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(5)
