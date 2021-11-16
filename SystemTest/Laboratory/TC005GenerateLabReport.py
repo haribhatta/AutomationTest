@@ -1,32 +1,38 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-from GlobalShareVariables import GSV
-
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModuleLaboratory as LL
+#############
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+#############
 # lab user login
 labUserId = GSV.labUserID
 labUserPwd = GSV.labUserPwD
-
-glr = A()
-
-labitem = GSV.TFT
-imagingtest = GSV.USG
-
-glr.openBrowser()
-glr.login(foUserId, foUserPwd)
-glr.counteractivation()
-glr.patientquickentry(0, 'Cash')
-glr.createlabxrayinvoice(labitem, imagingtest)
-#glr.verifylabxrayinvoice()
-glr.logout()
-
-glr.login(labUserId, labUserPwd)
-glr.collectLabSample("sample collected")
-glr.addLabResult()
-glr.verifyLabReport()
-glr.printLabReport("2.23", "15.0", "4.05")
-glr.logout()
-glr.closeBrowser()
+labTestTFT = GSV.TFT
+radioTestUSG = GSV.USG
+#############
+AC.login(foUserId, foUserPwd)
+############
+LB.counteractivation()
+hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae)
+print("hospitalNo", hospitalNo)
+#oblx.verifyopdinvoice(deposit=0, billamt=500)
+LB.createlabxrayinvoice(hospitalNo, labTestTFT, radioTestUSG)
+#oblx.verifylabxrayinvoice()
+#############
+AC.logout()
+AC.login(labUserId, labUserPwd)
+LL.collectLabSample(hospitalNo, labTestTFT)
+LL.addLabResult()
+LL.verifyLabReport(hospitalNo)
+LL.printLabReport(hospitalNo, "2.23", "15.0", "4.05")
+AC.logout()
+AC.closeBrowser()

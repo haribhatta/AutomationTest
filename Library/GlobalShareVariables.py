@@ -83,15 +83,20 @@ if application == "LPH":
 ###############################################################################
 if application == "SNCH":
 
-      #defining Login Credentials for LPH
+      #defining Login Credentials for SNCH
       #admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'sabitri'
       foUserPwD = 'pass123'
-
-      # Bill Items Name variables for Charak Hospital
+      #pharmacy user
+      pharmacyUserID = 'shivraj'
+      pharmacyUserPwD = 'pass123'
+      #laboratory user
+      labUserID = 'gayatri'
+      labUserPwD = 'pass123'
+      # Bill Items Name variables for SNCH
       opdRate = 500
       CBC = "CBC"
       TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
@@ -105,7 +110,7 @@ if application == "SNCH":
       usgRate = 1000
       admitRate = 1500
 
-      #Drug name for charak pharmacy billing
+      #Drug name for SNCH pharmacy billing
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
       drug1Rate = 1.15
@@ -120,6 +125,9 @@ if application == "SNCH":
 
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
+
+      drugSinexName = 'SINEX TAB'
+      drugSinexRate = 3
 
       Testdrug = "Testdrugreport"
 

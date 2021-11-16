@@ -5,27 +5,6 @@ import AutomationTest.Library.ApplicationConfiguration as AC
 danpheEMR = AC.danpheEMR
 print("DanpheEMR", danpheEMR)
 
-
-# Module:Pharmacy ------------------
-def activatePharmacyCounter(self):
-    print(">>Start: Pharmacy Counter Activate: START")
-    time.sleep(7)
-    # if appPort == "81":
-    #    self.danpheEMR.find_element_by_link_text("Pharmacy").click()
-    #    time.sleep(3)
-    if appPort == "82":
-        self.danpheEMR.find_element_by_link_text("Dispensary").click()
-        time.sleep(7)
-        self.danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
-        time.sleep(3)
-    self.danpheEMR.find_element_by_link_text("Counter").click()
-    time.sleep(2)
-    self.danpheEMR.find_element_by_xpath("//h5").click()
-    time.sleep(2)
-    print("Pharmacy Counter Activate: END")
-    print("End>> generateDischargeInvoice")
-
-
 def addPharmacyItem(self, genericName):  # incomplete
     print(">>START: addPharmacyItem")
     global DrugName

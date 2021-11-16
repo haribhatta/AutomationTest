@@ -1,17 +1,29 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-
-mode = 'Cash'
-drug = GSV.Sinex
-
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleDispensary as LD
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
+AC.applicationSelection()
+AC.openBrowser()
+#############
+# front desk user login
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+# pharmacy user login
 phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
-
-ds = A()
-#ds.applicationSelection()
-ds.openBrowser()
-ds.login(phuserid, phuserpwd)
-ds.activatePharmacyCounter()
-ds.createDispensarySaleRandomPatient(qty=1, drugname=drug, paymentmode=mode)
-ds.logout()
-ds.closeBrowser()
+drugSinex = GSV.drugSinexName
+paymentMode = 'Cash'
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+AC.logout()
+#############
+AC.login(phuserid, phuserpwd)
+LD.activatePharmacyCounter()
+LD.createDispensarySale(HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
+AC.logout()
+AC.closeBrowser()
