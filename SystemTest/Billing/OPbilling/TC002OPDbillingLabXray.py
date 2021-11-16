@@ -16,9 +16,10 @@ radioTestUSG = GSV.USG
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation()
-LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae)
+hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae)
+print("hospitalNo", hospitalNo)
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
-LB.createlabxrayinvoice(labTestTFT, radioTestUSG)
+LB.createlabxrayinvoice(hospitalNo, labTestTFT, radioTestUSG)
 #oblx.verifylabxrayinvoice()
 AC.logout()
 AC.closeBrowser()

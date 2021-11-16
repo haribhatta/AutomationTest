@@ -3,18 +3,16 @@ import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
-
+import Library.LibModuleAppointment as LA
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
-
-HospitalNo = None
 
 # Module:Billing -----------------------
 def counteractivation():
     print(">>Activate Billing Counter: START")
     time.sleep(8)
     danpheEMR.find_element_by_link_text("Billing").click()
-    time.sleep(5)
+    time.sleep(15)
     danpheEMR.find_element_by_xpath("(//a[contains(@href, '#/Billing/CounterActivate')])[2]").click()
     danpheEMR.find_element_by_css_selector(".col-md-2:nth-child(1) img").click()
     print("Activate Billing Counter: END<<")
@@ -133,7 +131,7 @@ def creditPayment(HospitalNo):
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
 
-def createlabxrayinvoice(labtest, imagingtest):
+def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     global InvoiceNo
     print("Hospital Number:", HospitalNo)

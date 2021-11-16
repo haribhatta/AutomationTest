@@ -94,15 +94,15 @@ if application == "SNCH":
       # Bill Items Name variables for Charak Hospital
       opdRate = 500
       CBC = "CBC"
-      TFT = "TFT"   #TFT(FT3,FT4,TSH) CLLEA
-      TFTRate = 1100
+      TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      TFTRate = 1200
       LDH = "LDH"
       #UrineRE = "Urine RE/ME"
       UrineRE = "URINE R/E,M/E" # this gets changed on V1.49.3
       BTCT = "BT/CT"
-      btctRate = 200
-      USG = "USG (Abdomen / pelvis)"
-      usgRate = 1050
+      btctRate = 300
+      USG = "USG ABDOMIN AND PELVIS"
+      usgRate = 1000
       admitRate = 1500
 
       #Drug name for charak pharmacy billing
