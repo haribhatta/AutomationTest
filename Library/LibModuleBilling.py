@@ -1,4 +1,3 @@
-from selenium import webdriver
 import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
@@ -7,7 +6,6 @@ import Library.LibModuleAppointment as LA
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
 
-# Module:Billing -----------------------
 def counteractivation():
     print(">>Activate Billing Counter: START")
     time.sleep(8)
