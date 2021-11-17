@@ -96,6 +96,9 @@ if application == "SNCH":
       #laboratory user
       labUserID = 'gayatri'
       labUserPwD = 'pass123'
+      #Inventory user
+      storeUserID = 'admin'
+      storeUserPwD = 'pass123'
       # Bill Items Name variables for SNCH
       opdRate = 500
       CBC = "CBC"

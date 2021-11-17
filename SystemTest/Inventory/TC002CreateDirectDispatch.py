@@ -1,14 +1,18 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleInventory as LI
 
-# front desk user login
-adminUserId = GSV.adminUserID
-adminUserPwd = GSV.adminUserPwD
-
-cdd = A()
+AC.applicationSelection()
+AC.openBrowser()
+#############
+# Inventory user login
+storeUserid = GSV.storeUserID
+storeUserPwd = GSV.storeUserPwD
+drugSinex = GSV.drugSinexName
+paymentMode = 'Cash'
 itemname = GSV.A4Paper
+StoreName = GSV.SubStore1
 qty = 2
-
-cdd.openBrowser()
-cdd.login(adminUserId, adminUserPwd)
-cdd.createInventoryDirectDispatch(itemname, qty)
+#############
+AC.login(storeUserid, storeUserPwd)
+LI.createInventoryDirectDispatch(itemname, qty=qty, store=StoreName)
