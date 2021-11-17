@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 import random
+import GlobalShareVariables
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
@@ -128,6 +129,28 @@ def followUpAppointment(self):
           time.sleep(5)
           self.danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
           #self.danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
+
+def oldPatientRegistration(HospitalNo,DoctorName,Department):
+   print(">>Create Old Appointment: START")
+   if AppName == "SNCH":
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text("Appointment").click()
+      time.sleep(2)
+      x = int(HospitalNo)-10
+      print("old patient:", x)
+      time.sleep(2)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(x)
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text("Check In").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_id("txtDepartment").send_keys(Department)
+      time.sleep(3)
+      danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+      time.sleep(3)
+      danpheEMR.find_element_by_id("doctorName").send_keys(DoctorName)
+      danpheEMR.find_element_by_id("btnPrintInvoice").click()
+      time.sleep(3)
+
 
 
 def wait_for_window(timeout=2):
