@@ -1,295 +1,210 @@
-from selenium import webdriver
 import time
-import AutomationTest.Library.ApplicationConfiguration as AC
+import Library.ApplicationConfiguration as AC
+import random
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 
 danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
+AppName = AC.appName
 
 # Module:Inventory---------------------------------------------------------
-   def createInventoryGoodReceipt(self, qty, item, rate):
+def createInventoryGoodReceipt(qty, item, rate):
       print(">>START: createGoodReceipt")
       global BillNo
-      # if appPort == '81':
-      #    self.danpheEMR.find_element_by_link_text("Inventory").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_link_text("Procurement").click()
-      #    time.sleep(3)
-      #    #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
-      #    #time.sleep(5)
-      #    #self.danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
-      #    time.sleep(5)
-      #    self.danpheEMR.find_element_by_xpath("//a[contains(text(),' Create Good Receipt')]").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
-      #    BillNo = random.randint(100, 99999)
-      #    print("Bill No", BillNo)
-      #    self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo) # LPH-934, LPH_V1.9.3
-      #    self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
-      #    self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
-      #    self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_id("rateip0").clear()
-      #    self.danpheEMR.find_element_by_id("rateip0").send_keys(rate)
-      #    self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
-      #    time.sleep(3)
-      if appPort == '82':
-         #self.danpheEMR.find_element_by_link_text("Inventory").click()
-         #time.sleep(2)
-         self.danpheEMR.find_element_by_link_text("Procurement").click()
-         #time.sleep(3)
-         #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("Procurement").click()
          time.sleep(5)
-         self.danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
+         danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
          time.sleep(5)
-         self.danpheEMR.find_element_by_xpath("//a[contains(.,' Create Goods Receipt')]").click()
+         danpheEMR.find_element_by_xpath("//a[contains(.,' Create Goods Receipt')]").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").click()
+         danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
+         danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
          BillNo = random.randint(100, 99999)
          print("Bill No", BillNo)
-         self.danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo) # LPH-934, LPH_V1.9.3
-         self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
-         self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
-         self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
+         danpheEMR.find_element_by_xpath("//input[@formcontrolname='BillNo']").send_keys(BillNo) # LPH-934, LPH_V1.9.3
+         danpheEMR.find_element_by_id("itemName0").send_keys(item)
+         danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
+         danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
          time.sleep(2)
-         self.danpheEMR.find_element_by_id("rateip0").clear()
-         self.danpheEMR.find_element_by_id("rateip0").send_keys(rate)
-         self.danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
+         danpheEMR.find_element_by_id("rateip0").clear()
+         danpheEMR.find_element_by_id("rateip0").send_keys(rate)
+         danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Goods Receipt List')]").click()
+         danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Goods Receipt List')]").click()
       print("<<END: createGoodReceipt")
-   def editInventoryGoodsReceipt(self):
+def editInventoryGoodsReceipt():
       print(">>START: edit GoodReceipt")
       time.sleep(2)
-      # if appPort == '81':
-      #    self.danpheEMR.find_element_by_link_text("Procurement").click()
-      #    time.sleep(3)
-      #    #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
-      #    self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(BillNo)
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_xpath("//button[contains(text(),' Edit Receipt ')]").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_id("qtyip0").clear() #Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
-      #    self.danpheEMR.find_element_by_id("qtyip0").send_keys(2)
-      #    self.danpheEMR.find_element_by_id("SaveGoodsReceiptbtn").click()
-      if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("Procurement").click()
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("Procurement").click()
          time.sleep(2)
-         #self.danpheEMR.find_element_by_xpath("//i[contains(.,'General Inventory')]").click()
-         #time.sleep(5)
-         self.danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
+         danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_id("quickFilterInput").send_keys(BillNo)
+         danpheEMR.find_element_by_id("quickFilterInput").send_keys(BillNo)
          time.sleep(2)
-         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+         danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_xpath("//button[contains(text(),' Edit Receipt ')]").click()
+         danpheEMR.find_element_by_xpath("//button[contains(text(),' Edit Receipt ')]").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_id("qtyip0").clear() #Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
-         self.danpheEMR.find_element_by_id("qtyip0").send_keys(2)
-         self.danpheEMR.find_element_by_id("SaveGoodsReceiptbtn").click()
-   def InventoryConsumption(self, item, qty, store):
+         danpheEMR.find_element_by_id("qtyip0").clear() #Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
+         danpheEMR.find_element_by_id("qtyip0").send_keys(2)
+         danpheEMR.find_element_by_id("SaveGoodsReceiptbtn").click()
+def InventoryConsumption(item, qty, store):
       time.sleep(5)
-      # if appPort == '81':
-      #    #self.danpheEMR.find_element_by_link_text("SubStore").click()
-      #    time.sleep(5)
-      #    a = "//i[contains(text(),'"
-      #    b = store
-      #    c = "')]"
-      #    d = a + b + c
-      #    print("test:", d)
-      #
-      #    #self.danpheEMR.find_element_by_xpath(d).click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_link_text("Consumption").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_link_text("New Consumption").click()
-      #    time.sleep(2)
-      #    self.danpheEMR.find_element_by_id("itemName0").clear()
-      #    self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
-      #    self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
-      #    self.danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").clear()
-      #    self.danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").send_keys(qty)
-      #    self.danpheEMR.find_element_by_css_selector(".btn-success").click()
-      #    time.sleep(2)
-      if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("SubStore").click()
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("SubStore").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
+         danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_link_text("Consumption").click()
+         danpheEMR.find_element_by_link_text("Consumption").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_link_text("New Consumption").click()
+         danpheEMR.find_element_by_link_text("New Consumption").click()
          time.sleep(2)
-         self.danpheEMR.find_element_by_id("itemName0").clear()
-         self.danpheEMR.find_element_by_id("itemName0").send_keys(item)
-         self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
-         self.danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").clear()
-         self.danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").send_keys(qty)
-         self.danpheEMR.find_element_by_css_selector(".btn-success").click()
+         danpheEMR.find_element_by_id("itemName0").clear()
+         danpheEMR.find_element_by_id("itemName0").send_keys(item)
+         danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
+         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").clear()
+         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").send_keys(qty)
+         danpheEMR.find_element_by_css_selector(".btn-success").click()
          time.sleep(2)
-   def createInventoryDirectDispatch(self, itemname, qty, store):
+def createInventoryDirectDispatch(itemname, qty, store):
        print(">>START: directDispatch")
-       # if appPort == '81':
-       #    time.sleep(3)
-       #    self.danpheEMR.find_element_by_link_text("Inventory").click()
-       #    time.sleep(5)
-       #    self.danpheEMR.find_element_by_link_text("Internal").click()
-       #    time.sleep(5)
-       #    self.danpheEMR.find_element_by_xpath("//button[contains(.,'Direct Dispatch  ')]").click()
-       #    time.sleep(2)
-       #    self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(store)
-       #    self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(Keys.TAB)
-       #    time.sleep(1)
-       #    self.danpheEMR.find_element_by_id("itemName0").send_keys(itemname)
-       #    time.sleep(1)
-       #    self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.ENTER)
-       #    time.sleep(1)
-       #    self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
-       #    time.sleep(5)
-       #    #self.danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
-       #    self.danpheEMR.find_element_by_xpath("//textarea[@name='Remarks']").send_keys("Direct dispatch test")
-       #    time.sleep(1)
-       #    self.danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
-       if appPort == '82':
+       if AppName == 'SNCH':
           time.sleep(3)
-          self.danpheEMR.find_element_by_link_text("Inventory").click()
+          danpheEMR.find_element_by_link_text("Inventory").click()
           time.sleep(5)
-          self.danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+          danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
           time.sleep(3)
-          self.danpheEMR.find_element_by_link_text("Internal").click()
+          danpheEMR.find_element_by_link_text("Internal").click()
           time.sleep(5)
-          self.danpheEMR.find_element_by_xpath("//button[contains(.,'Direct Dispatch  ')]").click()
+          danpheEMR.find_element_by_xpath("//button[contains(.,'Direct Dispatch  ')]").click()
           time.sleep(2)
-          self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(store)
-          self.danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(Keys.TAB)
+          danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(store)
+          danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(Keys.TAB)
           time.sleep(1)
-          self.danpheEMR.find_element_by_id("itemName0").send_keys(itemname)
+          danpheEMR.find_element_by_id("itemName0").send_keys(itemname)
           time.sleep(1)
-          self.danpheEMR.find_element_by_id("itemName0").send_keys(Keys.ENTER)
+          danpheEMR.find_element_by_id("itemName0").send_keys(Keys.ENTER)
           time.sleep(1)
-          self.danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
+          danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
           time.sleep(5)
-          #self.danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
-          self.danpheEMR.find_element_by_id("remarks").send_keys("Direct dispatch test")
+          #danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
+          danpheEMR.find_element_by_id("remarks").send_keys("Direct dispatch test")
           time.sleep(1)
-          self.danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
+          danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
        print("<<END: directDispatch")
-   def InventoryStockManage(self, managetype):
+def InventoryStockManage(managetype):
       print(">>START: InventoryStockManage")
-      self.danpheEMR.find_element_by_link_text("Inventory").click()
+      danpheEMR.find_element_by_link_text("Inventory").click()
       time.sleep(3)
-      self.danpheEMR.find_element_by_link_text("Stock").click()
+      danpheEMR.find_element_by_link_text("Stock").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
-      availableQty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
+      availableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
       availableQty = int(availableQty)
       print("case1", availableQty)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
-      grNo = self.danpheEMR.find_element_by_xpath("(//div[@col-id='GoodsReceiptNo'])[2]").text
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+      grNo = danpheEMR.find_element_by_xpath("(//div[@col-id='GoodsReceiptNo'])[2]").text
       print("Goods Receipt No", grNo)
       global UnitPrice
-      UnitPrice = self.danpheEMR.find_element_by_xpath("(//div[@col-id='ItemRate'])[2]").text
+      UnitPrice = danpheEMR.find_element_by_xpath("(//div[@col-id='ItemRate'])[2]").text
       print("Unit Price", UnitPrice)
-      self.danpheEMR.find_element_by_xpath("//i[@class='fa fa-backward']").click()
+      danpheEMR.find_element_by_xpath("//i[@class='fa fa-backward']").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Manage Stock')]").click()
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Manage Stock')]").click()
       time.sleep(3)
-      grNoTemp = self.danpheEMR.find_element_by_xpath("//td[contains(text(),'GR No.')]/parent::tr/parent::thead/following-sibling::tbody/child::tr/child::td").text
+      grNoTemp = danpheEMR.find_element_by_xpath("//td[contains(text(),'GR No.')]/parent::tr/parent::thead/following-sibling::tbody/child::tr/child::td").text
       assert grNo == grNoTemp
-      currentQty = self.danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").get_attribute("value")
+      currentQty = danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").get_attribute("value")
       print("currentQty", currentQty)
       currentQty = float(currentQty)
       modifyin = int(currentQty + 1)
       modifyOut = int(currentQty - 1)
       print("modifyOut", modifyOut)
       print("modifyin", modifyin)
-      self.danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").clear()
+      danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").clear()
       if managetype == "in":
-         self.danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyin)
+         danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyin)
          print("Manage In done")
       if managetype == "out":
-         self.danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyOut)
+         danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyOut)
          print("Manage Out done")
          time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//input[@value='Update Stock']").click()
-      self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+      danpheEMR.find_element_by_xpath("//input[@value='Update Stock']").click()
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
       time.sleep(2)
-      newavailableQty = self.danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
+      newavailableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
       print("newavailableQty", newavailableQty)         #
       print("availableQty", availableQty)               #
       if managetype == "in":
          assert int(newavailableQty) == int(availableQty + 1)
       if managetype == "out":
          assert int(newavailableQty) == availableQty - 1
-   def verifyInventoryDailyItemDispatchReport(self, itemname, qty):
-       self.danpheEMR.find_element_by_link_text("Inventory").click()
+def verifyInventoryDailyItemDispatchReport(itemname, qty):
+       danpheEMR.find_element_by_link_text("Inventory").click()
        time.sleep(3)
-       self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
+       danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
        time.sleep(2)
-       self.danpheEMR.find_element_by_xpath("//i[contains(.,'Daily Item Dispatch')]").click()
+       danpheEMR.find_element_by_xpath("//i[contains(.,'Daily Item Dispatch')]").click()
        time.sleep(2)
-       self.danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+       danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
        time.sleep(2)
-       self.danpheEMR.find_element_by_id("quickFilterInput").send_keys("nursing store")
+       danpheEMR.find_element_by_id("quickFilterInput").send_keys("nursing store")
        time.sleep(2)
-       self.danpheEMR.find_element_by_xpath("//span[contains(.,'Requisition ID')]").click()
+       danpheEMR.find_element_by_xpath("//span[contains(.,'Requisition ID')]").click()
        time.sleep(3)
-       self.danpheEMR.find_element_by_xpath("//span[contains(.,'Requisition ID')]").click()
+       danpheEMR.find_element_by_xpath("//span[contains(.,'Requisition ID')]").click()
        time.sleep(2)
-       element1 = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
+       element1 = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
        assert element1 == itemname
-       element2 = self.danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+       element2 = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
        print(element2)
        print(qty)
        assert element2 == str(qty)
-   def getInventoryCurrentStockLevelReport(self, store):
+def getInventoryCurrentStockLevelReport(store):
       global TotalStockQuantity
       global TotalStockValue
-      self.danpheEMR.find_element_by_link_text("Inventory").click()
+      danpheEMR.find_element_by_link_text("Inventory").click()
       time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_xpath("//i[contains(.,'Current Stock Level')]").click()
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Current Stock Level')]").click()
       time.sleep(2)
-      self.danpheEMR.find_element_by_css_selector(".fa-remove").click()
-      self.danpheEMR.find_element_by_xpath("//span[contains(.,'---Select Item---')]").click()
-      self.danpheEMR.find_element_by_xpath("//input[@type='text']").send_keys(store)
+      danpheEMR.find_element_by_css_selector(".fa-remove").click()
+      danpheEMR.find_element_by_xpath("//span[contains(.,'---Select Item---')]").click()
+      danpheEMR.find_element_by_xpath("//input[@type='text']").send_keys(store)
       if store == "Main Store":
-         self.danpheEMR.find_element_by_xpath("//label[contains(.,'Main Store')]").click()
+         danpheEMR.find_element_by_xpath("//label[contains(.,'Main Store')]").click()
       if store == "OT Store":
-         self.danpheEMR.find_element_by_xpath("//label[contains(.,'OT Store')]").click()
-      self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
+         danpheEMR.find_element_by_xpath("//label[contains(.,'OT Store')]").click()
+      danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
       time.sleep(3)
-      self.danpheEMR.find_element_by_xpath("(//a[contains(text(),'View')])[1]").click()
+      danpheEMR.find_element_by_xpath("(//a[contains(text(),'View')])[1]").click()
       time.sleep(3)
-      sysStoreName = self.danpheEMR.find_element_by_xpath(
+      sysStoreName = danpheEMR.find_element_by_xpath(
          "(//th[contains(text(),' Store Name ')]/parent::tr/following-sibling::tr/child::td)[1]").text
       print("sysStoreName", sysStoreName)
       assert store == sysStoreName
-      self.danpheEMR.find_element_by_xpath("//a[@title='Cancel']").click()
+      danpheEMR.find_element_by_xpath("//a[@title='Cancel']").click()
       time.sleep(7)
-      TotalStockQuantity = self.danpheEMR.find_element_by_xpath(
+      TotalStockQuantity = danpheEMR.find_element_by_xpath(
          "//b[contains(text(),' Total Stock Quantity ')]/parent::span/parent::td/following-sibling::td[1]").text
       print("TotalStockQuantity-:", TotalStockQuantity)
-      TotalStockValue = self.danpheEMR.find_element_by_xpath(
+      TotalStockValue = danpheEMR.find_element_by_xpath(
          "//b[contains(text(),' Total Stock Value ')]/parent::span/parent::td/following-sibling::td[1]").text
       TotalStockValue = TotalStockValue.replace(',', '')
       print("TotalStockValue:", TotalStockValue)
-   def preInventoryCurrentStockLevelReport(self):
+def preInventoryCurrentStockLevelReport():
       global preTotalStockQuantity
       global preTotalStockValue
       preTotalStockQuantity = float(TotalStockQuantity)
       preTotalStockValue = float(TotalStockValue)
-   def verifyInventoryCurrentStockLevelReport(self, type, qty, unitprice):
+def verifyInventoryCurrentStockLevelReport(type, qty, unitprice):
       global calcTotalStockQuantity
       global calcTotalStockValue
       print("preTotalStockQuantity", preTotalStockQuantity)
@@ -314,25 +229,22 @@ print("DanpheEMR", danpheEMR)
       calcTotalStockValue = float(calcTotalStockValue)
       TotalStockValuec = float(TotalStockValue)
       assert round(float(TotalStockValuec)) == round(float(calcTotalStockValue))
-   def selectInventory(self, inventory):
+def selectInventory(inventory):
       time.sleep(5)
-      # if appPort == '81':
-      #    print("This is test")
-      if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("Inventory").click()
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("Inventory").click()
          time.sleep(5)
-         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+         danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
          time.sleep(3)
-   def selectDispensary(self, dispensary):
+def selectDispensary(dispensary):
       time.sleep(5)
-      # if appPort == '81':
-      #    print("This is test")
-      if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("Dispensary").click()
+
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("Dispensary").click()
          time.sleep(5)
-         self.danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
+         danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
          time.sleep(3)
-   def getInventorySummaryReport(self):
+def getInventorySummaryReport():
       global OpeningValue
       global OpeningQty
       global PurchaseValue
@@ -346,112 +258,58 @@ print("DanpheEMR", danpheEMR)
       global ClosingValue
       global ClosingQty
       time.sleep(3)
-      # if appPort == '81':
-      #    self.danpheEMR.find_element_by_link_text("ssInventory").click()
-      #    time.sleep(5)
-      #    self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
-      #    time.sleep(3)
-      #    self.danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
-      #    time.sleep(3)
-      #    self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
-      #    time.sleep(7)
-      #    OpeningValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    OpeningValue = float(OpeningValue.replace(',', ''))
-      #    print("OpeningValue", OpeningValue)
-      #    OpeningQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("OpeningQty", OpeningQty)
-      #    PurchaseValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    PurchaseValue = float(PurchaseValue.replace(',', ''))
-      #    print("PurchaseValue", PurchaseValue)
-      #    PurchaseQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("PurchaseQty", PurchaseQty)
-      #    StockManageInValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    StockManageInValue = float(StockManageInValue.replace(',', ''))
-      #    print("StockManageInValue", StockManageInValue)
-      #    StockManageInQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("StockManageInQty", StockManageInQty)
-      #    StockManageOutValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    StockManageOutValue = float(StockManageOutValue.replace(',', ''))
-      #    print("StockManageOutValue", StockManageOutValue)
-      #    StockManageOutQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("StockManageOutQty", StockManageOutQty)
-      #    ConsumptionValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    ConsumptionValue = float(ConsumptionValue.replace(',', ''))
-      #    print("ConsumptionValue", ConsumptionValue)
-      #    ConsumptionQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("ConsumptionQty", ConsumptionQty)
-      #    ClosingValue = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    ClosingValue = float(ClosingValue.replace(',', ''))
-      #    print("ClosingValue", ClosingValue)
-      #    ClosingQty = self.danpheEMR.find_element_by_xpath(
-      #       "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-      #    print("ClosingQty", ClosingQty)
-
-      if appPort == '82':
-         self.danpheEMR.find_element_by_link_text("Inventory").click()
+      if AppName == 'SNCH':
+         danpheEMR.find_element_by_link_text("Inventory").click()
          time.sleep(5)
-         #self.danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+         danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
+         danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
          time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
-         time.sleep(3)
-         self.danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
+         danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
          time.sleep(7)
-         OpeningValue = self.danpheEMR.find_element_by_xpath(
+         OpeningValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          OpeningValue = float(OpeningValue.replace(',', ''))
          print("OpeningValue", OpeningValue)
-         OpeningQty = self.danpheEMR.find_element_by_xpath(
+         OpeningQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("OpeningQty", OpeningQty)
-         PurchaseValue = self.danpheEMR.find_element_by_xpath(
+         PurchaseValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          PurchaseValue = float(PurchaseValue.replace(',', ''))
          print("PurchaseValue", PurchaseValue)
-         PurchaseQty = self.danpheEMR.find_element_by_xpath(
+         PurchaseQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("PurchaseQty", PurchaseQty)
-         StockManageInValue = self.danpheEMR.find_element_by_xpath(
+         StockManageInValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          StockManageInValue = float(StockManageInValue.replace(',', ''))
          print("StockManageInValue", StockManageInValue)
-         StockManageInQty = self.danpheEMR.find_element_by_xpath(
+         StockManageInQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("StockManageInQty", StockManageInQty)
-         StockManageOutValue = self.danpheEMR.find_element_by_xpath(
+         StockManageOutValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          StockManageOutValue = float(StockManageOutValue.replace(',', ''))
          print("StockManageOutValue", StockManageOutValue)
-         StockManageOutQty = self.danpheEMR.find_element_by_xpath(
+         StockManageOutQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("StockManageOutQty", StockManageOutQty)
-         ConsumptionValue = self.danpheEMR.find_element_by_xpath(
+         ConsumptionValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          ConsumptionValue = float(ConsumptionValue.replace(',', ''))
          print("ConsumptionValue", ConsumptionValue)
-         ConsumptionQty = self.danpheEMR.find_element_by_xpath(
+         ConsumptionQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("ConsumptionQty", ConsumptionQty)
-         ClosingValue = self.danpheEMR.find_element_by_xpath(
+         ClosingValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          ClosingValue = float(ClosingValue.replace(',', ''))
          print("ClosingValue", ClosingValue)
-         ClosingQty = self.danpheEMR.find_element_by_xpath(
+         ClosingQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
          print("ClosingQty", ClosingQty)
-   def preInventorySummaryReport(self):
+def preInventorySummaryReport():
       global preOpeningValue
       global preOpeningQty
       global prePurchaseValue
@@ -476,7 +334,7 @@ print("DanpheEMR", danpheEMR)
       preConsumptionQty = ConsumptionQty
       preClosingValue = ClosingValue
       preClosingQty = ClosingQty
-   def verifyInventorySummaryReport(self, purchaseqty, purchaseamount, consumeqty, consumeamount, manageinqty, manageinamount, manageoutqty, manageoutamount):
+def verifyInventorySummaryReport(purchaseqty, purchaseamount, consumeqty, consumeamount, manageinqty, manageinamount, manageoutqty, manageoutamount):
       print("preOpeningValue", preOpeningValue)
       print("OpeningValue", OpeningValue)
       time.sleep(3)
@@ -521,8 +379,6 @@ print("DanpheEMR", danpheEMR)
       print("tempclosingqty", tempclosingqty)
       print("ClosingQty", ClosingQty)
       assert float(ClosingQty) == float(tempclosingqty)
-
-
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles

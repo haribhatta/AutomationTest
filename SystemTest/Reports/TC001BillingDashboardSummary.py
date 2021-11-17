@@ -13,14 +13,20 @@
 # 11. Deposit Deduct,
 # 12. Deposit Refund.
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModulePatientPortal as LP
+import Library.LibModuleADT as LADT
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-doctor = GSV.doctor1
-department = GSV.department1
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
 
 opdticket = GSV.opdRate
 discountpct = 50
@@ -30,109 +36,107 @@ usgtest = GSV.USG
 usgprice = GSV.usgRate
 admisioncharge = GSV.admitRate
 deposit = 1000
-
-CBDS = A()
-CBDS.openBrowser()
-CBDS.login(foUserId, foUserPwd)
-CBDS.counteractivation()
-
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+########
 # 1. Cash Invoice
-CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=0, paymentmode="Cash")  # cash = opdticket
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
+LB.getBillingDashboard()
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)  # cash = opdticket
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 2. Return Cash Invoice
 print("2. Return Cash Invoice")
-CBDS.getBillingDashboard()
-CBDS.returnBillingInvoice("This is cash invoice return")
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
+LB.getBillingDashboard()
+LB.returnBillingInvoice("This is cash invoice return")
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 3. Cash Discount Invoice
-CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=discountpct, paymentmode="Cash")
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
+LB.getBillingDashboard()
+HospitalNo1 = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 4. Return Cash Discount Invoice
-CBDS.getBillingDashboard()
-CBDS.returnBillingInvoice("This is cash discount invoice return")
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamount, credit=0, creditReturn=0,
+LB.getBillingDashboard()
+LB.returnBillingInvoice("This is cash discount invoice return")
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 5. Credit Invoice
 print("##### Credit Invoice #####")
-CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=0, paymentmode="CREDIT")
-#CBDS.verifyopdinvoice()
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
+LB.getBillingDashboard()
+HospitalNo3 = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae)
+#LB.verifyopdinvoice()
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 6. Return Credit Invoice
-CBDS.getBillingDashboard()
+LB.getBillingDashboard()
 print("Returning Credit Invoice")
-CBDS.returnBillingInvoice("This is credit invoice return")
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=opdticket,
+LB.returnBillingInvoice("This is credit invoice return")
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=opdticket,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 7. Credit Payment
-CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=0, paymentmode="CREDIT") #credit=opdticket
-#CBDS.verifyopdinvoice()
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.creditPayment()        #settlement=credit
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
+LB.getBillingDashboard()
+HospitalNo4 = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae) #credit=opdticket
+#LB.verifyopdinvoice()
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.creditPayment(HospitalNo4)     #settlement=credit
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement="CREDIT", provisional=0, provisionalcancel=0)
 
 # 8.1 Provisional Bill
-CBDS.getBillingDashboard()
-CBDS.patientRegistration()
-CBDS.createProvisionalBill(usgtest)  #provisional=usgprice
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
+LB.getBillingDashboard()
+LP.patientRegistration()
+LB.createProvisionalBill(usgtest)  #provisional=usgprice
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
                             provisional=usgprice, provisionalcancel=0)
 
 # 8.2 Provisional IP Bill
-CBDS.patientRegistration()
-CBDS.getBillingDashboard()
-CBDS.admitDisTrans(1, 0, 0, deposit, doctor=doctor, department=department)
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
+LP.patientRegistration()
+LB.getBillingDashboard()
+LADT.admitDisTrans(1, 0, 0, deposit, doctor=doctorGynae, department=departmentGynae)
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                           settlement=0, provisional=admisioncharge, provisionalcancel=0)
-CBDS.createIPprovisionalBill(usgtest)
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
+LB.createIPprovisionalBill(usgtest)
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                           settlement=0, provisional=usgprice, provisionalcancel=0)
 
 
 # 9. Cancel Provisional Bill
-CBDS.getBillingDashboard()
-CBDS.cancelIPprovisionalBill(usgtest)
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
+LB.getBillingDashboard()
+LB.cancelIPprovisionalBill(usgtest)
+LB.preSystemDataBillingDashboard()
+LB.getBillingDashboard()
+LB.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
                             provisional=0, provisionalcancel=usgprice)
 
 print(" EMR-2571: is existing bug to cancel provisional bill")
-CBDS.logout()
-CBDS.closeBrowser()
+AC.logout()
+AC.closeBrowser()
 #End of the test case
 
 
