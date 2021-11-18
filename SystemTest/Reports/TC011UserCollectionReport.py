@@ -1,3 +1,5 @@
+import time
+
 import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleBilling as LB
@@ -7,30 +9,34 @@ import Library.LibModuleBillingReports as LBR
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-user = GSV.UserBilling
+user = GSV.foUserID
 #
 opdRate = GSV.opdRate
 AC.applicationSelection()
 AC.openBrowser()
-AC.login(foUserId ,foUserPwd)
+AC.login(foUserId, foUserPwd)
 LB.counteractivation()
-LBR.getUserCollectionReport()
-LA.patientquickentry(0, 'Cash')
+time.sleep(2)
+LBR.getUserCollectionReport(user)
 LBR.preSystemUserCollectionReport()
+InvoiceNO = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+# LBR.preSystemUserCollectionReport()
+print(InvoiceNO)
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
-LBR.returnBillingInvoice("This is cash return.")
+time.sleep(2)
+LB.returnBillingInvoice(InvoiceNO, returnmsg="This is Return Invoice",)
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=opdRate, credit=0, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
-LB.patientquickentry(0, 'CREDIT')
+InvoiceNO = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=opdRate, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
-LBR.returnBillingInvoice("This is credit return.")
+LB.returnBillingInvoice( InvoiceNO, returnmsg="This is credit return.")
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=opdRate, discount=0, deposit=0,

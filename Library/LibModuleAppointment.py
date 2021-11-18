@@ -88,7 +88,11 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       # self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
       # self.danpheEMR.find_element_by_xpath("//a[contains(.,'X')]").click()
       time.sleep(9)
+      return InvoiceNo
       return HospitalNo
+
+
+
 
    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
    print("Create New Appointment: END<<")
