@@ -136,7 +136,7 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
       time.sleep(2)
-      x = int(HospitalNo)-10
+      x = int(HospitalNo)-100
       print("old patient:", x)
       time.sleep(2)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(x)
@@ -149,9 +149,12 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
       time.sleep(3)
       danpheEMR.find_element_by_id("doctorName").send_keys(DoctorName)
       danpheEMR.find_element_by_id("btnPrintInvoice").click()
+      time.sleep(5)
+      InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+      #verify = popup.danpheEMR.find_element_by_xpath("//b[contains(text(),' Please bring this invoice on your next visit. ')]").text
+      print("InvoiceNo", InvoiceNo)
+      danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
       time.sleep(3)
-
-
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))

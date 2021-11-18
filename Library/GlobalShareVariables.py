@@ -1,4 +1,4 @@
-import Library.ApplicationConfiguration as AC
+import   Library.ApplicationConfiguration as AC
 
 application = AC.appName
 
@@ -152,6 +152,7 @@ if application == "SNCH":
       departmentGyno = "Gynecology"
 
       deposit = 200
+      user = "admin"
 
    #def __str__(self):
     #  return

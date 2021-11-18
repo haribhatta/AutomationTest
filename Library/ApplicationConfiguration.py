@@ -7,7 +7,7 @@ appName = input("Please enter project/application name:\n"
             "MMH\n"
             "LPH\n")
 ChromePath = LSV.ChromeDriverPath
-danpheEMR = webdriver.Chrome(ChromePath)
+danpheEMR = webdriver.Chrome(executable_path=ChromePath)
 
 def applicationSelection():
       global appURL
