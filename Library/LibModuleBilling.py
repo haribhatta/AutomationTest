@@ -139,7 +139,6 @@ def creditPayment(HospitalNo):
 
 def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
-    global InvoiceNo
     print("Hospital Number:", HospitalNo)
     if AppName == "SNCH":
         danpheEMR.find_element_by_link_text("Billing").click()

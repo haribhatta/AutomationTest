@@ -106,7 +106,7 @@ if application == "SNCH":
       TFTRate = 1200
       LDH = "LDH"
       #UrineRE = "Urine RE/ME"
-      UrineRE = "URINE R/E,M/E" # this gets changed on V1.49.3
+      UrineRE = "URINE R/E" # this gets changed on V1.49.3
       BTCT = "BT/CT"
       btctRate = 300
       USG = "USG ABDOMIN AND PELVIS"
