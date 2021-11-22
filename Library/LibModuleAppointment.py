@@ -87,8 +87,12 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)
       # self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
       # self.danpheEMR.find_element_by_xpath("//a[contains(.,'X')]").click()
-      time.sleep(9)
-      return HospitalNo
+      time.sleep(3)
+      return type('',(object,),{"InvoiceNo": InvoiceNo,"HospitalNo": HospitalNo})()
+      # return [InvoiceNo, HospitalNo]
+
+
+
 
    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
    print("Create New Appointment: END<<")
@@ -135,7 +139,7 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
    if AppName == "SNCH":
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
-      time.sleep(2)
+      # time.sleep(2)
       x = int(HospitalNo)-100
       print("old patient:", x)
       time.sleep(2)
@@ -149,6 +153,11 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
       time.sleep(3)
       danpheEMR.find_element_by_id("doctorName").send_keys(DoctorName)
       danpheEMR.find_element_by_id("btnPrintInvoice").click()
+      time.sleep(5)
+      InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+      #verify = popup.danpheEMR.find_element_by_xpath("//b[contains(text(),' Please bring this invoice on your next visit. ')]").text
+      print("InvoiceNo", InvoiceNo)
+      danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
       time.sleep(3)
 
 
