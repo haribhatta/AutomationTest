@@ -16,11 +16,10 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation()
 HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
 #can.verifyopdinvoice(deposit=0, billamt=500)
-
+print("Status:Passed - > TC001 CreateAppointmentNew")
 LA.oldPatientRegistration(HospitalNo, doctorGynae, departmentGynae)
 AC.logout()
 AC.closeBrowser()
-print("Status:Passed - > TC001 CreateAppointmentNew")
 print("Status:Passed - > TC001 oldPatientAppointment")
 
 

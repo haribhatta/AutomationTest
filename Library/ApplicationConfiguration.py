@@ -35,6 +35,10 @@ def login(userid, pwd):
       danpheEMR.find_element_by_id("password").send_keys(pwd)
       danpheEMR.find_element_by_id("login").submit()
       print("LogIn: END<<")
+def verifyLogIn():
+      print("Start:verifyLogIn")
+      ####### code here
+      print("End: verifyLogin")
 def logout():
       print(">>LogOut: START")
       time.sleep(1)

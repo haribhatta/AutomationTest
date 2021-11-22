@@ -136,7 +136,7 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
       time.sleep(2)
-      x = int(HospitalNo)-10
+      x = int(HospitalNo)-100
       print("old patient:", x)
       time.sleep(2)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(x)

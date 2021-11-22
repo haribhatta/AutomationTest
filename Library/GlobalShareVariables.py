@@ -135,13 +135,14 @@ if application == "SNCH":
       Testdrug = "Testdrugreport"
 
       #Inventory Item name list
-      Inventory1 = "General Inventory"
+      GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
 
-      A4Paper = 'Paper A4'
+      A4Paper = 'A4 PAPER'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
+      File = "FILE"
 
       #Sub Store Name list
       SubStore1 = "General"
