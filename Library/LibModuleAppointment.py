@@ -74,7 +74,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
          paymentoptions.select_by_visible_text(paymentmode)
          danpheEMR.find_element_by_xpath("//div[2]/div[2]/input").send_keys("Credit in request of chairman")
       danpheEMR.find_element_by_css_selector(".btn-success").click()
-      time.sleep(9)
+      time.sleep(10)
       InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
       print("InvoiceNoTemp", InvoiceNo)
       InvoiceNo = InvoiceNo.partition("BL")[2]
@@ -87,7 +87,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)
       # self.danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
       # self.danpheEMR.find_element_by_xpath("//a[contains(.,'X')]").click()
-      time.sleep(9)
+      time.sleep(3)
       return type('',(object,),{"InvoiceNo": InvoiceNo,"HospitalNo": HospitalNo})()
       # return [InvoiceNo, HospitalNo]
 
@@ -130,16 +130,16 @@ def followUpAppointment(self):
 
           time.sleep(3)
           self.danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
-          time.sleep(5)
+          time.sleep(3)
           self.danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
           #self.danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
 
 def oldPatientRegistration(HospitalNo,DoctorName,Department):
    print(">>Create Old Appointment: START")
    if AppName == "SNCH":
-      time.sleep(2)
+      # time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
-      time.sleep(2)
+      # time.sleep(2)
       x = int(HospitalNo)-100
       print("old patient:", x)
       time.sleep(2)

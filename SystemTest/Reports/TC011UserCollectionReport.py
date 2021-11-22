@@ -19,24 +19,23 @@ LB.counteractivation()
 time.sleep(2)
 LBR.getUserCollectionReport(user)
 LBR.preSystemUserCollectionReport()
-InvoiceNO = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+InvoiceNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
 # LBR.preSystemUserCollectionReport()
-print(InvoiceNO)
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
 time.sleep(2)
-LB.returnBillingInvoice(InvoiceNO, returnmsg="This is Return Invoice",)
+LB.returnBillingInvoice(InvoiceNo, returnmsg="This is Return Invoice",)
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=opdRate, credit=0, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
-InvoiceNO = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+InvoiceNo = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=opdRate, creditreturn=0, discount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
-LB.returnBillingInvoice( InvoiceNO, returnmsg="This is credit return.")
+LB.returnBillingInvoice( InvoiceNo, returnmsg="This is credit return.")
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(user)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=opdRate, discount=0, deposit=0,

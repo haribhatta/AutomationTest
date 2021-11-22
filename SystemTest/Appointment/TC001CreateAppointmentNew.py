@@ -14,7 +14,7 @@ doctorGynae = GSV.doctorGyno
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation()
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 
 LA.oldPatientRegistration(HospitalNo, doctorGynae, departmentGynae)
