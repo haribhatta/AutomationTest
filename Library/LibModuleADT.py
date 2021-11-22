@@ -1,5 +1,8 @@
 from selenium import webdriver
 import time
+
+from selenium.webdriver.support.select import Select
+
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
@@ -30,11 +33,13 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
             danpheEMR.find_element_by_id("WardId").click()
             danpheEMR.find_element_by_id("BedFeatureId").click()
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
+            time.sleep(1)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.DOWN)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
             danpheEMR.find_element_by_id("BedFeatureId").click()
             time.sleep(2)
             danpheEMR.find_element_by_id("BedId").click()
+            time.sleep(0.5)
             danpheEMR.find_element_by_id("BedId").send_keys(Keys.ENTER)
             danpheEMR.find_element_by_id("BedId").send_keys(Keys.DOWN)
             time.sleep(2)
@@ -61,7 +66,9 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
          danpheEMR.find_element_by_xpath("(//button[@type='button'])[5]").click()
          time.sleep(3)
          danpheEMR.find_element_by_xpath("//pat-ip-bill-summary/div/div[2]/div/div/div/div/a").click()
-         danpheEMR.close()
+         # danpheEMR.find_element_by_id("btnPrintDischargeInvoice")
+         # danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+
       elif trasfer == 1:
          danpheEMR.find_element_by_link_text("ADT").click()
          time.sleep(3)
@@ -69,17 +76,37 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
          time.sleep(3)
          danpheEMR.find_element_by_link_text("Transfer").click()
          time.sleep(2)
-         danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
-         danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
-         danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
-         danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
-         danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
-         danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.RETURN)
-         danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.ARROW_DOWN)
-         danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.RETURN)
-         danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
-         danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.ARROW_DOWN)
-         danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
+         danpheEMR.find_element_by_id("DepartmentName").click()
+         danpheEMR.find_element_by_id("DepartmentName").send_keys(department)
+         danpheEMR.find_element_by_id("DepartmentName").send_keys(Keys.TAB)
+         # danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys()
+
+         Ward = Select(danpheEMR.find_element_by_id('WardId'))
+         Ward.select_by_visible_text('ICU')
+         # # select by value and index
+         # select.select_by_value('1')
+         time.sleep(2)
+         danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
+         danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ARROW_DOWN)
+         danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
+
+
+         # Bedfeature = Select(danpheEMR.find_element_by_id("BedFeatureId"))
+         # Bedfeature.select_by_visible_text("BED CHARGE ICU")
+         danpheEMR.find_element_by_id("BedId").click()
+         danpheEMR.find_element_by_id("BedId").send_keys(Keys.ARROW_DOWN)
+         danpheEMR.find_element_by_id("BedId").send_keys(Keys.ENTER)
+         # danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+         # danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
+         # danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
+         # danpheEMR.find_element_by_xpath("//select").send_keys(Keys.ARROW_DOWN)
+         # danpheEMR.find_element_by_xpath("//select").send_keys(Keys.RETURN)
+         # danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.RETURN)
+         # danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.ARROW_DOWN)
+         # danpheEMR.find_element_by_xpath("//tr[5]/td[2]/select").send_keys(Keys.RETURN)
+         # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
+         # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.ARROW_DOWN)
+         # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
          danpheEMR.find_element_by_id("Remarks").send_keys("Transfer to ICU ward")
          danpheEMR.find_element_by_xpath("//input[@name='name']").click()
 def billingIP(admitCharge, deposit):

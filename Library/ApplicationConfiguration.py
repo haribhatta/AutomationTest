@@ -37,7 +37,7 @@ def login(userid, pwd):
       print("LogIn: END<<")
 def logout():
       print(">>LogOut: START")
-      time.sleep(1)
+      time.sleep(3)
       danpheEMR.find_element_by_css_selector(".dropdown-toggle:nth-child(1) > .fa").click()
       time.sleep(1)
       danpheEMR.find_element_by_link_text("Log Out").click()

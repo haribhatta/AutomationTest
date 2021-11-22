@@ -150,6 +150,7 @@ if application == "SNCH":
       #Doctor/Department List
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
+      departmentNephro = "Nephro"
 
       deposit = 200
       user = "admin"
