@@ -2,7 +2,6 @@ import time
 import Library.ApplicationConfiguration as AC
 import random
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
 
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
@@ -74,7 +73,7 @@ def createInventoryDirectDispatch(itemname, qty, store):
        if AppName == 'SNCH':
           time.sleep(3)
           danpheEMR.find_element_by_link_text("Inventory").click()
-          time.sleep(5)
+          time.sleep(9)
           danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
           time.sleep(3)
           danpheEMR.find_element_by_link_text("Internal").click()
@@ -94,7 +93,96 @@ def createInventoryDirectDispatch(itemname, qty, store):
           danpheEMR.find_element_by_id("remarks").send_keys("Direct dispatch test")
           time.sleep(1)
           danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
+          time.sleep(4)
+          RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
+          return RequsitionNo
        print("<<END: directDispatch")
+def verifyInventoryDirectDispatch(RequisitionNo, ItemName, qty, StoreName):
+    print(">>Start: verifyInventoryDirectDispatch")
+    if AppName == 'SNCH':
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Inventory").click()
+        #time.sleep(9)
+        #danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Internal").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_xpath("//label[2]/span").click()
+        time.sleep(3)
+        ReqNo = danpheEMR.find_element_by_xpath("(//div[@col-id='RequisitionNo'])[2]").text
+        time.sleep(2)
+        assert ReqNo == RequisitionNo
+    print("<<End: verifyInventoryDirectDispatch")
+def dispatchRequisition(ssReqNo, GeneralInventory, itemname, qty):
+    print(">>START: DispatchRequisition")
+    if AppName == 'SNCH':
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Inventory").click()
+        time.sleep(9)
+        #danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Internal").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_link_text("Requisition").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//a[contains(text(),'Dispatch Requisition')]").click() # This step can get failed if "AllowSubstoreDispatchWithoutVerification" = false.
+        time.sleep(2)
+        danpheEMR.find_element_by_id("remarks").send_keys("dispatching req")
+        danpheEMR.find_element_by_id("DispatchBtn").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Requisition List')]").click()
+    print("<<END: dispatchRequisition")
+def verifyDispatchRequisition(ssReqNo):
+    print(">>START: verifyDispatchRequisition")
+    if AppName == 'SNCH':
+        danpheEMR.find_element_by_xpath("//label[2]/span").click()
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+        time.sleep(2)
+        ssReqNo1 = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
+        assert ssReqNo1 == ssReqNo
+    print("<<END: verifyDispatchRequisition")
+def createPurchaseRequest(ItemName, qty):
+    print(">>START: createPurchaseRequest")
+    if AppName == 'SNCH':
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Inventory").click()
+        time.sleep(9)
+        #danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Internal").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_link_text("Purchase Request").click()
+        time.sleep(2)
+        PRNo = int(danpheEMR.find_element_by_xpath("(//div[@col-id='PRNumber'])[2]").text)
+        print("PRNo:", PRNo)
+        danpheEMR.find_element_by_xpath("//button[contains(.,'Create Purchase Request')]").click()
+        time.sleep(4)
+        danpheEMR.find_element_by_id("itemName0").send_keys(ItemName)
+        time.sleep(2)
+        danpheEMR.find_element_by_id("qty0").send_keys(qty)
+        danpheEMR.find_element_by_id("RequestPORequisition").click()
+        PRNo = PRNo + 1
+        return PRNo
+    print("<<END: createPurchaseRequest")
+def verifyPurchaseRequest(PRNo, ItemName, qty):
+    print(">>START: verifyPurchaseRequest")
+    if AppName == 'SNCH':
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Inventory").click()
+        time.sleep(9)
+        #danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Internal").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_link_text("Purchase Request").click()
+        time.sleep(3)
+        PRNo1 = int(danpheEMR.find_element_by_xpath("(//div[@col-id='PRNumber'])[2]").text)
+        assert PRNo1 == PRNo
+    print(">>END: veriifyPurchaseRequest")
 def InventoryStockManage(managetype):
       print(">>START: InventoryStockManage")
       danpheEMR.find_element_by_link_text("Inventory").click()

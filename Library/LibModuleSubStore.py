@@ -1,30 +1,59 @@
 from selenium import webdriver
 import time
-import AutomationTest.Library.ApplicationConfiguration as AC
+import Library.ApplicationConfiguration as AC
+from selenium.webdriver.common.keys import Keys
 
 danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
+AppName = AC.appName
 
 #Module: SubStore Test Actions
-   def selectSubStore(self, substore):
+def selectSubStore(substore):
       print("Start>> selectSubStore")
-      self.danpheEMR.find_element_by_link_text("SubStore").click()
+      danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//i[contains(text(),'ADMINISTRATION')]").click()
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'ADMINISTRATION')]").click()
       print("End<<selectSubStore")
-   def createSubStoreRequisition(self, InventoryName, ItemName, Qty):
+def createSubStoreRequisition(InventoryName, ItemName, Qty):
       print("Start>> createSubStoreRequisition")
-      self.danpheEMR.find_element_by_link_text("SubStore").click()
+      time.sleep(6)
+      danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
-      self.danpheEMR.find_element_by_link_text("Inventory").click()
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
       time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
       time.sleep(5)
-      self.danpheEMR.find_element_by_xpath("//input[@class='btn btn-primary']").click()
-
-
+      danpheEMR.find_element_by_xpath("//input[@class='btn btn-primary']").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_id("activeInventory").send_keys(InventoryName)
+      time.sleep(3)
+      danpheEMR.find_element_by_id("activeInventory").send_keys(Keys.TAB)
+      time.sleep(3)
+      danpheEMR.find_element_by_id("itemName0").send_keys(ItemName)
+      danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
+      danpheEMR.find_element_by_id("qtyip0").send_keys(Qty)
+      time.sleep(3)
+      danpheEMR.find_element_by_id("save_requisition").click()
+      time.sleep(5)
+      ssReqNo = danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
+      print("Sub Store Requisition No", ssReqNo)
+      danpheEMR.find_element_by_id("backToList").click()
       print("End<<createSubStoreRequisition")
-
+      return ssReqNo
+def verifySubStoreRequisition(ssReqNo, InventoryName, ItemName, Qty):
+      print("Start>> verifySubStoreRequisition")
+      #time.sleep(6)
+      #danpheEMR.find_element_by_link_text("SubStore").click()
+      #time.sleep(5)
+      #danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
+      #time.sleep(5)
+      #danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
+      time.sleep(5)
+      ReqNo = danpheEMR.find_element_by_xpath("(//div[@col-id='RequisitionNo'])[2]").text
+      assert ReqNo == ssReqNo
+      #danpheEMR.find_element_by_xpath("//label[2]/span").click()
+      #time.sleep(3)
+      #ssReqNo1 =
+      print("<<END: verifySubStoreRequisition")
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
