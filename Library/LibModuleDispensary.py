@@ -6,9 +6,7 @@ from selenium.webdriver.support.select import Select
 danpheEMR = AC.danpheEMR
 print("DanpheEMR", danpheEMR)
 AppName = AC.appName
-
 # Module:Dispensary ------------------
-
 def activatePharmacyCounter():
     print(">>Start: Pharmacy Counter Activate: START")
     time.sleep(7)
@@ -22,7 +20,6 @@ def activatePharmacyCounter():
     danpheEMR.find_element_by_xpath("//h5").click()
     time.sleep(2)
     print("Pharmacy Counter Activate: END")
-    
 def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
     print(">>Create Dispensary Sale to Hospital Patient: START")
     global pInvoiceNo
@@ -59,7 +56,6 @@ def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("Create Pharmacy OPD Invoice: END<<")
-
 def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     print("<<START: Create Dispensary sales to random customer.")
     global pInvoiceNo

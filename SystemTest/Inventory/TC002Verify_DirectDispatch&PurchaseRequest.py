@@ -40,3 +40,6 @@ LSS.verifySubStoreRequisition(ssReqNo, StoreName, itemname, qty)
 ######## Dispatch Requisition
 LI.dispatchRequisition(ssReqNo, GeneralInventory, itemname, qty)
 LI.verifyDispatchRequisition(ssReqNo)
+######## DispatchReceived
+LSS.receiveInventoryDispatch(ssReqNo)
+LSS.verifyReceivedInventoryDispatch(ssReqNo)

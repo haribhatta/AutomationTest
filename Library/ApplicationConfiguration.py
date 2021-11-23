@@ -53,6 +53,6 @@ def wait_for_window(timeout=2):
       if len(wh_now) > len(wh_then):
          return set(wh_now).difference(set(wh_then)).pop()
 
-def __str__(self):
+def __str__():
       return
 

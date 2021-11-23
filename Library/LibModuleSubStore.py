@@ -54,6 +54,41 @@ def verifySubStoreRequisition(ssReqNo, InventoryName, ItemName, Qty):
       #time.sleep(3)
       #ssReqNo1 =
       print("<<END: verifySubStoreRequisition")
+def receiveInventoryDispatch(ssReqNo):
+      print("Start>> createSubStoreRequisition")
+      time.sleep(6)
+      danpheEMR.find_element_by_link_text("SubStore").click()
+      time.sleep(5)
+      #danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
+      #time.sleep(5)
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
+      time.sleep(5)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
+      time.sleep(5)
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Receive Items')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_id("ReceiveButton").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_id("backToList").click()
+def verifyReceivedInventoryDispatch(ssReqNo):
+      print(">>START: verifyReceivedInventoryDispatch")
+      time.sleep(6)
+      danpheEMR.find_element_by_link_text("SubStore").click()
+      time.sleep(5)
+      #danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
+      #time.sleep(5)
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
+      time.sleep(5)
+      danpheEMR.find_element_by_xpath("//label[2]/span").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
+      time.sleep(3)
+      danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+      time.sleep(3)
+      ssReqNo1= danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
+      assert ssReqNo1 == ssReqNo
+      danpheEMR.find_element_by_id("backToList").click()
+      print("<<END: verifyReceivedInventoryDispatch")
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
@@ -61,6 +96,6 @@ def wait_for_window(timeout=2):
       if len(wh_now) > len(wh_then):
          return set(wh_now).difference(set(wh_then)).pop()
 
-def __str__(self):
+def __str__():
       return
 

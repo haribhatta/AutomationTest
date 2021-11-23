@@ -6,7 +6,200 @@ import Library.LibModuleAppointment as LA
 ########
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
-########
+######## Dashboard
+def getBillingDashboard():
+    print(">>START: getBillingDashboard")
+    global sysgrosstotal
+    global syssubtotal
+    global sysdiscountamount
+    global sysreturnamount
+    global systotalamount
+    global sysnetcashcollection
+    global sysprovisionalitems
+    global sysunpaidcreditinvoices
+
+    time.sleep(8)
+    danpheEMR.find_element_by_link_text("Billing").click()
+    time.sleep(7)
+    danpheEMR.find_element_by_css_selector(".fa-home").click()
+    time.sleep(9)
+
+    if AppName == "SNCH":
+        sysgrosstotal = danpheEMR.find_element_by_xpath("//div[contains(text(),'i. Subtotal :')]").text
+        print("sysgrosstotal:", sysgrosstotal)
+        syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
+        print("System subTotal-1:", syssubtotal)
+        syssubtotal = syssubtotal.partition("\nii")[0]
+        sysdiscountamount = sysgrosstotal.partition("ii. Discount Amount : ")[2]
+        print(sysdiscountamount)
+        sysdiscountamount = sysdiscountamount.partition(".")[0]
+        sysdiscountamount = sysdiscountamount.replace(',', '')
+        print("System discountAmount:", sysdiscountamount)
+
+        sysreturnamount = danpheEMR.find_element_by_css_selector("#totalsales > div:nth-child(4)").text
+        print("sysreturnamount:", sysreturnamount)
+        print("sysreturnamount:", sysreturnamount)
+        sysreturnamount = sysreturnamount.partition(" : ")[2]
+        # sysreturnamount = sysreturnamount.partition(".")[0]
+        # sysreturnamount = sysreturnamount.replace(',', '')
+        print("System returnAmount:", sysreturnamount)
+
+        systotalamount = danpheEMR.find_element_by_xpath("//div[@id='totalsales']/div[5]/b").text
+        print(systotalamount)
+        systotalamount = systotalamount.partition(": NRs. ")[2]
+        # systotalamount = systotalamount.partition(".")[0]
+        print("System totalAmount:", systotalamount)
+        # systotalamount = systotalamount.replace(',', '')
+        print("System totalAmount:", systotalamount)
+
+        sysnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
+        sysnetcashcollection = sysnetcashcollection.partition("(")[2]
+        sysnetcashcollection = sysnetcashcollection.partition(")")[0]
+        sysnetcashcollection = sysnetcashcollection.replace(',', '')
+        print("System NetCashCollection:", sysnetcashcollection)
+
+        sysprovisionalitems = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'PROVISIONAL ITEMS')]/following-sibling::td").text
+        sysprovisionalitems = sysprovisionalitems.partition("NRs. ")[2]
+        sysprovisionalitems = sysprovisionalitems.partition(".")[0]
+        sysprovisionalitems = sysprovisionalitems.replace(',', '')
+        print("System Provisional Item:", sysprovisionalitems)
+
+        sysunpaidcreditinvoices = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'UNPAID CREDIT INVOICES')]/following-sibling::td").text
+        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition("NRs. ")[2]
+        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition(".")[0]
+        sysunpaidcreditinvoices = sysunpaidcreditinvoices.replace(',', '')
+        print("System Unpaid Credit Invoice:", sysunpaidcreditinvoices)
+    print(">>End: getBillingDashboard")
+    print("syssubtotal", syssubtotal)
+def preSystemDataBillingDashboard():
+    print(">>START: preSystemDataBillingDashboard")
+    global presyssubtotal
+    global presysdiscountamount
+    global presysreturnamount
+    global presystotalamount
+    global presysnetcashcollection
+    global presysprovisionalitems
+    global presysunpaidcreditinvoices
+
+    presyssubtotal = float(syssubtotal)
+    presyssubtotal = int(syssubtotal)
+    print("presyssubtotal", presyssubtotal)
+    presysdiscountamount = float(sysdiscountamount)
+    print("presysdiscountamount", presysdiscountamount)
+    presysreturnamount = float(sysreturnamount)
+    print("presysreturnamount", presysreturnamount)
+    presystotalamount = float(systotalamount)
+    print("presystotalamount", presystotalamount)
+    presysnetcashcollection = float(sysnetcashcollection)
+    print("presysnetcashcollection", presysnetcashcollection)
+    presysprovisionalitems = float(sysprovisionalitems)
+    print("presysprovisionalitems", presysprovisionalitems)
+    presysunpaidcreditinvoices = float(sysunpaidcreditinvoices)
+    print("presysunpaidcreditinvoices", presysunpaidcreditinvoices)
+    print("<<END:")
+def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, settlement, provisional,
+                           provisionalcancel):
+    print(">>START: Verify Billing Dashboard new updated amounts")
+
+    # 1. Cash Invoice (Check subTotal & totalAmount is increased in Total Sales area).
+    if cash > 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
+        expectedsubtotal = presyssubtotal + cash
+        print("expectedsubtotal", expectedsubtotal)
+        print("syssubtotal", syssubtotal)
+        assert float(syssubtotal) == expectedsubtotal
+        assert float(systotalamount) == presystotalamount + cash
+        assert float(sysnetcashcollection) == presysnetcashcollection + cash
+
+    # 2. Return Cash Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
+    elif cash == 0 and cashReturn > 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
+        time.sleep(3)
+        print("syssubtotal", syssubtotal)
+        print("presyssubtotal", presyssubtotal)
+        assert int(syssubtotal) == int(presyssubtotal)  # LPH-864: Prio-1 bug in LPH_V1.9.0
+        tempresult = presysreturnamount + cashReturn
+        print("tempresult", tempresult)
+        print("sysreturnamount", sysreturnamount)
+        print("presysreturnamount", presysreturnamount)
+        assert float(sysreturnamount) == presysreturnamount + cashReturn
+        assert float(systotalamount) == presystotalamount - cashReturn
+        assert float(sysnetcashcollection) == presysnetcashcollection - cashReturn
+
+    # 3. Cash Discount Invoice (Check Billing Dashboard for discount in OPD cash sale invoice).
+    elif cash > 0 and cashReturn == 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
+        time.sleep(3)
+        assert int(syssubtotal) == presyssubtotal + cash
+        calctemp = presysdiscountamount + (discountpc * cash / 100)
+        print("calctemp", calctemp)
+        print("sysdiscountamount", sysdiscountamount)
+        assert float(sysdiscountamount) == calctemp
+        assert float(sysreturnamount) == presysreturnamount
+        assert float(systotalamount) == presystotalamount + cash - (discountpc * cash / 100)
+        assert float(sysnetcashcollection) == presysnetcashcollection + cash - (discountpc * cash / 100)
+
+    # 4. Return Cash Discount Invoice (Check Billing Dashboard for return of discounted OPD cash sale invoice).
+    elif cash == 0 and cashReturn > 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
+        assert int(syssubtotal) == presyssubtotal
+        assert int(sysdiscountamount) == presysdiscountamount
+        print("sysreturnamount", sysreturnamount)
+        print("presysreturnamount", presysreturnamount)
+        print("cashReturn*discountpc", cashReturn * discountpc)
+        assert int(sysreturnamount) == presysreturnamount + (cashReturn * (100 - discountpc) / 100)
+        assert int(systotalamount) == presystotalamount - (cashReturn * (100 - discountpc) / 100)
+        assert int(sysnetcashcollection) == presysnetcashcollection - (cashReturn * (100 - discountpc) / 100)
+
+    # 5. Credit Invoice
+    elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit > 0 and creditReturn == 0:
+        time.sleep(7)
+        # if appPort == '81':
+        #    assert int(syssubtotal) == presyssubtotal + credit
+        #    assert int(sysdiscountamount) == presysdiscountamount
+        #    assert int(sysreturnamount) == presysreturnamount
+        #    assert int(systotalamount) == presystotalamount + credit
+        #    print("presysnetcashcollection", presysnetcashcollection)
+        #    print("sysnetcashcollection", sysnetcashcollection)
+        #    assert int(sysnetcashcollection) == presysnetcashcollection
+        #    print("End of credit invoice check")
+        if AppName == "SNCH":
+            assert int(syssubtotal) == presyssubtotal + credit
+            assert int(sysdiscountamount) == presysdiscountamount
+            assert int(sysreturnamount) == presysreturnamount
+            assert int(systotalamount) == presystotalamount + credit
+            print("presysnetcashcollection", presysnetcashcollection)
+            print("sysnetcashcollection", sysnetcashcollection)
+            assert int(sysnetcashcollection) == presysnetcashcollection
+            print("End of credit invoice check")
+
+    # 6. Return Credit Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
+    elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn > 0:
+        time.sleep(3)
+        print(syssubtotal)
+        print(presyssubtotal)
+        assert int(syssubtotal) == presyssubtotal
+        print("sysreturnamount", sysreturnamount)
+        print("presysreturnamount", presysreturnamount)
+        print("creditReturn", creditReturn)
+        assert int(sysreturnamount) == presysreturnamount + creditReturn
+        assert int(systotalamount) == presystotalamount - creditReturn
+        assert int(sysnetcashcollection) == presysnetcashcollection
+
+    # 7. Credit Payment/Settlement
+    elif credit > 0 and settlement == "CREDIT":
+        assert int(sysnetcashcollection) == presysnetcashcollection + credit
+
+    # 8. Provisional bill
+    elif cash == 0 and credit == 0 and discountpc == 0 and cashReturn == 0 and provisional > 0:
+        print("presysprovisionalitems:", presysprovisionalitems)
+        print("provisional:", provisional)
+        print(float(sysprovisionalitems))
+        testvalu = presysprovisionalitems + provisional
+        print(testvalu)
+        # assert float(sysprovisionalitems) == presysprovisionalitems + provisional
+
+    # 9. Cancel Provisional bill
+    elif cash == 0 and credit == 0 and provisional == 0 and provisionalcancel > 0:
+        print(presysprovisionalitems)
 ########SalesDayBook
 def getSalesDayBook():
       print(">>START: getSalesDayBook")
@@ -314,6 +507,7 @@ def verifyIncomeSegregation(cash, cashreturn, credit, creditreturn, provision):
          assert int(systotaldiscount) == presystotaldiscount + 0
          assert int(systotalnetsales) == presystotalnetsales + cash - cashreturn + credit - creditreturn
          print("<<END verifyIncomeSegregation")
+######## Patient Credit Summary Report
 def getPatientCreditSummary():
       print(">>START: getPatientCreditSummary")
       danpheEMR.find_element_by_link_text("Reports").click()
@@ -331,6 +525,7 @@ def preSystemPatientCreditSummary():
 def verifyPatientCreditSummary():
       print(">>START: verifyPatientCreditSummary")
       print("<<END: verifyPatientCreditSummary")
+######## Doctor Summary Report
 def getDoctorSummary(doctor):
       print(">>START: getDoctorSummary")
       global sysgrosstotal
@@ -392,7 +587,6 @@ def verifyDoctorSummary(cash, cashreturn, credit, creditreturn, discount, provis
       assert int(syscancelamount) == presyscancelamount + provisionalcancel
       assert int(syscreditamount) == presyscreditamount + credit - creditreturn
       print("<<END: verifyDoctorSummary")
-
 #Module:Billing_Report: Discount Report**********************
 def verifyDiscountReport(HospitalNo, cash, discountpc):
       print(">>START: verifyDiscountReport")
@@ -677,7 +871,49 @@ def verifyTotalAdmittedPatients(HospitalNo):
       time.sleep(5)
       hospitalno = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
       assert hospitalno == HospitalNo
-
+######## Report: Total Items Bill
+def getTotalItemsBill():
+    print(">>START: getTotalItemsBill")
+    global sysreturnQty
+    global sysreturnSubtotal
+    global sysreturnQtyDiscount
+    global sysreturnTotalamount
+    danpheEMR.find_element_by_link_text("Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Billing Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//i[contains(.,'Total Items Bill')]").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+    time.sleep(9)
+    sysreturnQty = danpheEMR.find_element_by_xpath('//tr[4]/td[2]').text
+    print(sysreturnQty)
+    sysreturnSubtotal = danpheEMR.find_element_by_xpath('//tr[4]/td[3]').text
+    print(sysreturnSubtotal)
+    print("<<END: getTotalItemsBill")
+def preSystemTotalItemsBill():
+    print(">>START: preSystemTotalItemsBill")
+    global presysreturnQty
+    global presysreturnSubtotal
+    global presysreturnQtyDiscount
+    global presysreturnTotalamount
+    presysreturnQty = int(sysreturnQty)
+    print(presysreturnQty)
+    presysreturnSubtotal = int(sysreturnSubtotal)
+    print(presysreturnSubtotal)
+    presysreturnQtyDiscount = int(sysreturnQtyDiscount)
+    print(presysreturnQtyDiscount)
+    presysreturnTotalamount = int(sysreturnTotalamount)
+    print(presysreturnTotalamount)
+    print("<<END: preSystemTotalItemsBill")
+def verifyTotalItemsBill(self, returnamt, discountamt):
+    print(">>START: verifyTotalItemsBill")
+    if returnamt > 0:
+        assert int(sysreturnQty) == (presysreturnQty + 1)
+        assert int(sysreturnSubtotal) == (presysreturnSubtotal + returnamt)
+        assert int(sysreturnQtyDiscount) == (presysreturnQtyDiscount + discountamt)
+        assert int(sysreturnTotalamount) == (presysreturnTotalamount + returnamt)
+    print("<<END: verifyTotalItemsBill")
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles

@@ -70,7 +70,6 @@ def getPharmacyDashboard():
       UnpaidInvoices = float(UnpaidInvoices)
       print("UnpaidInvoices", UnpaidInvoices)
       print("<<END: getPharmacyDashboard")
-
 def preSystemPharmacyDashboard():
       global xTotalSale
       # global xTotalReturn
@@ -89,8 +88,6 @@ def preSystemPharmacyDashboard():
       xDepositReturned = DepositReturned
       xProvisionalItems = ProvisionalItems
       xUnpaidInvoices = UnpaidInvoices
-
-
 def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, depositreturn, provisional,
                             provisionacancel):
       print(">>START: verifyPharmacyDashboard:")
@@ -126,7 +123,6 @@ def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, dep
             print("UnpaidInvoices", UnpaidInvoices)
             assert float(round(UnpaidInvoices)) == c
       print("<<END: verifyPharmacyDashboard")
-
 def getPharmacyCashCollectionSummary(user):
       print(">>START: getPharmacyCashCollectionSummary")
       global sysinvoiceamount
@@ -177,7 +173,6 @@ def preSystemPharmacyCashCollectionSummary():
       presysnetamount = float(sysnetamount)
       presysdiscountamount = int(sysdiscountamount)
       print("<<END: preSystemPharmacyCashCollectionSummary")
-
 def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, deposit, depositreturn, discount):
       print(">>START: verifyPharmacyCashCollectionSummary")
       print("presysinvoiceamount:", presysinvoiceamount)
@@ -199,7 +194,6 @@ def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, 
       assert float(sysnetamount) == float(netamount)
       assert int(sysdiscountamount) == presysdiscountamount + discount
       print("<<END: verifyPharmacyCashCollectionSummary")
-
 def getPharmacyUserCollectionReport(user):
       print(">>START: getPharmacyUserCollectionReport")
       global sysPnetcashcollection
@@ -259,7 +253,6 @@ def getPharmacyUserCollectionReport(user):
       sysPtotalcollection = danpheEMR.find_element_by_xpath("//tr[13]/td[2]").text
       print(sysPtotalcollection)
       print("<<END: getPharmacyUserCollectionReport")
-
 def preSystemPharmacyUserCollectionReport():
       print(">START: preSystemPharmacyUserCollectionReport")
       global presysPnetcashcollection
@@ -291,7 +284,6 @@ def preSystemPharmacyUserCollectionReport():
       presysPlesscashdiscount = float(sysPlesscashdiscount)
       presysPtotalcollection = float(sysPtotalcollection)
       print("<<END: preSystemPharmacyUserCollectionReport")
-
 def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditreturn, creditsettlement, discount,
                                              deposit, depositreturn, provisional, provisionalcancel):
       print(">>START: verifySystemPharmacyUserCollectionReport")
@@ -345,7 +337,6 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
             print("Y", x)
             assert x == y
       print("<<END: verifySystemPharmacyUserCollectionReport")
-
 def getPharmacyDepositBalanceReport(HospitalNo):
       print(">>START: getPharmacyDepositBalanceReport")
       global sysdepositamt
@@ -360,7 +351,6 @@ def getPharmacyDepositBalanceReport(HospitalNo):
       assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
       sysdepositamt = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
       print("<<END: getPharmacyDepositBalanceReport")
-
 def verifyPharmacyDepositBalanceReport(HospitalNo, deposit, depositreturn):
       print(">>START: verifyPharmacyDepositBalanceReport")
       danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -375,7 +365,6 @@ def verifyPharmacyDepositBalanceReport(HospitalNo, deposit, depositreturn):
       depositbalance = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
       assert depositbalance == sysdepositamt + deposit - depositreturn
       print("<<END: verifyPharmacyDepositBalanceReport")
-
 def getPharmacyOpeningEndingStockSummaryReport(drugname):
       print(">>START: getPharmacyOpeningEndingStockSummaryReport")
       global sysdrugname
@@ -398,7 +387,6 @@ def getPharmacyOpeningEndingStockSummaryReport(drugname):
       sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       print("sysendingstock", sysendingstock)
       print("<<END: getPharmacyOpeningEndingStockSummaryReport")
-
 def preSystemPharmacyOpeningEndingStockSummaryReport():
       print(">>START: preSystemPharmacyOpeningEndingStockSummaryReport")
       global presysdrugname
@@ -412,7 +400,6 @@ def preSystemPharmacyOpeningEndingStockSummaryReport():
       presysdrugbatch = sysdrugbatch
       presysdrugexpiry = sysdrugexpiry
       print("<<END: preSystemPharmacyOpeningEndingStockSummaryReport")
-
 def verifyPharmacyOpeningEndingStockSummaryReport(qty):
       print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
       danpheEMR.find_element_by_link_text('Pharmacy').click()
@@ -431,7 +418,6 @@ def verifyPharmacyOpeningEndingStockSummaryReport(qty):
       sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       assert int(sysendingstock) == int(presysendingstock) - qty
       print("<<END: verifyPharmacyOpeningEndingStockSummaryReport")
-
 def getPharmacyStockManageDetailReport(drugname):
       print(">>START: getPharmacyStockManageDetailReport")
       global ManageQuantity
@@ -449,17 +435,13 @@ def getPharmacyStockManageDetailReport(drugname):
             "(//div[@col-id='Quantity'])[2]").text  # There is open bug (EMR-2588) to list down latest manage record to top.
       print("Manage Quantity", ManageQuantity)
       print("<<END: getPharmacyStockManageDetailReport")
-
 def preSystemPharmacyStockManageDetailReport():
       print(">>START: preSystemPharmacyStockManageDetailReport")
       global xManageQuantity
       xManageQuantity = ManageQuantity
-
-
 def verifyPharmacyStockManageDetailReport(In, Out):
       assert int(ManageQuantity) == int(xManageQuantity) + In - Out
       print("<<END: preSystemPharmacyStockManageDetailReport")
-
 def verifyStockItemsReport(drugname):
       print(">>START: verifyStockItemsReport")
       danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -480,7 +462,6 @@ def verifyStockItemsReport(drugname):
       print("drugqtySS", drugqtySS)
       assert int(drugqtySS) == int(sysqty)
       print("<<END: verifyStockItemsReport")
-
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles

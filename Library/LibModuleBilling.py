@@ -6,8 +6,6 @@ import Library.LibModuleAppointment as LA
 
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
-
-
 def counteractivation():
     print(">>Activate Billing Counter: START")
     time.sleep(5)
@@ -16,8 +14,6 @@ def counteractivation():
     danpheEMR.find_element_by_xpath("(//a[contains(@href, '#/Billing/CounterActivate')])[2]").click()
     danpheEMR.find_element_by_css_selector(".col-md-2:nth-child(1) img").click()
     print("Activate Billing Counter: END<<")
-
-
 def verifyopdinvoice(deposit, billamt):
     print(">>Verify OPD Invoice Details: START")
     if AppName == "SNCH":
@@ -44,8 +40,6 @@ def verifyopdinvoice(deposit, billamt):
             sysdepositbalance = sysdepositbalance.partition("e: ")[2]
             assert sysdepositbalance == "0"
     print(">>>Verify OPD Invoice. >>End")
-
-
 def returnBillingInvoice(InvoiceNo, returnmsg):
     print(">>START: Returning OPD Invoice.", InvoiceNo)
     global returnTotalAmount
@@ -77,8 +71,6 @@ def returnBillingInvoice(InvoiceNo, returnmsg):
         assert returnremark == returnmsg
         print("returnTotalAmount", returnTotalAmount)
     print("<<END: Return OPD Invoice.")
-
-
 def returnBillingInvoicePartial(InvoiceNo, returnmsg):
     print(">>START: Partial Return of billing invoice.", InvoiceNo)
     global returnTotalAmount
@@ -100,8 +92,6 @@ def returnBillingInvoicePartial(InvoiceNo, returnmsg):
     time.sleep(2)
     danpheEMR.find_element_by_xpath(
         "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
-
-
 def verifyCreditNoteDuplicateInvoice():
     print("Verify partial return of bill invoice")
     # global returnTotalAmount
@@ -122,8 +112,6 @@ def verifyCreditNoteDuplicateInvoice():
     print("ReturnAmount", ReturnAmount)
     danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
     time.sleep(2)
-
-
 def creditPayment(HospitalNo):
     print(">>START: Credit Payment")
     danpheEMR.find_element_by_link_text("Billing").click()
@@ -135,8 +123,6 @@ def creditPayment(HospitalNo):
     danpheEMR.find_element_by_link_text("Show Details").click()
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
-
-
 def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
@@ -179,8 +165,6 @@ def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
         print("InvoiceNo", InvoiceNo)
 
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
-
-
 def createERlabInvoice(HospitalNo, labtest, labtype):
     print(">>Create ER LAB Invoice: START")
     global InvoiceNo
@@ -212,8 +196,6 @@ def createERlabInvoice(HospitalNo, labtest, labtype):
         InvoiceNo = InvoiceNo.partition("BL")[2]
         print("InvoiceNo", InvoiceNo)
     print("Create ER LAB Invoice: 1 Lab: END<<")
-
-
 def verifylabxrayinvoice():
     # if appPort == "81":
     #    print(">>Verify OPD Invoice: 1 Lab + 1 Xray Items: START")
@@ -226,13 +208,9 @@ def verifylabxrayinvoice():
         # hospitalNoTemp = danpheEMR.find_element_by_css_selector("span > strong").text
         # assert HospitalNo == hospitalNoT
     # print("Verify OPD Invoice: 1 Lab + 1 Xray Items: END<<", "HospitalNo", hospitalNoT, "InvoiceNo", invoiceNo)
-
-
 def verifySampleCollectionDuplicateEntry():
     if AppName == "SNCH":
         print("Start: verifySampleCollectionDuplicateEntry")
-
-
 def createProvisionalBill(HospitalNo, usgtest):
     print(">>START: Create USG Provisional bill")
     if AppName == "SNCH":
@@ -256,8 +234,6 @@ def createProvisionalBill(HospitalNo, usgtest):
         time.sleep(2)
 
     print("<<END")
-
-
 def verifyDuplicateBill(HospitalNo):
     if AppName == "SNCH":
         time.sleep(3)
@@ -272,8 +248,6 @@ def verifyDuplicateBill(HospitalNo):
         time.sleep(2)
         danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
         time.sleep(3)
-
-
 def createCopyItemInvoice(paymentmode):
     print(">>START: CreateCopyItemInvoice")
     global InvoiceNo
@@ -295,207 +269,6 @@ def createCopyItemInvoice(paymentmode):
     print("returnTotalAmount", returnTotalAmount)
     assert CopyItemTotalAmount == returnTotalAmount  # LPH-865 : LPH_V1.9.0
     print("<<END: CreateCopyItemInvoice")
-
-
-def getBillingDashboard():
-    print(">>START: getBillingDashboard")
-    global sysgrosstotal
-    global syssubtotal
-    global sysdiscountamount
-    global sysreturnamount
-    global systotalamount
-    global sysnetcashcollection
-    global sysprovisionalitems
-    global sysunpaidcreditinvoices
-
-    time.sleep(8)
-    danpheEMR.find_element_by_link_text("Billing").click()
-    time.sleep(7)
-    danpheEMR.find_element_by_css_selector(".fa-home").click()
-    time.sleep(9)
-
-    if AppName == "SNCH":
-        sysgrosstotal = danpheEMR.find_element_by_xpath("//div[contains(text(),'i. Subtotal :')]").text
-        print("sysgrosstotal:", sysgrosstotal)
-        syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
-        print("System subTotal-1:", syssubtotal)
-        syssubtotal = syssubtotal.partition("\nii")[0]
-        sysdiscountamount = sysgrosstotal.partition("ii. Discount Amount : ")[2]
-        print(sysdiscountamount)
-        sysdiscountamount = sysdiscountamount.partition(".")[0]
-        sysdiscountamount = sysdiscountamount.replace(',', '')
-        print("System discountAmount:", sysdiscountamount)
-
-        sysreturnamount = danpheEMR.find_element_by_css_selector("#totalsales > div:nth-child(4)").text
-        print("sysreturnamount:", sysreturnamount)
-        print("sysreturnamount:", sysreturnamount)
-        sysreturnamount = sysreturnamount.partition(" : ")[2]
-        # sysreturnamount = sysreturnamount.partition(".")[0]
-        # sysreturnamount = sysreturnamount.replace(',', '')
-        print("System returnAmount:", sysreturnamount)
-
-        systotalamount = danpheEMR.find_element_by_xpath("//div[@id='totalsales']/div[5]/b").text
-        print(systotalamount)
-        systotalamount = systotalamount.partition(": NRs. ")[2]
-        # systotalamount = systotalamount.partition(".")[0]
-        print("System totalAmount:", systotalamount)
-        # systotalamount = systotalamount.replace(',', '')
-        print("System totalAmount:", systotalamount)
-
-        sysnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
-        sysnetcashcollection = sysnetcashcollection.partition("(")[2]
-        sysnetcashcollection = sysnetcashcollection.partition(")")[0]
-        sysnetcashcollection = sysnetcashcollection.replace(',', '')
-        print("System NetCashCollection:", sysnetcashcollection)
-
-        sysprovisionalitems = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(),'PROVISIONAL ITEMS')]/following-sibling::td").text
-        sysprovisionalitems = sysprovisionalitems.partition("NRs. ")[2]
-        sysprovisionalitems = sysprovisionalitems.partition(".")[0]
-        sysprovisionalitems = sysprovisionalitems.replace(',', '')
-        print("System Provisional Item:", sysprovisionalitems)
-
-        sysunpaidcreditinvoices = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(),'UNPAID CREDIT INVOICES')]/following-sibling::td").text
-        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition("NRs. ")[2]
-        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition(".")[0]
-        sysunpaidcreditinvoices = sysunpaidcreditinvoices.replace(',', '')
-        print("System Unpaid Credit Invoice:", sysunpaidcreditinvoices)
-    print(">>End: getBillingDashboard")
-    print("syssubtotal", syssubtotal)
-
-
-def preSystemDataBillingDashboard():
-    print(">>START: preSystemDataBillingDashboard")
-    global presyssubtotal
-    global presysdiscountamount
-    global presysreturnamount
-    global presystotalamount
-    global presysnetcashcollection
-    global presysprovisionalitems
-    global presysunpaidcreditinvoices
-
-    presyssubtotal = float(syssubtotal)
-    presyssubtotal = int(syssubtotal)
-    print("presyssubtotal", presyssubtotal)
-    presysdiscountamount = float(sysdiscountamount)
-    print("presysdiscountamount", presysdiscountamount)
-    presysreturnamount = float(sysreturnamount)
-    print("presysreturnamount", presysreturnamount)
-    presystotalamount = float(systotalamount)
-    print("presystotalamount", presystotalamount)
-    presysnetcashcollection = float(sysnetcashcollection)
-    print("presysnetcashcollection", presysnetcashcollection)
-    presysprovisionalitems = float(sysprovisionalitems)
-    print("presysprovisionalitems", presysprovisionalitems)
-    presysunpaidcreditinvoices = float(sysunpaidcreditinvoices)
-    print("presysunpaidcreditinvoices", presysunpaidcreditinvoices)
-    print("<<END:")
-
-
-def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, settlement, provisional,
-                           provisionalcancel):
-    print(">>START: Verify Billing Dashboard new updated amounts")
-
-    # 1. Cash Invoice (Check subTotal & totalAmount is increased in Total Sales area).
-    if cash > 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
-        expectedsubtotal = presyssubtotal + cash
-        print("expectedsubtotal", expectedsubtotal)
-        print("syssubtotal", syssubtotal)
-        assert float(syssubtotal) == expectedsubtotal
-        assert float(systotalamount) == presystotalamount + cash
-        assert float(sysnetcashcollection) == presysnetcashcollection + cash
-
-    # 2. Return Cash Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
-    elif cash == 0 and cashReturn > 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
-        time.sleep(3)
-        print("syssubtotal", syssubtotal)
-        print("presyssubtotal", presyssubtotal)
-        assert int(syssubtotal) == int(presyssubtotal)  # LPH-864: Prio-1 bug in LPH_V1.9.0
-        tempresult = presysreturnamount + cashReturn
-        print("tempresult", tempresult)
-        print("sysreturnamount", sysreturnamount)
-        print("presysreturnamount", presysreturnamount)
-        assert float(sysreturnamount) == presysreturnamount + cashReturn
-        assert float(systotalamount) == presystotalamount - cashReturn
-        assert float(sysnetcashcollection) == presysnetcashcollection - cashReturn
-
-    # 3. Cash Discount Invoice (Check Billing Dashboard for discount in OPD cash sale invoice).
-    elif cash > 0 and cashReturn == 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
-        time.sleep(3)
-        assert int(syssubtotal) == presyssubtotal + cash
-        calctemp = presysdiscountamount + (discountpc * cash / 100)
-        print("calctemp", calctemp)
-        print("sysdiscountamount", sysdiscountamount)
-        assert float(sysdiscountamount) == calctemp
-        assert float(sysreturnamount) == presysreturnamount
-        assert float(systotalamount) == presystotalamount + cash - (discountpc * cash / 100)
-        assert float(sysnetcashcollection) == presysnetcashcollection + cash - (discountpc * cash / 100)
-
-    # 4. Return Cash Discount Invoice (Check Billing Dashboard for return of discounted OPD cash sale invoice).
-    elif cash == 0 and cashReturn > 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
-        assert int(syssubtotal) == presyssubtotal
-        assert int(sysdiscountamount) == presysdiscountamount
-        print("sysreturnamount", sysreturnamount)
-        print("presysreturnamount", presysreturnamount)
-        print("cashReturn*discountpc", cashReturn * discountpc)
-        assert int(sysreturnamount) == presysreturnamount + (cashReturn * (100 - discountpc) / 100)
-        assert int(systotalamount) == presystotalamount - (cashReturn * (100 - discountpc) / 100)
-        assert int(sysnetcashcollection) == presysnetcashcollection - (cashReturn * (100 - discountpc) / 100)
-
-    # 5. Credit Invoice
-    elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit > 0 and creditReturn == 0:
-        time.sleep(7)
-        # if appPort == '81':
-        #    assert int(syssubtotal) == presyssubtotal + credit
-        #    assert int(sysdiscountamount) == presysdiscountamount
-        #    assert int(sysreturnamount) == presysreturnamount
-        #    assert int(systotalamount) == presystotalamount + credit
-        #    print("presysnetcashcollection", presysnetcashcollection)
-        #    print("sysnetcashcollection", sysnetcashcollection)
-        #    assert int(sysnetcashcollection) == presysnetcashcollection
-        #    print("End of credit invoice check")
-        if AppName == "SNCH":
-            assert int(syssubtotal) == presyssubtotal + credit
-            assert int(sysdiscountamount) == presysdiscountamount
-            assert int(sysreturnamount) == presysreturnamount
-            assert int(systotalamount) == presystotalamount + credit
-            print("presysnetcashcollection", presysnetcashcollection)
-            print("sysnetcashcollection", sysnetcashcollection)
-            assert int(sysnetcashcollection) == presysnetcashcollection
-            print("End of credit invoice check")
-
-    # 6. Return Credit Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
-    elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn > 0:
-        time.sleep(3)
-        print(syssubtotal)
-        print(presyssubtotal)
-        assert int(syssubtotal) == presyssubtotal
-        print("sysreturnamount", sysreturnamount)
-        print("presysreturnamount", presysreturnamount)
-        print("creditReturn", creditReturn)
-        assert int(sysreturnamount) == presysreturnamount + creditReturn
-        assert int(systotalamount) == presystotalamount - creditReturn
-        assert int(sysnetcashcollection) == presysnetcashcollection
-
-    # 7. Credit Payment/Settlement
-    elif credit > 0 and settlement == "CREDIT":
-        assert int(sysnetcashcollection) == presysnetcashcollection + credit
-
-    # 8. Provisional bill
-    elif cash == 0 and credit == 0 and discountpc == 0 and cashReturn == 0 and provisional > 0:
-        print("presysprovisionalitems:", presysprovisionalitems)
-        print("provisional:", provisional)
-        print(float(sysprovisionalitems))
-        testvalu = presysprovisionalitems + provisional
-        print(testvalu)
-        # assert float(sysprovisionalitems) == presysprovisionalitems + provisional
-
-    # 9. Cancel Provisional bill
-    elif cash == 0 and credit == 0 and provisional == 0 and provisionalcancel > 0:
-        print(presysprovisionalitems)
-
-
 # Module:Billing_OP -----------------
 def opDeposit(HospitalNo, amount):
     print(">>>opDeposit>>Start")
@@ -516,8 +289,6 @@ def opDeposit(HospitalNo, amount):
         danpheEMR.find_element_by_xpath("//input[@value='Add Deposit and Print']").click()
         time.sleep(3)
     print(">>>opDeposit>>End")
-
-
 def opDepositDbiling(HospitalNo, deposit, testname):
     print("lets issue OPD invoice deducting amount from deposit.")
     if AppName == "SNCH":
@@ -574,8 +345,6 @@ def opDepositDbiling(HospitalNo, deposit, testname):
         time.sleep(9)
         danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
         time.sleep(3)
-
-
 def opDepositDbilingTenderCashReturn(HospitalNo, deposit, testname):
     global ChangeReturn
     print(">>>opDepositDbilingTenderCashReturn>>Start")
@@ -685,8 +454,6 @@ def opDepositDbilingTenderCashReturn(HospitalNo, deposit, testname):
             assert DepositBalance == NewDepositBalance
         danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
     print(">>>opDepositDbilingTenderCashReturn>>End")
-
-
 def createUSGinvoice(HospitalNo, USGtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     if AppName == "SNCH":
@@ -712,8 +479,6 @@ def createUSGinvoice(HospitalNo, USGtest):
         danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
 
     print("Create OPD Invoice: USG Items: END<<")
-
-
 # Module:Billing_IP -----------------
 def createIPprovisionalBill(HospitalNo, test):
     global testrate
@@ -735,8 +500,6 @@ def createIPprovisionalBill(HospitalNo, test):
         danpheEMR.find_element_by_xpath("//input[@value='Request']").click()
         time.sleep(9)
     print("<<END")
-
-
 def cancelIPprovisionalBill(HospitalNo, canceltest):
     print(">>START: Cancel IP Provisional bill")
     if AppName == "SNCH":
@@ -761,8 +524,6 @@ def cancelIPprovisionalBill(HospitalNo, canceltest):
         time.sleep(2)
         danpheEMR.find_element_by_css_selector(".fa-times").click()
     print("End of cancel IP Provisional Bill")
-
-
 def getIPbillingDetails(HospitalNo, paymentmode):
     print("Start>>getIPbillingDetails")
     global BillingTotal
@@ -799,8 +560,6 @@ def getIPbillingDetails(HospitalNo, paymentmode):
                 "//td[contains(.,'Change/Return :')]/following-sibling::td").text
             print("ChangeReturn", ChangeReturn)
     print("End<<getIPbillingDetails")
-
-
 def preIPbillingDetails():
     global xBillingTotal
     global xNetTotal
@@ -814,8 +573,6 @@ def preIPbillingDetails():
     xToBePaid = int(ToBePaid)
     xTender = int(Tender)
     xChangeReturn = int(ChangeReturn)
-
-
 def verifyIPbillingDetails(testrate, canceltest, paymentmode):
     x = BillingTotal.replace(',', '')
     x = int(x)
@@ -831,8 +588,6 @@ def verifyIPbillingDetails(testrate, canceltest, paymentmode):
     if paymentmode != "CREDIT":
         assert int(Tender) == xTender + testrate - canceltest
         assert int(ChangeReturn) == xChangeReturn
-
-
 def modifyDischargeDate(HospitalNo):
     danpheEMR.find_element_by_link_text("Billing").click()
     time.sleep(3)
@@ -842,8 +597,6 @@ def modifyDischargeDate(HospitalNo):
     time.sleep(3)
     danpheEMR.find_element_by_link_text("View Details").click()
     time.sleep(5)
-
-
 def verifyConfirmDischarge(HospitalNo, paymentmode):
     if AppName == "SNCH":
         danpheEMR.find_element_by_link_text("Billing").click()
@@ -880,8 +633,6 @@ def verifyConfirmDischarge(HospitalNo, paymentmode):
         time.sleep(2)
         danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Confirm Discharge ']").click()
         time.sleep(7)
-
-
 def verifyDischargeInvoice(paymentmode):
     time.sleep(3)
     print("Start>>verifyDischargeInvoice")
@@ -933,8 +684,6 @@ def verifyDischargeInvoice(paymentmode):
         time.sleep(2)
         danpheEMR.execute_script("arguments[0].click();", element)
     print("End>>verifyDischargeInvoice")
-
-
 def creditSettlements(HospitalNo):
     print("Start: creditSettlements")
     danpheEMR.find_element_by_link_text("Billing").click()
@@ -945,8 +694,6 @@ def creditSettlements(HospitalNo):
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
     print("End: creditSettlements")
-
-
 def generateDischargeInvoice(HospitalNo, paymentmode):
     print("Start: generateDischargeInvoice")
     global InvoiceNo
@@ -985,6 +732,60 @@ def generateDischargeInvoice(HospitalNo, paymentmode):
         danpheEMR.execute_script("arguments[0].click();", element)
     print("End: generateDischargeInvoice")
 
+
+def billingIP(HospitalNo, admitCharge, deposit):
+    if AppName == 'SNCH':
+        danpheEMR.find_element_by_link_text("Billing").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("IPBilling").click()
+        time.sleep(1)
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("View Details").click()
+        time.sleep(9)
+        if deposit >= 1:
+            danpheEMR.find_element_by_xpath("//button[contains(.,' Add Deposit ')]").click()
+            danpheEMR.find_element_by_id("txtAmount").send_keys(deposit)
+            danpheEMR.find_element_by_id("btnAddDeposit").click()
+            time.sleep(2)
+            danpheEMR.find_element_by_id("btn_PrintReceipt").send_keys(Keys.ESCAPE)
+        time.sleep(2)
+        billingTotalExp = admitCharge
+        billingTotalAct = danpheEMR.find_element_by_xpath("//td[2]/label").text
+        print(billingTotalAct)
+        totalDiscountExp = 0  # discount is zero
+        totalDiscountAct = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),' Discount Amt.')]/following-sibling::td").text
+        print("totalDiscountAct", totalDiscountAct)
+        print("totalDiscountExp", totalDiscountExp)
+        netTotalExp = int(billingTotalExp) - int(totalDiscountExp)
+        netTotalAct = danpheEMR.find_element_by_xpath("//tr[5]/td[2]/label").text
+        print(netTotalAct)
+        depositBalanceExp = int(deposit)
+        depositBalanceAct = danpheEMR.find_element_by_xpath("//tr[6]/td[2]/label").text
+        print("depositBalanceAct", depositBalanceAct)
+        depositBalanceAct = depositBalanceAct.replace(',', '')
+        print("depositBalanceAct", depositBalanceAct)
+        print("depositBalanceExp", depositBalanceExp)
+        assert depositBalanceExp == int(depositBalanceAct)
+        if depositBalanceExp > netTotalExp:
+            toBeRefundExp = depositBalanceExp - netTotalExp
+            toBeRefundAct = danpheEMR.find_element_by_css_selector("tr:nth-child(7) label").text
+            print("To be refund:", toBeRefundAct)
+        elif depositBalanceExp < netTotalExp:
+            toBePaidExp = netTotalExp - depositBalanceExp
+            toBePaidAct = danpheEMR.find_element_by_css_selector("tr:nth-child(7) label").text
+            print("To be paid:", toBePaidAct)
+        time.sleep(4)
+        danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_xpath("//div[3]/textarea").send_keys("Patient discharging")
+        danpheEMR.find_element_by_xpath("(//button[@type='button'])[5]").click()
+        time.sleep(10)
+        element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+        time.sleep(2)
+        danpheEMR.execute_script("arguments[0].click();", element)
+        time.sleep(5)
 
 def wait_for_window(timeout=2):
     time.sleep(round(timeout / 1000))

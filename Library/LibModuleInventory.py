@@ -82,18 +82,18 @@ def createInventoryDirectDispatch(itemname, qty, store):
           time.sleep(2)
           danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(store)
           danpheEMR.find_element_by_xpath("//input[@onclick='this.select();']").send_keys(Keys.TAB)
-          time.sleep(1)
+          time.sleep(3)
           danpheEMR.find_element_by_id("itemName0").send_keys(itemname)
-          time.sleep(1)
+          time.sleep(3)
           danpheEMR.find_element_by_id("itemName0").send_keys(Keys.ENTER)
-          time.sleep(1)
+          time.sleep(3)
           danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
           time.sleep(5)
           #danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
           danpheEMR.find_element_by_id("remarks").send_keys("Direct dispatch test")
           time.sleep(1)
           danpheEMR.find_element_by_xpath("//input[@value='Direct Dispatch']").click()
-          time.sleep(4)
+          time.sleep(8)
           RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
           return RequsitionNo
        print("<<END: directDispatch")
@@ -141,8 +141,10 @@ def verifyDispatchRequisition(ssReqNo):
         danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
         time.sleep(3)
         danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
-        time.sleep(2)
+        time.sleep(4)
         ssReqNo1 = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
+        print("ssReqNo1:", ssReqNo1)
+        print("ssReqNo:", ssReqNo)
         assert ssReqNo1 == ssReqNo
     print("<<END: verifyDispatchRequisition")
 def createPurchaseRequest(ItemName, qty):
@@ -474,6 +476,6 @@ def wait_for_window(timeout=2):
       if len(wh_now) > len(wh_then):
          return set(wh_now).difference(set(wh_then)).pop()
 
-def __str__(self):
+def __str__():
       return
 

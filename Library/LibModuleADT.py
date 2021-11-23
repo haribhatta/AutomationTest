@@ -109,58 +109,6 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
          # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
          danpheEMR.find_element_by_id("Remarks").send_keys("Transfer to ICU ward")
          danpheEMR.find_element_by_xpath("//input[@name='name']").click()
-def billingIP(admitCharge, deposit):
-      if AppName == 'SNCH':
-         danpheEMR.find_element_by_link_text("Billing").click()
-         time.sleep(2)
-         danpheEMR.find_element_by_link_text("IPBilling").click()
-         time.sleep(1)
-         danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-         time.sleep(2)
-         danpheEMR.find_element_by_link_text("View Details").click()
-         time.sleep(9)
-         if deposit >= 1:
-            danpheEMR.find_element_by_xpath("//button[contains(.,' Add Deposit ')]").click()
-            danpheEMR.find_element_by_id("txtAmount").send_keys(deposit)
-            danpheEMR.find_element_by_id("btnAddDeposit").click()
-            time.sleep(2)
-            danpheEMR.find_element_by_id("btn_PrintReceipt").send_keys(Keys.ESCAPE)
-         time.sleep(2)
-         billingTotalExp = admitCharge
-         billingTotalAct = danpheEMR.find_element_by_xpath("//td[2]/label").text
-         print(billingTotalAct)
-         totalDiscountExp = 0 # discount is zero
-         totalDiscountAct = danpheEMR.find_element_by_xpath("//td[contains(text(),' Discount Amt.')]/following-sibling::td").text
-         print("totalDiscountAct", totalDiscountAct)
-         print("totalDiscountExp", totalDiscountExp)
-         netTotalExp = int(billingTotalExp) - int(totalDiscountExp)
-         netTotalAct = danpheEMR.find_element_by_xpath("//tr[5]/td[2]/label").text
-         print(netTotalAct)
-         depositBalanceExp = int(deposit)
-         depositBalanceAct = danpheEMR.find_element_by_xpath("//tr[6]/td[2]/label").text
-         print("depositBalanceAct", depositBalanceAct)
-         depositBalanceAct = depositBalanceAct.replace(',', '')
-         print("depositBalanceAct", depositBalanceAct)
-         print("depositBalanceExp", depositBalanceExp)
-         assert depositBalanceExp == int(depositBalanceAct)
-         if depositBalanceExp > netTotalExp:
-            toBeRefundExp = depositBalanceExp - netTotalExp
-            toBeRefundAct = danpheEMR.find_element_by_css_selector("tr:nth-child(7) label").text
-            print("To be refund:", toBeRefundAct)
-         elif depositBalanceExp < netTotalExp:
-            toBePaidExp = netTotalExp - depositBalanceExp
-            toBePaidAct = danpheEMR.find_element_by_css_selector("tr:nth-child(7) label").text
-            print("To be paid:", toBePaidAct)
-         time.sleep(4)
-         danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
-         time.sleep(2)
-         danpheEMR.find_element_by_xpath("//div[3]/textarea").send_keys("Patient discharging")
-         danpheEMR.find_element_by_xpath("(//button[@type='button'])[5]").click()
-         time.sleep(10)
-         element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
-         time.sleep(2)
-         danpheEMR.execute_script("arguments[0].click();", element)
-         time.sleep(5)
 def cancelDischarge():
       # To cancel discharge user need to return discharge invoice
       print("Start: cancel discharge")

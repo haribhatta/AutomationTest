@@ -156,5 +156,5 @@ if application == "SNCH":
       deposit = 200
       user = "admin"
 
-   #def __str__(self):
+   #def __str__():
     #  return
