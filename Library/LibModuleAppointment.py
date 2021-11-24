@@ -1,7 +1,7 @@
 from selenium import webdriver
 import time
 import random
-import GlobalShareVariables
+import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select

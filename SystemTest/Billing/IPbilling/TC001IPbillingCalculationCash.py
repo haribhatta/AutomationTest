@@ -1,5 +1,4 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
 
 # front desk user login
 foUserId = GSV.foUserID

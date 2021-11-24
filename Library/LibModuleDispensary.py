@@ -82,6 +82,54 @@ def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
+def returnPharmacyInvoice(qty, returnremark):
+    print(">>Return Pharmacy Invoice: START")
+    if AppName == 'SNCH':
+        danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
+        time.sleep(3)
+        # danpheEMR.find_element_by_xpath("//i[contains(.,'MainDispensary')]").click()
+        # time.sleep(2)
+        danpheEMR.find_element_by_link_text("Return From Customer").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_id("invoiceId").send_keys(pInvoiceNo)
+        print("pInvoiceNo is getting returned", pInvoiceNo)
+        time.sleep(2)
+        danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.TAB)
+        time.sleep(3)
+        danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.ENTER)
+        time.sleep(2)
+        danpheEMR.find_element_by_id("ReturnedQty0").clear()
+        danpheEMR.find_element_by_id("ReturnedQty0").send_keys(qty)
+        danpheEMR.find_element_by_xpath("//textarea[@name='Remark']").send_keys(returnremark)
+        danpheEMR.find_element_by_id("return").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger']").click()
+        time.sleep(5)
+    print("<<Return Pharmacy Invoice: END")
+def verifyReturnPharmacyInvoice(HospitalNo, paymentmode, returnRemark):
+    print("<<Verify Return Pharmacy Invoice: START")
+    if AppName == 'SNCH':
+        danpheEMR.find_element_by_link_text("Return Sale List").click()
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Print").click()
+        time.sleep(3)
+        syspaymentmode = danpheEMR.find_element_by_xpath("//p[contains(text(),'Method of payment: ')]").text
+        print("syspaymentmode:", syspaymentmode)
+        syspaymentmode = syspaymentmode.partition("t: ")[2]
+        # print("syspaymentmode1:", syspaymentmode)
+        assert syspaymentmode == "Cash"  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
+        ReturnremarkTemp = danpheEMR.find_element_by_xpath("//div[@id='pharma-pat-info']/div[12]").text
+        print("ReturnremarkTemp", ReturnremarkTemp)
+        ReturnremarkTemp = ReturnremarkTemp.partition("s : ")[2]
+        print("ReturnremarkTemp", ReturnremarkTemp)
+        assert ReturnremarkTemp == returnRemark
+        time.sleep(5)
+        danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
+        # danpheEMR.find_element_by_css_selector(".fa-close").click()
+
+    print(">>Verify Return Pharmacy Invoice: END")
+
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
