@@ -1,8 +1,7 @@
 import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
-import Library.LibModuleAppointment as LA
+
 ########
 danpheEMR = AC.danpheEMR
 AppName = AC.appName
@@ -874,10 +873,19 @@ def verifyTotalAdmittedPatients(HospitalNo):
 ######## Report: Total Items Bill
 def getTotalItemsBill():
     print(">>START: getTotalItemsBill")
-    global sysreturnQty
-    global sysreturnSubtotal
-    global sysreturnQtyDiscount
-    global sysreturnTotalamount
+    global CashSales
+    global CreditSales
+    global GrossSales
+    global CashDiscount
+    global CreditDiscount
+    global TotalDiscount
+    global ReturnCashSales
+    global ReturnCreditSales
+    global TotalSalesReturn
+    global ReturnCashDiscount
+    global ReturnCreditDiscount
+    global TotalReturnDiscount
+    global NetSales
     danpheEMR.find_element_by_link_text("Reports").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -886,34 +894,124 @@ def getTotalItemsBill():
     time.sleep(3)
     danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
     time.sleep(9)
-    sysreturnQty = danpheEMR.find_element_by_xpath('//tr[4]/td[2]').text
-    print(sysreturnQty)
-    sysreturnSubtotal = danpheEMR.find_element_by_xpath('//tr[4]/td[3]').text
-    print(sysreturnSubtotal)
+
+    CashSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[2]/td[3]").text
+    CashSales = CashSales.replace(",", "")
+    print("Cash Sale is : ",CashSales)
+    CreditSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[3]/td[3]").text
+    CreditSales = CreditSales.replace(",", "")
+    print("Credit Sale is :",CreditSales)
+    GrossSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[4]/td[3]").text
+    GrossSales = GrossSales.replace(",", "")
+    print("Gross Sale is :",GrossSales)
+    CashDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[5]/td[3]").text
+    CashDiscount = CashDiscount.replace(",", "")
+    print("Cash Discount is : ",CashDiscount)
+    CreditDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[6]/td[3]").text
+    CreditDiscount = CreditDiscount.replace(",", "")
+    print("Credit Discount is : ",CreditDiscount)
+    TotalDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[7]/td[3]").text
+    TotalDiscount = TotalDiscount.replace(",", "")
+    print("Total Discount is :",TotalDiscount)
+    ReturnCashSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[8]/td[3]").text
+    ReturnCashSales = ReturnCashSales.replace(",", "")
+    print("Cash Sale Returned is :",ReturnCashSales)
+    ReturnCreditSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[9]/td[3]").text
+    ReturnCreditSales = ReturnCreditSales.replace(",", "")
+    print("Credit Sale Returned is : ",ReturnCreditSales)
+    TotalSalesReturn = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[10]/td[3]").text
+    TotalSalesReturn = TotalSalesReturn.replace(",", "")
+    print("Total Sale Returned is :",TotalSalesReturn)
+    ReturnCashDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[11]/td[3]").text
+    ReturnCashDiscount = ReturnCashDiscount.replace(",", "")
+    print("Cash Discount Returned is : ",ReturnCashDiscount)
+    ReturnCreditDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[12]/td[3]").text
+    ReturnCreditDiscount = ReturnCreditDiscount.replace(",", "")
+    print("Credit Discount Returned is ",ReturnCreditDiscount)
+    TotalReturnDiscount = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[13]/td[3]").text
+    TotalReturnDiscount = TotalReturnDiscount.replace(",", "")
+    print("Total Discount Returned is :",TotalReturnDiscount)
+    NetSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[14]/td[3]").text
+    NetSales = NetSales.replace(",", "")
+    print("Net Sales is : ",NetSales)
+
+    # return type('', (object,), {"system return quantiy": sysreturnQty, "Return Subtotal": sysreturnSubtotal})()
     print("<<END: getTotalItemsBill")
 def preSystemTotalItemsBill():
     print(">>START: preSystemTotalItemsBill")
-    global presysreturnQty
-    global presysreturnSubtotal
-    global presysreturnQtyDiscount
-    global presysreturnTotalamount
-    presysreturnQty = int(sysreturnQty)
-    print(presysreturnQty)
-    presysreturnSubtotal = int(sysreturnSubtotal)
-    print(presysreturnSubtotal)
-    presysreturnQtyDiscount = int(sysreturnQtyDiscount)
-    print(presysreturnQtyDiscount)
-    presysreturnTotalamount = int(sysreturnTotalamount)
-    print(presysreturnTotalamount)
+    global preCashSales
+    global preCreditSales
+    global preGrossSales
+    global preCashDiscount
+    global preCreditDiscount
+    global preTotalDiscount
+    global preReturnCashSales
+    global preReturnCreditSales
+    global preTotalSalesReturn
+    global preReturnCashDiscount
+    global preReturnCreditDiscount
+    global preTotalReturnDiscount
+    global preNetSales
+
+
+    preCashSales = int(CashSales)
+    print("Previous Cash Sales is :",preCashSales)
+    preCreditSales = int(CreditSales)
+    print("Previous Credit Sales is :",preCreditSales)
+    preGrossSales = int(GrossSales)
+    print("Previous Gross Sales is :",preGrossSales)
+    preCashDiscount = int(CashDiscount)
+    print("Previous Cash Discount is :",preCashDiscount)
+    preCreditDiscount = int(CreditDiscount)
+    print("Previous Credit Discount is :",preCreditDiscount)
+    preTotalDiscount = int(TotalDiscount)
+    print("Previous Total Discount is :",preTotalDiscount)
+    preReturnCashSales = int(ReturnCashSales)
+    print("Previous  Returned Cash Sales is :",preReturnCashSales)
+    preReturnCreditSales = int(ReturnCreditSales)
+    print("Previous Returned Credit Sales is :",preReturnCreditSales)
+    preTotalSalesReturn = int(TotalSalesReturn)
+    print("Previous Total Sales Return is :",preTotalSalesReturn)
+    preReturnCashDiscount = int(ReturnCashDiscount)
+    print("Previous Returned Cash Discount is :",preReturnCashDiscount)
+    preReturnCreditDiscount = int(ReturnCreditDiscount)
+    print("Previous Returned Credit Discount is :",preReturnCreditDiscount)
+    preTotalReturnDiscount = int(TotalReturnDiscount)
+    print("Previous Total Returned Discount is :",preTotalReturnDiscount)
+    preNetSales = int(NetSales)
+    print("Previous Net Cash Sales is :",preNetSales)
+
     print("<<END: preSystemTotalItemsBill")
-def verifyTotalItemsBill(self, returnamt, discountamt):
+def verifyTotalItemsBill( returnamt):
+    global CashSales
+    global CreditSales
+    global GrossSales
+    global CashDiscount
+    global CreditDiscount
+    global TotalDiscount
+    global ReturnCashSales
+    global ReturnCreditSales
+    global TotalSalesReturn
+    global ReturnCashDiscount
+    global ReturnCreditDiscount
+    global TotalReturnDiscount
+    global NetSales
+
     print(">>START: verifyTotalItemsBill")
     if returnamt > 0:
-        assert int(sysreturnQty) == (presysreturnQty + 1)
-        assert int(sysreturnSubtotal) == (presysreturnSubtotal + returnamt)
-        assert int(sysreturnQtyDiscount) == (presysreturnQtyDiscount + discountamt)
-        assert int(sysreturnTotalamount) == (presysreturnTotalamount + returnamt)
+        assert int(GrossSales) == preGrossSales               \
+               # + int(CashSales) + int(CreditSales)
+        assert int(TotalDiscount) == (preTotalDiscount )
+        # + CashDiscount + CreditDiscount)
+        assert int(TotalSalesReturn) == (preTotalSalesReturn + returnamt)
+        # + ReturnCashSales + ReturnCreditSales)
+        assert int(TotalReturnDiscount) == preTotalReturnDiscount
+                                            # ReturnCashDiscount + ReturnCreditDiscount)
+        assert int(NetSales) ==(preNetSales - returnamt)
+                                # GrossSales - TotalDiscount - TotalSalesReturn + TotalReturnDiscount)
     print("<<END: verifyTotalItemsBill")
+
+
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
