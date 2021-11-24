@@ -46,7 +46,7 @@ def getBillingDashboard():
 
         systotalamount = danpheEMR.find_element_by_xpath("//div[@id='totalsales']/div[5]/b").text
         print(systotalamount)
-        systotalamount = systotalamount.partition(": NRs. ")[2]
+        systotalamount = systotalamount.partition("Rs. ")[2]
         # systotalamount = systotalamount.partition(".")[0]
         print("System totalAmount:", systotalamount)
         # systotalamount = systotalamount.replace(',', '')
@@ -60,14 +60,14 @@ def getBillingDashboard():
 
         sysprovisionalitems = danpheEMR.find_element_by_xpath(
             "//td[contains(text(),'PROVISIONAL ITEMS')]/following-sibling::td").text
-        sysprovisionalitems = sysprovisionalitems.partition("NRs. ")[2]
+        sysprovisionalitems = sysprovisionalitems.partition("Rs. ")[2]
         sysprovisionalitems = sysprovisionalitems.partition(".")[0]
         sysprovisionalitems = sysprovisionalitems.replace(',', '')
         print("System Provisional Item:", sysprovisionalitems)
 
         sysunpaidcreditinvoices = danpheEMR.find_element_by_xpath(
             "//td[contains(text(),'UNPAID CREDIT INVOICES')]/following-sibling::td").text
-        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition("NRs. ")[2]
+        sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition("Rs. ")[2]
         sysunpaidcreditinvoices = sysunpaidcreditinvoices.partition(".")[0]
         sysunpaidcreditinvoices = sysunpaidcreditinvoices.replace(',', '')
         print("System Unpaid Credit Invoice:", sysunpaidcreditinvoices)
