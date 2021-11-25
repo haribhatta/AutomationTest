@@ -121,7 +121,7 @@ if application == "SNCH":
       drug1GenericName = "quinapril"
       drug1Rate = 1.15
 
-      drugAasma = 'Asthalin 2.5ml'
+      drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
 
       drug3BrandName = "Sinex tab"
@@ -134,6 +134,7 @@ if application == "SNCH":
 
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
+      drugAasma = 'AASMA 150 XR TAB'
 
       Testdrug = "Testdrugreport"
 
@@ -146,8 +147,6 @@ if application == "SNCH":
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
       File = "FILE"
-      # Supplier Name
-      supplierName = "Shremad Tech."
 
       #Sub Store Name list
       SubStore1 = "General"
@@ -157,6 +156,10 @@ if application == "SNCH":
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
+
+      #Supplier Name list
+      supplierShremad = "Shremad Tech."
+      supplierName2 = "AAKAR ENTERPRISES"
 
       deposit = 200
       user = "admin"

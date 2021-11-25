@@ -320,34 +320,52 @@ def createPharmacyInvoiceAnonymous(drugname, qty, paymentmode):
     danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     print("END>>: Create Pharmacy OPD Invoice.", pInvoiceNo)
-def createPharmacyPurchaseOrder():
+def createPharmacyPurchaseOrder(supplierName, drugName):
     print(">>Start: Create purchase order in pharmacy")
     danpheEMR.find_element_by_link_text("Pharmacy").click()
-    danpheEMR.find_element_by_link_text("Order").click()
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderItems')]").click()
-    danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control").click()
-    time.sleep(9)
-    dropdown = danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control")
+    time.sleep(5)
+    danpheEMR.find_element_by_xpath("/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[1]/ul/li[2]/a").click()
     time.sleep(3)
-    dropdown.find_element_by_xpath("//option[. = 'AARATI MEDITCHA PVT']").click()
-    time.sleep(2)
-    danpheEMR.find_element_by_css_selector(".danphe-auto-complete-wrapper > .form-control").send_keys(
-        "ABEN SUSPENSION 10ML")
+    danpheEMR.find_element_by_xpath("/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div/ul/li[1]/a").click()
+    time.sleep(3)
+    #danpheEMR.find_element_by_link_text("Order").click()
+    #danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderItems')]").click()
+    #danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control").click()
+    #time.sleep(9)
+    #dropdown = danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control")
+    #time.sleep(3)
+    #dropdown.find_element_by_xpath("//option[. = 'Shremad Tech.']").click()
+    danpheEMR.find_element_by_id("SupplierName").send_keys(supplierName)
+    danpheEMR.find_element_by_id("SupplierName").send_keys(Keys.TAB)
+    danpheEMR.find_element_by_id("ItemName0").send_keys(drugName)
+    time.sleep(3)
     danpheEMR.find_element_by_name("quantity").click()
-    time.sleep(2)
+    time.sleep(3)
     danpheEMR.find_element_by_name("quantity").send_keys("100")
     danpheEMR.find_element_by_name("price").click()
     danpheEMR.find_element_by_name("price").send_keys("1")
     # danpheEMR.find_element_by_css_selector(".page-content").click()
     danpheEMR.find_element_by_css_selector(".text-right > .btn-success").click()
     time.sleep(5)
-def verifyPharmacyPurchaseOrder():
-    print(">>Start: Verify purchase order in pharmacy")
+def verifyCreatePharmacyPurchaseOrder(supplierName, drugName):
+    print(">>START: verifyCreatePharmacyPurchaseOrder")
     danpheEMR.find_element_by_link_text("Pharmacy").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Order").click()
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderList')]").click()
-    # Jira ticket EMR-3297 need to deploy to search the purchase order with PO number.
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Order List").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(supplierName)
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+    time.sleep(3)
+    appSupplierName = danpheEMR.find_element_by_xpath("//p[contains(text(),'Supplier Name :')]/child::b").text
+    print("SupplierName:", appSupplierName)
+    assert supplierName == danpheEMR.find_element_by_xpath("//p[contains(text(),'Supplier Name :')]/child::b").text
+    appItemName = danpheEMR.find_element_by_xpath("//td[2]/b").text
+    print("app Item name:", appItemName)
+    assert drugName == appItemName
+
 def addPharmacyGRfromPO():
     print(">>Start: Create GR from purchase order in pharmacy")
     danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -536,7 +554,19 @@ def closePopupApplication(saleinvoice):
     time.sleep(7)
     danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
     time.sleep(3)
-
+def viewPharmacyOrderList(SupplierName, drugName):
+    print(">>START: viewPharmacyOrderList")
+    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Order").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Order List").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(SupplierName)
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+    time.sleep(3)
+    #SNo = danpheEMR.find_element_by_xpath("//*[@id="printpage"]/div/div/div[4]/table/tbody/tr[1]/td[1]").text
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
