@@ -99,6 +99,9 @@ if application == "SNCH":
       #Inventory user
       storeUserID = 'admin'
       storeUserPwD = 'pass123'
+      #Medical Record user
+      MRUserID = 'haris'
+      MRUserPwD = 'pass123'
       # Bill Items Name variables for SNCH
       opdRate = 500
       CBC = "CBC"

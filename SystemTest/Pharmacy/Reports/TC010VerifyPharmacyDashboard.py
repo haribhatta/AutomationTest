@@ -28,6 +28,7 @@ rate = GSV.drug1Rate
 qty = 2
 amount = rate*qty
 print("Amount", amount)
+AC.logout()
 AC.login(phUserId, phUserPwd)
 LD.activatePharmacyCounter()
 LPR.getPharmacyDashboard()
