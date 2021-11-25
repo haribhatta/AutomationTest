@@ -22,7 +22,6 @@ def activatePharmacyCounter():
     print("Pharmacy Counter Activate: END")
 def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
     print(">>Create Dispensary Sale to Hospital Patient: START")
-    global pInvoiceNo
     danpheEMR.find_element_by_link_text("Dispensary").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Sale").click()
@@ -56,6 +55,7 @@ def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("Create Pharmacy OPD Invoice: END<<")
+    return pInvoiceNo
 def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     print("<<START: Create Dispensary sales to random customer.")
     global pInvoiceNo
@@ -82,7 +82,7 @@ def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
-def returnPharmacyInvoice(qty, returnremark):
+def returnPharmacyInvoice(pInvoiceNo, qty, returnremark):
     print(">>Return Pharmacy Invoice: START")
     if AppName == 'SNCH':
         danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
@@ -97,7 +97,7 @@ def returnPharmacyInvoice(qty, returnremark):
         danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.TAB)
         time.sleep(3)
         danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.ENTER)
-        time.sleep(2)
+        time.sleep(5)
         danpheEMR.find_element_by_id("ReturnedQty0").clear()
         danpheEMR.find_element_by_id("ReturnedQty0").send_keys(qty)
         danpheEMR.find_element_by_xpath("//textarea[@name='Remark']").send_keys(returnremark)

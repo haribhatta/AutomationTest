@@ -19,11 +19,12 @@ paymentMode = 'Cash'
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation()
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
 AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
 LD.activatePharmacyCounter()
-LD.createDispensarySale(HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
+pInvoiceNo = LD.createDispensarySale(HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
+LD.returnPharmacyInvoice(pInvoiceNo, qty=1, returnremark="Wrong entry")
 AC.logout()
 AC.closeBrowser()
