@@ -10,7 +10,7 @@ AppName = AC.appName
 def activatePharmacyCounter():
     print(">>Start: Pharmacy Counter Activate: START")
     time.sleep(7)
-    if AppName == "SNCH":
+    if AppName == "SNCH" or AppName == "MPH":
         danpheEMR.find_element_by_link_text("Dispensary").click()
         time.sleep(7)
         danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()

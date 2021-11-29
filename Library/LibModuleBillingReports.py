@@ -23,7 +23,7 @@ def getBillingDashboard():
     danpheEMR.find_element_by_css_selector(".fa-home").click()
     time.sleep(9)
 
-    if AppName == "SNCH":
+    if AppName == "SNCH" or AppName == "MPH":
         sysgrosstotal = danpheEMR.find_element_by_xpath("//div[contains(text(),'i. Subtotal :')]").text
         print("sysgrosstotal:", sysgrosstotal)
         syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
@@ -160,7 +160,7 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         #    print("sysnetcashcollection", sysnetcashcollection)
         #    assert int(sysnetcashcollection) == presysnetcashcollection
         #    print("End of credit invoice check")
-        if AppName == "SNCH":
+        if AppName == "SNCH" or AppName == "MPH":
             assert int(syssubtotal) == presyssubtotal + credit
             assert int(sysdiscountamount) == presysdiscountamount
             assert int(sysreturnamount) == presysreturnamount
@@ -379,7 +379,7 @@ def getIncomeSegregation():
       #    systotalnetsales = danpheEMR.find_element_by_xpath(
       #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
       #    print("systotalnetsales", systotalnetsales)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Reports").click()
          time.sleep(3)
          danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -487,7 +487,7 @@ def verifyIncomeSegregation(cash, cashreturn, credit, creditreturn, provision):
       #    assert int(systotaldiscount) == presystotaldiscount + 0
       #    assert int(systotalnetsales) == presystotalnetsales + cash - cashreturn + credit - creditreturn
       #    print("<<END verifyIncomeSegregation")
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          calcUnit = presysunit + unit
          print("calcUnit", calcUnit)
          print("sysunit", sysunit)
@@ -640,7 +640,7 @@ def verifyDepositBalanceReport(HospitalNo, deposit):
       #    print("x", x)
       #    print("y", y)
       #    assert x == y
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Reports").click()
          time.sleep(3)
          danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -702,7 +702,7 @@ def getDepartmentSummary():
       #    print(syscancelamount)
       #    syscreditamount = danpheEMR.find_element_by_xpath("//table[2]/tbody/tr[2]/td[3]").text
       #    print(syscreditamount)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Reports").click()
          time.sleep(2)
          danpheEMR.find_element_by_link_text("Billing Reports").click()

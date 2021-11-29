@@ -18,7 +18,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
    global FullName
    print("AppName", AppName)
    print(">>Create New Appointment: START")
-   if  AppName == "SNCH":
+   if  AppName == "SNCH" or AppName == "MPH":
       time.sleep(2)
       #danpheEMR.find_element_by_link_text("Registration").click()
       danpheEMR.find_element_by_link_text("Appointment").click()
@@ -85,17 +85,14 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
       time.sleep(2)
       danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)
-      # danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
-      # danpheEMR.find_element_by_xpath("//a[contains(.,'X')]").click()
       time.sleep(3)
-      return type('',(object,),{"InvoiceNo": InvoiceNo,"HospitalNo": HospitalNo})()
+      return type('', (object,), {"InvoiceNo": InvoiceNo,"HospitalNo": HospitalNo})()
       # return [InvoiceNo, HospitalNo]
-
    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
    print("Create New Appointment: END<<")
 def followUpAppointment():
       print("lets create appointment followup")
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
           danpheEMR.find_element_by_link_text("Registration").click()
           time.sleep(5)
           danpheEMR.find_element_by_link_text("List Visits").click()
@@ -119,7 +116,7 @@ def followUpAppointment():
           #danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
 def oldPatientRegistration(HospitalNo,DoctorName,Department):
    print(">>Create Old Appointment: START")
-   if AppName == "SNCH":
+   if AppName == "SNCH" or AppName == "MPH":
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
       # time.sleep(2)

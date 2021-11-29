@@ -21,7 +21,7 @@ def patientRegistration():
       contactno = random.randint(9811111111, 9899999999)
       danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
       print(contactno)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Register Patient").click()
          danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
          sname = str(random.randint(1111, 9999))

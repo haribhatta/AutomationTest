@@ -12,7 +12,7 @@ def collectLabSample(HospitalNo, testname):
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Laboratory").click()
       time.sleep(5)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_xpath("//a[contains(text(),' Sample Collection ')]").click()
          danpheEMR.find_element_by_id("quickFilterInput").click()
          danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
@@ -27,7 +27,7 @@ def collectLabSample(HospitalNo, testname):
          danpheEMR.find_element_by_xpath("//button[contains(.,'Close')]").click()
 def addLabResult():
       print("Starting>Adding Lab Report")
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Laboratory").click()
          time.sleep(1)
          danpheEMR.find_element_by_link_text("Add Results").click()
@@ -81,7 +81,7 @@ def checkLabDuplicateRequisition(HospitalNo, ItemName):
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Laboratory").click()
       time.sleep(5)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_xpath("//a[contains(text(),' Sample Collection ')]").click()
          danpheEMR.find_element_by_id("quickFilterInput").click()
          danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)

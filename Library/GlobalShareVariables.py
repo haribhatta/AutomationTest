@@ -1,9 +1,8 @@
 import   Library.ApplicationConfiguration as AC
-
 application = AC.appName
-
+########Defining Variables for LPH
 if application == "LPH":
-      #defining Login Credentials for LPH
+###Login Credentials:
       #admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
@@ -28,9 +27,9 @@ if application == "LPH":
       #store user
       storeUserID = 'shreeram'
       storeUserPwD = 'pass123'
-
-      # Bill Items Name variables for LPH Hospital
+###Billing Items Name:
       opdRate = 30
+      deposit = 100
       CBC = "CBC"
       TFT = "TFT"
       TFTRate = 800
@@ -43,8 +42,7 @@ if application == "LPH":
       btctRate = 100
       erTest = "TC"
       LabType = "ER"
-
-      #Drug name
+###Pharmacy/Dispensary Items Name:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
       drug1Rate = 25
@@ -57,8 +55,7 @@ if application == "LPH":
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
       Testdrug = "testdrugreport"
-
-      #Inventory Item name list
+###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
       Dispensary1 = "MainDispensary"
@@ -66,25 +63,20 @@ if application == "LPH":
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "DOTPEN"
-
-      #Sub Store Name list
+###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
-
-      #Doctor/Department List
+###Doctors/Departments Name:
       doctorGyno = "Dr. doctor doctor"
       departmentGyno = "GYNAE & OBS"
       doctor2 = "Mr. admin admin"
-
-      # User Name List
+###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
-
-      deposit = 100
 ###############################################################################
+########Defining Variables for SNCH
 if application == "SNCH":
-
-      #defining Login Credentials for SNCH
-      #admin user
+###Login Credentials:
+      # admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #billing user
@@ -102,70 +94,131 @@ if application == "SNCH":
       #Medical Record user
       MRUserID = 'haris'
       MRUserPwD = 'pass123'
-      # Bill Items Name variables for SNCH
+### Bill Items Name:
       opdRate = 500
+      deposit = 200
       CBC = "CBC"
       TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
       TFTRate = 1200
       LDH = "LDH"
-      #UrineRE = "Urine RE/ME"
       UrineRE = "URINE R/E" # this gets changed on V1.49.3
       BTCT = "BT/CT"
       btctRate = 300
       USG = "USG ABDOMIN AND PELVIS"
       usgRate = 1000
       admitRate = 1500
-
-      #Drug name for SNCH pharmacy billing
+###Pharmacy/Dispensary Items Name:
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
       drug1Rate = 1.15
-
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
-
       drug3BrandName = "Sinex tab"
-
       drug4BrandName = "10 ML DIS.SYRINGE"
       drug4BrandRate = 6.49
-
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
-
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
-
+      drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
-
-      #Inventory Item name list
+###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
-
       A4Paper = 'A4 PAPER'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
       File = "FILE"
-
-      #Sub Store Name list
+###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
-
-      #Doctor/Department List
+###Doctors/Departments List
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
-
-      bed = "BED CHARGE EMERGENCY WARD"
-
-      #Supplier Name list
+###Suppliers Name list
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
-
-      deposit = 200
+###Users Name:
       user = "admin"
-      xray = 'X RAY B/L SHOULDER AP'
-
+###############################################################################
+########Defining Variables for Medi Plus
+if application == "MPH":
+###Login Credentials:
+      #admin user
+      adminUserID = 'admin'
+      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'bandana'
+      foUserPwD = 'pass123'
+      #Lab user
+      labUserID = 'supriya'
+      labUserPwD = 'pass123'
+      #ER Lab user
+      ERlabUserID = 'erlab'
+      ERlabUserPwD = 'pass123'
+      #radiologist user
+      radioUserID = 'basudev'
+      radioUserPwD = 'pass123'
+      #pharmacy user
+      pharmacyUserID = 'kishor'
+      pharmacyUserPwD = 'pass123'
+      #nurse user
+      nurseUserID = 'admin'
+      nurseUserPwD = 'pass123'
+      #store user
+      storeUserID = 'radha'
+      storeUserPwD = 'pass123'
+###Billing Items Name:
+      opdRate = 475
+      deposit = 1000
+      CBC = "COMPLETE BLOOD COUNT-CBC"
+      CBCRate = 1100
+      TFT = "TFT"
+      TFTRate = 500
+      LDH = "LDH"
+      LDHRate = 600
+      USG = "USG ABDOMEN AND PELVIS"
+      usgRate = 1300
+      admitRate = 30
+      UrineRE = "URINE R/E "
+      UrineRERare = 125
+      BTCT = "BT CT"
+      btctRate = 200
+      erTest = "TC, DC"
+      LabType = "ER"
+###Pharmacy/Dispensary Items Name:
+      drug1BrandName = 'NIKO DROP 15ML BOTTLE'
+      drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
+      drug1Rate = 25
+      drug2BrandName = "MACLAR 500MG TAB"
+      drug2GenericName = "CLARITHROMYCIN"
+      drug2Rate = 563.5
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      Testdrug = "testdrugreport"
+###Inventory/Store Items Name:
+      Inventory1 = "General Inventory"
+      SubStoreName1 = "ADMINISTRATION"
+      Dispensary1 = "MainDispensary"
+      A4Paper = 'Paper A4'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      stationaryItem1 = "DOTPEN"
+###Sub Stores Name:
+      SubStore1 = "General"
+      SubStore2 = "PostOps"
+###Doctors/Departments Name:
+      doctorGyno = "Dr. Anjali Subedi"
+      departmentGyno = "OBG Gynae"
+      doctor2 = "Dr. Junu Shrestha"
+###Users Name:
+      UserBilling = 'Mr. Bhagawati Pandey'
+###############################################################################
 
    #def __str__():
     #  return

@@ -285,7 +285,7 @@ def createPharmacyInvoiceTC(HospitalNo, drugname, qty, paymentmode):
     danpheEMR.find_element_by_id("item-box0").send_keys(drugname)
     danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
     time.sleep(5)
-    if AppName == "SNCH":
+    if AppName == "SNCH" or AppName == "MPH":
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
@@ -309,7 +309,7 @@ def createPharmacyInvoiceAnonymous(drugname, qty, paymentmode):
     danpheEMR.find_element_by_id("item-box0").send_keys(drugname)
     danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
     time.sleep(5)
-    if AppName == "SNCH":
+    if AppName == "SNCH" or AppName == "MPH":
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
         danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").send_keys(qty)

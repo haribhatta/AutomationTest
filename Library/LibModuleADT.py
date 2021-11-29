@@ -13,7 +13,7 @@ AppName = AC.appName
 #Module:ADT -----------------------------
 def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
       if admit == 1:
-         if AppName == "SNCH":
+         if AppName == "SNCH" or AppName == "MPH":
             time.sleep(3)
             danpheEMR.find_element_by_link_text("ADT").click()
             time.sleep(3)
@@ -127,7 +127,7 @@ def cancelDischarge():
       print("End: cancel discharge")
 def dischargeRandomPatient():
       time.sleep(2)
-      if AppName == "SNCH":
+      if AppName == "SNCH" or AppName == "MPH":
          danpheEMR.find_element_by_link_text("Billing").click()
          time.sleep(2)
          danpheEMR.find_element_by_link_text("IPBilling").click()

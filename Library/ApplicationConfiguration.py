@@ -5,7 +5,8 @@ from Library.LocalShareVariables import LSV
 appName = input("Please enter project/application name:\n"
             "SNCH\n"
             "MMH\n"
-            "LPH\n")
+            "LPH\n"
+            "MPH\n")
 ChromePath = LSV.ChromeDriverPath
 danpheEMR = webdriver.Chrome(executable_path=ChromePath)
 
@@ -17,6 +18,8 @@ def applicationSelection():
          appURL = "http://202.51.74.168:170/"
       if appName == "LPH":
          appURL = "http://202.51.74.168:453/"
+      if appName == "MPH":
+         appURL = "http://192.168.1.130:82/"
 
 def openBrowser():
       print(">>Open Browser: START")
