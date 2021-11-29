@@ -29,7 +29,7 @@ def patientRegistration():
          gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
          gender.select_by_visible_text("Female")
 
-      danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
+      danpheEMR.find_element_by_xpath("//button[@value='Register Patient']").click()
       time.sleep(7)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
       time.sleep(5)
@@ -39,6 +39,41 @@ def patientRegistration():
       HospitalNo = danpheEMR.find_element_by_xpath("//ag-grid-angular[@id='myGrid']"
                                                         "/div/div/div/div[3]/div[2]/div/div/div/div").text
       print(HospitalNo)
+
+
+def patientRegistrationMultipleClick():
+    global contactno
+    global HospitalNo
+    global FullName
+    time.sleep(5)
+    danpheEMR.find_element_by_link_text("Patient").click()
+    time.sleep(5)
+    danpheEMR.find_element_by_link_text("Register Patient").click()
+    time.sleep(5)
+    age = random.randint(1, 99)
+    danpheEMR.find_element_by_xpath("//input[@type='number']").send_keys(age)
+    contactno = random.randint(9811111111, 9899999999)
+    danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
+    print(contactno)
+    if AppName == "SNCH" or AppName == "MPH":
+        danpheEMR.find_element_by_link_text("Register Patient").click()
+        danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
+        sname = str(random.randint(1111, 9999))
+        danpheEMR.find_element_by_xpath("(//input[@value=''])[3]").send_keys("preg", sname)
+        gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
+        gender.select_by_visible_text("Female")
+    danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
+    danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
+    print("Contact No", contactno)
+    return contactno
+def verifyMultipleRegistration(ContactNo):
+    print(">>START: verifyMultipleRegistration")
+    danpheEMR.find_element_by_link_text("Patient").click()
+    time.sleep(5)
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(ContactNo)
+    time.sleep(5)
+
+    print("<<END: verifyMultipleRegistration")
 def getRandomPatient():
       danpheEMR.find_element_by_link_text("Patient").click()
       time.sleep(5)
