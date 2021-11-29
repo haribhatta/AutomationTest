@@ -158,6 +158,10 @@ if application == "SNCH":
 
       bed = "BED CHARGE EMERGENCY WARD"
 
+      #Supplier Name list
+      supplierShremad = "Shremad Tech."
+      supplierName2 = "AAKAR ENTERPRISES"
+
       deposit = 200
       user = "admin"
       xray = 'X RAY B/L SHOULDER AP'

@@ -2,7 +2,7 @@ import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleDispensary as LD
 import Library.LibModuleAppointment as LA
-import Library.LibModuleBilling as LB
+import Library.LibModulePharmacy as LP
 AC.applicationSelection()
 AC.openBrowser()
 #############
@@ -16,15 +16,17 @@ phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
 drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
+supplierName = GSV.supplierShremad
+drugName = GSV.drugAasma
 #############
-AC.login(foUserId, foUserPwd)
-LB.counteractivation()
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
-AC.logout()
+#AC.login(foUserId, foUserPwd)
+#LB.counteractivation()
+#HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+#AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
 LD.activatePharmacyCounter()
-pInvoiceNo = LD.createDispensarySale(HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
-LD.returnPharmacyInvoice(pInvoiceNo, qty=1, returnremark="Wrong entry")
+LP.createPharmacyPurchaseOrder(supplierName, drugName)
+LP.verifyCreatePharmacyPurchaseOrder(supplierName, drugName)
 AC.logout()
 AC.closeBrowser()
