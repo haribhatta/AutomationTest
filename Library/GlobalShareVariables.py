@@ -156,8 +156,12 @@ if application == "SNCH":
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
 
+      bed = "BED CHARGE EMERGENCY WARD"
+
       deposit = 200
       user = "admin"
+      xray = 'X RAY B/L SHOULDER AP'
+
 
    #def __str__():
     #  return
