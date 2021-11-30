@@ -11,7 +11,7 @@ print("DanpheEMR", danpheEMR)
 AppName = AC.appName
 
 #Module:ADT -----------------------------
-def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, department):
+def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, department):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH":
             time.sleep(3)

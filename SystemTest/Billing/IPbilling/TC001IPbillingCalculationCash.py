@@ -1,46 +1,51 @@
-import Library.GlobalShareVariables as GSV
+'''
+TC_Smoke_TC002: Do IP Patient Billing (non Insurance - Lab, Radiology and Discharge).
+'''
 
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModuleADT as LADT
+
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
-ip = A()
-test1 = GSV.USG
-test1rate = GSV.usgRate
-test2 = GSV.BTCT
-test2rate = GSV.btctRate
-paymode = "Cash"
-doctor1 = GSV.doctor1
-department1 = GSV.department1
-
-ip.openBrowser()
-ip.login(foUserId, foUserPwd)
-ip.counteractivation()
-ip.dischargeRandomPatient()  # This action is to free bed to admit new patient (Pre-condition to run test script).
-
-ip.patientquickentry(discountpc=0, paymentmode="Cash")
-ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0,doctor=doctor1, department=department1)
-ip.getIPbillingDetails(paymentmode=paymode)
-ip.preIPbillingDetails()
-ip.createIPprovisionalBill(test=test1)
-ip.getIPbillingDetails(paymentmode=paymode)
-ip.verifyIPbillingDetails(testrate = test1rate, canceltest = 0, paymentmode=paymode)
-ip.preIPbillingDetails()
-ip.createIPprovisionalBill(test=test2)
-ip.getIPbillingDetails(paymentmode=paymode)
-ip.verifyIPbillingDetails(testrate = test2rate, canceltest = 0, paymentmode=paymode)
-ip.preIPbillingDetails()
-ip.cancelIPprovisionalBill(canceltest = test2)
-ip.getIPbillingDetails(paymentmode=paymode)
-ip.verifyIPbillingDetails(testrate = 0, canceltest = test2rate, paymentmode=paymode)
-ip.preIPbillingDetails()
-ip.modifyDischargeDate()
-ip.getIPbillingDetails(paymentmode=paymode)
-ip.verifyIPbillingDetails(testrate = 0, canceltest = 0, paymentmode=paymode)
-ip.verifyConfirmDischarge(paymentmode=paymode)
-ip.verifyDischargeInvoice(paymentmode=paymode)
-ip.logout()
-ip.closeBrowser()
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+labTestTFT = GSV.TFT
+labTestTFTrate = GSV.TFTRate
+radioTestUSG = GSV.USG
+paymode = 'Cash'
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+HospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
+LADT.admitDisTrans(admit=1, discharge=0, trasfer=0, hospitalNO=HospitalNo, deposit=0,doctor=doctorGynae, department=departmentGynae)
+LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
+LB.preIPbillingDetails()
+LB.createIPprovisionalBill(HospitalNo=HospitalNo, test=labTestTFT)
+LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
+LB.verifyIPbillingDetails(testrate=labTestTFTrate, canceltest=labTestTFT, paymentmode=paymode)
+LB.preIPbillingDetails()
+LB.createIPprovisionalBill(HospitalNo=HospitalNo, test=labTestTFT)
+LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
+LB.verifyIPbillingDetails(testrate=labTestTFTrate, canceltest=labTestTFT, paymentmode=paymode)
+LB.preIPbillingDetails()
+LB.cancelIPprovisionalBill(HospitalNo, labTestTFT)
+LB.getIPbillingDetails(HospitalNo, paymode)
+LB.verifyIPbillingDetails(labTestTFTrate, labTestTFT, paymode)
+LB.preIPbillingDetails()
+LB.modifyDischargeDate(HospitalNo)
+LB.getIPbillingDetails(HospitalNo, paymode)
+LB.verifyIPbillingDetails(testrate = 0, canceltest = 0, paymentmode=paymode)
+LB.verifyConfirmDischarge(HospitalNo, paymode)
+LB.verifyDischargeInvoice(paymentmode=paymode)
+AC.logout()
+AC.closeBrowser()
 
 
 
