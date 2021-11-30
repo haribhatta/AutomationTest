@@ -99,6 +99,9 @@ if application == "SNCH":
       deposit = 200
       CBC = "CBC"
       TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      T3 = "FT3"
+      T4 = "FT4"
+      TSH = "TSH"
       TFTRate = 1200
       LDH = "LDH"
       UrineRE = "URINE R/E" # this gets changed on V1.49.3
@@ -176,6 +179,9 @@ if application == "MPH":
       CBC = "COMPLETE BLOOD COUNT-CBC"
       CBCRate = 1100
       TFT = "TFT"
+      T3 = "FT3"
+      T4 = "FT4"
+      TSH = "TSH"
       TFTRate = 500
       LDH = "LDH"
       LDHRate = 600

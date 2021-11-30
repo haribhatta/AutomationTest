@@ -1,26 +1,32 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModulePatientPortal as LP
+import Library.LibModuleRadiology as LR
 
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
-# radiologist user login
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+radioTestUSG = GSV.USG
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+HospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
+print("hospitalNo", HospitalNo)
+LP.patientRegistration()
+LB.createUSGinvoice(HospitalNo=HospitalNo, USGtest=radioTestUSG)
+AC.logout()
+######## Radiology user login
 radioUserId = GSV.radioUserID
 radioUserPwd = GSV.radioUserPwD
-
-# calling billing item name
-usgtest = GSV.USG
-
-GUSGR = A()
-
-GUSGR.openBrowser()
-GUSGR.login(foUserId, foUserPwd)
-GUSGR.counteractivation()
-GUSGR.patientRegistration()
-GUSGR.createUSGinvoice(USGtest=usgtest)
-GUSGR.logout()
-GUSGR.login(radioUserId, radioUserPwd)
-GUSGR.doRadioScan()
-GUSGR.logout()
-GUSGR.closeBrowser()
+AC.login(radioUserId, radioUserPwd)
+######## Radiology Report generation
+LR.doRadioScan(HospitalNo=HospitalNo)
+AC.logout()
+AC.closeBrowser()
