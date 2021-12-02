@@ -18,21 +18,27 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
    global FullName
    print("AppName", AppName)
    print(">>Create New Appointment: START")
-   if  AppName == "SNCH" or AppName == "MPH":
+   if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)
-      #danpheEMR.find_element_by_link_text("Registration").click()
-      danpheEMR.find_element_by_link_text("Appointment").click()
+      if AppName == "LPH":
+         danpheEMR.find_element_by_link_text("Registration").click()
+      else:
+         danpheEMR.find_element_by_link_text("Appointment").click()
       time.sleep(2)
       danpheEMR.find_element_by_id("btnNewPatient").click()
       time.sleep(4)
-      danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
-      time.sleep(3)
-      danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
-      time.sleep(3)
-      danpheEMR.find_element_by_id("doctorName").send_keys(doctor)
-      time.sleep(3)
-      #danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
-      time.sleep(3)
+      if AppName == "LPH":
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+         time.sleep(2)
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+         time.sleep(3)
+      else:
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+         time.sleep(3)
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+         time.sleep(3)
+         danpheEMR.find_element_by_id("doctorName").send_keys(doctor)
+         time.sleep(3)
       danpheEMR.find_element_by_id("aptPatFirstName").send_keys("auto")
       danpheEMR.find_element_by_xpath("(//input[@type='text'])[2]").send_keys("test")
       sname = str(random.randint(1111, 9999))
