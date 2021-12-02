@@ -13,7 +13,7 @@ AppName = AC.appName
 #Module:ADT -----------------------------
 def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, department):
       if admit == 1:
-         if AppName == "SNCH" or AppName == "MPH":
+         if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
             time.sleep(3)
             danpheEMR.find_element_by_link_text("ADT").click()
             time.sleep(3)
@@ -25,11 +25,11 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, departm
             dropdown = danpheEMR.find_element_by_id("admissionCase")
             dropdown.find_element_by_xpath("//option[. = 'General']").click()
             danpheEMR.find_element_by_id("admissionCase").click()
-            danpheEMR.find_element_by_id("RequestingDeptId").send_keys("General Physician")
+            danpheEMR.find_element_by_id("RequestingDeptId").send_keys(department)
             danpheEMR.find_element_by_id("RequestingDeptId").send_keys(Keys.ENTER)
             danpheEMR.find_element_by_id("RequestingDeptId").click()
             dropdown = danpheEMR.find_element_by_id("WardId")
-            dropdown.find_element_by_xpath("//option[. = 'General Ward ']").click()
+            dropdown.select_by_visible_text("Labour Ward")
             danpheEMR.find_element_by_id("WardId").click()
             danpheEMR.find_element_by_id("BedFeatureId").click()
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
@@ -109,7 +109,7 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, departm
          # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
          danpheEMR.find_element_by_id("Remarks").send_keys("Transfer to ICU ward")
          danpheEMR.find_element_by_xpath("//input[@name='name']").click()
-def cancelDischarge():
+def cancelDischarge(HospitalNo):
       # To cancel discharge user need to return discharge invoice
       print("Start: cancel discharge")
       danpheEMR.find_element_by_link_text("ADT").click()
@@ -127,7 +127,7 @@ def cancelDischarge():
       print("End: cancel discharge")
 def dischargeRandomPatient():
       time.sleep(2)
-      if AppName == "SNCH" or AppName == "MPH":
+      if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
          danpheEMR.find_element_by_link_text("Billing").click()
          time.sleep(2)
          danpheEMR.find_element_by_link_text("IPBilling").click()

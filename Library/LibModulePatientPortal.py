@@ -21,7 +21,7 @@ def patientRegistration():
       contactno = random.randint(9811111111, 9899999999)
       danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
       print(contactno)
-      if AppName == "SNCH" or AppName == "MPH":
+      if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
          danpheEMR.find_element_by_link_text("Register Patient").click()
          danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
          sname = str(random.randint(1111, 9999))
@@ -55,7 +55,7 @@ def patientRegistrationMultipleClick():
     contactno = random.randint(9811111111, 9899999999)
     danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
     print(contactno)
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Register Patient").click()
         danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
         sname = str(random.randint(1111, 9999))
@@ -72,7 +72,13 @@ def verifyMultipleRegistration(ContactNo):
     time.sleep(5)
     danpheEMR.find_element_by_id("quickFilterInput").send_keys(ContactNo)
     time.sleep(5)
-
+    searchResult = danpheEMR.find_element_by_xpath("//div[@class='page-items']").text
+    print("searchResult:", searchResult)
+    searchResult = searchResult.partition("Showing ")[2]
+    print("searchResult:", searchResult)
+    searchResult = searchResult.partition(" /")[0]
+    print("searchResult:", searchResult)
+    assert searchResult == "1"
     print("<<END: verifyMultipleRegistration")
 def getRandomPatient():
       danpheEMR.find_element_by_link_text("Patient").click()

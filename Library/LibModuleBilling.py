@@ -16,7 +16,7 @@ def counteractivation():
     print("Activate Billing Counter: END<<")
 def verifyopdinvoice(deposit, billamt):
     print(">>Verify OPD Invoice Details: START")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         syscontactno = danpheEMR.find_element_by_xpath("//p[contains(text(),'Contact No:')]").text
         syscontactno = syscontactno.partition("No: ")[2]
         print(syscontactno)
@@ -43,7 +43,7 @@ def verifyopdinvoice(deposit, billamt):
 def returnBillingInvoice(InvoiceNo, returnmsg):
     print(">>START: Returning OPD Invoice.", InvoiceNo)
     global returnTotalAmount
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_link_text("Return Bills").click()
         time.sleep(4)
@@ -126,7 +126,7 @@ def creditPayment(HospitalNo):
 def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(5)
         danpheEMR.find_element_by_id("srch_PatientList").click()
@@ -168,7 +168,7 @@ def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
 def createERlabInvoice(HospitalNo, labtest, labtype):
     print(">>Create ER LAB Invoice: START")
     global InvoiceNo
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(5)
         danpheEMR.find_element_by_id("srch_PatientList").click()
@@ -202,18 +202,18 @@ def verifylabxrayinvoice():
     #    invoiceNo = danpheEMR.find_element_by_css_selector(".no-margin:nth-child(1) > span").text
     #    hospitalNoT = danpheEMR.find_element_by_css_selector("span > strong").text
     #    assert HospitalNo == hospitalNoT
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         print(">>Verify OPD Invoice: 1 Lab + 1 Xray Items: START")
         # InvoiceNoTemp = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
         # hospitalNoTemp = danpheEMR.find_element_by_css_selector("span > strong").text
         # assert HospitalNo == hospitalNoT
     # print("Verify OPD Invoice: 1 Lab + 1 Xray Items: END<<", "HospitalNo", hospitalNoT, "InvoiceNo", invoiceNo)
 def verifySampleCollectionDuplicateEntry():
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         print("Start: verifySampleCollectionDuplicateEntry")
 def createProvisionalBill(HospitalNo, usgtest):
     print(">>START: Create USG Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_id("srch_PatientList").click()
         danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
@@ -235,7 +235,7 @@ def createProvisionalBill(HospitalNo, usgtest):
 
     print("<<END")
 def verifyDuplicateBill(HospitalNo):
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(3)
@@ -272,7 +272,7 @@ def createCopyItemInvoice(paymentmode):
 # Module:Billing_OP -----------------
 def opDeposit(HospitalNo, amount):
     print(">>>opDeposit>>Start")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(5)
@@ -291,7 +291,7 @@ def opDeposit(HospitalNo, amount):
     print(">>>opDeposit>>End")
 def opDepositDbiling(HospitalNo, deposit, testname):
     print("lets issue OPD invoice deducting amount from deposit.")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_id("srch_PatientList").click()
         danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
@@ -348,7 +348,7 @@ def opDepositDbiling(HospitalNo, deposit, testname):
 def opDepositDbilingTenderCashReturn(HospitalNo, deposit, testname):
     global ChangeReturn
     print(">>>opDepositDbilingTenderCashReturn>>Start")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(3)
         danpheEMR.find_element_by_id("srch_PatientList").click()
@@ -456,7 +456,7 @@ def opDepositDbilingTenderCashReturn(HospitalNo, deposit, testname):
     print(">>>opDepositDbilingTenderCashReturn>>End")
 def createUSGinvoice(HospitalNo, USGtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_id("srch_PatientList").click()
         danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
@@ -483,7 +483,7 @@ def createUSGinvoice(HospitalNo, USGtest):
 def createIPprovisionalBill(HospitalNo, test):
     global testrate
     print(">>START: Cancel Admitted Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_link_text("IPBilling").click()
         danpheEMR.find_element_by_id("quickFilterInput").click()
@@ -502,7 +502,7 @@ def createIPprovisionalBill(HospitalNo, test):
     print("<<END")
 def cancelIPprovisionalBill(HospitalNo, canceltest):
     print(">>START: Cancel IP Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         danpheEMR.find_element_by_link_text("IPBilling").click()
         danpheEMR.find_element_by_id("quickFilterInput").click()
@@ -533,7 +533,7 @@ def getIPbillingDetails(HospitalNo, paymentmode):
     Tender = 0
     global ChangeReturn
     ChangeReturn = 0
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(3)
         danpheEMR.find_element_by_link_text("IPBilling").click()
@@ -598,7 +598,7 @@ def modifyDischargeDate(HospitalNo):
     danpheEMR.find_element_by_link_text("View Details").click()
     time.sleep(5)
 def verifyConfirmDischarge(HospitalNo, paymentmode):
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(3)
         danpheEMR.find_element_by_link_text("IPBilling").click()
@@ -636,7 +636,7 @@ def verifyConfirmDischarge(HospitalNo, paymentmode):
 def verifyDischargeInvoice(paymentmode):
     time.sleep(3)
     print("Start>>verifyDischargeInvoice")
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         AMOUNT = danpheEMR.find_element_by_xpath("//span[contains(text(),'Amount:')]//parent::div").text
         print("GrandTotal", AMOUNT)
         Amount1 = AMOUNT.partition(": ")[2]
@@ -697,7 +697,7 @@ def creditSettlements(HospitalNo):
 def generateDischargeInvoice(HospitalNo, paymentmode):
     print("Start: generateDischargeInvoice")
     global InvoiceNo
-    if AppName == "SNCH" or AppName == "MPH":
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(2)
         danpheEMR.find_element_by_link_text("IPBilling").click()

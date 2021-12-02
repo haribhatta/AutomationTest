@@ -13,7 +13,7 @@ HospitalNo = None
 # Module:Appointment --------------------
 def addBirthCertificate(HospitalNo):
    print(">>START: addBirthCertificate")
-   if  AppName == "SNCH" or AppName == "MPH":
+   if  AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)
       danpheEMR.find_element_by_link_text("MedicalRecords").click()
       time.sleep(5)

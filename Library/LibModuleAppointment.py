@@ -98,7 +98,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
    print("Create New Appointment: END<<")
 def followUpAppointment():
       print("lets create appointment followup")
-      if AppName == "SNCH" or AppName == "MPH":
+      if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
           danpheEMR.find_element_by_link_text("Registration").click()
           time.sleep(5)
           danpheEMR.find_element_by_link_text("List Visits").click()
@@ -122,7 +122,7 @@ def followUpAppointment():
           #danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
 def oldPatientRegistration(HospitalNo,DoctorName,Department):
    print(">>Create Old Appointment: START")
-   if AppName == "SNCH" or AppName == "MPH":
+   if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Appointment").click()
       # time.sleep(2)
