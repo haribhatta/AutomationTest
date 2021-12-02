@@ -3,3 +3,4 @@ drivers/*
 venv/*
 __pycache__/*
 debug.log/*
+LocalShareVariables.py
