@@ -222,6 +222,9 @@ if application == "MPH":
       doctorGyno = "Dr. Anjali Subedi"
       departmentGyno = "OBG Gynae"
       doctor2 = "Dr. Junu Shrestha"
+###Wards Name:
+      generalWard = "General Non-Covid Ward"
+      bedFeature = "General Non-Covid Ward"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###############################################################################
