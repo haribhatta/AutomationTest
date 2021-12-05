@@ -1,3 +1,8 @@
+'''
+Objective: Happy Path of OPD billing.
+The AIM of this test script is to verify below scenarios:
+1. Create an OPD invoice of - lab item and xray item.
+'''
 import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleBilling as LB
