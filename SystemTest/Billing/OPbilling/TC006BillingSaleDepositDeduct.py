@@ -1,23 +1,27 @@
-#Objective: To cover the OPD bill amount deduction from deposit balance where deposit balance > Total Amount.
+'''
+Objective:
+To cover the OPD bill amount deduction from deposit balance where deposit balance > Total Amount.
+'''
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-
+AC.applicationSelection()
+AC.openBrowser()
+#############
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
-CBC = GSV.CBC
-
-DepositAmount = 5000
-
-bsdd = A()
-
-bsdd.openBrowser()
-bsdd.login(foUserId, foUserPwd)
-bsdd.counteractivation()
-bsdd.patientRegistration()
-bsdd.opDeposit(DepositAmount)
-bsdd.opDepositDbiling(DepositAmount, CBC)
-bsdd.logout()
-bsdd.closeBrowser()
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
+labTestTFT = GSV.TFT
+radioTestUSG = GSV.USG
+#############
+AC.login(foUserId, foUserPwd)
+LB.counteractivation()
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+LB.opDeposit(HospitalNo=HospitalNo, amount=GSV.deposit)
+LB.opDepositDbiling(HospitalNo=HospitalNo, deposit=GSV.deposit, testname=GSV.TFT)
+AC.logout()
+AC.closeBrowser()
