@@ -124,9 +124,13 @@ def oldPatientRegistration(HospitalNo,DoctorName,Department):
    print(">>Create Old Appointment: START")
    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)
-      danpheEMR.find_element_by_link_text("Appointment").click()
-      # time.sleep(2)
-      x = int(HospitalNo)-100
+      if AppName == "LPH":
+         danpheEMR.find_element_by_link_text("Registration").click()
+         time.sleep(2)
+      else:
+         danpheEMR.find_element_by_link_text("Appointment").click()
+         time.sleep(2)
+      x = int(HospitalNo)-35
       print("old patient:", x)
       time.sleep(2)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(x)

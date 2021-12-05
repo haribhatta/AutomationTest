@@ -84,7 +84,7 @@ def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
 def returnPharmacyInvoice(pInvoiceNo, qty, returnremark):
     print(">>Return Pharmacy Invoice: START")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
         time.sleep(3)
         # danpheEMR.find_element_by_xpath("//i[contains(.,'MainDispensary')]").click()
