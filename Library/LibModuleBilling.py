@@ -165,6 +165,42 @@ def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
         print("InvoiceNo", InvoiceNo)
 
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+def createLabInvoice(HospitalNo, labtest, imagingtest):
+    print(">>Create OPD Invoice: 1 Lab Items: START")
+    print("Hospital Number:", HospitalNo)
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
+        danpheEMR.find_element_by_link_text("Billing").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_id("srch_PatientList").click()
+        danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
+        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+        time.sleep(3)
+        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
+        time.sleep(2)
+        danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
+        time.sleep(5)
+        danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
+        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(labtest)
+        time.sleep(1)
+        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
+        time.sleep(1)
+        danpheEMR.find_element_by_id("txtQuantity_0").send_keys(1)
+        price1 = danpheEMR.find_element_by_xpath("//input[@name='total']").get_attribute('value')
+        time.sleep(1)
+        totalprice = int(price1)
+        print("Total Price:", totalprice)
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
+        time.sleep(9)
+        # InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+        InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+        danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+
+        print("InvoiceNoTemp", InvoiceNo)
+        InvoiceNo = InvoiceNo.partition("BL")[2]
+        print("InvoiceNo", InvoiceNo)
+    print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+
 def createERlabInvoice(HospitalNo, labtest, labtype):
     print(">>Create ER LAB Invoice: START")
     global InvoiceNo
