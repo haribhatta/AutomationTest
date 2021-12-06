@@ -131,7 +131,7 @@ def dispatchRequisition(ssReqNo, GeneralInventory, itemname, qty):
         time.sleep(2)
         danpheEMR.find_element_by_id("remarks").send_keys("dispatching req")
         danpheEMR.find_element_by_id("DispatchBtn").click()
-        time.sleep(3)
+        time.sleep(9)
         danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Requisition List')]").click()
     print("<<END: dispatchRequisition")
 def verifyDispatchRequisition(ssReqNo):
