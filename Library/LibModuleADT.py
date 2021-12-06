@@ -2,7 +2,7 @@ from selenium import webdriver
 import time
 
 from selenium.webdriver.support.select import Select
-
+import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
@@ -28,10 +28,17 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, departm
             danpheEMR.find_element_by_id("RequestingDeptId").send_keys(department)
             danpheEMR.find_element_by_id("RequestingDeptId").send_keys(Keys.ENTER)
             danpheEMR.find_element_by_id("RequestingDeptId").click()
-            dropdown = danpheEMR.find_element_by_id("WardId")
-            dropdown.select_by_visible_text("Labour Ward")
-            danpheEMR.find_element_by_id("WardId").click()
+            time.sleep(3)
+            if AppName == "SNCH" or AppName == "MPH":
+                danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(GSV.doctorGyno)
+                danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(Keys.ENTER)
+                time.sleep(3)
+            wardID = Select(danpheEMR.find_element_by_id("WardId"))
+            time.sleep(3)
+            wardID.select_by_visible_text(GSV.generalWard)
+            time.sleep(3)
             danpheEMR.find_element_by_id("BedFeatureId").click()
+            time.sleep(3)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
             time.sleep(1)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.DOWN)
