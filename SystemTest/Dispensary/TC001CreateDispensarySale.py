@@ -24,7 +24,7 @@ AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
 LD.activatePharmacyCounter()
-pInvoiceNo = LD.createDispensarySale(HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
+pInvoiceNo = LD.createDispensarySale(HospitalNo, qty=2, drugName=drugSinex, paymentmode=paymentMode)
 LD.returnPharmacyInvoice(pInvoiceNo, qty=1, returnremark="Wrong entry")
 AC.logout()
 AC.closeBrowser()
