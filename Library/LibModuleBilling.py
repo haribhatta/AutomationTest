@@ -165,6 +165,79 @@ def createlabxrayinvoice(HospitalNo, labtest, imagingtest):
         print("InvoiceNo", InvoiceNo)
 
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+
+def multiplebillingclick(HospitalNo, labtest, imagingtest):
+        print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
+        print("Hospital Number:", HospitalNo)
+        if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Billing").click()
+            time.sleep(5)
+            danpheEMR.find_element_by_id("srch_PatientList").click()
+            danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
+            danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
+            time.sleep(3)
+            danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
+            time.sleep(5)
+            danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
+            time.sleep(5)
+            danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
+            time.sleep(2)
+            danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(imagingtest)
+            time.sleep(1)
+            danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
+            time.sleep(1)
+            price1 = danpheEMR.find_element_by_xpath("//input[@name='total']").get_attribute('value')
+            time.sleep(1)
+            danpheEMR.find_element_by_css_selector("a > .btn-success").click()
+            time.sleep(1)
+            danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(labtest)
+            time.sleep(3)
+            danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(Keys.RETURN)
+            time.sleep(2)
+            price2 = danpheEMR.find_element_by_xpath("(//input[@name='total'])[2]").get_attribute('value')
+            totalprice = int(price1) + int(price2)
+            print("Total Price:", totalprice)
+            time.sleep(3)
+            danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
+            danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
+            time.sleep(3)
+            # InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
+            InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+            danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+
+            print("InvoiceNoTemp", InvoiceNo)
+            InvoiceNo = InvoiceNo.partition("BL")[2]
+            print("InvoiceNo", InvoiceNo)
+            return InvoiceNo
+
+        print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+def verifymultipleclickbilling(InvoiceNo):
+    print(">>START: verifymultipleclickbilling")
+    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
+        time.sleep(3)
+        danpheEMR.find_element_by_link_text("Billing").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//a[contains(text(),'Duplicate Prints ')]").click()
+        time.sleep(5)
+        print("InvoiceNo:", InvoiceNo)
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(InvoiceNo)
+        time.sleep(2)
+        danpheEMR.find_element_by_xpath("//button[contains(.,'Load Invoices')]").click()
+        time.sleep(2)
+        searchResult = danpheEMR.find_element_by_xpath("//div[@class='page-items']").text
+        print("searchResult:", searchResult)
+        searchResult = searchResult.partition("Showing ")[2]
+        print("searchResult:", searchResult)
+        searchResult = searchResult.partition(" /")[0]
+        print("searchResult:", searchResult)
+        assert searchResult == "1"
+        danpheEMR.find_element_by_xpath("(//a[contains(text(),'Show Details')])[1]").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+        #element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+        time.sleep(2)
+
+
 def createERlabInvoice(HospitalNo, labtest, labtype):
     print(">>Create ER LAB Invoice: START")
     global InvoiceNo

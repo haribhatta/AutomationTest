@@ -18,9 +18,8 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation()
 hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
 print("hospitalNo", hospitalNo)
-#oblx.verifyopdinvoice(deposit=0, billamt=500)
-LB.createlabxrayinvoice(hospitalNo, labTestTFT, radioTestUSG)
-#oblx.verifylabxrayinvoice()
+InvoiceNo=LB.multiplebillingclick(hospitalNo,labTestTFT, radioTestUSG)
+LB.verifymultipleclickbilling(InvoiceNo)
 AC.logout()
 AC.closeBrowser()
-print("Status:Passed -> TC002OPDbillingLabXray.py")
+
