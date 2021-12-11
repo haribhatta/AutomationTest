@@ -3,12 +3,13 @@ import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
+import Library.GlobalShareVariables as GSV
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+#danpheEMR = AC.danpheEMR
+AppName = GSV.appName
 ########
 #Module:Radiology ***************************
-def doRadioScan(HospitalNo):
+def doRadioScan(danpheEMR, HospitalNo):
    print(">>START: doRadioScan")
    if AppName == 'SNCH':
          time.sleep(3)

@@ -1,5 +1,10 @@
-from Library import ApplicationConfiguration as AC
+'''
+Objective:
+To test high priority bug EMR-4216:
+
+'''
 import Library.GlobalShareVariables as GSV
+from Library import ApplicationConfiguration as AC
 from Library import LibModuleBilling as LB
 from Library import LibModuleAppointment as LA
 
@@ -11,13 +16,12 @@ foUserPwd = GSV.foUserPwD
 opdAmt = GSV.opdRate
 user = GSV.foUserID
 
-
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
+LB.counteractivation(EMR)
 time.sleep(2)
-HospitalNo = LA.patientquickentry(0, 'Credit', GSV.departmentGyno, GSV.doctorGyno).HospitalNo
+paymode = "Credit"
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 LB.createProvisionalBill(HospitalNo, usgtest=GSV.bed)
 LB.createlabxrayinvoice('Credit', HospitalNo, GSV.USG, GSV.xray)
 time.sleep(2)

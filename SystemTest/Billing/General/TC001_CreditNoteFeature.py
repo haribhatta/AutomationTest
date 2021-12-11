@@ -20,8 +20,10 @@ Impact on Pages:
 4. Income Segregation Report.
 """
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
 
 # front desk user login
 foUserId = GSV.foUserID
@@ -32,18 +34,13 @@ returnamount = opdticket
 labtest1 = GSV.TFT
 usgtest1 = GSV.USG
 
-CN = A()
-CN.openBrowser()
-CN.login(foUserId, foUserPwd)
-CN.counteractivation()
-CN.patientquickentry(discountpc=0, paymentmode='Cash')
-CN.createlabxrayinvoice(labtest=labtest1, imagingtest= usgtest1)
-CN.getBillingDashboard()
-CN.preSystemDataBillingDashboard()
-CN.returnBillingInvoicePartial(returnmsg='Cash P Return') # Scenario: 1
-CN.verifyCreditNoteDuplicateInvoice()    # Scenario: 2
-CN.getBillingDashboard()
-CN.verifyBillingDashboard(cash=0,discountpc=0,cashReturn=300,credit=0,creditReturn=0,settlement=0,provisional=0,provisionalcancel=0)
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+InvoiceNo = LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labtest1, imagingtest= usgtest1)
+LB.returnBillingInvoicePartial(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg='Cash P Return') # Scenario: 1
+LB.verifyCreditNoteDuplicateInvoice(danpheEMR=EMR)    # Scenario: 2
 
 
 

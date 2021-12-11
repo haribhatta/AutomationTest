@@ -1,12 +1,12 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleEmergency as LE
 
 # front desk user login
 EmergencyId = GSV.adminUserID
 EmergencyPwd = GSV.adminUserPwD
-EPR = A()
 
-EPR.openBrowser()
-EPR.login(EmergencyId, EmergencyPwd)
-EPR.EmergencyRegistration()
+EMR = AC.openBrowser()
+AC.login(EmergencyId, EmergencyPwd)
+LE.EmergencyRegistration()
 print("The Emergency Patient Registered.")

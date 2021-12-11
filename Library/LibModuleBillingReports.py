@@ -1,12 +1,12 @@
 import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
-
+import Library.GlobalShareVariables as GSV
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+#danpheEMR = AC.danpheEMR
+AppName = GSV.appName
 ######## Dashboard
-def getBillingDashboard():
+def getBillingDashboard(danpheEMR):
     print(">>START: getBillingDashboard")
     global sysgrosstotal
     global syssubtotal
@@ -101,6 +101,23 @@ def preSystemDataBillingDashboard():
 def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, settlement, provisional,
                            provisionalcancel):
     print(">>START: Verify Billing Dashboard new updated amounts")
+    print("Cash:", cash)
+    print("discountpc:", discountpc)
+    print("cashReturn:", cashReturn)
+    print("Credit:", credit)
+    print("CreditReturn:", creditReturn)
+    print("settlement:", settlement)
+    print("Provisional:", provisional)
+    print("Provisionalcancel:", provisionalcancel)
+
+    cash = int(cash)
+    discountpc = int(discountpc)
+    cashReturn = int(cashReturn)
+    credit = int(credit)
+    creditReturn = int(creditReturn)
+    settlement = int(settlement)
+    provisional = int(provisional)
+    provisionalcancel = int(provisionalcancel)
 
     # 1. Cash Invoice (Check subTotal & totalAmount is increased in Total Sales area).
     if cash > 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
@@ -200,7 +217,7 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
     elif cash == 0 and credit == 0 and provisional == 0 and provisionalcancel > 0:
         print(presysprovisionalitems)
 ########SalesDayBook
-def getSalesDayBook():
+def getSalesDayBook(danpheEMR):
       print(">>START: getSalesDayBook")
       global syssales
       #global returnamount
@@ -246,7 +263,7 @@ def verifySalesDayBook(cash, credit, cashreturn, creditreturn):
       #assert int(sysnetsalesamount) == presysnetsalesamount + cash + credit - cashreturn - creditreturn
       print("<<END: verifySalesDayBook")
 #Module:Report: PatientCensus***************
-def getPatientCensus():
+def getPatientCensus(danpheEMR):
       print(">>START: getPatientCensus")
       global sysnoofcount
       global sysamount
@@ -323,7 +340,7 @@ def verifyPatientCensus(cash, cashreturn, credit, creditreturn, provisional):
       assert int(systotalamount) == presystotalamount + cash + credit
       print("<<END: verifyPatientCensus")
 #Module:Report: Income Segregation Report*****************
-def getIncomeSegregation():
+def getIncomeSegregation(danpheEMR):
       print(">>START: getIncomeSegregation")
       global sysunit
       global syscashgrosssales
@@ -507,7 +524,7 @@ def verifyIncomeSegregation(cash, cashreturn, credit, creditreturn, provision):
          assert int(systotalnetsales) == presystotalnetsales + cash - cashreturn + credit - creditreturn
          print("<<END verifyIncomeSegregation")
 ######## Patient Credit Summary Report
-def getPatientCreditSummary():
+def getPatientCreditSummary(danpheEMR):
       print(">>START: getPatientCreditSummary")
       danpheEMR.find_element_by_link_text("Reports").click()
       time.sleep(2)
@@ -525,7 +542,7 @@ def verifyPatientCreditSummary():
       print(">>START: verifyPatientCreditSummary")
       print("<<END: verifyPatientCreditSummary")
 ######## Doctor Summary Report
-def getDoctorSummary(doctor):
+def getDoctorSummary(danpheEMR, doctor):
       print(">>START: getDoctorSummary")
       global sysgrosstotal
       global sysdiscountamount
@@ -587,7 +604,7 @@ def verifyDoctorSummary(cash, cashreturn, credit, creditreturn, discount, provis
       assert int(syscreditamount) == presyscreditamount + credit - creditreturn
       print("<<END: verifyDoctorSummary")
 #Module:Billing_Report: Discount Report**********************
-def verifyDiscountReport(HospitalNo, cash, discountpc):
+def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
       print(">>START: verifyDiscountReport")
       danpheEMR.find_element_by_link_text("Reports").click()
       time.sleep(3)
@@ -621,7 +638,7 @@ def verifyDiscountReport(HospitalNo, cash, discountpc):
       print(user)
       print("<<END: verifyDiscountReport")
 #Module:Billing report: Deposit Report*********************
-def verifyDepositBalanceReport(HospitalNo, deposit):
+def verifyDepositBalanceReport(danpheEMR, HospitalNo, deposit):
       print(">>START: verifyDepositBalanceReport")
       # if appPort == '81':
       #    danpheEMR.find_element_by_link_text("Reports").click()
@@ -660,7 +677,7 @@ def verifyDepositBalanceReport(HospitalNo, deposit):
          assert x == y
       print("<<END: verifyDepositBalanceReport")
 #Module: Billing report: Department Summary Report**********
-def getDepartmentSummary():
+def getDepartmentSummary(danpheEMR):
       global sysgrosstotal
       global sysdiscountamount
       global sysreturnamount
@@ -760,7 +777,7 @@ def verifyDepartmentSummary(cash, cashreturn, credit, creditreturn, discount, pr
       assert int(syscancelamount) == presyscancelamount + provisionalcancel
       assert int(syscreditamount) == presyscreditamount + credit - creditreturn
 #Module:Billing_Report: User Collection Report***********
-def getUserCollectionReport(user):
+def getUserCollectionReport(danpheEMR, user):
        global sysnetcashcollection
        global sysgrosstotalsales
        global sysdiscount
@@ -843,6 +860,10 @@ def preSystemUserCollectionReport():
       presyslesscashdiscount = int(syslesscashdiscount)
       presystotalcollection = int(systotalcollection)
 def verifyUserCollectionReport(cash, cashreturn, credit, creditreturn, discount, deposit, depositreturn, creditsettlement, provisional, provisionalcancel):
+      x = presysnetcashcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
+      print("X:", x)
+      y = int(sysnetcashcollection)
+      print("Y:", y)
       assert int(sysnetcashcollection) == presysnetcashcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
       assert int(sysgrosstotalsales) == presysgrosstotalsales + cash + credit
       assert int(sysdiscount) == presysdiscount + discount
@@ -857,7 +878,7 @@ def verifyUserCollectionReport(cash, cashreturn, credit, creditreturn, discount,
       assert int(syslesscashdiscount) == presyslesscashdiscount + discount
       assert int(systotalcollection) == presystotalcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
 #Module:Admission_Report: Total Admitted Patients Report**********************
-def verifyTotalAdmittedPatients(HospitalNo):
+def verifyTotalAdmittedPatients(danpheEMR, HospitalNo):
       danpheEMR.find_element_by_link_text("Reports").click()
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Admission").click()
@@ -871,7 +892,7 @@ def verifyTotalAdmittedPatients(HospitalNo):
       hospitalno = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
       assert hospitalno == HospitalNo
 ######## Report: Total Items Bill
-def getTotalItemsBill():
+def getTotalItemsBill(danpheEMR):
     print(">>START: getTotalItemsBill")
     global CashSales
     global CreditSales

@@ -2,25 +2,26 @@ import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+import Library.GlobalShareVariables as GSV
 
-danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
-AppName = AC.appName
+#danpheEMR = AC.danpheEMR
+#print("DanpheEMR", danpheEMR)
+AppName = GSV.appName
 # Module:Dispensary ------------------
-def activatePharmacyCounter():
+def activatePharmacyCounter(danpheEMR,dispensaryName):
     print(">>Start: Pharmacy Counter Activate: START")
     time.sleep(7)
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Dispensary").click()
         time.sleep(7)
-        danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
+        danpheEMR.find_element_by_xpath("//i[contains(text(),'"+dispensaryName+"')]").click()
         time.sleep(3)
     danpheEMR.find_element_by_link_text("Counter").click()
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//h5").click()
     time.sleep(2)
     print("Pharmacy Counter Activate: END")
-def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
+def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     print(">>Create Dispensary Sale to Hospital Patient: START")
     danpheEMR.find_element_by_link_text("Dispensary").click()
     time.sleep(3)
@@ -56,7 +57,7 @@ def createDispensarySale(HospitalNo, qty, drugName, paymentmode):
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("Create Pharmacy OPD Invoice: END<<")
     return pInvoiceNo
-def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
+def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     print("<<START: Create Dispensary sales to random customer.")
     global pInvoiceNo
     danpheEMR.find_element_by_link_text("Dispensary").click()
@@ -82,7 +83,7 @@ def createDispensarySaleRandomPatient(drugname, qty, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     danpheEMR.find_element_by_id("btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
-def returnPharmacyInvoice(pInvoiceNo, qty, returnremark):
+def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
     print(">>Return Pharmacy Invoice: START")
     if AppName == 'SNCH' or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
@@ -106,7 +107,7 @@ def returnPharmacyInvoice(pInvoiceNo, qty, returnremark):
         danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger']").click()
         time.sleep(5)
     print("<<Return Pharmacy Invoice: END")
-def verifyReturnPharmacyInvoice(HospitalNo, paymentmode, returnRemark):
+def verifyReturnPharmacyInvoice(danpheEMR, HospitalNo, paymentmode, returnRemark):
     print("<<Verify Return Pharmacy Invoice: START")
     if AppName == 'SNCH':
         danpheEMR.find_element_by_link_text("Return Sale List").click()

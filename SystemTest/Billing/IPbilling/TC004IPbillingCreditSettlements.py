@@ -1,32 +1,31 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test below scenario:
+1. Work flow of ip patient credit settlement
+'''
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
+import Library.LibModuleADT as LADT
+import Library.LibModulePatientPortal as LPP
 
-# front desk user login
+#front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-ip = A()
-paymode = "CREDIT"
-itemprice = GSV.admitRate
-doctor = GSV.doctor1
-department = GSV.department1
 
-ip.openBrowser()
-ip.login(foUserId, foUserPwd)
-ip.counteractivation()
-ip.patientRegistration()
-ip.getBillingDashboard()
-ip.preSystemDataBillingDashboard()
-ip.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=0,doctor=0,department=0)
-ip.getBillingDashboard()
-ip.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0, provisional=itemprice, provisionalcancel=0)
-ip.preSystemDataBillingDashboard()
-ip.generateDischargeInvoice(paymentmode = paymode)
-ip.getBillingDashboard()
-ip.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=itemprice, creditReturn=0, settlement=0, provisional=0, provisionalcancel=itemprice)
-ip.preSystemDataBillingDashboard()
-ip.creditSettlements()
-ip.getBillingDashboard()
-ip.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=itemprice, provisional=0, provisionalcancel=0)
-ip.logout()
-ip.closeBrowser()
+itemprice = GSV.admitRate
+doctor = GSV.doctorGyno
+department = GSV.departmentGyno
+
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LPP.patientRegistration()
+LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo, admit=1, discharge=0, trasfer=0, deposit=0,doctor=0,department=0)
+paymode = "CREDIT"
+LB.generateDischargeInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode = paymode)
+LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo)
+AC.logout()
+AC.closeBrowser()

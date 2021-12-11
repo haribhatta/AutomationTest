@@ -1,9 +1,8 @@
-import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
 
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 #############
 # pharmacy user login
 phuserid = GSV.pharmacyUserID
@@ -15,7 +14,7 @@ drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
 #############
 AC.login(phuserid, phuserpwd)
-LD.activatePharmacyCounter()
-LD.createDispensarySaleRandomPatient(qty=1, drugname=drugSinex, paymentmode=paymentMode)
+LD.activatePharmacyCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
+LD.createDispensarySaleRandomPatient(danpheEMR=EMR, qty=1, drugname=drugSinex, paymentmode=paymentMode)
 AC.logout()
 AC.closeBrowser()

@@ -1,13 +1,16 @@
 from SystemTest import shortcut as sc
-from TestActionLibrary import A
-from LocalShareVariables import LSV
+#from TestActionLibrary import A
+#from Library.ApplicationConfiguration import A
+from Library.LocalShareVariables import LSV
+import Library.GlobalShareVariables as GSV
+
 import pathlib
 import os
 
 def files(file,file1,rows,*args):
     if not args:
         sc.copyoriginal(file, file1)
-        A.applicationSelection()
+        #A.applicationSelection()
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)

@@ -6,12 +6,12 @@ import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 
-danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
-AppName = AC.appName
-HospitalNo = None
+#danpheEMR = AC.danpheEMR
+#print("DanpheEMR", danpheEMR)
+AppName = GSV.appName
+#HospitalNo = None
 # Module:Appointment --------------------
-def patientquickentry(discountpc, paymentmode, department, doctor):
+def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
    global InvoiceNo
    global contactno
    global HospitalNo
@@ -24,7 +24,7 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
          danpheEMR.find_element_by_link_text("Registration").click()
       else:
          danpheEMR.find_element_by_link_text("Appointment").click()
-      time.sleep(2)
+      time.sleep(4)
       danpheEMR.find_element_by_id("btnNewPatient").click()
       time.sleep(4)
       if AppName == "LPH":
@@ -96,9 +96,10 @@ def patientquickentry(discountpc, paymentmode, department, doctor):
       # return [InvoiceNo, HospitalNo]
    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
    print("Create New Appointment: END<<")
-def followUpAppointment():
+def followUpAppointment(danpheEMR):
       print("lets create appointment followup")
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
+         time.sleep(5)
          if AppName == "LPH":
             danpheEMR.find_element_by_link_text("Registration").click()
             time.sleep(5)
@@ -123,7 +124,7 @@ def followUpAppointment():
          time.sleep(5)
          danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
          #danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
-def oldPatientRegistration(HospitalNo,DoctorName,Department):
+def oldPatientRegistration(danpheEMR, HospitalNo,DoctorName,Department):
    print(">>Create Old Appointment: START")
    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)

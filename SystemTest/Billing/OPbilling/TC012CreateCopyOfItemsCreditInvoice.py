@@ -1,18 +1,20 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBillingReports as LBR
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
-
-bil = A()
-bil.openBrowser()
-bil.login(foUserId, foUserPwd)
-bil.counteractivation()
-bil.patientquickentry(0, 'CREDIT')
-bil.returnBillingInvoice("This is credit bill return")
-bil.createCopyItemInvoice('CREDIT')
-bil.returnBillingInvoice("This is copy bill return")
-bil.createCopyItemInvoice('Cash')
-bil.logout()
-bil.closeBrowser()
+foUserId = GSV.adminUserID
+foUserPwd = GSV.adminUserPwD
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.departmentGyno
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+InvoiceNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+LB.returnBillingInvoice(EMR, InvoiceNo, "This is credit bill return")
+LB.createCopyItemInvoice(EMR, 'CREDIT')
+LB.returnBillingInvoice(EMR, InvoiceNo,  "This is copy bill return")
+LB.createCopyItemInvoice(EMR, 'Cash')
+AC.logout()
+AC.closeBrowser()

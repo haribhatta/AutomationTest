@@ -7,30 +7,31 @@ Scenarios to test:
 4. Discharge the patient with payment mode cash.
 '''
 ######## Import Libraries
-import Library.ApplicationConfiguration as AC
+
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleADT as LADT
 ########
-AC.applicationSelection()
+#AC.applicationSelection()
 ########
-AC.openBrowser()
+EMR = AC.openBrowser()
 ########
 AC.login(GSV.foUserID, GSV.foUserPwD)
 ########
-LB.counteractivation()
+LB.counteractivation(EMR)
 ######## 1. Create OP visit.
-HospitalNo = LA.patientquickentry(0, 'Cash',department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, 0, 'Cash',department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 ######## 2. Admit above patient.
-LADT.admitDisTrans(admit=1, discharge=0, trasfer=0, hospitalNO=HospitalNo, deposit=0,doctor=GSV.doctorGyno, department=GSV.departmentGyno)
+LADT.admitDisTrans(EMR, admit=1, discharge=0, trasfer=0, hospitalNO=HospitalNo, deposit=0,doctor=GSV.doctorGyno, department=GSV.departmentGyno)
 #LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
 #LB.preIPbillingDetails()
-LB.createIPprovisionalBill(HospitalNo=HospitalNo, test=GSV.TFT)
+LB.createIPprovisionalBill(EMR, HospitalNo=HospitalNo, test=GSV.TFT)
 #LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
 #LB.verifyIPbillingDetails(testrate=labTestTFTrate, canceltest=labTestTFT, paymentmode=paymode)
 #LB.preIPbillingDetails()
-LB.createIPprovisionalBill(HospitalNo=HospitalNo, test=GSV.USG)
+LB.createIPprovisionalBill(EMR, HospitalNo=HospitalNo, test=GSV.USG)
 #LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
 #LB.verifyIPbillingDetails(testrate=labTestTFTrate, canceltest=labTestTFT, paymentmode=paymode)
 #LB.preIPbillingDetails()
@@ -41,8 +42,8 @@ LB.createIPprovisionalBill(HospitalNo=HospitalNo, test=GSV.USG)
 #LB.modifyDischargeDate(HospitalNo)
 #LB.getIPbillingDetails(HospitalNo, paymode)
 #LB.verifyIPbillingDetails(testrate = 0, canceltest = 0, paymentmode=paymode)
-LB.verifyConfirmDischarge(HospitalNo, 'Cash')
-LB.verifyDischargeInvoice(paymentmode= 'Cash')
+LB.verifyConfirmDischarge(EMR, HospitalNo, 'Cash')
+LB.verifyDischargeInvoice(EMR, paymentmode= 'Cash')
 AC.logout()
 AC.closeBrowser()
 

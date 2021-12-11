@@ -1,20 +1,25 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test below checkpoints:
+1. return out patient cash invoice.
+2. verify return invoice is correctly generated.
+'''
+
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-rb = A()
 paymode = "Cash"
 itemrate = GSV.opdRate
 
-rb.openBrowser()
-rb.login(foUserId, foUserPwd)
-rb.counteractivation()
-rb.patientquickentry(discountpc=0, paymentmode=paymode)
-rb.getBillingDashboard()
-rb.preSystemDataBillingDashboard()
-rb.returnBillingInvoice(returnmsg="This is test return")
-rb.getBillingDashboard()
-rb.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=itemrate, credit=0, creditReturn=0, settlement=0, provisional=0, provisionalcancel=0)
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+InvoiceNo = LA.patientquickentry(EMR, discountpc=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+LB.returnBillingInvoice(EMR, InvoiceNo, returnmsg="This is test return")
+LB.verifyReturnBillingInvoice() # this function need to add in LibModuleBilling library file.

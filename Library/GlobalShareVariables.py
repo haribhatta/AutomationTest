@@ -1,7 +1,18 @@
-import   Library.ApplicationConfiguration as AC
-application = AC.appName
+#import   Library.ApplicationConfiguration as AC
+from Library.ApplicationConfiguration import A
+
+#class G:
+#application = AC.applicationSelection()
 ########Defining Variables for LPH
-if application == "LPH":
+
+appName = input("Please enter project/application name:\n"
+                "SNCH\n"
+                "MMH\n"
+                "LPH\n"
+                "MPH\n")
+if appName == "LPH":
+
+      appURL = "http://202.51.74.168:453/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
@@ -59,6 +70,7 @@ if application == "LPH":
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
       Dispensary1 = "MainDispensary"
+      dispensaryName = "MainDispensary"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
@@ -74,7 +86,7 @@ if application == "LPH":
       UserBilling = 'Mr. Bhagawati Pandey'
 ###############################################################################
 ########Defining Variables for SNCH
-if application == "SNCH":
+if appName == "SNCH":
 ###Login Credentials:
       # admin user
       adminUserID = 'admin'
@@ -111,6 +123,7 @@ if application == "SNCH":
       usgRate = 1000
       admitRate = 1500
 ###Pharmacy/Dispensary Items Name:
+      dispensaryName = "MainDispensary"
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
       drug1Rate = 1.15
@@ -147,7 +160,8 @@ if application == "SNCH":
       user = "admin"
 ###############################################################################
 ########Defining Variables for Medi Plus
-if application == "MPH":
+if appName == "MPH":
+      appURL = "http://192.168.137.1:82/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
@@ -174,7 +188,7 @@ if application == "MPH":
       storeUserID = 'radha'
       storeUserPwD = 'pass123'
 ###Billing Items Name:
-      opdRate = 475
+      opdRate = 660
       deposit = 1000
       CBC = "COMPLETE BLOOD COUNT-CBC"
       CBCRate = 1100
@@ -207,10 +221,13 @@ if application == "MPH":
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
       Testdrug = "testdrugreport"
+      drugSinexName = 'SINEX'
+      drugSinexRate = 3
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
       Dispensary1 = "MainDispensary"
+      dispensaryName = "Main Dispensary"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300

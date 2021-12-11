@@ -1,14 +1,13 @@
 import shortcut as sc
-#from TestActionLibrary import A
+import Library.ApplicationConfiguration as AC
 from LocalShareVariables import LSV
 import pathlib
 import os
 
-a = A()
-def files(file,file1,rows,*args):
+def files(file, file1, rows, *args):
     if not args:
         sc.copyoriginal(file, file1)
-        a.applicationSelection()
+        AC.applicationSelection()
 
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))
@@ -19,6 +18,7 @@ def files(file,file1,rows,*args):
             base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
+            exec(open(Pythonfilepath).read())
 
             try:
                 exec(open(Pythonfilepath).read())

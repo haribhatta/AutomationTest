@@ -6,18 +6,18 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
-danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
-AppName = AC.appName
+#danpheEMR = AC.danpheEMR
+#print("DanpheEMR", danpheEMR)
+AppName = GSV.appName
 
 #Module:ADT -----------------------------
-def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, department):
+def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
             time.sleep(3)
             danpheEMR.find_element_by_link_text("ADT").click()
             time.sleep(3)
-            danpheEMR.find_element_by_id("quickFilterInput").send_keys(hospitalNO)
+            danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
             time.sleep(3)
             danpheEMR.find_element_by_link_text("Admit").click()
             time.sleep(3)
@@ -116,7 +116,7 @@ def admitDisTrans(admit, discharge, trasfer,hospitalNO, deposit, doctor, departm
          # danpheEMR.find_element_by_xpath("//tr[7]/td[2]/select").send_keys(Keys.RETURN)
          danpheEMR.find_element_by_id("Remarks").send_keys("Transfer to ICU ward")
          danpheEMR.find_element_by_xpath("//input[@name='name']").click()
-def cancelDischarge(HospitalNo):
+def cancelDischarge(danpheEMR, HospitalNo):
       # To cancel discharge user need to return discharge invoice
       print("Start: cancel discharge")
       danpheEMR.find_element_by_link_text("ADT").click()
@@ -132,7 +132,7 @@ def cancelDischarge(HospitalNo):
       danpheEMR.find_element_by_id("Approve").click()
       time.sleep(5)
       print("End: cancel discharge")
-def dischargeRandomPatient():
+def dischargeRandomPatient(danpheEMR):
       time.sleep(2)
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
          danpheEMR.find_element_by_link_text("Billing").click()
@@ -150,7 +150,7 @@ def dischargeRandomPatient():
          danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
          time.sleep(14)
       time.sleep(5)
-def checkAutoAddItems():
+def checkAutoAddItems(danpheEMR):
       danpheEMR.find_element_by_link_text("Settings").click()
       time.sleep(2)
       danpheEMR.find_element_by_xpath("//a[contains(text(),' ADT ')]").click()

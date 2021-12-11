@@ -1,21 +1,27 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test below checkpoints:
+1. Create out patient credit invoice.
+2. Verify credit invoice (i.e. Credit Note).
+3. Do credit settlement.
+4. Verify credit settlement slip.
+'''
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-cs = A()
 paymode = "CREDIT"
 itemrate = GSV.opdRate
 
-cs.openBrowser()
-cs.login(foUserId, foUserPwd)
-cs.counteractivation()
-cs.patientquickentry(discountpc=0, paymentmode=paymode)
-cs.getBillingDashboard()
-cs.preSystemDataBillingDashboard()
-cs.creditSettlements()
-cs.getBillingDashboard()
-cs.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=itemrate, provisional=0, provisionalcancel=0)
-
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode="CREDIT", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+LB.verifyCreditNoteDuplicateInvoice(EMR)
+LB.creditSettlements(EMR, HospitalNo)
+LB.verifyCreditSettlement()  #This function need to add in LibModuleBilling library file.
