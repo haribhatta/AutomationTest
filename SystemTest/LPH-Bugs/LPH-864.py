@@ -9,14 +9,19 @@ Issue:
 
 '''
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleInventory as LI
+import Library.LibModuleSubStore as LS
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
+import Library.LibModuleBillingReports as LBR
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-doctor = GSV.doctor1
-department = GSV.department1
+doctor = GSV.doctorGyno
+department = GSV.departmentGyno
 
 opdticket = GSV.opdRate
 discountpct = 50
@@ -27,24 +32,23 @@ usgprice = GSV.usgRate
 admisioncharge = GSV.admitRate
 deposit = 1000
 
-CBDS = A()
-CBDS.openBrowser()
-CBDS.login(foUserId, foUserPwd)
-CBDS.counteractivation()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
 
 # 1. Cash Invoice
-CBDS.getBillingDashboard()
-CBDS.patientquickentry(discountpc=0, paymentmode="Cash")  # cash = opdticket
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
+LBR.getBillingDashboard(EMR)
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=department, doctor=doctor).InvoiceNo  # cash = opdticket
+LBR.preSystemDataBillingDashboard()
+LBR.getBillingDashboard(EMR)
+LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 2. Return Cash Invoice
 print("2. Return Cash Invoice")
-CBDS.getBillingDashboard()
-CBDS.returnBillingInvoice("This is cash invoice return")
-CBDS.preSystemDataBillingDashboard()
-CBDS.getBillingDashboard()
-CBDS.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
+LBR.getBillingDashboard(EMR)
+LB.returnBillingInvoice(EMR, InvoiceNo, "This is cash invoice return")
+LBR.preSystemDataBillingDashboard()
+LBR.getBillingDashboard(EMR)
+LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)

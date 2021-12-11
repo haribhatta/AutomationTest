@@ -1,19 +1,21 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModuleADT as LADT
+import Library.LibModuleBillingReports as LBR
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-Doctor1 = GSV.doctor1
-Department1 = GSV.department1
+Doctor1 = GSV.doctorGyno
+Department1 = GSV.departmentGyno
 
-tapr = A()
-
-tapr.openBrowser()
-tapr.login(foUserId, foUserPwd)
-tapr.counteractivation()
-tapr.patientquickentry(0, 'Cash')
-tapr.admitDisTrans(1, 0, 0,0,doctor=Doctor1, department=Department1)
-tapr.verifyTotalAdmittedPatients()
-tapr.logout()
-tapr.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=Department1, doctor=Doctor1).HospitalNo
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0,HospitalNo=HospitalNo, doctor=Doctor1, department=Department1)
+LBR.verifyTotalAdmittedPatients(EMR, HospitalNo)
+AC.logout()
+AC.closeBrowser()

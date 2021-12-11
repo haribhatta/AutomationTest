@@ -1,14 +1,11 @@
-from TestActionLibrary import A
-from TestActionLibrary import GSV
-
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleSettings as LS
 # front desk user login
 adminuser = GSV.adminUserID
 adminpswd = GSV.adminUserPwD
 
-
-
-addEmp= A()
-addEmp.openBrowser()
-addEmp.login(adminuser, adminpswd)
-addEmp.Setting_add_employee()
-addEmp.logout()
+EMR = AC.openBrowser()
+AC.login(adminuser, adminpswd)
+LS.Setting_add_employee()
+AC.logout()

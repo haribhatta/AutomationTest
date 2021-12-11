@@ -10,8 +10,7 @@ import Library.GlobalShareVariables as GSV
 import Library.LibModuleInventory as LI
 import Library.LibModuleSubStore as LSS
 
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 #############
 # Inventory user login
 storeUserid = GSV.storeUserID

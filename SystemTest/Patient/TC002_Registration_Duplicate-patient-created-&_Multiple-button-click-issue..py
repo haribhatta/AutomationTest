@@ -1,9 +1,9 @@
-import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModulePatientPortal as LPP
 ########
-AC.applicationSelection()
-AC.openBrowser()
+
+EMR = AC.openBrowser()
 
 #############
 # front desk user login

@@ -20,8 +20,7 @@ store = 'Emergency Sto'
 StoreName = 'Emergency Sto'
 ItemName = 'A4 PA'
 
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LI.activateInventory(inventory='General Inventory')
 itemstock = LI.countStock(itemname=itemname)

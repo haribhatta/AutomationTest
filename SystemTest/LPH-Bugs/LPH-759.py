@@ -6,8 +6,13 @@ Create Requisition not working.
 Navigation: Substore → Inventory → Inventory Requisition → Create Requisition
 '''
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
+import Library.LibModuleSubStore as LSS
+import Library.LibModuleSubStore as LS
+import Library.LibModulePatientPortal as LPP
+import Library.LibModuleBilling as LB
+import Library.LibModuleADT as LADT
 
 # front desk user login
 StoreUserId = GSV.storeUserID
@@ -19,8 +24,7 @@ Inventory1 = GSV.Inventory1
 ItemName1 = GSV.stationaryItem1
 Qty1 = 3
 
-IR = A()
-IR.openBrowser()
-IR.login(StoreUserId, StoreUserPwd)
-IR.selectSubStore(substore=Store1)
-IR.createSubStoreRequisition(InventoryName=Inventory1, ItemName=ItemName1, Qty=Qty1)
+EMR = AC.openBrowser()
+AC.login(StoreUserId, StoreUserPwd)
+LSS.selectSubStore(substore=Store1)
+LSS.createSubStoreRequisition(InventoryName=Inventory1, ItemName=ItemName1, Qty=Qty1)
