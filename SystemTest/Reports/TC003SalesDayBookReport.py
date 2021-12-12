@@ -1,11 +1,10 @@
-import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
 
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 #############
 # front desk user login
 foUserId = GSV.foUserID
@@ -15,27 +14,27 @@ doctorGynae = GSV.doctorGyno
 rateOPD = GSV.opdRate
 #############
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
-LBR.getSalesDayBook()
+LB.counteractivation(EMR)
+LBR.getSalesDayBook(EMR)
 ###
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
 LBR.preSystemSalesDayBook()
-LBR.getSalesDayBook()
+LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=rateOPD, cashreturn=0, credit=0, creditreturn=0)
 ###
-LB.returnBillingInvoice(returnmsg="this is bill return 1")
+LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="this is bill return 1")
 LBR.preSystemSalesDayBook()
-LBR.getSalesDayBook()
+LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=0, cashreturn=rateOPD, credit=0, creditreturn=0)
 ###
-HospitalNo1 = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae)
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae).InvoiceNo
 LBR.preSystemSalesDayBook()
-LBR.getSalesDayBook()
+LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=0, cashreturn=0, credit=rateOPD, creditreturn=0)
 ###
-LB.returnBillingInvoice(returnmsg="this is bill retur 2n")
+LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is bill retur 2n")
 LBR.preSystemSalesDayBook()
-LBR.getSalesDayBook()
+LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=0, cashreturn=0, credit=0, creditreturn=rateOPD)
 ###
 AC.logout()

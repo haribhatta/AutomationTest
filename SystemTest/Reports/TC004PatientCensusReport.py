@@ -1,19 +1,21 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModuleBillingReports as LBR
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 opdRate = GSV.opdRate
 
-pcr = A()
-pcr.openBrowser()
-pcr.login(foUserId, foUserPwd)
-pcr.getPatientCensus()
-pcr.counteractivation()
-pcr.patientquickentry(0, 'Cash')
-pcr.preSystemPatientCensus()
-pcr.getPatientCensus()
-pcr.verifyPatientCensus(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, provisional=0)
-pcr.logout()
-pcr.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+LBR.getPatientCensus(EMR)
+LBR.preSystemPatientCensus()
+LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+LBR.getPatientCensus(EMR)
+LBR.verifyPatientCensus(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, provisional=0)
+AC.logout()
+AC.closeBrowser()

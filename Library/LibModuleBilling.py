@@ -5,7 +5,6 @@ from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
 import Library.GlobalShareVariables as GSV
 
-danpheEMR = AC.openBrowser()
 AppName = GSV.appName
 def counteractivation(danpheEMR):
     print(">>Activate Billing Counter: START")
@@ -167,7 +166,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
 
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
 def createLabInvoice(danpheEMR, HospitalNo, labtest, imagingtest):
-
+    print("This is test")
 def multiplebillingclick(HospitalNo, labtest, imagingtest):
         print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
         print("Hospital Number:", HospitalNo)

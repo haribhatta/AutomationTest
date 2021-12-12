@@ -1,5 +1,6 @@
 ''''
-LAB | Duplicate lab requisition is created after billing.
+Objective:
+To test EMR-904: Pharmacy | Good Receipt | Failed to add Good receipt.
 
 Steps:
 1. Navigate to Billing Module
@@ -9,10 +10,19 @@ Steps:
 5. Duplicate requisition is created for same patient.
 6. Verify and view details for Sample collection process.
 
+Issue:
+LAB | Duplicate lab requisition is created after billing.
 '''
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-from GlobalShareVariables import GSV
+
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleDispensary as LD
+import Library.LibModulePharmacy as LP
+import Library.LibModulePharmacyReports as LPR
+import Library.LibModuleAppointment as LA
+#import Library.LibModuleBilling as LB
+import Library.LibModuleBilling as LB
+import Library.LibModuleLaboratory as LL
 
 # front desk user login
 foUserId = GSV.foUserID
@@ -22,23 +32,21 @@ foUserPwd = GSV.foUserPwD
 labUserId = GSV.labUserID
 labUserPwd = GSV.labUserPwD
 
-glr = A()
-
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+paymentmode = "Cash"
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 labitem = GSV.TFT
 imagingtest = GSV.USG
-
-glr.openBrowser()
-glr.login(foUserId, foUserPwd)
-glr.counteractivation()
-glr.patientquickentry(0, 'Cash')
-glr.createlabxrayinvoice(labitem, imagingtest)
+LB.createlabxrayinvoice(EMR, HospitalNo, labitem, imagingtest)
 #glr.verifylabxrayinvoice()
-glr.logout()
+AC.logout()
 
-glr.login(labUserId, labUserPwd)
-glr.verifySampleCollectionDuplicateEntry()
-glr.collectLabSample("sample collected")
-glr.checkLabDuplicateRequisition(ItemName=imagingtest)
-glr.logout()
-glr.closeBrowser()
+AC.login(labUserId, labUserPwd)
+LB.verifySampleCollectionDuplicateEntry()
+LL.collectLabSample(EMR, HospitalNo, labitem)
+LL.checkLabDuplicateRequisition(danpheEMR=EMR, HospitalNo=HospitalNo, ItemName=imagingtest)
+AC.logout()
+AC.closeBrowser()
 print("LPH-904 Passed")

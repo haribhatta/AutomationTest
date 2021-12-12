@@ -1,5 +1,18 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test below check points:
+1. Create pharmacy OPD invoice.
+2. Verify pharmacy OPD invoice.
+'''
+
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleDispensary as LD
+import Library.LibModulePharmacy as LP
+import Library.LibModulePharmacyReports as LPR
+import Library.LibModuleAppointment as LA
+#import Library.LibModuleBilling as LB
+import Library.LibModuleBilling as LB
 
 # front desk user login
 foUserId = GSV.foUserID
@@ -15,17 +28,14 @@ rate = GSV.drug1Rate
 quantity = 1
 mode = "Cash"
 
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+AC.logout()
 
-phaoB = A()
-
-phaoB.openBrowser()
-phaoB.login(foUserId, foUserPwd)
-phaoB.counteractivation()
-phaoB.patientquickentry(0, "Cash")
-phaoB.logout()
-
-phaoB.login(pharmacyUserId, pharmacyUserPwd)
-phaoB.activatePharmacyCounter()
+AC.login(pharmacyUserId, pharmacyUserPwd)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 
 #  Create PO
 #phaoB.createPharmacyPurchaseOrder()
@@ -34,6 +44,6 @@ phaoB.activatePharmacyCounter()
 # Received GR from above PO
 #phaoB.addPharmacyGRfromPO()
 
-phaoB.createPharmacyInvoiceTC(drugname=drugname, qty=quantity, paymentmode=mode)
-phaoB.logout()
-phaoB.closeBrowser()
+LP.createPharmacyInvoiceTC(danpheEMR=EMR,HospitalNo=HospitalNo, drugname=drugname, qty=quantity, paymentmode=mode)
+AC.logout()
+AC.closeBrowser()

@@ -5,6 +5,7 @@ The objective of this test case is to test below scenarios:
 '''
 #
 import Library.GlobalShareVariables as GSV
+
 print("hari1")
 #from Library.ApplicationConfiguration import B
 import Library.ApplicationConfiguration as AC

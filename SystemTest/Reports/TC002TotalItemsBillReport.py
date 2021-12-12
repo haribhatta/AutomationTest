@@ -1,8 +1,10 @@
-from Library import ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
-from Library import LibModuleBilling as LB
-from Library import LibModuleAppointment as LA
-from Library import LibModuleBillingReports as LBR
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleBillingReports as LBR
+import Library.LibModuleAppointment as LA
+import Library.LibModulePatientPortal as LP
+import Library.LibModuleADT as LADT
 import time
 
 # front desk user login
@@ -11,17 +13,15 @@ foUserPwd = GSV.foUserPwD
 opdAmt = GSV.opdRate
 user = GSV.foUserID
 
-
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
+LB.counteractivation(EMR)
 time.sleep(2)
-InvoiceNo = LA.patientquickentry(0, 'Cash', GSV.departmentGyno, GSV.doctorGyno).InvoiceNo
-LBR.getTotalItemsBill()
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+LBR.getTotalItemsBill(EMR)
 LBR.preSystemTotalItemsBill()
-LB.returnBillingInvoice(InvoiceNo, "This is cash return.")
-LBR.getTotalItemsBill()
+LB.returnBillingInvoice(EMR, InvoiceNo, "This is cash return.")
+LBR.getTotalItemsBill(EMR)
 LBR.verifyTotalItemsBill(returnamt=opdAmt)
 time.sleep(2)
 AC.logout()

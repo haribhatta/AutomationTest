@@ -1,5 +1,24 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test Cash Collection Summary report in pharmacy with below check scenarios:
+1. Cash Sale
+2. Cash Sale Return
+3. Credit Sale
+4. Credit Settlement
+5. Credit Sale Return
+6. Deposit
+7. Deposit Return
+8. Estimation bill (i.e. Provisional).
+9. Cancel estimation bill.
+'''
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModulePharmacyReports as LPR
+import Library.LibModulePharmacy as LP
+import Library.LibModuleDispensary as LD
+import Library.LibModulePatientPortal as LPP
 
 # front desk user login
 pharmacyUserId = GSV.pharmacyUserID
@@ -12,20 +31,19 @@ amount = qty*rate
 totalamount = round(amount)
 remark = "This is test return."
 
-ccsr = A()
-ccsr.openBrowser()
-ccsr.login(pharmacyUserId, pharmacyUserPwd)
-ccsr.activatePharmacyCounter()
-ccsr.getPharmacyCashCollectionSummary(pharmacyUserId)
-ccsr.getStockDetail(drugname=drugname)
-ccsr.getRandomPatient()
-ccsr.createPharmacyInvoiceTC(qty=qty, drugname=drugname, paymentmode='Cash')
-ccsr.preSystemPharmacyCashCollectionSummary()
-ccsr.getPharmacyCashCollectionSummary(pharmacyUserId)
-ccsr.verifyPharmacyCashCollectionSummary(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
-ccsr.returnPharmacyInvoice(qty=qty, returnremark=remark)
-ccsr.preSystemPharmacyCashCollectionSummary()
-ccsr.getPharmacyCashCollectionSummary(pharmacyUserId)
-ccsr.verifyPharmacyCashCollectionSummary(cash=0, cashreturn=amount, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
-ccsr.logout()
-ccsr.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(pharmacyUserId, pharmacyUserPwd)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
+LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
+HospitalNo = LPP.getRandomPatient()
+InvoiceNo = LP.createPharmacyInvoiceTC(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugname=drugname, paymentmode='Cash')
+LPR.preSystemPharmacyCashCollectionSummary()
+LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
+LPR.verifyPharmacyCashCollectionSummary(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
+LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=qty, returnremark=remark)
+LPR.preSystemPharmacyCashCollectionSummary()
+LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
+LPR.verifyPharmacyCashCollectionSummary(cash=0, cashreturn=amount, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
+AC.logout()
+AC.closeBrowser()

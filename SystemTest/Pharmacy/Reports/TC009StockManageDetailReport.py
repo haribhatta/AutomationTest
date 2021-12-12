@@ -1,23 +1,34 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test Pharmacy> Stock Manage Detail Summary Report with below check points:
+1. Get Stock Details Report
+2. Manage Stock Quantity
+3. Verify Stock Details Report
+'''
+
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleDispensary as LD
+import Library.LibModulePharmacyReports as LPR
+import Library.LibModulePatientPortal as LPP
+import Library.LibModulePharmacy as LP
 
 # front desk user login
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
-smdr = A()
 drug = GSV.Testdrug
 setupqty = 5
 testqty = 7
 
-smdr.openBrowser()
-smdr.login(pharmacyUserId, pharmacyUserPwd)
-smdr.activatePharmacyCounter()
-smdr.getStoreDetail(drugname=drug)
-smdr.manageStoreStock(drugname=drug, type='In', qty=setupqty)
-smdr.getPharmacyStockManageDetailReport(drugname=drug)
-smdr.preSystemPharmacyStockManageDetailReport()
-smdr.manageStoreStock(drugname=drug, type='In', qty=testqty)
-smdr.getPharmacyStockManageDetailReport(drugname=drug)
-smdr.verifyPharmacyStockManageDetailReport(In=testqty, Out=0)
+EMR = AC.openBrowser()
+AC.login(pharmacyUserId, pharmacyUserPwd)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LP.getStoreDetail(danpheEMR=EMR, drugname=drug)
+LP.manageStoreStock(danpheEMR=EMR, drugname=drug, type='In', qty=setupqty)
+LPR.getPharmacyStockManageDetailReport(danpheEMR=EMR, drugname=drug)
+LPR.preSystemPharmacyStockManageDetailReport()
+LP.manageStoreStock(danpheEMR=EMR, drugname=drug, type='In', qty=testqty)
+LPR.getPharmacyStockManageDetailReport(danpheEMR=EMR, drugname=drug)
+LPR.verifyPharmacyStockManageDetailReport(In=testqty, Out=0)
 #Blocked by EMR-2588

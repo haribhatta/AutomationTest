@@ -1,5 +1,17 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test below check points:
+1. Create Pharmacy goods receipt.
+2. Verify Pharmacy goods receipt.
+'''
+
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleDispensary as LD
+import Library.LibModulePharmacy as LP
+import Library.LibModulePharmacyReports as LPR
+import Library.LibModuleAppointment as LA
+#import Library.LibModuleBilling as LB
 
 # pharmacy desk user login
 pharmacyUserId = GSV.pharmacyUserID
@@ -8,17 +20,16 @@ genericName = GSV.drug1GenericName
 drugName = GSV.drug1BrandName
 drugRate = GSV.drug1Rate
 
-cpgr = A()
 qty = 50
 
-cpgr.openBrowser()
-cpgr.login(pharmacyUserId, pharmacyUserPwd)
-cpgr.activatePharmacyCounter()
-cpgr.addPharmacyItem(genericName)
-cpgr.verifyPharmacyItem()
-cpgr.createPharmacyGoodsReceipt(qty=qty, DrugName=drugName, grPrice=drugRate)
-cpgr.verifyPharmacyGoodsReceipt(qty=qty, DrugName=drugName)
-cpgr.logout()
-cpgr.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(pharmacyUserId, pharmacyUserPwd)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LP.addPharmacyItem(EMR, GSV.drug1GenericName)
+LP.verifyPharmacyItem(EMR)
+LP.createPharmacyGoodsReceipt(danpheEMR=EMR, qty=qty, DrugName=drugName, grPrice=drugRate)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, qty=qty, DrugName=drugName)
+AC.logout()
+AC.closeBrowser()
 #Blocked by bug EMR-2591
 #Failed with bug EMR-3177

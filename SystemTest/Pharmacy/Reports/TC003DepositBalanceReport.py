@@ -1,5 +1,18 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+'''
+Objective:
+To test Pharmacy> Deposit Balance report with below check points:
+1. Create Deposit slip
+2. Verify deposit slip
+3. Return Deposit balance
+4. Verify deposit return.
+'''
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleAppointment as LA
+import Library.LibModulePharmacy as LP
+import Library.LibModuleDispensary as LD
+import Library.LibModulePharmacyReports as LPR
 
 # front desk user login
 foUserId = GSV.foUserID
@@ -8,21 +21,19 @@ foUserPwd = GSV.foUserPwD
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
-dbr = A()
-
-dbr.openBrowser()
-dbr.login(foUserId, foUserPwd)
-dbr.counteractivation()
-dbr.patientquickentry(0, 'Cash')
-dbr.logout()
-dbr.login(pharmacyUserId, pharmacyUserPwd)
-dbr.activatePharmacyCounter()
-dbr.addPharmacyDeposit(deposit=1000)
-dbr.getPharmacyDepositBalanceReport()
-dbr.addPharmacyDeposit(deposit=1000)
-dbr.verifyPharmacyDepositBalanceReport(deposit=1000, depositreturn=0)
-dbr.getPharmacyDepositBalanceReport()
-dbr.returnPharmacyDeposit(depositreturn=500)
-dbr.verifyPharmacyDepositBalanceReport(deposit=0, depositreturn=500)
-dbr.logout()
-dbr.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+AC.logout()
+AC.login(pharmacyUserId, pharmacyUserPwd)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LP.addPharmacyDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=1000)
+LPR.getPharmacyDepositBalanceReport(danpheEMR=EMR, HospitalNo=HospitalNo)
+LP.addPharmacyDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=1000)
+LPR.verifyPharmacyDepositBalanceReport(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=1000, depositreturn=0)
+LPR.getPharmacyDepositBalanceReport(danpheEMR=EMR, HospitalNo=HospitalNo)
+LP.returnPharmacyDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, depositreturn=500)
+LPR.verifyPharmacyDepositBalanceReport(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=0, depositreturn=500)
+AC.logout()
+AC.closeBrowser()

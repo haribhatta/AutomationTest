@@ -12,19 +12,19 @@
 # 10.Refund Deposit.
 # 11.Repeat Scenarios 1-10 for different date.
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
-
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleBilling as LB
+import Library.LibModuleBillingReports as LBR
+import Library.LibModuleAppointment as LA
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-pcsr = A()
-
-pcsr.openBrowser()
-pcsr.login(foUserId, foUserPwd)
-pcsr.counteractivation()
-pcsr.patientquickentry(0, "CREDIT")
-pcsr.getPatientCreditSummary()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+LBR.getPatientCreditSummary(EMR)
 #pcsr.logout()
 #pcsr.closeBrowser()

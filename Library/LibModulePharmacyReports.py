@@ -3,12 +3,13 @@ import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
+import Library.GlobalShareVariables as GSV
+
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+AppName = GSV.appName
 ########
 # Module:Pharmacy_Reports: User Collection Report*********
-def getPharmacyDashboard():
+def getPharmacyDashboard(danpheEMR):
       print(">>START: getPharmacyDashboard")
       global TotalSale
       # global TotalReturn
@@ -123,7 +124,7 @@ def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, dep
             print("UnpaidInvoices", UnpaidInvoices)
             assert float(round(UnpaidInvoices)) == c
       print("<<END: verifyPharmacyDashboard")
-def getPharmacyCashCollectionSummary(user):
+def getPharmacyCashCollectionSummary(danpheEMR, user):
       print(">>START: getPharmacyCashCollectionSummary")
       global sysinvoiceamount
       global sysinvoicereturned
@@ -194,7 +195,7 @@ def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, 
       assert float(sysnetamount) == float(netamount)
       assert int(sysdiscountamount) == presysdiscountamount + discount
       print("<<END: verifyPharmacyCashCollectionSummary")
-def getPharmacyUserCollectionReport(user):
+def getPharmacyUserCollectionReport(danpheEMR, user):
       print(">>START: getPharmacyUserCollectionReport")
       global sysPnetcashcollection
       global sysPgrosstotalsales
@@ -337,7 +338,7 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
             print("Y", x)
             assert x == y
       print("<<END: verifySystemPharmacyUserCollectionReport")
-def getPharmacyDepositBalanceReport(HospitalNo):
+def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
       print(">>START: getPharmacyDepositBalanceReport")
       global sysdepositamt
       danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -351,7 +352,7 @@ def getPharmacyDepositBalanceReport(HospitalNo):
       assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
       sysdepositamt = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
       print("<<END: getPharmacyDepositBalanceReport")
-def verifyPharmacyDepositBalanceReport(HospitalNo, deposit, depositreturn):
+def verifyPharmacyDepositBalanceReport(danpheEMR, HospitalNo, deposit, depositreturn):
       print(">>START: verifyPharmacyDepositBalanceReport")
       danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
@@ -365,7 +366,7 @@ def verifyPharmacyDepositBalanceReport(HospitalNo, deposit, depositreturn):
       depositbalance = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
       assert depositbalance == sysdepositamt + deposit - depositreturn
       print("<<END: verifyPharmacyDepositBalanceReport")
-def getPharmacyOpeningEndingStockSummaryReport(drugname):
+def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
       print(">>START: getPharmacyOpeningEndingStockSummaryReport")
       global sysdrugname
       global sysopeningstock
@@ -400,7 +401,7 @@ def preSystemPharmacyOpeningEndingStockSummaryReport():
       presysdrugbatch = sysdrugbatch
       presysdrugexpiry = sysdrugexpiry
       print("<<END: preSystemPharmacyOpeningEndingStockSummaryReport")
-def verifyPharmacyOpeningEndingStockSummaryReport(qty):
+def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
       print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
       danpheEMR.find_element_by_link_text('Pharmacy').click()
       time.sleep(2)
@@ -418,7 +419,7 @@ def verifyPharmacyOpeningEndingStockSummaryReport(qty):
       sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
       assert int(sysendingstock) == int(presysendingstock) - qty
       print("<<END: verifyPharmacyOpeningEndingStockSummaryReport")
-def getPharmacyStockManageDetailReport(drugname):
+def getPharmacyStockManageDetailReport(danpheEMR, drugname):
       print(">>START: getPharmacyStockManageDetailReport")
       global ManageQuantity
       danpheEMR.find_element_by_link_text("Pharmacy").click()
@@ -442,7 +443,7 @@ def preSystemPharmacyStockManageDetailReport():
 def verifyPharmacyStockManageDetailReport(In, Out):
       assert int(ManageQuantity) == int(xManageQuantity) + In - Out
       print("<<END: preSystemPharmacyStockManageDetailReport")
-def verifyStockItemsReport(drugname):
+def verifyStockItemsReport(danpheEMR, drugname):
       print(">>START: verifyStockItemsReport")
       danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(2)

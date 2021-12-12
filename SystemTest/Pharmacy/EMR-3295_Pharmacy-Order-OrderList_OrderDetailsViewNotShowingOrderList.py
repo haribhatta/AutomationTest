@@ -1,10 +1,16 @@
+'''
+Objective:
+To test EMR-3295:
+'''
+
 import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleDispensary as LD
 import Library.LibModuleAppointment as LA
 import Library.LibModulePharmacy as LP
-AC.applicationSelection()
-AC.openBrowser()
+
+########
+EMR = AC.openBrowser()
 #############
 # front desk user login
 foUserId = GSV.foUserID
@@ -25,8 +31,8 @@ drugName = GSV.drugAasma
 #AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
-LD.activatePharmacyCounter()
-LP.createPharmacyPurchaseOrder(supplierName, drugName)
-LP.verifyCreatePharmacyPurchaseOrder(supplierName, drugName)
+LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LP.createPharmacyPurchaseOrder(EMR, supplierName, drugName)
+LP.verifyCreatePharmacyPurchaseOrder(EMR, supplierName, drugName)
 AC.logout()
 AC.closeBrowser()

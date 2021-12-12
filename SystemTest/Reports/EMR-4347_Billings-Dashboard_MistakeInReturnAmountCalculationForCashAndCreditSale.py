@@ -12,16 +12,15 @@ Actual result:
 The total amount is equal to the sub total amount(cash sales and credit sales).
 This cause the calculation error in the net cash collection.
 '''
-
-import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
 import Library.LibModulePatientPortal as LP
 import Library.LibModuleADT as LADT
-AC.applicationSelection()
-AC.openBrowser()
+
+EMR = AC.openBrowser()
 #############
 # front desk user login
 foUserId = GSV.foUserID
@@ -39,37 +38,37 @@ admisioncharge = GSV.admitRate
 deposit = 1000
 #############
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
+LB.counteractivation(EMR)
 ########
 # 1. Cash Invoice
-LBR.getBillingDashboard()
+LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo  # cash = opdticket
-LBR.getBillingDashboard()
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo  # cash = opdticket
+LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 # 2. Return Cash Invoice
 print("2. Return Cash Invoice")
-LBR.getBillingDashboard()
+LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-LB.returnBillingInvoice(InvoiceNo, returnmsg='This is bug testing')
-LBR.getBillingDashboard()
+LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg='This is bug testing')
+LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 # 5. Credit Invoice
 print("##### Credit Invoice #####")
-LBR.getBillingDashboard()
-InvoiceNo1 = LA.patientquickentry(discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+LBR.getBillingDashboard(EMR)
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae).InvoiceNo
 LBR.preSystemDataBillingDashboard()
-LBR.getBillingDashboard()
+LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 # 6. Return Credit Invoice
-LBR.getBillingDashboard()
+LBR.getBillingDashboard(EMR)
 print("Returning Credit Invoice")
-LB.returnBillingInvoice(InvoiceNo1, returnmsg="Bug testing")
+LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="Bug testing")
 LBR.preSystemDataBillingDashboard()
-LBR.getBillingDashboard()
+LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=opdticket,
                             settlement=0, provisional=0, provisionalcancel=0)
 AC.logout()
