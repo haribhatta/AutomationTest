@@ -7,7 +7,7 @@ import os
 def files(file, file1, rows, *args):
     if not args:
         sc.copyoriginal(file, file1)
-        AC.applicationSelection()
+        #AC.applicationSelection()
 
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))

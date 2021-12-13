@@ -19,7 +19,7 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
    print("AppName", AppName)
    print(">>Create New Appointment: START")
    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-      time.sleep(2)
+      time.sleep(5)
       if AppName == "LPH":
          danpheEMR.find_element_by_link_text("Registration").click()
       else:
@@ -145,7 +145,8 @@ def oldPatientRegistration(danpheEMR, HospitalNo,DoctorName,Department):
       time.sleep(3)
       danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
       time.sleep(3)
-      danpheEMR.find_element_by_id("doctorName").send_keys(DoctorName)
+      if AppName != "LPH":
+         danpheEMR.find_element_by_id("doctorName").send_keys(DoctorName)
       danpheEMR.find_element_by_id("btnPrintInvoice").click()
       time.sleep(5)
       InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text

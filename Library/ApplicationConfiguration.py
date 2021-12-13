@@ -1,33 +1,8 @@
 from selenium import webdriver
 import time
 from Library.LocalShareVariables import LSV
-#from Library.GlobalShareVariables import G
-import Library.GlobalShareVariables as G
-class A:
-    #global appURL
-    run = 'New'
-    '''
-    def applicationSelection(self):
-          global appURL
-          #global run
-          appName = input("Please enter project/application name:\n"
-                          "SNCH\n"
-                          "MMH\n"
-                          "LPH\n"
-                          "MPH\n")
-          if appName == "SNCH":
-             appURL = "http://202.51.74.168:168/"
-          if appName == "MMH":
-             appURL = "http://202.51.74.168:170/"
-          if appName == "LPH":
-             appURL = "http://202.51.74.168:453/"
-          if appName == "MPH":
-             appURL = "http://192.168.1.130:82/"
-          run = 'Old'
-          #return appURL
-          '''
-#class B:
-#danpheEMR
+import Library.GlobalShareVariables as GSV
+########
 def openBrowser():
           print(">>Open Browser: START")
           global danpheEMR
@@ -35,8 +10,7 @@ def openBrowser():
           danpheEMR = webdriver.Chrome(executable_path=ChromePath)
           danpheEMR.set_window_position(-2000, 0)
           danpheEMR.maximize_window()
-
-          danpheEMR.get(G.appURL)
+          danpheEMR.get(GSV.appURL)
           print("Open Browser: END<<")
           return danpheEMR
 def closeBrowser():

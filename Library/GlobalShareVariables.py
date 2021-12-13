@@ -1,17 +1,10 @@
-#import   Library.ApplicationConfiguration as AC
-from Library.ApplicationConfiguration import A
-
-#class G:
-#application = AC.applicationSelection()
 ########Defining Variables for LPH
-
 appName = input("Please enter project/application name:\n"
                 "SNCH\n"
                 "MMH\n"
                 "LPH\n"
                 "MPH\n")
 if appName == "LPH":
-
       appURL = "http://202.51.74.168:453/"
 ###Login Credentials:
       #admin user
