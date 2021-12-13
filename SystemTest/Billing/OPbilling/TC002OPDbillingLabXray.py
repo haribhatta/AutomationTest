@@ -4,18 +4,9 @@ The AIM of this test script is to verify below scenarios:
 1. Create an OPD invoice of - lab item and xray item.
 '''
 import Library.GlobalShareVariables as GSV
-print("hari1")
-#from Library.ApplicationConfiguration import B
 import Library.ApplicationConfiguration as AC
-print("hari2")
-#from Library.GlobalShareVariables import G
-
-print("hari3")
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
-print("hari4")
-#AC = B()
-#AC.A.applicationSelection(self)
 EMR = AC.openBrowser()
 #############
 # front desk user login
