@@ -87,6 +87,7 @@ if appName == "LPH":
 ###############################################################################
 ########Defining Variables for SNCH
 if appName == "SNCH":
+      appURL = "http://202.51.74.168:168/"
 ###Login Credentials:
       # admin user
       adminUserID = 'admin'
