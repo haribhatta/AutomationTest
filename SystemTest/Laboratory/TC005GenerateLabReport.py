@@ -29,17 +29,17 @@ radioTestUSG = GSV.USG
 AC.login(foUserId, foUserPwd)
 ############
 LB.counteractivation(EMR)
-hospitalNo = LA.patientquickentry(EMR, 0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
-print("hospitalNo", hospitalNo)
+HospitalNo = LA.patientquickentry(EMR, 0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
+print("hospitalNo", HospitalNo)
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
-LB.createLabInvoice(EMR, hospitalNo, labTestTFT, radioTestUSG)
+LB.createLabInvoice(EMR, HospitalNo, labTestTFT)
 #oblx.verifylabxrayinvoice()
 #############
 AC.logout()
 AC.login(labUserId, labUserPwd)
-LL.collectLabSample(EMR, hospitalNo, labTestTFT)
+LL.collectLabSample(EMR, HospitalNo, labTestTFT)
 LL.addLabResult(EMR)
-LL.verifyLabReport(EMR, hospitalNo)
-LL.printLabReport(EMR, hospitalNo, "2.23", "15.0", "4.05")
+LL.verifyLabReport(EMR, HospitalNo)
+LL.printLabReport(EMR, HospitalNo, "2.23", "15.0", "4.05")
 AC.logout()
 AC.closeBrowser()

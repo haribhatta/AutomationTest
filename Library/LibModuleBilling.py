@@ -159,15 +159,11 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
         # InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
         InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
         danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
-
         print("InvoiceNoTemp", InvoiceNo)
         InvoiceNo = InvoiceNo.partition("BL")[2]
         print("InvoiceNo", InvoiceNo)
-
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
-def createLabInvoice(danpheEMR, HospitalNo, labtest, imagingtest):
-    print("This is test")
-def multiplebillingclick(HospitalNo, labtest, imagingtest):
+def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
         print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
         print("Hospital Number:", HospitalNo)
         if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
@@ -212,7 +208,7 @@ def multiplebillingclick(HospitalNo, labtest, imagingtest):
             return InvoiceNo
 
         print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
-def verifymultipleclickbilling(InvoiceNo):
+def verifymultipleclickbilling(danpheEMR, InvoiceNo):
     print(">>START: verifymultipleclickbilling")
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         time.sleep(3)
@@ -238,8 +234,7 @@ def verifymultipleclickbilling(InvoiceNo):
         #element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
         time.sleep(2)
 
-
-def createLabInvoice(HospitalNo, labtest, imagingtest):
+def createLabInvoice(danpheEMR, HospitalNo, labtest):
     print(">>Create OPD Invoice: 1 Lab Items: START")
     print("Hospital Number:", HospitalNo)
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
@@ -276,7 +271,7 @@ def createLabInvoice(HospitalNo, labtest, imagingtest):
         print("InvoiceNoTemp", InvoiceNo)
         InvoiceNo = InvoiceNo.partition("BL")[2]
         print("InvoiceNo", InvoiceNo)
-    print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+    print("Create OPD Invoice: 1 Lab Items: END<<")
 
 def createERlabInvoice(danpheEMR, HospitalNo, labtest, labtype):
     print(">>Create ER LAB Invoice: START")

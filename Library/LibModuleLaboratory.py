@@ -13,7 +13,10 @@ def collectLabSample(danpheEMR, HospitalNo, testname):
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Laboratory").click()
       time.sleep(5)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'op-lab')]").click()
+      try:
+          danpheEMR.find_element_by_xpath("//i[contains(text(),'op-lab')]").click()
+      except:
+          print("No OP lab to select")
       time.sleep(5)
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
          danpheEMR.find_element_by_xpath("//a[contains(text(),' Sample Collection ')]").click()
