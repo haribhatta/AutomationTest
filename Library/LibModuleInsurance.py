@@ -9,6 +9,28 @@ danpheEMR = AC.danpheEMR
 AppName = AC.appName
 ########
 #Module:Incentive ******************
+
+def ExistingPatientNewVisit():
+    global NSHI
+    print("Start >> Existing Patient Registration")
+    danpheEMR.find_element_by_link_text("GovInsurance").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_id("allPatWithOutIns").click()
+    danpheEMR.find_element_by_id("allPatWithOutIns").send_keys(HospitalNo)
+    danpheEMR.find_element_by_id("allPatWithOutIns").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element_by_id("allPatWithOutIns").send_keys(Keys.TAB)
+    NSHI = str(random.randint(11111, 99999))
+    danpheEMR.find_element_by_id("Ins_NshiNumber").send_keys(NSHI)
+    danpheEMR.find_element_by_id("Ins_InsuranceBalance").send_keys(50000)
+    dropdown = danpheEMR.find_element_by_id("firstServicePoint")
+    dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
+    danpheEMR.find_element_by_id("firstServicePoint").click()
+    time.sleep(3)
+    dropdown = danpheEMR.find_element_by_id("IsFamilyHead")
+    dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
+    danpheEMR.find_element_by_id("IsFamilyHead").click()
+    danpheEMR.find_element_by_id("register").click()
 def insurancePatientRegistration():
       global NSHI
       print("Start >> Insurance Patient Registration")

@@ -26,7 +26,7 @@ def doRadioScan(danpheEMR, HospitalNo):
          time.sleep(3)
          danpheEMR.find_element_by_xpath("//a[contains(text(),'Add Report')]").click()
          time.sleep(3)
-         danpheEMR.find_element_by_xpath("//input[@value='Submit & Print']").click()
+         danpheEMR.find_element_by_xpath("//input[@value='Save']").click()
          time.sleep(5)
          danpheEMR.find_element_by_id("quickFilterInput").send_keys(Keys.ESCAPE)
    print("<<END: doRadioScan")

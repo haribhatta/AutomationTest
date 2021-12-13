@@ -94,6 +94,9 @@ if appName == "SNCH":
       #laboratory user
       labUserID = 'gayatri'
       labUserPwD = 'pass123'
+      # Radiology user
+      radioUserID = 'bharat'
+      radioUserPwD = 'pass123'
       #Inventory user
       storeUserID = 'admin'
       storeUserPwD = 'pass123'
