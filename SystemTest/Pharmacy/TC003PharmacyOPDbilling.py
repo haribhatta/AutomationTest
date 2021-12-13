@@ -22,7 +22,7 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 #Drug name for billing
-drugname = GSV.drug1BrandName
+drugname = GSV.drugSinexName
 genericname = GSV.drug1GenericName
 rate = GSV.drug1Rate
 quantity = 1
