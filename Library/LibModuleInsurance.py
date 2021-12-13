@@ -1,16 +1,16 @@
 import time
 import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
 import random
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+AppName = GSV.appName
 ########
 #Module:Incentive ******************
 
-def ExistingPatientNewVisit():
+def ExistingPatientNewVisit(danpheEMR):
     global NSHI
     print("Start >> Existing Patient Registration")
     danpheEMR.find_element_by_link_text("GovInsurance").click()
@@ -31,7 +31,7 @@ def ExistingPatientNewVisit():
     dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
     danpheEMR.find_element_by_id("IsFamilyHead").click()
     danpheEMR.find_element_by_id("register").click()
-def insurancePatientRegistration():
+def insurancePatientRegistration(danpheEMR):
       global NSHI
       print("Start >> Insurance Patient Registration")
       danpheEMR.find_element_by_link_text("GovInsurance").click()
@@ -57,7 +57,7 @@ def insurancePatientRegistration():
       dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
       danpheEMR.find_element_by_id("IsFamilyHead").click()
       danpheEMR.find_element_by_id("register").click()
-def insuranceNewVisit():
+def insuranceNewVisit(danpheEMR):
       global NSHI
       print(">> Start: Create insurance patient new visit")
       danpheEMR.find_element_by_link_text("GovInsurance").click()
@@ -72,7 +72,7 @@ def insuranceNewVisit():
       danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.RETURN)
       time.sleep(2)
       danpheEMR.find_element_by_id("btnPrintInvoice").click()
-def EmergencyRegistration():
+def EmergencyRegistration(danpheEMR):
        danpheEMR.find_element_by_link_text("Emergency").click()
        time.sleep(3)
        danpheEMR.find_element_by_xpath("//a[contains(text(),'New patient')]").click()
