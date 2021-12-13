@@ -48,6 +48,7 @@ if appName == "LPH":
       LabType = "ER"
 ###Pharmacy/Dispensary Items Name:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
+      drug1BrandRate = 25
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
       drug1Rate = 25
       drug2BrandName = "MACLAR 500MG TAB"
@@ -58,6 +59,8 @@ if appName == "LPH":
       drug4BrandRate = 6.49
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
+      drugSinexName = 'SINEX TAB'
+      drugSinexRate = 3
       Testdrug = "testdrugreport"
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
