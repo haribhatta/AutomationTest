@@ -25,6 +25,7 @@ def getPharmacyDashboard(danpheEMR):
       time.sleep(9)
       danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
       time.sleep(3)
+      '''
       TotalSale = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Total Sale')]/following-sibling::b").text
       print("Total Sale", TotalSale)
       TotalSale = TotalSale.partition(": ")[2]
@@ -70,6 +71,13 @@ def getPharmacyDashboard(danpheEMR):
       UnpaidInvoices = UnpaidInvoices.partition("Rs.")[2]
       UnpaidInvoices = float(UnpaidInvoices)
       print("UnpaidInvoices", UnpaidInvoices)
+      '''
+      user = GSV.pharmacyUserName
+      time.sleep(9)
+      userCollection = danpheEMR.find_element_by_xpath("//h4[contains(text(),'"+user+"')]/following-sibling::b").text
+      print("User Collection:", userCollection)
+      userCollection = userCollection.partition(": ")[2]
+      print("User Collection:", userCollection)
       print("<<END: getPharmacyDashboard")
 def preSystemPharmacyDashboard():
       global xTotalSale
