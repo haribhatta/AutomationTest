@@ -11,7 +11,7 @@ from selenium.webdriver.common.keys import Keys
 AppName = GSV.appName
 
 #Module:ADT -----------------------------
-def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department):
+def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department, wardName, bedFeature):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
             time.sleep(3)
@@ -89,7 +89,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
          # danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys()
 
          Ward = Select(danpheEMR.find_element_by_id('WardId'))
-         Ward.select_by_visible_text('ICU')
+         Ward.select_by_visible_text(wardName)
          # # select by value and index
          # select.select_by_value('1')
          time.sleep(2)

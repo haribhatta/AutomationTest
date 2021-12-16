@@ -45,9 +45,9 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     danpheEMR.find_element_by_xpath("//input[@formcontrolname= 'Quantity']").clear()
     danpheEMR.find_element_by_xpath("//input[@formcontrolname= 'Quantity']").send_keys(qty)
     time.sleep(3)
-    if paymentmode == 'Credit':
+    if paymentmode == 'credit':
         paymentoptions = Select(danpheEMR.find_element_by_xpath("//select"))
-        paymentoptions.select_by_visible_text("credit")
+        paymentoptions.select_by_visible_text('credit')
         time.sleep(2)
         danpheEMR.find_element_by_xpath("//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element_by_xpath("//button[@title='ALT + P']").click()
@@ -93,6 +93,7 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
         danpheEMR.find_element_by_link_text("Return From Customer").click()
         time.sleep(3)
         danpheEMR.find_element_by_id("invoiceId").send_keys(pInvoiceNo)
+        time.sleep(3)
         print("pInvoiceNo is getting returned", pInvoiceNo)
         time.sleep(2)
         danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.TAB)
@@ -107,11 +108,11 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
         danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger']").click()
         time.sleep(5)
     print("<<Return Pharmacy Invoice: END")
-def verifyReturnPharmacyInvoice(danpheEMR, HospitalNo, paymentmode, returnRemark):
+def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark):
     print("<<Verify Return Pharmacy Invoice: START")
     if AppName == 'SNCH':
         danpheEMR.find_element_by_link_text("Return Sale List").click()
-        danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+        danpheEMR.find_element_by_id("quickFilterInput").send_keys(InvoiceNo)
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Print").click()
         time.sleep(3)

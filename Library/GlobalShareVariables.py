@@ -147,6 +147,7 @@ if appName == "SNCH":
       stationaryItem1 = "PENCIL"
       File = "FILE"
 ###Sub Stores Name:
+      SubStoreNameAdmin = "General"
       SubStore1 = "General"
       SubStore2 = "PostOps"
 ###Doctors/Departments List
@@ -210,11 +211,13 @@ if appName == "MPH":
       erTest = "TC, DC"
       LabType = "ER"
 ###Pharmacy/Dispensary Items Name:
-      drug1BrandName = 'NIKO DROP 15ML BOTTLE'
-      drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
-      drug1Rate = 25
+      drug1BrandName = "ASTHALIN ROTACAPS "
+      drug1GenericName = 'SALBUTAMOL-100MCG'
+      drug1Rate = 69.18
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
+
+
       drug2Rate = 563.5
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
@@ -225,14 +228,15 @@ if appName == "MPH":
       drugSinexName = 'SINEX'
       drugSinexRate = 3
 ###Inventory/Store Items Name:
-      Inventory1 = "General Inventory"
-      SubStoreName1 = "ADMINISTRATION"
+      GeneralInventory = "General Inventory"
+      SubStoreNameAdmin = "Administration Sub Store"
       Dispensary1 = "MainDispensary"
       dispensaryName = "Main Dispensary"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      stationaryItem1 = "DOTPEN"
+      #stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Pen Holder"
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"

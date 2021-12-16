@@ -116,7 +116,7 @@ def followUpAppointment(danpheEMR):
                 print("test1")
                 time.sleep(3)
              except:
-                #danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
+                danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
                 print("test2")
                 pass
          time.sleep(3)

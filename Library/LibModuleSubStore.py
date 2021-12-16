@@ -1,15 +1,12 @@
-
 import time
+import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
-
+AppName = GSV.appName
 #Module: SubStore Test Actions
 
-
-def selectSubStore(substore='Administration' or 'Emergency Store'):
+def selectSubStore(danpheEMR, substore='Administration' or 'Emergency Store'):
       print("Start>> selectSubStore")
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
@@ -23,14 +20,12 @@ def selectSubStore(substore='Administration' or 'Emergency Store'):
             danpheEMR.find_element_by_xpath("//i[contains(text(),'Emergency Store')]").click()
       print("End<<selectSubStore")
 
-
-
-def createSubStoreRequisition(InventoryName, ItemName, Qty):
+def createSubStoreRequisition(danpheEMR, subStoreName, InventoryName, ItemName, Qty):
       print("Start>> createSubStoreRequisition")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'"+subStoreName+"')]").click()
       time.sleep(5)
       danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
       time.sleep(5)
@@ -52,8 +47,7 @@ def createSubStoreRequisition(InventoryName, ItemName, Qty):
       print("End<<createSubStoreRequisition")
       return ssReqNo
 
-
-def verifySubStoreRequisition(ssReqNo, InventoryName, ItemName, Qty):
+def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
       print("Start>> verifySubStoreRequisition")
       #time.sleep(6)
       #danpheEMR.find_element_by_link_text("SubStore").click()
@@ -69,9 +63,8 @@ def verifySubStoreRequisition(ssReqNo, InventoryName, ItemName, Qty):
       #ssReqNo1 =
       print("<<END: verifySubStoreRequisition")
 
-
-def receiveInventoryDispatch(ssReqNo):
-      print("Start>> createSubStoreRequisition")
+def receiveInventoryDispatch(danpheEMR, ssReqNo):
+      print("Start>> receiveInventoryDispatch")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
@@ -88,9 +81,9 @@ def receiveInventoryDispatch(ssReqNo):
       time.sleep(5)
       #danpheEMR.find_element_by_id("backToList").click()
       danpheEMR.find_element_by_xpath("(//button[@class='btn btn-primary btn-sm'])[1]").click()
+      print("END: receiveInventoryDispatch:")
 
-
-def verifyReceivedInventoryDispatch(ssReqNo):
+def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
       print(">>START: verifyReceivedInventoryDispatch")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
@@ -112,7 +105,7 @@ def verifyReceivedInventoryDispatch(ssReqNo):
       danpheEMR.find_element_by_id("backToList").click()
       print("<<END: verifyReceivedInventoryDispatch")
 
-def countStockSub(itemname):
+def countStockSub(danpheEMR, itemname):
       print(">>START: Counting Sub-store's Stock of :", itemname)
       time.sleep(5)
       danpheEMR.find_element_by_link_text("SubStore").click()
@@ -123,14 +116,13 @@ def countStockSub(itemname):
       time.sleep(2)
       stock = danpheEMR.find_element_by_css_selector("span > div").text
       print("Stock of item is :", stock)
-      return stock
       print(">>END: End of Sub-store stock count")
+      return stock
 
 def prestockcountSub(stock):
       preStock = int(stock)
       print("previous Stock of Item is :", preStock)
       return preStock
-
 
 def verifyStockSub(qty, preStock, stock):
     time.sleep(2)
@@ -139,7 +131,6 @@ def verifyStockSub(qty, preStock, stock):
     print("Substore's Item Stock is :", int(stock))
     assert int(qty) == int(stock) - int(preStock)
     print("End of Verifying Stock")
-
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))

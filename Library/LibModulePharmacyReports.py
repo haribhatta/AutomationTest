@@ -11,15 +11,16 @@ AppName = GSV.appName
 # Module:Pharmacy_Reports: User Collection Report*********
 def getPharmacyDashboard(danpheEMR):
       print(">>START: getPharmacyDashboard")
-      global TotalSale
+      #global TotalSale
       # global TotalReturn
-      global CreditReturn
-      global CashReturn
-      global NetCashCollection
-      global DepositAmount
-      global DepositReturned
-      global ProvisionalItems
-      global UnpaidInvoices
+      #global CreditReturn
+      #global CashReturn
+      #global NetCashCollection
+      #global DepositAmount
+      #global DepositReturned
+      #global ProvisionalItems
+      #global UnpaidInvoices
+      global userCollection
       time.sleep(5)
       danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(9)
@@ -80,15 +81,18 @@ def getPharmacyDashboard(danpheEMR):
       print("User Collection:", userCollection)
       print("<<END: getPharmacyDashboard")
 def preSystemPharmacyDashboard():
-      global xTotalSale
+      #global xTotalSale
       # global xTotalReturn
-      global xCashReturn
-      global xCreditReturn
-      global xNetCashCollection
-      global xDepositAmount
-      global xDepositReturned
-      global xProvisionalItems
-      global xUnpaidInvoices
+      #global xCashReturn
+      #global xCreditReturn
+      #global xNetCashCollection
+      #global xDepositAmount
+      #global xDepositReturned
+      #global xProvisionalItems
+      #global xUnpaidInvoices
+      global preUserCollection
+      preUserCollection = userCollection
+      '''
       xTotalSale = TotalSale
       xCashReturn = CashReturn
       xCreditReturn = CreditReturn
@@ -97,10 +101,12 @@ def preSystemPharmacyDashboard():
       xDepositReturned = DepositReturned
       xProvisionalItems = ProvisionalItems
       xUnpaidInvoices = UnpaidInvoices
+      '''
 def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, depositreturn, provisional,
                             provisionacancel):
       print(">>START: verifyPharmacyDashboard:")
-      if AppName =='SNCH':
+      if AppName =='SNCH' or AppName == 'MPH':
+            '''
             temp = round(xTotalSale + cash + credit)
             print("temp", temp)
             print("temp", float(temp))
@@ -131,6 +137,19 @@ def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, dep
             print("c", c)
             print("UnpaidInvoices", UnpaidInvoices)
             assert float(round(UnpaidInvoices)) == c
+            '''
+            x = float(preUserCollection) + float(cash) + float(deposit) - float(cashreturn) - float(depositreturn)
+            x = str(x)
+            print("X:", x)
+            #x = x.replace(" ", "")
+            x = x.partition(".")[0]
+            print("X final:", x)
+            print("userCollection:", userCollection)
+            y = str(userCollection)
+            #y = y.replace(" ", "")
+            y = y.partition(".")[0]
+            print("y final:", y)
+            assert y == x
       print("<<END: verifyPharmacyDashboard")
 def getPharmacyCashCollectionSummary(danpheEMR, user):
       print(">>START: getPharmacyCashCollectionSummary")

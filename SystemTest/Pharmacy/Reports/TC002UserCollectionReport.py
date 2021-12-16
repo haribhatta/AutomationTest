@@ -14,6 +14,7 @@ To test Pharmacy> User Collection report with below check points:
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleAppointment as LA
+import Library.LibModuleBilling as LB
 import Library.LibModulePharmacy as LP
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacyReports as LPR
@@ -37,6 +38,7 @@ remark = "This is test return."
 EMR = AC.openBrowser()
 # To get random patient information
 AC.login(userid=billingId, pwd=billingPwd)
+LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 AC.logout()
 # Start of User collection report
