@@ -26,6 +26,7 @@ def files(file, file1, rows, *args):
             except:
                 sc.writeData(file1, 'test', r, 2, 'Failed')
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
+                pass
 
 smokesanityresult = "SmokeSanity_ExecutionResult_"
 scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
