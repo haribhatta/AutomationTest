@@ -11,20 +11,21 @@ def files(file, file1, rows, *args):
 
     for r in range(2, rows + 1):
         Testcase = str(sc.readData(file1, 'test', r, 1))
+        print("Testcase:", Testcase)
         Status = sc.readData(file1, 'test', r, 2)
+        print("Status:", Status)
         RunNoR = (sc.readData(file1, 'test', r, 4))
-        if Status != 'Passed':
-            print(" Status is Norun or Failed")
+        #if Status != "Passed" or Status != "Failed":
+        if Status == "UnderAnalysis" or Status == "NoRun":
+            print("Executing NoRun and UnderAnalysis test cases.")
             base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
-            exec(open(Pythonfilepath).read())
-
             try:
                 exec(open(Pythonfilepath).read())
                 sc.writeData(file1, 'test', r, 2, 'Passed')
             except:
-                sc.writeData(file1, 'test', r, 2, 'Failed')
+                sc.writeData(file1, 'test', r, 2, 'UnderAnalysis')
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
                 pass
 

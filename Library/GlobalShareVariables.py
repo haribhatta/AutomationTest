@@ -162,7 +162,8 @@ if appName == "SNCH":
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
-      appURL = "http://202.51.74.168:129/"
+      #appURL = "http://192.168.137.1:82/"
+      appURL = "http://localhost:5000/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
@@ -216,8 +217,6 @@ if appName == "MPH":
       drug1Rate = 69.18
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
-
-
       drug2Rate = 563.5
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
