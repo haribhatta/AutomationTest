@@ -14,9 +14,9 @@ AppName = GSV.appName
 def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department, wardName, bedFeature):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-            time.sleep(3)
+            time.sleep(5)
             danpheEMR.find_element_by_link_text("ADT").click()
-            time.sleep(3)
+            time.sleep(5)
             danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
             time.sleep(3)
             danpheEMR.find_element_by_link_text("Admit").click()
@@ -54,8 +54,9 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             danpheEMR.find_element_by_id("BedId").click()
             time.sleep(2)
             danpheEMR.find_element_by_id("SaveAdmission").click()
-            time.sleep(2)
-            danpheEMR.find_element_by_id("btnAdtSticker").click()
+            time.sleep(5)
+            danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE) # EMR-4693
+            #danpheEMR.find_element_by_id("btnAdtSticker").click()
             # danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
             print("Patient successfully admitted.")
             time.sleep(2)

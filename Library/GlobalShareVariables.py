@@ -30,7 +30,7 @@ if appName == "LPH":
       nurseUserPwD = 'pass123'
       #store user
       storeUserID = 'shreeram'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'pass1234'
 ###Billing Items Name:
       opdRate = 30
       deposit = 100
@@ -51,9 +51,9 @@ if appName == "LPH":
       drug1BrandRate = 25
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
       drug1Rate = 25
-      drug2BrandName = "MACLAR 500MG TAB"
-      drug2GenericName = "CLARITHROMYCIN"
-      drug2Rate = 563.5
+      drug2BrandName = "NIKO DROP 15ML BOTTLE"
+      drug2GenericName = "PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE"
+      drug2Rate = 25
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
       drug4BrandRate = 6.49
@@ -62,6 +62,10 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
+###ADT:
+      generalWard = "Pediatric"
+      bedFeature = "General Bed"
+
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -154,6 +158,9 @@ if appName == "SNCH":
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
+      ###Wards Name:
+      generalWard = "General Ward "
+      bedFeature = " BED CHARGE General Ward "
 ###Suppliers Name list
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
@@ -162,8 +169,8 @@ if appName == "SNCH":
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
-      #appURL = "http://192.168.137.1:82/"
-      appURL = "http://localhost:5000/"
+      appURL = "http://192.168.137.1:82/"
+      #appURL = "http://localhost:5000/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
