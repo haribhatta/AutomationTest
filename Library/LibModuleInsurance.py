@@ -10,7 +10,7 @@ AppName = GSV.appName
 ########
 #Module:Incentive ******************
 
-def ExistingPatientNewVisit(danpheEMR):
+def ExistingPatientNewVisit(danpheEMR, HospitalNo, department, labtest):
     global NSHI
     print("Start >> Existing Patient Registration")
     danpheEMR.find_element_by_link_text("GovInsurance").click()
@@ -23,14 +23,25 @@ def ExistingPatientNewVisit(danpheEMR):
     NSHI = str(random.randint(11111, 99999))
     danpheEMR.find_element_by_id("Ins_NshiNumber").send_keys(NSHI)
     danpheEMR.find_element_by_id("Ins_InsuranceBalance").send_keys(50000)
-    dropdown = danpheEMR.find_element_by_id("firstServicePoint")
-    dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
-    danpheEMR.find_element_by_id("firstServicePoint").click()
+    dropdown = Select(danpheEMR.find_element_by_id("firstServicePoint"))
+    dropdown.select_by_visible_text("Yes")
+    dropdown = Select(danpheEMR.find_element_by_id("IsFamilyHead"))
+    dropdown.select_by_visible_text("Yes")
+    danpheEMR.find_element_by_id("update").click()
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(NSHI)
     time.sleep(3)
-    dropdown = danpheEMR.find_element_by_id("IsFamilyHead")
-    dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
-    danpheEMR.find_element_by_id("IsFamilyHead").click()
-    danpheEMR.find_element_by_id("register").click()
+    danpheEMR.find_element_by_link_text("New Visit").click()
+    danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+    danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element_by_id("btnPrintInvoice").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_id("btnPrintInsSticker").send_keys(Keys.ESCAPE)
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Insurance Billing").click()
+    danpheEMR.
+
+
 def insurancePatientRegistration(danpheEMR):
       global NSHI
       print("Start >> Insurance Patient Registration")
@@ -57,6 +68,8 @@ def insurancePatientRegistration(danpheEMR):
       dropdown.find_element_by_xpath("//option[. = 'Yes']").click()
       danpheEMR.find_element_by_id("IsFamilyHead").click()
       danpheEMR.find_element_by_id("register").click()
+
+
 def insuranceNewVisit(danpheEMR):
       global NSHI
       print(">> Start: Create insurance patient new visit")
