@@ -25,12 +25,13 @@ if appName == "LPH":
       #pharmacy user
       pharmacyUserID = 'debika'
       pharmacyUserPwD = 'pass123'
+      pharmacyUserName = 'Ms. Debika Gaire'
       #nurse user
       nurseUserID = 'admin'
       nurseUserPwD = 'pass123'
       #store user
       storeUserID = 'shreeram'
-      storeUserPwD = 'pass1234'
+      storeUserPwD = 'pass123'
 ###Billing Items Name:
       opdRate = 30
       deposit = 100
@@ -74,8 +75,10 @@ if appName == "LPH":
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      stationaryItem1 = "DOTPEN"
+      #stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "USG PAPER"
 ###Sub Stores Name:
+      subStoreAccount = "ACCOUNT"
       SubStore1 = "General"
       SubStore2 = "PostOps"
 ###Doctors/Departments Name:
@@ -151,6 +154,7 @@ if appName == "SNCH":
       stationaryItem1 = "PENCIL"
       File = "FILE"
 ###Sub Stores Name:
+      subStoreAccount = "ACCOUNT"
       SubStoreNameAdmin = "General"
       SubStore1 = "General"
       SubStore2 = "PostOps"

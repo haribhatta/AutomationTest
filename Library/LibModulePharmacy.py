@@ -11,7 +11,7 @@ AppName = GSV.appName
 def addPharmacyItem(danpheEMR, genericName):  # incomplete
     print(">>START: addPharmacyItem")
     global DrugName
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element_by_link_text("Store").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Setting").click()
     time.sleep(3)
