@@ -168,7 +168,7 @@ def verifyInventoryDirectDispatch(danpheEMR, RequisitionNo, itemname, qty, store
 
 def dispatchRequisition(danpheEMR, ssReqNo, GeneralInventory, itemname, qty):
     print(">>START: DispatchRequisition")
-    if AppName == 'SNCH' or AppName == 'MPH':
+    if AppName == 'SNCH' or AppName == 'MPH' or AppName == 'LPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)

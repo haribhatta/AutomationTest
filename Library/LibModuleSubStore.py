@@ -41,8 +41,16 @@ def createSubStoreRequisition(danpheEMR, subStoreName, InventoryName, ItemName, 
       time.sleep(3)
       danpheEMR.find_element_by_id("save_requisition").click()
       time.sleep(5)
-      ssReqNo = danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
-      print("Sub Store Requisition No", ssReqNo)
+      global ssReqNo
+      if AppName == "SNCH" or AppName == "MPH":
+            ssReqNo = int(danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text)
+            print("Sub Store Requisition No:ssReqNo", ssReqNo)
+      elif AppName == "LPH":
+            magNumber = danpheEMR.find_element_by_xpath("//div[contains(text(),'माग नं:')]").text
+            print("magNumber:", magNumber)
+            magNumber = magNumber.partition("नं: ")[2]
+            print("magNumber:", magNumber)
+            ssReqNo = int(magNumber)
       danpheEMR.find_element_by_id("backToList").click()
       print("End<<createSubStoreRequisition")
       return ssReqNo
@@ -57,6 +65,10 @@ def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
       #danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
       time.sleep(5)
       ReqNo = danpheEMR.find_element_by_xpath("(//div[@col-id='RequisitionNo'])[2]").text
+      print("ReqNo:", ReqNo)
+      print("ssReqNo:", ssReqNo)
+      ReqNo = int(ReqNo)
+      ssReqNo = int(ssReqNo)
       assert ReqNo == ssReqNo
       #danpheEMR.find_element_by_xpath("//label[2]/span").click()
       #time.sleep(3)
@@ -100,7 +112,15 @@ def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
       time.sleep(3)
       danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
       time.sleep(3)
-      ssReqNo1= danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
+      if AppName == 'LPH':
+            ssReqNo1 = danpheEMR.find_element_by_xpath("//div[contains(text(),'माग नं:')]").text
+            print("ssReqNo1:", ssReqNo1)
+            ssReqNo1 = int(ssReqNo1.partition("नं: ")[2])
+            print("ssReqNo1:", ssReqNo1)
+      else:
+            ssReqNo1= int(danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text)
+      print("ssReqNo1:", ssReqNo1)
+      print("ssReqNo:", ssReqNo)
       assert ssReqNo1 == ssReqNo
       danpheEMR.find_element_by_id("backToList").click()
       print("<<END: verifyReceivedInventoryDispatch")
