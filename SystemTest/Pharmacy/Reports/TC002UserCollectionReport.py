@@ -28,6 +28,7 @@ billingId = GSV.foUserID
 billingPwd = GSV.foUserPwD
 
 drugname = GSV.drug1BrandName
+print("drugname", drugname)
 qty = 1
 paymode = 'Cash'
 rate = GSV.drug1Rate
@@ -47,10 +48,10 @@ LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 ######## Create anonymous pharmacy sale
 LP.createPharmacyInvoiceAnonymous(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode=paymode)
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserId)
-LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
+LPR.preSystemPharmacyUserCollectionReport()
+#LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
 ######## Create pharmacy cash sale
 pInvoiceNo = LP.createPharmacyInvoiceTC(EMR, HospitalNo, drugname, qty, paymode)
-LPR.preSystemPharmacyUserCollectionReport()
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserId)
 LPR.verifySystemPharmacyUserCollectionReport(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, creditsettlement=0,
                                              discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)

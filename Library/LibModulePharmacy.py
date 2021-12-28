@@ -301,8 +301,9 @@ def createPharmacyInvoiceTC(danpheEMR, HospitalNo, drugname, qty, paymentmode):
     pInvoiceNo = danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
     print("pInvoiceNo", pInvoiceNo)
     danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
-    epInvoiceNo = pInvoiceNo.partition("PH")[2]
+    pInvoiceNo = pInvoiceNo.partition("PH")[2]
     print("Create Pharmacy OPD Invoice: END<<")
+    return pInvoiceNo
 def createPharmacyInvoiceAnonymous(danpheEMR, drugname, qty, paymentmode):
     print(">>Create Pharmacy OPD Invoice: START")
     global pInvoiceNo

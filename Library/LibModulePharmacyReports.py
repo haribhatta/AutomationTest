@@ -22,7 +22,10 @@ def getPharmacyDashboard(danpheEMR):
       #global UnpaidInvoices
       global userCollection
       time.sleep(5)
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      else:
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(9)
       danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
       time.sleep(3)
@@ -74,6 +77,7 @@ def getPharmacyDashboard(danpheEMR):
       print("UnpaidInvoices", UnpaidInvoices)
       '''
       user = GSV.pharmacyUserName
+
       time.sleep(9)
       userCollection = danpheEMR.find_element_by_xpath("//h4[contains(text(),'"+user+"')]/following-sibling::b").text
       print("User Collection:", userCollection)
@@ -238,7 +242,10 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
       global sysPaddcollectionfromreceivables
       global sysPlesscashdiscount
       global sysPtotalcollection
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      if AppName == 'LPH':
+            danpheEMR.find_element_by_link_text("Store").click()
+      else:
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
       danpheEMR.find_element_by_link_text("Report").click()
       time.sleep(4)
@@ -251,35 +258,37 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
       time.sleep(9)
       sysPnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
-      print(sysPnetcashcollection)
-      sysPnetcashcollection = sysPnetcashcollection.partition("( ")[2]
+      print("sysPnetcashcollection:", sysPnetcashcollection)
+      sysPnetcashcollection = sysPnetcashcollection.partition("(")[2]
       sysPnetcashcollection = sysPnetcashcollection.partition(")")[0]
+      sysPnetcashcollection = float(sysPnetcashcollection)
+      print("sysPnetcashcollection the final:", sysPnetcashcollection)
       sysPgrosstotalsales = danpheEMR.find_element_by_xpath("//div/div/table/tbody/tr/td[2]").text
-      print(sysPgrosstotalsales)
+      print("sysPgrosstotalsales:", sysPgrosstotalsales)
       sysPdiscount = danpheEMR.find_element_by_xpath("//tr[2]/td[2]").text
-      print(sysPdiscount)
+      print("sysPdiscount:", sysPdiscount)
       sysPreturnsubtotal = danpheEMR.find_element_by_xpath("//tr[3]/td[2]").text
-      print(sysPreturnsubtotal)
+      print("sysPreturnsubtotal:", sysPreturnsubtotal)
       sysPreturndiscount = danpheEMR.find_element_by_xpath("//tr[4]/td[2]").text
-      print(sysPreturndiscount)
+      print("sysPreturndiscount:", sysPreturndiscount)
       sysPreturnamount = danpheEMR.find_element_by_xpath("//tr[5]/td[2]").text
-      print(sysPreturnamount)
+      print("sysPreturnamount:", sysPreturnamount)
       sysPnetsales = danpheEMR.find_element_by_xpath("//tr[6]/td[2]").text
-      print(sysPnetsales)
+      print("sysPnetsales:", sysPnetsales)
       sysPlesscreditamount = danpheEMR.find_element_by_xpath("//tr[7]/td[2]").text
-      print(sysPlesscreditamount)
+      print("sysPlesscreditamount:", sysPlesscreditamount)
       sysPadddepositreceived = danpheEMR.find_element_by_xpath("//tr[8]/td[2]").text
-      print(sysPadddepositreceived)
+      print("sysPadddepositreceived:", sysPadddepositreceived)
       sysPdepositdeducted = danpheEMR.find_element_by_xpath("//tr[9]/td[2]").text
-      print(sysPdepositdeducted)
+      print("sysPdepositdeducted:", sysPdepositdeducted)
       sysPlessdepositrefund = danpheEMR.find_element_by_xpath("//tr[10]/td[2]").text
-      print(sysPlessdepositrefund)
+      print("sysPlessdepositrefund:", sysPlessdepositrefund)
       sysPaddcollectionfromreceivables = danpheEMR.find_element_by_xpath("//tr[11]/td[2]").text
-      print(sysPaddcollectionfromreceivables)
+      print("sysPaddcollectionfromreceivables:", sysPaddcollectionfromreceivables)
       sysPlesscashdiscount = danpheEMR.find_element_by_xpath("//tr[12]/td[2]").text
-      print(sysPlesscashdiscount)
+      print("sysPlesscashdiscount:", sysPlesscashdiscount)
       sysPtotalcollection = danpheEMR.find_element_by_xpath("//tr[13]/td[2]").text
-      print(sysPtotalcollection)
+      print("sysPtotalcollection:", sysPtotalcollection)
       print("<<END: getPharmacyUserCollectionReport")
 def preSystemPharmacyUserCollectionReport():
       print(">START: preSystemPharmacyUserCollectionReport")
@@ -297,6 +306,7 @@ def preSystemPharmacyUserCollectionReport():
       global presysPaddcollectionfromreceivables
       global presysPlesscashdiscount
       global presysPtotalcollection
+      print("sysPnetcashcollection: Hari", sysPnetcashcollection)
       presysPnetcashcollection = float(sysPnetcashcollection)
       presysPgrosstotalsales = float(sysPgrosstotalsales)
       presysPdiscount = float(sysPdiscount)
