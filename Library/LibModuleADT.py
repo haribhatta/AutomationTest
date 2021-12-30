@@ -55,7 +55,10 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             time.sleep(2)
             danpheEMR.find_element_by_id("SaveAdmission").click()
             time.sleep(5)
-            danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE) # EMR-4693
+            if AppName == "MPH":
+                danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
+            else:
+                 danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE) # EMR-4693
             #danpheEMR.find_element_by_id("btnAdtSticker").click()
             # danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
             print("Patient successfully admitted.")
