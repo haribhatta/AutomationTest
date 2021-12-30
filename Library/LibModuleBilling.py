@@ -53,6 +53,8 @@ def returnBillingInvoice(danpheEMR, InvoiceNo, returnmsg):
         danpheEMR.find_element_by_css_selector(".fa-search").click()
         time.sleep(9)
         danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
+        if AppName == "MPH":
+            danpheEMR.find_element_by_id("txtRetQty_1").send_keys(1) #This is for MPH registration charge workaround
         danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
         danpheEMR.find_element_by_id("btnSubmit").click()
         time.sleep(3)
