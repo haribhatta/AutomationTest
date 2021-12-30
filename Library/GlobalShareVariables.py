@@ -101,6 +101,7 @@ if appName == "SNCH":
       #pharmacy user
       pharmacyUserID = 'shivraj'
       pharmacyUserPwD = 'pass123'
+      pharmacyUserName = 'Shiv  Raj  Sharma'
       #laboratory user
       labUserID = 'gayatri'
       labUserPwD = 'pass123'
@@ -133,7 +134,7 @@ if appName == "SNCH":
       dispensaryName = "MainDispensary"
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
-      drug1Rate = 1.15
+      drug1Rate = 3.00
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
@@ -146,6 +147,7 @@ if appName == "SNCH":
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
 ###Inventory/Store Items Name:
+      Inventory1 = "General Inventory"
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
       A4Paper = 'A4 PAPER'
