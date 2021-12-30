@@ -55,12 +55,16 @@ def addLabResult(danpheEMR):
          danpheEMR.find_element_by_id("btnUpdateSignatories").click()
          time.sleep(2)
 def verifyLabReport(danpheEMR, HospitalNo):
-      danpheEMR.find_element_by_link_text("PendingReports").click()
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(2)
-      danpheEMR.find_element_by_link_text("View Details").click()
-      time.sleep(3)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Verify ')]").click()
+      print("START>> verifyLabReport")
+      if AppName == "MPH":
+          print("Verification not required in MPH")
+      else:
+          danpheEMR.find_element_by_link_text("PendingReports").click()
+          danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+          time.sleep(2)
+          danpheEMR.find_element_by_link_text("View Details").click()
+          time.sleep(3)
+          danpheEMR.find_element_by_xpath("//button[contains(.,'Verify ')]").click()
 def printLabReport(danpheEMR, HospitalNo, t3, t4, tsh):
       danpheEMR.find_element_by_link_text("Laboratory").click()
       time.sleep(5)
