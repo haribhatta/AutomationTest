@@ -205,7 +205,7 @@ if appName == "MPH":
       storeUserID = 'radha'
       storeUserPwD = 'pass123'
 ###Billing Items Name:
-      opdRate = 660
+      opdRate = 735 # MPH include registration charge as well
       deposit = 1000
       CBC = "COMPLETE BLOOD COUNT-CBC"
       CBCRate = 1100
