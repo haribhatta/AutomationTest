@@ -47,6 +47,7 @@ if appName == "LPH":
       btctRate = 100
       erTest = "TC"
       LabType = "ER"
+      seniorCitizenDiscountPct = 50
 ###Pharmacy/Dispensary Items Name:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1BrandRate = 25
@@ -130,6 +131,7 @@ if appName == "SNCH":
       USG = "USG ABDOMIN AND PELVIS"
       usgRate = 1000
       admitRate = 1500
+      seniorCitizenDiscountPct = 10
 ###Pharmacy/Dispensary Items Name:
       dispensaryName = "MainDispensary"
       drug1BrandName = "SINEX TAB"
