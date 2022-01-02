@@ -10,7 +10,7 @@ AppName = GSV.appName
 ########
 #Module:Incentive ******************
 
-def ExistingPatientNewVisit(danpheEMR, HospitalNo, department, labtest):
+def ExistingPatientNewVisit(danpheEMR):
     global NSHI
     print("Start >> Existing Patient Registration")
     danpheEMR.find_element_by_link_text("GovInsurance").click()
