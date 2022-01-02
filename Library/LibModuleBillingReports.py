@@ -10,9 +10,9 @@ def getBillingDashboard(danpheEMR):
     print(">>START: getBillingDashboard")
     global sysgrosstotal
     global syssubtotal
-    global sysdiscountamount
-    global sysreturnamount
-    global systotalamount
+    global actualDiscountAmount
+    global actualReturnedAmount
+    global actualTotalAmount
     global sysnetcashcollection
     global sysprovisionalitems
     global sysunpaidcreditinvoices
@@ -29,27 +29,29 @@ def getBillingDashboard(danpheEMR):
         syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
         print("System subTotal-1:", syssubtotal)
         syssubtotal = syssubtotal.partition("\nii")[0]
-        sysdiscountamount = sysgrosstotal.partition("ii. Discount Amount : ")[2]
-        print(sysdiscountamount)
-        sysdiscountamount = sysdiscountamount.partition(".")[0]
-        sysdiscountamount = sysdiscountamount.replace(',', '')
-        print("System discountAmount:", sysdiscountamount)
+        actualDiscountAmount = sysgrosstotal.partition("ii. Discount Amount : ")[2]
+        print("actualDiscount:", actualDiscountAmount)
+        #actualDiscountAmount = actualDiscountAmount.partition(".")[0]
+        actualDiscountAmount = actualDiscountAmount.replace(',', '')
+        actualDiscountAmount = float(actualDiscountAmount)
+        print("System actualDiscountAmount:", actualDiscountAmount)
 
-        sysreturnamount = danpheEMR.find_element_by_css_selector("#totalsales > div:nth-child(4)").text
-        print("sysreturnamount:", sysreturnamount)
-        print("sysreturnamount:", sysreturnamount)
-        sysreturnamount = sysreturnamount.partition(" : ")[2]
+        actualReturnedAmount = danpheEMR.find_element_by_css_selector("#totalsales > div:nth-child(4)").text
+        print("actualReturnedAmount:", actualReturnedAmount)
+        actualReturnedAmount = actualReturnedAmount.partition(" : ")[2]
         # sysreturnamount = sysreturnamount.partition(".")[0]
         # sysreturnamount = sysreturnamount.replace(',', '')
-        print("System returnAmount:", sysreturnamount)
+        actualReturnedAmount = float(actualReturnedAmount)
+        print("System actualReturnedAmount:", actualReturnedAmount)
 
-        systotalamount = danpheEMR.find_element_by_xpath("//div[@id='totalsales']/div[5]/b").text
-        print(systotalamount)
-        systotalamount = systotalamount.partition("Rs. ")[2]
+        actualTotalAmount = danpheEMR.find_element_by_xpath("//div[@id='totalsales']/div[5]/b").text
+        print("actualTotalAmount:", actualTotalAmount)
+        actualTotalAmount = actualTotalAmount.partition("Rs. ")[2]
         # systotalamount = systotalamount.partition(".")[0]
-        print("System totalAmount:", systotalamount)
+        print("System actualTotalAmount:", actualTotalAmount)
+        actualTotalAmount = float(actualTotalAmount)
         # systotalamount = systotalamount.replace(',', '')
-        print("System totalAmount:", systotalamount)
+        #print("System totalAmount:", systotalamount)
 
         sysnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
         sysnetcashcollection = sysnetcashcollection.partition("(")[2]
@@ -85,11 +87,11 @@ def preSystemDataBillingDashboard():
     presyssubtotal = float(syssubtotal)
     presyssubtotal = int(syssubtotal)
     print("presyssubtotal", presyssubtotal)
-    presysdiscountamount = float(sysdiscountamount)
+    presysdiscountamount = actualDiscountAmount
     print("presysdiscountamount", presysdiscountamount)
-    presysreturnamount = float(sysreturnamount)
+    presysreturnamount = actualReturnedAmount
     print("presysreturnamount", presysreturnamount)
-    presystotalamount = float(systotalamount)
+    presystotalamount = actualTotalAmount
     print("presystotalamount", presystotalamount)
     presysnetcashcollection = float(sysnetcashcollection)
     print("presysnetcashcollection", presysnetcashcollection)
@@ -125,7 +127,9 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         print("expectedsubtotal", expectedsubtotal)
         print("syssubtotal", syssubtotal)
         assert float(syssubtotal) == expectedsubtotal
-        assert float(systotalamount) == presystotalamount + cash
+        #assert float(systotalamount) == presystotalamount + cash
+        expectedTotalAmount = presystotalamount + cash
+        assert actualTotalAmount == expectedTotalAmount
         assert float(sysnetcashcollection) == presysnetcashcollection + cash
 
     # 2. Return Cash Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
@@ -136,33 +140,50 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         assert int(syssubtotal) == int(presyssubtotal)  # LPH-864: Prio-1 bug in LPH_V1.9.0
         tempresult = presysreturnamount + cashReturn
         print("tempresult", tempresult)
-        print("sysreturnamount", sysreturnamount)
+        print("actualReturnedAmount", actualReturnedAmount)
         print("presysreturnamount", presysreturnamount)
-        assert float(sysreturnamount) == presysreturnamount + cashReturn
-        assert float(systotalamount) == presystotalamount - cashReturn
+        assert actualReturnedAmount == presysreturnamount + cashReturn
+        #assert float(systotalamount) == presystotalamount - cashReturn
+        expectedTotalAmount = presystotalamount - cashReturn
+        assert actualTotalAmount == expectedTotalAmount
         assert float(sysnetcashcollection) == presysnetcashcollection - cashReturn
 
     # 3. Cash Discount Invoice (Check Billing Dashboard for discount in OPD cash sale invoice).
     elif cash > 0 and cashReturn == 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
         time.sleep(3)
         assert int(syssubtotal) == presyssubtotal + cash
-        calctemp = presysdiscountamount + (discountpc * cash / 100)
-        print("calctemp", calctemp)
-        print("sysdiscountamount", sysdiscountamount)
-        assert float(sysdiscountamount) == calctemp
-        assert float(sysreturnamount) == presysreturnamount
-        assert float(systotalamount) == presystotalamount + cash - (discountpc * cash / 100)
+        expectedDiscount = presysdiscountamount + (discountpc * cash / 100)
+        print("expectedDiscount", expectedDiscount)
+        print("actualDiscountAmount", actualDiscountAmount)
+        assert expectedDiscount == actualDiscountAmount
+        assert actualReturnedAmount == presysreturnamount
+        #assert float(systotalamount) == presystotalamount + cash - (discountpc * cash / 100)
+        expectedTotalAmount = presystotalamount + cash - (discountpc * cash / 100)
+        assert actualTotalAmount == expectedTotalAmount
         assert float(sysnetcashcollection) == presysnetcashcollection + cash - (discountpc * cash / 100)
 
     # 4. Return Cash Discount Invoice (Check Billing Dashboard for return of discounted OPD cash sale invoice).
     elif cash == 0 and cashReturn > 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
         assert int(syssubtotal) == presyssubtotal
-        assert int(sysdiscountamount) == presysdiscountamount
-        print("sysreturnamount", sysreturnamount)
+        #assert int(sysdiscountamount) == presysdiscountamount
+        discountReturn = cashReturn * (discountpc / 100) # discount return has no effect on 'Discount Amount'
+        print("cashReturn:", cashReturn)
+        print("discountpc:", discountpc)
+        print("discountReturn:", discountReturn)
+        expectedDiscountAmount = presysdiscountamount #+ discountReturn
+        print("expectedDiscountAmount:", expectedDiscountAmount)
+        print("actualDiscountAmount:", actualDiscountAmount)
+        assert actualDiscountAmount == expectedDiscountAmount
+        print("actualReturnedAmount", actualReturnedAmount)
         print("presysreturnamount", presysreturnamount)
         print("cashReturn*discountpc", cashReturn * discountpc)
-        assert int(sysreturnamount) == presysreturnamount + (cashReturn * (100 - discountpc) / 100)
-        assert int(systotalamount) == presystotalamount - (cashReturn * (100 - discountpc) / 100)
+        #assert int(sysreturnamount) == presysreturnamount + (cashReturn * (100 - discountpc) / 100)
+        expectedReturnedAmount = presysreturnamount + (cashReturn * (discountpc) / 100)
+        print("expectedReturnedAmount:", expectedReturnedAmount)
+        assert actualReturnedAmount == expectedReturnedAmount
+        #assert int(systotalamount) == presystotalamount - (cashReturn * (100 - discountpc) / 100)
+        expectedTotalAmount = presystotalamount - (cashReturn * (100 - discountpc) / 100)
+        assert actualTotalAmount == expectedTotalAmount
         assert int(sysnetcashcollection) == presysnetcashcollection - (cashReturn * (100 - discountpc) / 100)
 
     # 5. Credit Invoice
@@ -180,8 +201,11 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
             assert int(syssubtotal) == presyssubtotal + credit
             assert int(sysdiscountamount) == presysdiscountamount
-            assert int(sysreturnamount) == presysreturnamount
-            assert int(systotalamount) == presystotalamount + credit
+            #assert int(sysreturnamount) == presysreturnamount
+            assert actualReturnedAmount == presysreturnamount
+            #assert int(systotalamount) == presystotalamount + credit
+            expectedTotalAmount = presystotalamount + credit
+            assert actualTotalAmount == expectedTotalAmount
             print("presysnetcashcollection", presysnetcashcollection)
             print("sysnetcashcollection", sysnetcashcollection)
             assert int(sysnetcashcollection) == presysnetcashcollection
@@ -193,11 +217,15 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         print(syssubtotal)
         print(presyssubtotal)
         assert int(syssubtotal) == presyssubtotal
-        print("sysreturnamount", sysreturnamount)
+        print("actualReturnedAmount", actualReturnedAmount)
         print("presysreturnamount", presysreturnamount)
         print("creditReturn", creditReturn)
         assert int(sysreturnamount) == presysreturnamount + creditReturn
-        assert int(systotalamount) == presystotalamount - creditReturn
+        expectedReturnedAmount = presysreturnamount + creditReturn
+        assert actualReturnedAmount == expectedReturnedAmount
+        #assert int(systotalamount) == presystotalamount - creditReturn
+        expectedTotalAmount = presystotalamount - creditReturn
+        assert actualTotalAmount == expectedTotalAmount
         assert int(sysnetcashcollection) == presysnetcashcollection
 
     # 7. Credit Payment/Settlement

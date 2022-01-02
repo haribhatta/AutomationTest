@@ -61,8 +61,8 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
       phoneNo = random.randint(9111111111, 9999999999)
       danpheEMR.find_element_by_id("txtPhone").send_keys(phoneNo)
       if discountpc > 0:
-         danpheEMR.find_element_by_css_selector(".comm-list").click()
-         dropdown = danpheEMR.find_element_by_css_selector(".comm-list")
+         #danpheEMR.find_element_by_css_selector(".comm-list").click()
+         #dropdown = danpheEMR.find_element_by_css_selector(".comm-list")
          time.sleep(3)
          if AppName == "SNCH":
             dropdown.find_element_by_xpath("//option[. = 'Social Service Unit']").click()
@@ -76,7 +76,7 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
             dropdown.find_element_by_xpath("//option[. = ' Senior Citizen (10%)']").click()
             time.sleep(3)
             danpheEMR.find_element_by_css_selector(".membership-list").click()
-         else:
+         elif AppName == "LPH":
             dropdown.find_element_by_xpath("//option[. = 'SOCIAL SERVICE UNIT']").click()
             time.sleep(7)
             danpheEMR.find_element_by_css_selector(".comm-list").click()
@@ -88,11 +88,17 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
             dropdown.find_element_by_xpath("//option[. = ' Child Under Nutrition (50%)']").click()
             time.sleep(3)
             danpheEMR.find_element_by_css_selector(".membership-list").click()
+         elif AppName == "MPH":
+            dropdown.find_element_by_xpath("//option[. = ' Staff Family (30%)']").click()
+            time.sleep(7)
+            #danpheEMR.find_element_by_css_selector(".comm-list").click()
+            time.sleep(5)
       if paymentmode == 'CREDIT':
          paymentoptions = Select(danpheEMR.find_element_by_xpath("//select[@id='pay_mode']"))
          paymentoptions.select_by_visible_text(paymentmode)
          danpheEMR.find_element_by_xpath("//div[2]/div[2]/input").send_keys("Credit in request of chairman")
-      danpheEMR.find_element_by_css_selector(".btn-success").click()
+      #danpheEMR.find_element_by_css_selector(".btn-success").click()
+      danpheEMR.find_element_by_id("btnPrintInvoice").click() # due to MPH
       time.sleep(9)
       InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
       print("InvoiceNoTemp", InvoiceNo)
