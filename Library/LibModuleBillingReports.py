@@ -778,19 +778,20 @@ def verifyDepartmentSummary(cash, cashreturn, credit, creditreturn, discount, pr
       assert int(syscreditamount) == presyscreditamount + credit - creditreturn
 #Module:Billing_Report: User Collection Report***********
 def getUserCollectionReport(danpheEMR, user):
-       global sysnetcashcollection
-       global sysgrosstotalsales
-       global sysdiscount
-       global sysreturnsubtotal
-       global sysreturndiscount
-       global sysreturnamount
-       global sysnetsales
-       global syslesscreditamount
-       global sysadddepositreceived
-       global syslessdepositrefund
-       global sysaddcollectionfromreceivables
-       global syslesscashdiscount
-       global systotalcollection
+       global actualNetCashCollection
+       global actualGrossTotalSales
+       global actualDiscount
+       global actualReturnSubTotal
+       global actualReturnDiscount
+       global actualReturnAmount
+       global actualNetSales
+       global actualLessCreditAmount
+       global actualAddDepositReceived
+       global actualLessDepositRefund
+       global actualAddCollectionFromReceivables
+       global actualLessCashDiscount
+       global actualOtherPaymentsGiven
+       global actualTotalCollection
        danpheEMR.find_element_by_link_text("Reports").click()
        time.sleep(3)
        danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -803,35 +804,65 @@ def getUserCollectionReport(danpheEMR, user):
        time.sleep(2)
        danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
        time.sleep(9)
-       sysnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
-       print(sysnetcashcollection)
-       sysnetcashcollection = sysnetcashcollection.partition("( ")[2]
-       sysnetcashcollection = sysnetcashcollection.partition(")")[0]
-       print(sysnetcashcollection)
-       sysgrosstotalsales = danpheEMR.find_element_by_xpath("//div/div/table/tbody/tr/td[2]").text
-       print(sysgrosstotalsales)
-       sysdiscount = danpheEMR.find_element_by_xpath("//tr[2]/td[2]").text
-       print(sysdiscount)
-       sysreturnsubtotal = danpheEMR.find_element_by_xpath("//tr[3]/td[2]").text
-       print(sysreturnsubtotal)
-       sysreturndiscount = danpheEMR.find_element_by_xpath("//tr[4]/td[2]").text
-       print(sysreturndiscount)
-       sysreturnamount = danpheEMR.find_element_by_xpath("//tr[5]/td[2]").text
-       print(sysreturnamount)
-       sysnetsales = danpheEMR.find_element_by_xpath("//tr[6]/td[2]").text
-       print(sysnetsales)
-       syslesscreditamount = danpheEMR.find_element_by_xpath("//tr[7]/td[2]").text
-       print(syslesscreditamount)
-       sysadddepositreceived = danpheEMR.find_element_by_xpath("//tr[8]/td[2]").text
-       print(sysadddepositreceived)
-       syslessdepositrefund = danpheEMR.find_element_by_xpath("//tr[9]/td[2]").text
-       print(syslessdepositrefund)
-       sysaddcollectionfromreceivables = danpheEMR.find_element_by_xpath("//tr[10]/td[2]").text
-       print(sysaddcollectionfromreceivables)
-       syslesscashdiscount = danpheEMR.find_element_by_xpath("//tr[11]/td[2]").text
-       print(syslesscashdiscount)
-       systotalcollection = danpheEMR.find_element_by_xpath("//tr[12]/td[2]").text
-       print(systotalcollection)
+       #actualNetCashCollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
+       actualNetCashCollection = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Net Cash Collection')]").text
+       print("actualNetCashCollection:", actualNetCashCollection)
+       actualNetCashCollection = actualNetCashCollection.partition("( ")[2]
+       actualNetCashCollection = actualNetCashCollection.partition(")")[0]
+       actualNetCashCollection = float(actualNetCashCollection)
+       print("actualNetCashCollection:", actualNetCashCollection)
+       actualGrossTotalSales = danpheEMR.find_element_by_xpath("//td[contains(text(),'Gross Total Sales')]//following-sibling::td").text
+       print("actualGrossTotalSales:", actualGrossTotalSales)
+       actualGrossTotalSales = float(actualGrossTotalSales)
+       print("actualGrossTotalSales:", actualGrossTotalSales)
+       actualDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Discount')])[1]//following-sibling::td").text
+       print("actualDiscount:", actualDiscount)
+       actualDiscount = float(actualDiscount)
+       print("actualDiscount:", actualDiscount)
+       actualReturnSubTotal = danpheEMR.find_element_by_xpath("//td[contains(text(),'Return SubTotal')]//following-sibling::td").text
+       print("actualReturnSubTotal:", actualReturnSubTotal)
+       actualReturnSubTotal = float(actualReturnSubTotal)
+       print("actualReturnSubTotal:", actualReturnSubTotal)
+       actualReturnDiscount = danpheEMR.find_element_by_xpath("//td[contains(text(),'Return Discount')]//following-sibling::td").text
+       print("actualReturnDiscount:", actualReturnDiscount)
+       actualReturnDiscount = float(actualReturnDiscount)
+       print("actualReturnDiscount:", actualReturnDiscount)
+       actualReturnAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),'Return Amount')]//following-sibling::td").text
+       print("actualReturnAmount:", actualReturnAmount)
+       actualReturnAmount = float(actualReturnAmount)
+       print("actualReturnAmount:", actualReturnAmount)
+       actualNetSales = danpheEMR.find_element_by_xpath("//td[contains(text(),'Net Sales')]//following-sibling::td").text
+       print("actualNetSales:", actualNetSales)
+       actualNetSales = float(actualNetSales)
+       print("actualNetSales:", actualNetSales)
+       actualLessCreditAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),'Less Credit Amount')]//following-sibling::td").text
+       print("actualLessCreditAmount:", actualLessCreditAmount)
+       actualLessCreditAmount = float(actualLessCreditAmount)
+       print("actualLessCreditAmount:", actualLessCreditAmount)
+       actualAddDepositReceived = danpheEMR.find_element_by_xpath("//td[contains(text(),'Add Deposit Received')]//following-sibling::td").text
+       print("actualAddDepositReceived:", actualAddDepositReceived)
+       actualAddDepositReceived = float(actualAddDepositReceived)
+       print("actualAddDepositReceived:", actualAddDepositReceived)
+       actualLessDepositRefund = danpheEMR.find_element_by_xpath("//td[contains(text(),'Less Deposit Refund')]//following-sibling::td").text
+       print("actualLessDepositRefund:", actualLessDepositRefund)
+       actualLessDepositRefund = float(actualLessDepositRefund)
+       print("actualLessDepositRefund:", actualLessDepositRefund)
+       actualAddCollectionFromReceivables = danpheEMR.find_element_by_xpath("//td[contains(text(),'Add Collection From Receivables')]//following-sibling::td").text
+       print("actualAddCollectionFromReceivables:", actualAddCollectionFromReceivables)
+       actualAddCollectionFromReceivables = float(actualAddCollectionFromReceivables)
+       print("actualAddCollectionFromReceivables:", actualAddCollectionFromReceivables)
+       actualLessCashDiscount = danpheEMR.find_element_by_xpath("//td[contains(text(),'Less Cash Discount')]//following-sibling::td").text
+       print("actualLessCashDiscount:", actualLessCashDiscount)
+       actualLessCashDiscount = float(actualLessCashDiscount)
+       print("actualLessCashDiscount:", actualLessCashDiscount)
+       actualOtherPaymentsGiven = danpheEMR.find_element_by_xpath("//td[contains(text(),'Other Payments Given')]//following-sibling::td").text
+       print("actualOtherPaymentsGiven:", actualOtherPaymentsGiven)
+       actualOtherPaymentsGiven = float(actualOtherPaymentsGiven)
+       print("actualOtherPaymentsGiven:", actualOtherPaymentsGiven)
+       actualTotalCollection = danpheEMR.find_element_by_xpath("//td[contains(text(),' Total Collection ')]//following-sibling::td").text
+       print("actualTotalCollection:", actualTotalCollection)
+       actualTotalCollection = float(actualTotalCollection)
+       print("actualTotalCollection:", actualTotalCollection)
 def preSystemUserCollectionReport():
       global presysnetcashcollection
       global presysgrosstotalsales
@@ -845,38 +876,66 @@ def preSystemUserCollectionReport():
       global presyslessdepositrefund
       global presysaddcollectionfromreceivables
       global presyslesscashdiscount
+      global preOtherPaymentsGiven
       global presystotalcollection
-      presysnetcashcollection = int(sysnetcashcollection)
-      presysgrosstotalsales = int(sysgrosstotalsales)
-      presysdiscount = int(sysdiscount)
-      presysreturnsubtotal = int(sysreturnsubtotal)
-      presysreturndiscount = int(sysreturndiscount)
-      presysreturnamount = int(sysreturnamount)
-      presysnetsales = int(sysnetsales)
-      presyslesscreditamount = int(syslesscreditamount)
-      presysadddepositreceived = int(sysadddepositreceived)
-      presyslessdepositrefund = int(syslessdepositrefund)
-      presysaddcollectionfromreceivables = int(sysaddcollectionfromreceivables)
-      presyslesscashdiscount = int(syslesscashdiscount)
-      presystotalcollection = int(systotalcollection)
+      presysnetcashcollection = actualNetCashCollection
+      presysgrosstotalsales = actualGrossTotalSales
+      presysdiscount = actualDiscount
+      presysreturnsubtotal = actualReturnSubTotal
+      presysreturndiscount = actualReturnDiscount
+      presysreturnamount = actualReturnAmount
+      presysnetsales = actualNetSales
+      presyslesscreditamount = actualLessCreditAmount
+      presysadddepositreceived = actualAddDepositReceived
+      presyslessdepositrefund = actualLessDepositRefund
+      presysaddcollectionfromreceivables = actualAddCollectionFromReceivables
+      presyslesscashdiscount = actualLessCashDiscount
+      preOtherPaymentsGiven = actualOtherPaymentsGiven
+      presystotalcollection = actualTotalCollection
 def verifyUserCollectionReport(cash, cashreturn, credit, creditreturn, discount, deposit, depositreturn, creditsettlement, provisional, provisionalcancel):
-      x = presysnetcashcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
-      print("X:", x)
-      y = int(sysnetcashcollection)
-      print("Y:", y)
-      assert int(sysnetcashcollection) == presysnetcashcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
-      assert int(sysgrosstotalsales) == presysgrosstotalsales + cash + credit
-      assert int(sysdiscount) == presysdiscount + discount
-      assert int(sysreturnsubtotal) == presysreturnsubtotal + cashreturn + creditreturn
-      assert int(sysreturndiscount) == presysreturndiscount + discount
-      assert int(sysreturnamount) == presysreturnamount + cashreturn + creditreturn - discount
-      assert int(sysnetsales) == presysnetsales + cash - cashreturn + credit - creditreturn
-      assert int(syslesscreditamount) == presyslesscreditamount + credit - creditreturn
-      assert int(sysadddepositreceived) == presysadddepositreceived + deposit
-      assert int(syslessdepositrefund) == presyslessdepositrefund + depositreturn
-      assert int(sysaddcollectionfromreceivables) == presysaddcollectionfromreceivables + creditsettlement
-      assert int(syslesscashdiscount) == presyslesscashdiscount + discount
-      assert int(systotalcollection) == presystotalcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
+      expectedNetCashCollection = presysnetcashcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
+      print("expectedNetCashCollection:", expectedNetCashCollection)
+      assert expectedNetCashCollection == actualNetCashCollection
+      expectedGrossTotalSales = presysgrosstotalsales + cash + credit
+      print("expectedGrossTotalSales:", expectedGrossTotalSales)
+      assert expectedGrossTotalSales == actualGrossTotalSales
+      expectedDiscount = presysdiscount + discount
+      print("expectedDiscount:", expectedDiscount)
+      assert actualDiscount == expectedDiscount
+      expectedReturnSubTotal = presysreturnsubtotal + cashreturn + creditreturn
+      print("expectedReturnSubTotal:", expectedReturnSubTotal)
+      assert expectedReturnSubTotal == actualReturnSubTotal
+      expectedReturnDiscount = presysreturndiscount + discount
+      print("expectedReturnDiscount:", expectedReturnDiscount)
+      assert expectedReturnDiscount == actualReturnDiscount
+      expectedReturnAmount = presysreturnamount + cashreturn + creditreturn - discount
+      print("expectedReturnAmount:", expectedReturnAmount)
+      assert expectedReturnAmount == actualReturnAmount
+      expectedNetSales = presysnetsales + cash - cashreturn + credit - creditreturn
+      print("expectedNetSales:", expectedNetSales)
+      assert expectedNetSales == actualNetSales
+      expectedLessCreditAmount = presyslesscreditamount + credit - creditreturn
+      print("expectedLessCreditAmount:", expectedLessCreditAmount)
+      assert expectedLessCreditAmount == actualLessCreditAmount
+      expectedAddDepositReceived = presysadddepositreceived + deposit
+      print("expectedAddDepositReceived:", expectedAddDepositReceived)
+      assert expectedAddDepositReceived == actualAddDepositReceived
+      expectedLessDepositRefund = presyslessdepositrefund + depositreturn
+      print("expectedLessDepositRefund:", expectedLessDepositRefund)
+      assert expectedLessDepositRefund == actualLessDepositRefund
+      expectedAddCollectionFromReceivables = presysaddcollectionfromreceivables + creditsettlement
+      print("expectedAddCollectionFromReceivables:", expectedAddCollectionFromReceivables)
+      assert expectedAddCollectionFromReceivables == actualAddCollectionFromReceivables
+      expectedLessCashDiscount = presyslesscashdiscount + discount
+      print("expectedLessCashDiscount:", expectedLessCashDiscount)
+      assert expectedLessCashDiscount == actualLessCashDiscount
+      expectedOtherPayments = preOtherPaymentsGiven
+      print("expectedOtherPayments:", expectedOtherPayments)
+      assert expectedOtherPayments == actualOtherPaymentsGiven
+      expectedTotalCollection = presystotalcollection + cash - cashreturn + deposit - depositreturn - creditsettlement
+      print("expectedTotalCollection:", expectedTotalCollection)
+      print("actualTotalCollection:", actualTotalCollection)
+      assert actualTotalCollection == expectedTotalCollection
 #Module:Admission_Report: Total Admitted Patients Report**********************
 def verifyTotalAdmittedPatients(danpheEMR, HospitalNo):
       danpheEMR.find_element_by_link_text("Reports").click()
