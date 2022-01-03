@@ -11,12 +11,12 @@ from selenium.webdriver.common.keys import Keys
 AppName = GSV.appName
 
 #Module:ADT -----------------------------
-def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department, wardName, bedFeature):
+def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-            time.sleep(5)
+            time.sleep(3)
             danpheEMR.find_element_by_link_text("ADT").click()
-            time.sleep(5)
+            time.sleep(3)
             danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
             time.sleep(3)
             danpheEMR.find_element_by_link_text("Admit").click()
@@ -54,12 +54,8 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             danpheEMR.find_element_by_id("BedId").click()
             time.sleep(2)
             danpheEMR.find_element_by_id("SaveAdmission").click()
-            time.sleep(5)
-            if AppName == "MPH":
-                danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
-            else:
-                 danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE) # EMR-4693
-            #danpheEMR.find_element_by_id("btnAdtSticker").click()
+            time.sleep(2)
+            danpheEMR.find_element_by_id("btnAdtSticker").click()
             # danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
             print("Patient successfully admitted.")
             time.sleep(2)
@@ -93,7 +89,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
          # danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys()
 
          Ward = Select(danpheEMR.find_element_by_id('WardId'))
-         Ward.select_by_visible_text(wardName)
+         Ward.select_by_visible_text('ICU')
          # # select by value and index
          # select.select_by_value('1')
          time.sleep(2)

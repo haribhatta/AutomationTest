@@ -4,10 +4,6 @@ The objective of this test case is to test below scenarios:
 2. Create an appointment for old patient.
 '''
 ########
-#import sys
-#print(sys.path)
-#sys.path.append("D:\QA\Automation\AutomationTest\Library")
-from selenium import webdriver
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB

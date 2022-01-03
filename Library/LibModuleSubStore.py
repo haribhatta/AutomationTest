@@ -1,12 +1,15 @@
+
 import time
-import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
-AppName = GSV.appName
+danpheEMR = AC.danpheEMR
+AppName = AC.appName
+
 #Module: SubStore Test Actions
 
-def selectSubStore(danpheEMR, substore='Administration' or 'Emergency Store'):
+
+def selectSubStore(substore='Administration' or 'Emergency Store'):
       print("Start>> selectSubStore")
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
@@ -20,12 +23,14 @@ def selectSubStore(danpheEMR, substore='Administration' or 'Emergency Store'):
             danpheEMR.find_element_by_xpath("//i[contains(text(),'Emergency Store')]").click()
       print("End<<selectSubStore")
 
-def createSubStoreRequisition(danpheEMR, subStoreName, InventoryName, ItemName, Qty):
+
+
+def createSubStoreRequisition(InventoryName, ItemName, Qty):
       print("Start>> createSubStoreRequisition")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'"+subStoreName+"')]").click()
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
       time.sleep(5)
       danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
       time.sleep(5)
@@ -41,21 +46,14 @@ def createSubStoreRequisition(danpheEMR, subStoreName, InventoryName, ItemName, 
       time.sleep(3)
       danpheEMR.find_element_by_id("save_requisition").click()
       time.sleep(5)
-      global ssReqNo
-      if AppName == "SNCH" or AppName == "MPH":
-            ssReqNo = int(danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text)
-            print("Sub Store Requisition No:ssReqNo", ssReqNo)
-      elif AppName == "LPH":
-            magNumber = danpheEMR.find_element_by_xpath("//div[contains(text(),'माग नं:')]").text
-            print("magNumber:", magNumber)
-            magNumber = magNumber.partition("नं: ")[2]
-            print("magNumber:", magNumber)
-            ssReqNo = int(magNumber)
+      ssReqNo = danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
+      print("Sub Store Requisition No", ssReqNo)
       danpheEMR.find_element_by_id("backToList").click()
       print("End<<createSubStoreRequisition")
       return ssReqNo
 
-def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
+
+def verifySubStoreRequisition(ssReqNo, InventoryName, ItemName, Qty):
       print("Start>> verifySubStoreRequisition")
       #time.sleep(6)
       #danpheEMR.find_element_by_link_text("SubStore").click()
@@ -65,18 +63,15 @@ def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
       #danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory Requisition')]").click()
       time.sleep(5)
       ReqNo = danpheEMR.find_element_by_xpath("(//div[@col-id='RequisitionNo'])[2]").text
-      print("ReqNo:", ReqNo)
-      print("ssReqNo:", ssReqNo)
-      ReqNo = int(ReqNo)
-      ssReqNo = int(ssReqNo)
       assert ReqNo == ssReqNo
       #danpheEMR.find_element_by_xpath("//label[2]/span").click()
       #time.sleep(3)
       #ssReqNo1 =
       print("<<END: verifySubStoreRequisition")
 
-def receiveInventoryDispatch(danpheEMR, ssReqNo):
-      print("Start>> receiveInventoryDispatch")
+
+def receiveInventoryDispatch(ssReqNo):
+      print("Start>> createSubStoreRequisition")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
@@ -93,9 +88,9 @@ def receiveInventoryDispatch(danpheEMR, ssReqNo):
       time.sleep(5)
       #danpheEMR.find_element_by_id("backToList").click()
       danpheEMR.find_element_by_xpath("(//button[@class='btn btn-primary btn-sm'])[1]").click()
-      print("END: receiveInventoryDispatch:")
 
-def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
+
+def verifyReceivedInventoryDispatch(ssReqNo):
       print(">>START: verifyReceivedInventoryDispatch")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
@@ -112,20 +107,12 @@ def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
       time.sleep(3)
       danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
       time.sleep(3)
-      if AppName == 'LPH':
-            ssReqNo1 = danpheEMR.find_element_by_xpath("//div[contains(text(),'माग नं:')]").text
-            print("ssReqNo1:", ssReqNo1)
-            ssReqNo1 = int(ssReqNo1.partition("नं: ")[2])
-            print("ssReqNo1:", ssReqNo1)
-      else:
-            ssReqNo1= int(danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text)
-      print("ssReqNo1:", ssReqNo1)
-      print("ssReqNo:", ssReqNo)
+      ssReqNo1= danpheEMR.find_element_by_xpath("//p[contains(text(),'Requisition No:')]/child::b").text
       assert ssReqNo1 == ssReqNo
       danpheEMR.find_element_by_id("backToList").click()
       print("<<END: verifyReceivedInventoryDispatch")
 
-def countStockSub(danpheEMR, itemname):
+def countStockSub(itemname):
       print(">>START: Counting Sub-store's Stock of :", itemname)
       time.sleep(5)
       danpheEMR.find_element_by_link_text("SubStore").click()
@@ -136,13 +123,14 @@ def countStockSub(danpheEMR, itemname):
       time.sleep(2)
       stock = danpheEMR.find_element_by_css_selector("span > div").text
       print("Stock of item is :", stock)
-      print(">>END: End of Sub-store stock count")
       return stock
+      print(">>END: End of Sub-store stock count")
 
 def prestockcountSub(stock):
       preStock = int(stock)
       print("previous Stock of Item is :", preStock)
       return preStock
+
 
 def verifyStockSub(qty, preStock, stock):
     time.sleep(2)
@@ -151,6 +139,7 @@ def verifyStockSub(qty, preStock, stock):
     print("Substore's Item Stock is :", int(stock))
     assert int(qty) == int(stock) - int(preStock)
     print("End of Verifying Stock")
+
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))

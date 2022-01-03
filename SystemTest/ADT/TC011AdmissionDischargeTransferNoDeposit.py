@@ -1,9 +1,8 @@
 #-------------Objective of this script----------
 # To verify admission, transfer and discharge of newly registered patient. Patient has to get refund money from deposit left.
 
-
-import Library.GlobalShareVariables as GSV
-import Library.ApplicationConfiguration as AC
+from TestActionLibrary import A
+from GlobalShareVariables import GSV
 
 # front desk user login
 foUserId = GSV.foUserID

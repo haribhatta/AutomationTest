@@ -25,7 +25,6 @@ if appName == "LPH":
       #pharmacy user
       pharmacyUserID = 'debika'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'Ms. Debika Gaire'
       #nurse user
       nurseUserID = 'admin'
       nurseUserPwD = 'pass123'
@@ -47,15 +46,14 @@ if appName == "LPH":
       btctRate = 100
       erTest = "TC"
       LabType = "ER"
-      Membership = 50
 ###Pharmacy/Dispensary Items Name:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1BrandRate = 25
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
       drug1Rate = 25
-      drug2BrandName = "NIKO DROP 15ML BOTTLE"
-      drug2GenericName = "PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE"
-      drug2Rate = 25
+      drug2BrandName = "MACLAR 500MG TAB"
+      drug2GenericName = "CLARITHROMYCIN"
+      drug2Rate = 563.5
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
       drug4BrandRate = 6.49
@@ -64,10 +62,6 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
-###ADT:
-      generalWard = "Pediatric"
-      bedFeature = "General Bed"
-
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -76,10 +70,8 @@ if appName == "LPH":
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      #stationaryItem1 = "DOTPEN"
-      stationaryItem1 = "USG PAPER"
+      stationaryItem1 = "DOTPEN"
 ###Sub Stores Name:
-      subStoreAccount = "ACCOUNT"
       SubStore1 = "General"
       SubStore2 = "PostOps"
 ###Doctors/Departments Name:
@@ -102,7 +94,6 @@ if appName == "SNCH":
       #pharmacy user
       pharmacyUserID = 'shivraj'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'Shiv  Raj  Sharma'
       #laboratory user
       labUserID = 'gayatri'
       labUserPwD = 'pass123'
@@ -131,12 +122,11 @@ if appName == "SNCH":
       USG = "USG ABDOMIN AND PELVIS"
       usgRate = 1000
       admitRate = 1500
-      Membership = 10
 ###Pharmacy/Dispensary Items Name:
       dispensaryName = "MainDispensary"
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
-      drug1Rate = 3.00
+      drug1Rate = 1.15
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
@@ -149,7 +139,6 @@ if appName == "SNCH":
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
 ###Inventory/Store Items Name:
-      Inventory1 = "General Inventory"
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
       A4Paper = 'A4 PAPER'
@@ -158,17 +147,12 @@ if appName == "SNCH":
       stationaryItem1 = "PENCIL"
       File = "FILE"
 ###Sub Stores Name:
-      subStoreAccount = "ACCOUNT"
-      SubStoreNameAdmin = "General"
       SubStore1 = "General"
       SubStore2 = "PostOps"
 ###Doctors/Departments List
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
-      ###Wards Name:
-      generalWard = "General Ward "
-      bedFeature = " BED CHARGE General Ward "
 ###Suppliers Name list
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
@@ -177,9 +161,7 @@ if appName == "SNCH":
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
-      #appURL = "http://192.168.137.1:82/"
-      appURL = "http://202.51.74.168:129/"
-      #appURL = "http://localhost:5000/"
+      appURL = "http://192.168.137.1:82/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
@@ -199,7 +181,6 @@ if appName == "MPH":
       #pharmacy user
       pharmacyUserID = 'kishor'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'Mr. Kishor Ranabhat'
       #nurse user
       nurseUserID = 'admin'
       nurseUserPwD = 'pass123'
@@ -207,7 +188,7 @@ if appName == "MPH":
       storeUserID = 'radha'
       storeUserPwD = 'pass123'
 ###Billing Items Name:
-      opdRate = 735 # MPH include registration charge as well
+      opdRate = 660
       deposit = 1000
       CBC = "COMPLETE BLOOD COUNT-CBC"
       CBCRate = 1100
@@ -227,11 +208,10 @@ if appName == "MPH":
       btctRate = 200
       erTest = "TC, DC"
       LabType = "ER"
-      Membership = 30 #Staff Family (30%)
 ###Pharmacy/Dispensary Items Name:
-      drug1BrandName = "ASTHALIN ROTACAPS "
-      drug1GenericName = 'SALBUTAMOL-100MCG'
-      drug1Rate = 69.18
+      drug1BrandName = 'NIKO DROP 15ML BOTTLE'
+      drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
+      drug1Rate = 25
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5
@@ -244,15 +224,14 @@ if appName == "MPH":
       drugSinexName = 'SINEX'
       drugSinexRate = 3
 ###Inventory/Store Items Name:
-      GeneralInventory = "General Inventory"
-      SubStoreNameAdmin = "Administration Sub Store"
+      Inventory1 = "General Inventory"
+      SubStoreName1 = "ADMINISTRATION"
       Dispensary1 = "MainDispensary"
       dispensaryName = "Main Dispensary"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      #stationaryItem1 = "DOTPEN"
-      stationaryItem1 = "Pen Holder"
+      stationaryItem1 = "DOTPEN"
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"

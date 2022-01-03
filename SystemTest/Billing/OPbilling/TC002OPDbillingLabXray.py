@@ -8,6 +8,7 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 EMR = AC.openBrowser()
+
 #############
 # front desk user login
 foUserId = GSV.foUserID

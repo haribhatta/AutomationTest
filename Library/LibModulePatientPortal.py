@@ -1,13 +1,13 @@
 import time
 import random
-import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.support.select import Select
 
-AppName = GSV.appName
+danpheEMR = AC.danpheEMR
+AppName = AC.appName
 
 #Module:Patient_Registration -----------------
-def patientRegistration(danpheEMR):
+def patientRegistration():
       global contactno
       global HospitalNo
       global FullName
@@ -41,7 +41,7 @@ def patientRegistration(danpheEMR):
       print(HospitalNo)
 
 
-def patientRegistrationMultipleClick(danpheEMR):
+def patientRegistrationMultipleClick():
     global contactno
     global HospitalNo
     global FullName
@@ -66,7 +66,7 @@ def patientRegistrationMultipleClick(danpheEMR):
     danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
     print("Contact No", contactno)
     return contactno
-def verifyMultipleRegistration(danpheEMR, ContactNo):
+def verifyMultipleRegistration(ContactNo):
     print(">>START: verifyMultipleRegistration")
     danpheEMR.find_element_by_link_text("Patient").click()
     time.sleep(5)
@@ -80,11 +80,12 @@ def verifyMultipleRegistration(danpheEMR, ContactNo):
     print("searchResult:", searchResult)
     assert searchResult == "1"
     print("<<END: verifyMultipleRegistration")
-def getRandomPatient(danpheEMR):
+def getRandomPatient():
       danpheEMR.find_element_by_link_text("Patient").click()
       time.sleep(5)
       global HospitalNo
       HospitalNo = danpheEMR.find_element_by_xpath("(//div[@col-id='PatientCode'])[2]").text
+
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))

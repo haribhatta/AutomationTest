@@ -11,25 +11,20 @@ AppName = GSV.appName
 # Module:Pharmacy_Reports: User Collection Report*********
 def getPharmacyDashboard(danpheEMR):
       print(">>START: getPharmacyDashboard")
-      #global TotalSale
+      global TotalSale
       # global TotalReturn
-      #global CreditReturn
-      #global CashReturn
-      #global NetCashCollection
-      #global DepositAmount
-      #global DepositReturned
-      #global ProvisionalItems
-      #global UnpaidInvoices
-      global userCollection
+      global CreditReturn
+      global CashReturn
+      global NetCashCollection
+      global DepositAmount
+      global DepositReturned
+      global ProvisionalItems
+      global UnpaidInvoices
       time.sleep(5)
-      if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
-      else:
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(9)
       danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
       time.sleep(3)
-      '''
       TotalSale = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Total Sale')]/following-sibling::b").text
       print("Total Sale", TotalSale)
       TotalSale = TotalSale.partition(": ")[2]
@@ -75,28 +70,17 @@ def getPharmacyDashboard(danpheEMR):
       UnpaidInvoices = UnpaidInvoices.partition("Rs.")[2]
       UnpaidInvoices = float(UnpaidInvoices)
       print("UnpaidInvoices", UnpaidInvoices)
-      '''
-      user = GSV.pharmacyUserName
-
-      time.sleep(9)
-      userCollection = danpheEMR.find_element_by_xpath("//h4[contains(text(),'"+user+"')]/following-sibling::b").text
-      print("User Collection:", userCollection)
-      userCollection = userCollection.partition(": ")[2]
-      print("User Collection:", userCollection)
       print("<<END: getPharmacyDashboard")
 def preSystemPharmacyDashboard():
-      #global xTotalSale
+      global xTotalSale
       # global xTotalReturn
-      #global xCashReturn
-      #global xCreditReturn
-      #global xNetCashCollection
-      #global xDepositAmount
-      #global xDepositReturned
-      #global xProvisionalItems
-      #global xUnpaidInvoices
-      global preUserCollection
-      preUserCollection = userCollection
-      '''
+      global xCashReturn
+      global xCreditReturn
+      global xNetCashCollection
+      global xDepositAmount
+      global xDepositReturned
+      global xProvisionalItems
+      global xUnpaidInvoices
       xTotalSale = TotalSale
       xCashReturn = CashReturn
       xCreditReturn = CreditReturn
@@ -105,12 +89,10 @@ def preSystemPharmacyDashboard():
       xDepositReturned = DepositReturned
       xProvisionalItems = ProvisionalItems
       xUnpaidInvoices = UnpaidInvoices
-      '''
 def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, depositreturn, provisional,
                             provisionacancel):
       print(">>START: verifyPharmacyDashboard:")
-      if AppName =='SNCH' or AppName == 'MPH':
-            '''
+      if AppName =='SNCH':
             temp = round(xTotalSale + cash + credit)
             print("temp", temp)
             print("temp", float(temp))
@@ -141,19 +123,6 @@ def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, dep
             print("c", c)
             print("UnpaidInvoices", UnpaidInvoices)
             assert float(round(UnpaidInvoices)) == c
-            '''
-            x = float(preUserCollection) + float(cash) + float(deposit) - float(cashreturn) - float(depositreturn)
-            x = str(x)
-            print("X:", x)
-            #x = x.replace(" ", "")
-            x = x.partition(".")[0]
-            print("X final:", x)
-            print("userCollection:", userCollection)
-            y = str(userCollection)
-            #y = y.replace(" ", "")
-            y = y.partition(".")[0]
-            print("y final:", y)
-            assert y == x
       print("<<END: verifyPharmacyDashboard")
 def getPharmacyCashCollectionSummary(danpheEMR, user):
       print(">>START: getPharmacyCashCollectionSummary")
@@ -242,10 +211,7 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
       global sysPaddcollectionfromreceivables
       global sysPlesscashdiscount
       global sysPtotalcollection
-      if AppName == 'LPH':
-            danpheEMR.find_element_by_link_text("Store").click()
-      else:
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
       time.sleep(3)
       danpheEMR.find_element_by_link_text("Report").click()
       time.sleep(4)
@@ -258,37 +224,35 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
       time.sleep(9)
       sysPnetcashcollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
-      print("sysPnetcashcollection:", sysPnetcashcollection)
-      sysPnetcashcollection = sysPnetcashcollection.partition("(")[2]
+      print(sysPnetcashcollection)
+      sysPnetcashcollection = sysPnetcashcollection.partition("( ")[2]
       sysPnetcashcollection = sysPnetcashcollection.partition(")")[0]
-      sysPnetcashcollection = float(sysPnetcashcollection)
-      print("sysPnetcashcollection the final:", sysPnetcashcollection)
       sysPgrosstotalsales = danpheEMR.find_element_by_xpath("//div/div/table/tbody/tr/td[2]").text
-      print("sysPgrosstotalsales:", sysPgrosstotalsales)
+      print(sysPgrosstotalsales)
       sysPdiscount = danpheEMR.find_element_by_xpath("//tr[2]/td[2]").text
-      print("sysPdiscount:", sysPdiscount)
+      print(sysPdiscount)
       sysPreturnsubtotal = danpheEMR.find_element_by_xpath("//tr[3]/td[2]").text
-      print("sysPreturnsubtotal:", sysPreturnsubtotal)
+      print(sysPreturnsubtotal)
       sysPreturndiscount = danpheEMR.find_element_by_xpath("//tr[4]/td[2]").text
-      print("sysPreturndiscount:", sysPreturndiscount)
+      print(sysPreturndiscount)
       sysPreturnamount = danpheEMR.find_element_by_xpath("//tr[5]/td[2]").text
-      print("sysPreturnamount:", sysPreturnamount)
+      print(sysPreturnamount)
       sysPnetsales = danpheEMR.find_element_by_xpath("//tr[6]/td[2]").text
-      print("sysPnetsales:", sysPnetsales)
+      print(sysPnetsales)
       sysPlesscreditamount = danpheEMR.find_element_by_xpath("//tr[7]/td[2]").text
-      print("sysPlesscreditamount:", sysPlesscreditamount)
+      print(sysPlesscreditamount)
       sysPadddepositreceived = danpheEMR.find_element_by_xpath("//tr[8]/td[2]").text
-      print("sysPadddepositreceived:", sysPadddepositreceived)
+      print(sysPadddepositreceived)
       sysPdepositdeducted = danpheEMR.find_element_by_xpath("//tr[9]/td[2]").text
-      print("sysPdepositdeducted:", sysPdepositdeducted)
+      print(sysPdepositdeducted)
       sysPlessdepositrefund = danpheEMR.find_element_by_xpath("//tr[10]/td[2]").text
-      print("sysPlessdepositrefund:", sysPlessdepositrefund)
+      print(sysPlessdepositrefund)
       sysPaddcollectionfromreceivables = danpheEMR.find_element_by_xpath("//tr[11]/td[2]").text
-      print("sysPaddcollectionfromreceivables:", sysPaddcollectionfromreceivables)
+      print(sysPaddcollectionfromreceivables)
       sysPlesscashdiscount = danpheEMR.find_element_by_xpath("//tr[12]/td[2]").text
-      print("sysPlesscashdiscount:", sysPlesscashdiscount)
+      print(sysPlesscashdiscount)
       sysPtotalcollection = danpheEMR.find_element_by_xpath("//tr[13]/td[2]").text
-      print("sysPtotalcollection:", sysPtotalcollection)
+      print(sysPtotalcollection)
       print("<<END: getPharmacyUserCollectionReport")
 def preSystemPharmacyUserCollectionReport():
       print(">START: preSystemPharmacyUserCollectionReport")
@@ -306,7 +270,6 @@ def preSystemPharmacyUserCollectionReport():
       global presysPaddcollectionfromreceivables
       global presysPlesscashdiscount
       global presysPtotalcollection
-      print("sysPnetcashcollection: Hari", sysPnetcashcollection)
       presysPnetcashcollection = float(sysPnetcashcollection)
       presysPgrosstotalsales = float(sysPgrosstotalsales)
       presysPdiscount = float(sysPdiscount)

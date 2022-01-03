@@ -14,7 +14,6 @@ To test Pharmacy> User Collection report with below check points:
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleAppointment as LA
-import Library.LibModuleBilling as LB
 import Library.LibModulePharmacy as LP
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacyReports as LPR
@@ -28,7 +27,6 @@ billingId = GSV.foUserID
 billingPwd = GSV.foUserPwD
 
 drugname = GSV.drug1BrandName
-print("drugname", drugname)
 qty = 1
 paymode = 'Cash'
 rate = GSV.drug1Rate
@@ -39,7 +37,6 @@ remark = "This is test return."
 EMR = AC.openBrowser()
 # To get random patient information
 AC.login(userid=billingId, pwd=billingPwd)
-LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 AC.logout()
 # Start of User collection report
@@ -48,10 +45,10 @@ LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 ######## Create anonymous pharmacy sale
 LP.createPharmacyInvoiceAnonymous(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode=paymode)
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserId)
-LPR.preSystemPharmacyUserCollectionReport()
-#LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
+LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
 ######## Create pharmacy cash sale
 pInvoiceNo = LP.createPharmacyInvoiceTC(EMR, HospitalNo, drugname, qty, paymode)
+LPR.preSystemPharmacyUserCollectionReport()
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserId)
 LPR.verifySystemPharmacyUserCollectionReport(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, creditsettlement=0,
                                              discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)

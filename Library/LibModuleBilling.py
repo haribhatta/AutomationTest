@@ -53,8 +53,6 @@ def returnBillingInvoice(danpheEMR, InvoiceNo, returnmsg):
         danpheEMR.find_element_by_css_selector(".fa-search").click()
         time.sleep(9)
         danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
-        if AppName == "MPH":
-            danpheEMR.find_element_by_id("txtRetQty_1").send_keys(1) #This is for MPH registration charge workaround
         danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
         danpheEMR.find_element_by_id("btnSubmit").click()
         time.sleep(3)
@@ -250,10 +248,9 @@ def createLabInvoice(danpheEMR, HospitalNo, labtest):
         time.sleep(2)
         danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
         time.sleep(5)
-        if AppName == 'LPH':
-            labType = Select(danpheEMR.find_element_by_id("lab_type"))
-            labType.select_by_visible_text("OP-LAB")
-            time.sleep(3)
+        labType = Select(danpheEMR.find_element_by_id("lab_type"))
+        labType.select_by_visible_text("OP-LAB")
+        time.sleep(4)
         danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
         danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(labtest)
         time.sleep(1)

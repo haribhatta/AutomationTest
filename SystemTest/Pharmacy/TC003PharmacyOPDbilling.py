@@ -24,6 +24,7 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 #Drug name for billing
 drugname = GSV.drug1BrandName
 genericname = GSV.drug1GenericName
+rate = GSV.drug1BrandRate
 quantity = 1
 mode = "Cash"
 

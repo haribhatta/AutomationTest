@@ -29,7 +29,7 @@ departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 
 opdticket = GSV.opdRate
-discountpctSeniorCtz = GSV.Membership
+discountpct = 50
 #discountamount = (discountpct*opdticket/100)
 returnamount = opdticket
 usgtest = GSV.USG
@@ -60,9 +60,9 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit
 # 3. Cash Discount Invoice
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=discountpctSeniorCtz, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=50, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
 LBR.getBillingDashboard(EMR)
-LBR.verifyBillingDashboard(cash=opdticket, discountpc=discountpctSeniorCtz, cashReturn=0, credit=0, creditReturn=0,
+LBR.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 4. Return Cash Discount Invoice
@@ -70,7 +70,7 @@ LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="This is cash discount invoice return")
 LBR.getBillingDashboard(EMR)
-LBR.verifyBillingDashboard(cash=0, discountpc=discountpctSeniorCtz, cashReturn=returnamount, credit=0, creditReturn=0,
+LBR.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
 
 # 5. Credit Invoice
@@ -102,14 +102,14 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket,
 # 8.1 Provisional Bill
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo = LP.patientRegistration(EMR)
+HospitalNo = LP.patientRegistration()
 LB.createProvisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, usgtest=usgtest)  #provisional=usgprice
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
                             provisional=usgprice, provisionalcancel=0)
 
 # 8.2 Provisional IP Bill
-HospitalNo1 = LP.patientRegistration(EMR)
+HospitalNo1 = LP.patientRegistration()
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
 LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo1, admit=1, trasfer=0, discharge=0, deposit=deposit, doctor=doctorGynae, department=departmentGynae)
