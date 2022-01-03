@@ -98,7 +98,7 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
         danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.TAB)
         time.sleep(3)
         danpheEMR.find_element_by_id("invoiceId").send_keys(Keys.ENTER)
-        time.sleep(5)
+        time.sleep(9)
         danpheEMR.find_element_by_id("ReturnedQty0").clear()
         danpheEMR.find_element_by_id("ReturnedQty0").send_keys(qty)
         danpheEMR.find_element_by_xpath("//textarea[@name='Remark']").send_keys(returnremark)
@@ -109,7 +109,7 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
     print("<<Return Pharmacy Invoice: END")
 def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark):
     print("<<Verify Return Pharmacy Invoice: START")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH' or AppName == 'MPH':
         danpheEMR.find_element_by_link_text("Pharmacy").click()
         time.sleep(3)
         danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
