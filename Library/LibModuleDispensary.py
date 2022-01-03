@@ -112,10 +112,16 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
 def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark):
     print("<<Verify Return Pharmacy Invoice: START")
     if AppName == 'SNCH':
+        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        time.sleep(3)
+        danpheEMR.find_element_by_xpath("//span[contains(.,'Dispensary')]").click()
+        time.sleep(3)
         danpheEMR.find_element_by_link_text("Return Sale List").click()
+        time.sleep(9)
+        #danpheEMR.find_element_by_xpath("//button[contains(.,'Load Data')]").click()
+        danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success']").click()
+        time.sleep(3)
         danpheEMR.find_element_by_id("quickFilterInput").send_keys(InvoiceNo)
-        time.sleep(5)
-        danpheEMR.find_element_by_xpath("//button[contains(.,'Load Data')]").click()
         time.sleep(5)
         danpheEMR.find_element_by_link_text("Print").click()
         time.sleep(3)
@@ -123,7 +129,7 @@ def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark)
         print("syspaymentmode:", syspaymentmode)
         syspaymentmode = syspaymentmode.partition("t: ")[2]
         # print("syspaymentmode1:", syspaymentmode)
-        assert syspaymentmode == "Cash"  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
+        #assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
         ReturnremarkTemp = danpheEMR.find_element_by_xpath("//div[@id='pharma-pat-info']/div[12]").text
         print("ReturnremarkTemp", ReturnremarkTemp)
         ReturnremarkTemp = ReturnremarkTemp.partition("s : ")[2]
