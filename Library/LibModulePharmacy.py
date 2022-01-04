@@ -270,34 +270,6 @@ def createPharmacyInvoice(danpheEMR, HospitalNo, qty, paymentmode):
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
 
     print("Create Pharmacy OPD Invoice: END<<")
-def createPharmacyInvoiceTC(danpheEMR, HospitalNo, drugname, qty, paymentmode):
-    print(">>Create Pharmacy OPD Invoice: START")
-    global pInvoiceNo
-    danpheEMR.find_element_by_link_text("Sale").click()
-    danpheEMR.find_element_by_id("patient-search").click()
-    danpheEMR.find_element_by_id("patient-search").send_keys(HospitalNo)
-    time.sleep(3)
-    danpheEMR.find_element_by_id("patient-search").send_keys(Keys.TAB)
-    danpheEMR.find_element_by_id("patient-search").send_keys(Keys.RETURN)
-    time.sleep(3)
-    danpheEMR.find_element_by_id("item-box0").click()
-    danpheEMR.find_element_by_id("item-box0").clear()
-    danpheEMR.find_element_by_id("item-box0").send_keys(drugname)
-    danpheEMR.find_element_by_id("item-box0").send_keys(Keys.TAB)
-    time.sleep(5)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
-        danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").click()
-        danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
-        danpheEMR.find_element_by_xpath("// input[ @ formcontrolname = 'Quantity']").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element_by_xpath("//button[@title='ALT + P']").click()
-    time.sleep(5)
-    pInvoiceNo = danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
-    print("pInvoiceNo", pInvoiceNo)
-    danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
-    epInvoiceNo = pInvoiceNo.partition("PH")[2]
-    print("Create Pharmacy OPD Invoice: END<<")
 def createPharmacyInvoiceAnonymous(danpheEMR, drugname, qty, paymentmode):
     print(">>Create Pharmacy OPD Invoice: START")
     global pInvoiceNo
