@@ -13,18 +13,17 @@ def files(file, file1, rows, *args):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
         RunNoR = (sc.readData(file1, 'test', r, 4))
-        if Status != 'Passed':
+        if Status == 'Norun' or Status == 'UnderAnalysis':
             print(" Status is Norun or Failed")
             base_dir = str(pathlib.PureWindowsPath(LSV.SystemTestPath))
             Pythonfilepath = os.path.join(base_dir, Testcase)
             print(Pythonfilepath)
             exec(open(Pythonfilepath).read())
-
             try:
                 exec(open(Pythonfilepath).read())
                 sc.writeData(file1, 'test', r, 2, 'Passed')
             except:
-                sc.writeData(file1, 'test', r, 2, 'Failed')
+                sc.writeData(file1, 'test', r, 2, 'UnderAnalysis')
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
 smokesanityresult = "SmokeSanity_ExecutionResult_"
