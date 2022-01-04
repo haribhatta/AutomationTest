@@ -1,43 +1,33 @@
 #-------------Objective of this script----------
 # To verify admission, transfer and discharge of newly registered patient. Patient has to get refund money from deposit left.
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+from Library import ApplicationConfiguration as AC
+from Library import LibModuleBilling as LB
+from Library import LibModuleADT as ADT
+from Library import LibModuleAppointment as LA
+from Library import GlobalShareVariables as GSV
 
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-# front desk user login
-nurseUserId = GSV.nurseUserID
-nurseUserPwd = GSV.nurseUserPwD
 
 #------------Local Veriables-------------------
 labitem = GSV.UrineRE
 imagingitem = GSV.USG
 deposit = 0
 admitcharge = GSV.admitRate
-doctor = GSV.doctor1
-department = GSV.department1
+doctor = GSV.doctorGyno
+department = GSV.departmentGyno
 
 #-------------Script Owner: Hari----------------
 #Scripted on: 10.05.2077
 
-ADT = A()
-
-ADT.openBrowser()
-ADT.login(foUserId, foUserPwd)
-ADT.patientRegistration()
-ADT.counteractivation()
-ADT.createlabxrayinvoice(labitem, imagingitem)
-#ADT.logout()
-
-#ADT.login(nurseUserId, nurseUserPwd)
-#ADT.counteractivation()
-ADT.admitDisTrans(1, 0, 0, deposit, doctor=doctor, department=department)
-#ADT.logout()
-
-#ADT.login(foUserId, foUserPwd)
-#ADT.counteractivation()
-ADT.billingIP(admitcharge, deposit)
-ADT.logout()
-ADT.closeBrowser()
+EMR = AC.openBrowser()
+AC.login(foUserId, foUserPwd)
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labitem, imagingtest=imagingitem)
+ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=deposit,HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+LB.billingIP(danpheEMR=EMR, HospitalNo=HospitalNo, admitCharge=admitcharge, deposit=deposit)
+AC.logout()
+AC.closeBrowser()
