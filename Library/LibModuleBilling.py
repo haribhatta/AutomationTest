@@ -248,8 +248,9 @@ def createLabInvoice(danpheEMR, HospitalNo, labtest):
         time.sleep(2)
         danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
         time.sleep(5)
-        labType = Select(danpheEMR.find_element_by_id("lab_type"))
-        labType.select_by_visible_text("OP-LAB")
+        if AppName == 'LPH':
+            labType = Select(danpheEMR.find_element_by_id("lab_type"))
+            labType.select_by_visible_text("OP-LAB")
         time.sleep(4)
         danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
         danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(labtest)
@@ -523,8 +524,9 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
         print("ChangeReturn", ChangeReturn)
         ChangeReturn = ChangeReturn.partition("NRs.")[2]
         print("Change Return:", ChangeReturn)
-        ChangeReturn = int(ChangeReturn)
-        assert ChangeReturn == int(Tender) + int(DepositBalance) - int(TotalAmount)
+        actualChangeReturn = int(ChangeReturn)
+        expectedChangeReturn = int(Tender) + int(DepositBalance) - int(TotalAmount)
+        assert actualChangeReturn == expectedChangeReturn
 
         danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
         time.sleep(7)
@@ -547,14 +549,13 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
         print("Tender", Tender)
         assert int(Tender) == int(billTender)
 
-        if ChangeReturn >= 1:
+        if actualChangeReturn >= 1:
             eChangeReturn = danpheEMR.find_element_by_xpath(
                 "//span[contains(text(),' Change/Return:')]").text  # Change/Return
             print("eChangeReturn", eChangeReturn)
             eChangeReturn = eChangeReturn.partition("n: ")[2]
             print("eChangeReturn", eChangeReturn)
-            print("ChangeReturn", ChangeReturn)
-            assert eChangeReturn == str(ChangeReturn)
+            assert eChangeReturn == str(actualChangeReturn)
             DepositBalance = danpheEMR.find_element_by_xpath(
                 "//span[contains(text(),'Balance:')]").text  # Deposit Balance
             print("DepositBalance", DepositBalance)
