@@ -79,7 +79,9 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
          paymentoptions = Select(danpheEMR.find_element_by_xpath("//select[@id='pay_mode']"))
          paymentoptions.select_by_visible_text(paymentmode)
          danpheEMR.find_element_by_xpath("//div[2]/div[2]/input").send_keys("Credit in request of chairman")
-      danpheEMR.find_element_by_css_selector(".btn-success").click()
+      time.sleep(5)
+      #danpheEMR.find_element_by_css_selector(".btn-success").click()
+      danpheEMR.find_element_by_id("btnPrintInvoice").click()
       time.sleep(9)
       InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
       print("InvoiceNoTemp", InvoiceNo)
@@ -108,19 +110,21 @@ def followUpAppointment(danpheEMR):
             time.sleep(5)
          danpheEMR.find_element_by_link_text("List Visits").click()
          time.sleep(5)
-         x = range(1, 3, 1)
+         x = range(1, 2, 1)
          for n in x:
              try:
                 print(n)
+                danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
                 danpheEMR.find_element_by_xpath("(//a[contains(text(),'followup')])[1]").click()
                 print("test1")
                 time.sleep(3)
+                danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
              except:
                 #danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
                 print("test2")
                 pass
          time.sleep(3)
-         danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
+         #danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
          time.sleep(5)
          danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
          #danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
