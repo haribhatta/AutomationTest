@@ -19,21 +19,19 @@ deposit = 1000
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 
-AC.applicationSelection()
-AC.openBrowser()
 #############
-
+EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+LB.counteractivation(EMR)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 
 # LB.createlabxrayinvoice(HospitalNo=HospitalNo, labtest=labitem, imagingtest = imagingitem)
-ADT.admitDisTrans(admit=1, discharge=0, trasfer=0, deposit=deposit,hospitalNO=HospitalNo , department=GSV.departmentGyno)
+ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=deposit,HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
 print("Patient admitted successfully")
-ADT.admitDisTrans(admit=0, discharge=0, trasfer=1, deposit=deposit,hospitalNO=HospitalNo , department=GSV.departmentNephro)
+ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=0, trasfer=1, deposit=deposit,HospitalNo=HospitalNo, department=GSV.departmentNephro, doctor=GSV.doctorGyno)
 print("Patient Transferred successfully")
-ADT.admitDisTrans(admit=0, discharge=1, trasfer=0, deposit=deposit,hospitalNO=HospitalNo , department=GSV.doctorGyno)
+ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, trasfer=0, deposit=deposit,HospitalNo=HospitalNo, department=GSV.doctorGyno, doctor=GSV.doctorGyno)
 print("Patient Discharged successfully")
 AC.logout()
 AC.closeBrowser()

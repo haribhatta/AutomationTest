@@ -157,6 +157,9 @@ if appName == "SNCH":
 ###Suppliers Name list
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
+###Wards Name:
+      generalWard = "General Ward"
+      bedFeature = "BED CHARGE General Ward"
 ###Users Name:
       user = "admin"
 ###############################################################################
