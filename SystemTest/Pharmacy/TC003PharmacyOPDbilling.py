@@ -24,7 +24,7 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 #Drug name for billing
 drugname = GSV.drug1BrandName
 genericname = GSV.drug1GenericName
-rate = GSV.drug1BrandRate
+rate = GSV.drug1Rate
 quantity = 1
 mode = "Cash"
 
@@ -44,6 +44,6 @@ LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 # Received GR from above PO
 #phaoB.addPharmacyGRfromPO()
 
-LP.createPharmacyInvoiceTC(danpheEMR=EMR,HospitalNo=HospitalNo, drugname=drugname, qty=quantity, paymentmode=mode)
+LD.createDispensarySale(danpheEMR=EMR,HospitalNo=HospitalNo, drugName=drugname, qty=quantity, paymentmode=mode)
 AC.logout()
 AC.closeBrowser()
