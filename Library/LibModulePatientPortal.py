@@ -1,13 +1,13 @@
 import time
 import random
+import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.support.select import Select
 
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+AppName = GSV.appName
 
 #Module:Patient_Registration -----------------
-def patientRegistration():
+def patientRegistration(danpheEMR):
       global contactno
       global HospitalNo
       global FullName
@@ -39,9 +39,10 @@ def patientRegistration():
       HospitalNo = danpheEMR.find_element_by_xpath("//ag-grid-angular[@id='myGrid']"
                                                         "/div/div/div/div[3]/div[2]/div/div/div/div").text
       print(HospitalNo)
+      return HospitalNo
 
 
-def patientRegistrationMultipleClick():
+def patientRegistrationMultipleClick(danpheEMR):
     global contactno
     global HospitalNo
     global FullName
@@ -66,7 +67,7 @@ def patientRegistrationMultipleClick():
     danpheEMR.find_element_by_xpath("//input[@value='Register Patient']").click()
     print("Contact No", contactno)
     return contactno
-def verifyMultipleRegistration(ContactNo):
+def verifyMultipleRegistration(danpheEMR, ContactNo):
     print(">>START: verifyMultipleRegistration")
     danpheEMR.find_element_by_link_text("Patient").click()
     time.sleep(5)
@@ -80,7 +81,7 @@ def verifyMultipleRegistration(ContactNo):
     print("searchResult:", searchResult)
     assert searchResult == "1"
     print("<<END: verifyMultipleRegistration")
-def getRandomPatient():
+def getRandomPatient(danpheEMR):
       danpheEMR.find_element_by_link_text("Patient").click()
       time.sleep(5)
       global HospitalNo

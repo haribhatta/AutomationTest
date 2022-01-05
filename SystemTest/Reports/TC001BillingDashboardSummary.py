@@ -102,14 +102,14 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket,
 # 8.1 Provisional Bill
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo = LP.patientRegistration()
+HospitalNo = LP.patientRegistration(EMR)
 LB.createProvisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, usgtest=usgtest)  #provisional=usgprice
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
                             provisional=usgprice, provisionalcancel=0)
 
 # 8.2 Provisional IP Bill
-HospitalNo1 = LP.patientRegistration()
+HospitalNo1 = LP.patientRegistration(EMR)
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
 LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo1, admit=1, trasfer=0, discharge=0, deposit=deposit, doctor=doctorGynae, department=departmentGynae)
