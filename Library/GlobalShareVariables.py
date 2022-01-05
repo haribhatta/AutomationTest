@@ -165,7 +165,7 @@ if appName == "SNCH":
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
-      appURL = "http://192.168.137.1:82/"
+      appURL = "http://202.51.74.168:129/"
 ###Login Credentials:
       #admin user
       adminUserID = 'admin'
