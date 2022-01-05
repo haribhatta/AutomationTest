@@ -14,16 +14,16 @@ storeUserId = GSV.storeUserID
 storeUserPwd = GSV.storeUserPwD
 
 itemname = GSV.stationaryItem1
+print("itemName:", itemname)
 qty = 1
 inventory1 = GSV.Inventory1
 
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
-LI.selectInventory(inventory=inventory1)
-LI.createInventoryGoodReceipt(qty=qty, item=itemname, rate=1)
-LI.editInventoryGoodsReceipt()
-LI.createInventoryDirectDispatch(itemname, qty=qty, store=1)
+LI.selectInventory(danpheEMR=EMR, inventory=inventory1)
+LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=1)
+LI.editInventoryGoodsReceipt(danpheEMR=EMR)
+LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=itemname, qty=qty, store=1)
 AC.logout()
 AC.closeBrowser()
-
 print("There is existing bug: EMR-2576")

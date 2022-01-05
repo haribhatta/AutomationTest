@@ -70,7 +70,8 @@ if appName == "LPH":
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      stationaryItem1 = "DOTPEN"
+      #stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "USG PAPER"
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
@@ -235,7 +236,8 @@ if appName == "MPH":
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      stationaryItem1 = "DOTPEN"
+      #stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "envelop print"
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
