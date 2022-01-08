@@ -1,9 +1,12 @@
 ########Defining Variables for LPH
+#runEnv = 'free'
 appName = input("Please enter project/application name:\n"
                 "SNCH\n"
                 "MMH\n"
                 "LPH\n"
-                "MPH\n")
+                "MPH\n"
+                "Core\n")
+
 if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
 ###Login Credentials:
