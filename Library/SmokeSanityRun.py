@@ -1,30 +1,26 @@
 import shortcut as sc
 import Library.ApplicationConfiguration as AC
-print("A")
 from LocalShareVariables import LSV
-print("B")
 import pathlib
 import os
 import Library.GlobalShareVariables as GSV
 
+smokesanityfile = "SmokeSanityTestCases_"
 smokesanityresult = "SmokeSanity_ExecutionResult_"
-scheduletype = input("Enter 'A' to schedule new run and 'B' to restart previous run")
-appVersion = input("Please entry (name+veresion) for Test Summary Report")
+scheduletype = input("Enter '1' to schedule new run and '2' to restart previous run")
+appVersion = input("Please entry version for Test Summary Report")
 #AppName = input("Please entry (Application Name) for Test Summary Report")
 AppName = GSV.appName
 print("app name test", AppName)
-if scheduletype == 'A':
-    if AppName == 'LPH':
-        Originalfile = "SmokeSanityTestCases_LPH.xlsx"
-    elif AppName == 'SNCH':
-        Originalfile = "SmokeSanityTestCases_SNCH.xlsx"
-else:
-    Originalfile = smokesanityresult + appVersion + AppName + ".xlsx"
-    print("Originalfile:", Originalfile)
-    Originalfile = smokesanityresult + appVersion + AppName + ".xlsx"
+
+if scheduletype == '1':
+    Originalfile = smokesanityfile + AppName + ".xlsx"
+
+elif scheduletype == '2':
+    Originalfile = smokesanityresult + AppName + appVersion + ".xlsx"
     print("Originalfile:", Originalfile)
 
-duplicatefile = smokesanityresult + appVersion + AppName + ".xlsx"
+duplicatefile = smokesanityresult + AppName + appVersion + ".xlsx"
 print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'test')
@@ -40,7 +36,6 @@ def files(file, file1, rows, *args):
         Testcase = str(sc.readData(file1, 'test', r, 1))
         Status = sc.readData(file1, 'test', r, 2)
         runEnv = sc.readData(file1, 'test', r, 8)
-        print("runEnv3:", runEnv)
         RunNoR = (sc.readData(file1, 'test', r, 4))
         if Status == 'Norun' or Status == 'UnderAnalysis':
             print("Executing Norun and UnderAnalysis test scripts.")
