@@ -34,6 +34,9 @@ if appName == "LPH":
       #store user
       storeUserID = 'shreeram'
       storeUserPwD = 'pass123'
+      #vaccination user
+      vaccineUserID = 'surendra'
+      vaccineUserPwD = 'pass123'
 ###Billing Items Name:
       opdRate = 30
       deposit = 100
