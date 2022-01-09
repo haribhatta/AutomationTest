@@ -1,3 +1,4 @@
+# Applicable Projects: LPH
 ''''
 The objective of this test case is to test below scenarios:
 1. Create an appointment for new patient.
@@ -14,16 +15,16 @@ EMR = AC.openBrowser()
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
-doctorGynae = GSV.doctorGyno
-priceCategoryType = "Normal"
+doctorGynaeEHS = GSV.doctorGynoEHS
+priceCategoryType = "EHS"
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).HospitalNo
 print("Status:Passed - > TC001 CreateAppointmentNew")
 # 2. Create an appointment for old patient.
-LA.oldPatientRegistration(EMR, HospitalNo, doctorGynae, departmentGynae)
+LA.oldPatientRegistration(EMR, HospitalNo, doctorGynaeEHS, departmentGynae)
 AC.logout()
 AC.closeBrowser()
 print("Status:Passed - > TC001 oldPatientAppointment")

@@ -5,13 +5,14 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.by import By
 
 #danpheEMR = AC.danpheEMR
 #print("DanpheEMR", danpheEMR)
 AppName = GSV.appName
 #HospitalNo = None
 # Module:Appointment --------------------
-def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
+def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor, priceCategoryType):
    global InvoiceNo
    global contactno
    global HospitalNo
@@ -27,12 +28,23 @@ def patientquickentry(danpheEMR, discountpc, paymentmode, department, doctor):
       time.sleep(4)
       danpheEMR.find_element_by_id("btnNewPatient").click()
       time.sleep(4)
-      if AppName == "LPH":
+      if AppName == "LPH" and priceCategoryType == "EHS":
+         danpheEMR.find_element(By.CSS_SELECTOR, "div > .ng-untouched:nth-child(2)").click()
+         #dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".ng-dirty")
+         dropdown = danpheEMR.find_element_by_xpath("//price-category-select/div/select")
+         dropdown.find_element(By.XPATH, "//option[. = 'EHS (PayClinic)']").click()
+         time.sleep(3)
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+         time.sleep(2)
+         danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
+         danpheEMR.find_element_by_id("doctorName").send_keys(doctor)
+         time.sleep(3)
+      elif AppName == "LPH" and priceCategoryType == "Normal":
          danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
          time.sleep(2)
          danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
          time.sleep(3)
-      else:
+      elif AppName == ("SNCH" or "MPH") and priceCategoryType == "Normal":
          danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
          time.sleep(3)
          danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)

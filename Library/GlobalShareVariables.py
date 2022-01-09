@@ -49,6 +49,8 @@ if appName == "LPH":
       btctRate = 100
       erTest = "TC"
       LabType = "ER"
+      #EHS Billing
+      opdRateEHS = 400
 ###Pharmacy/Dispensary Items Name:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1BrandRate = 25
@@ -81,6 +83,7 @@ if appName == "LPH":
 ###Doctors/Departments Name:
       doctorGyno = "Dr. doctor doctor"
       departmentGyno = "GYNAE & OBS"
+      doctorGynoEHS = "Dr. Anupa Thapa"
       doctor2 = "Mr. admin admin"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
