@@ -34,6 +34,9 @@ if appName == "LPH":
       #store user
       storeUserID = 'shreeram'
       storeUserPwD = 'pass123'
+      #Medical Record user
+      MRUserID = 'mr'
+      MRUserPwD = 'pass123'
       #vaccination user
       vaccineUserID = 'surendra'
       vaccineUserPwD = 'pass123'
