@@ -1174,33 +1174,76 @@ def verifyCancelBillReport(danpheEMR, HospitalNo, expectedTotalAmt):
 ######## Report: EHS Bill
 def getEHSBillReport(danpheEMR):
     print(">>START: getEHSBillReport")
-    global CashSales
-    global CreditSales
-    global GrossSales
+    global actualCashSales #A
+    global actualCreditSales #B
+    global actualGrossSalesApB #C
+    global actualCashDiscount #D
+    global actualCreditDiscount #E
+    global actualTotalDiscountDpE #F
+    global actualReturnCashSales #G
+    global actualReturnCreditSales #H
+    global actualTotalSalesReturn #I
+    global actualReturnCashDiscount #J
+    global actualReturnCreditDiscount #K
+    global actualTotalReturnDiscount #L
+    global actualNetSales #M
     danpheEMR.find_element_by_link_text("Reports").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Billing Reports").click()
     time.sleep(3)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Total Items Bill')]").click()
+    danpheEMR.find_element_by_xpath("//i[contains(.,'EHS Bill')]").click()
     time.sleep(3)
     danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
     time.sleep(9)
+    #A
+    actualCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Sales')])[1]//following-sibling::td").text
+    print("actualCashSales: ",actualCashSales)
+    #B
+    actualCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Sales')])[1]//following-sibling::td").text
+    print("actualCreditSales: ", actualCreditSales)
+    #C
+    actualGrossSalesApB = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Gross Sales')])[1]//following-sibling::td").text
+    print("actualGrossSalesApB: ", actualGrossSalesApB)
+    #D
+    actualCashDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Discount')])[1]//following-sibling::td").text
+    print("actualCashDiscount: ", actualCashDiscount)
+    #E
+    actualCreditDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Discount')])[1]//following-sibling::td").text
+    print("actualCreditDiscount: ", actualCreditDiscount)
+    #F
+    actualTotalDiscountDpE = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Total Discount')])[1]//following-sibling::td").text
+    print("actualTotalDiscountDpE: ", actualTotalDiscountDpE)
+    #G
+    actualReturnCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Return Cash Sales')])[1]//following-sibling::td").text
+    print("actualReturnCashSales: ", actualReturnCashSales)
+    #H
+    actualReturnCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Return Credit Sales')])[1]//following-sibling::td").text
+    print("actualReturnCreditSales: ", actualReturnCreditSales)
+    #I
+    actualTotalSalesReturn = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Total Sales Return')])[1]//following-sibling::td").text
+    print("actualTotalSalesReturn: ", actualTotalSalesReturn)
+    #J
+    actualReturnCashDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Return Cash Discount')])[1]//following-sibling::td").text
+    print("actualReturnCashDiscount: ", actualReturnCashDiscount)
+    #K
+    actualReturnCreditDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Return Credit Discount')])[1]//following-sibling::td").text
+    print("actualReturnCreditDiscount: ", actualReturnCreditDiscount)
+    #L
+    actualTotalReturnDiscount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Total Return Discount')])[1]//following-sibling::td").text
+    print("actualTotalReturnDiscount: ", actualTotalReturnDiscount)
+    #M
+    actualNetSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Net Sales')])[1]//following-sibling::td").text
+    print("actualNetSales: ", actualNetSales)
 
-    CashSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[2]/td[3]").text
-    CashSales = CashSales.replace(",", "")
-    print("Cash Sale is : ",CashSales)
-    CreditSales = danpheEMR.find_element_by_xpath("//*[@id='dvSummary_TotalItemBills']/div/table/tbody/tr[3]/td[3]").text
-    CreditSales = CreditSales.replace(",", "")
-    print("Credit Sale is :",CreditSales)
     print("<<END: getEHSBillReport")
 def preEHSBillReport():
-    print(">>START: preSystemTotalItemsBill")
+    print(">>START: preEHSBillReport")
     global preCashSales
     global preCreditSales
-    global preGrossSales
+    global preGrossSalesApB
     global preCashDiscount
     global preCreditDiscount
-    global preTotalDiscount
+    global preTotalDiscountDpE
     global preReturnCashSales
     global preReturnCreditSales
     global preTotalSalesReturn
@@ -1209,63 +1252,25 @@ def preEHSBillReport():
     global preTotalReturnDiscount
     global preNetSales
 
+    preCashSales = actualCashSales
+    preCreditSales = actualCreditSales
+    preGrossSalesApB = actualGrossSalesApB
+    preCashDiscount = actualCashDiscount
+    preCreditDiscount = actualCreditDiscount
+    preTotalDiscountDpE = actualTotalDiscountDpE
+    preReturnCashSales = actualReturnCashSales
+    preReturnCreditSales = actualReturnCreditSales
+    preTotalSalesReturn = actualTotalSalesReturn
+    preReturnCashDiscount = actualReturnCashDiscount
+    preReturnCreditDiscount = actualReturnCreditDiscount
+    preTotalReturnDiscount = actualTotalReturnDiscount
+    preNetSales = actualNetSales
 
-    preCashSales = int(CashSales)
-    print("Previous Cash Sales is :",preCashSales)
-    preCreditSales = int(CreditSales)
-    print("Previous Credit Sales is :",preCreditSales)
-    preGrossSales = int(GrossSales)
-    print("Previous Gross Sales is :",preGrossSales)
-    preCashDiscount = int(CashDiscount)
-    print("Previous Cash Discount is :", preCashDiscount)
-    preCreditDiscount = int(CreditDiscount)
-    print("Previous Credit Discount is :", preCreditDiscount)
-    preTotalDiscount = int(TotalDiscount)
-    print("Previous Total Discount is :", preTotalDiscount)
-    preReturnCashSales = int(ReturnCashSales)
-    print("Previous  Returned Cash Sales is :", preReturnCashSales)
-    preReturnCreditSales = int(ReturnCreditSales)
-    print("Previous Returned Credit Sales is :", preReturnCreditSales)
-    preTotalSalesReturn = int(TotalSalesReturn)
-    print("Previous Total Sales Return is :",preTotalSalesReturn)
-    preReturnCashDiscount = int(ReturnCashDiscount)
-    print("Previous Returned Cash Discount is :",preReturnCashDiscount)
-    preReturnCreditDiscount = int(ReturnCreditDiscount)
-    print("Previous Returned Credit Discount is :",preReturnCreditDiscount)
-    preTotalReturnDiscount = int(TotalReturnDiscount)
-    print("Previous Total Returned Discount is :",preTotalReturnDiscount)
-    preNetSales = int(NetSales)
-    print("Previous Net Cash Sales is :",preNetSales)
+    print("<<END: preEHSBillReport")
+def verifyEHSBillReport():
+    print(">>START: verifyEHSBillReport")
 
-    print("<<END: preSystemTotalItemsBill")
-def verifyEHSBillReport( returnamt):
-    global CashSales
-    global CreditSales
-    global GrossSales
-    global CashDiscount
-    global CreditDiscount
-    global TotalDiscount
-    global ReturnCashSales
-    global ReturnCreditSales
-    global TotalSalesReturn
-    global ReturnCashDiscount
-    global ReturnCreditDiscount
-    global TotalReturnDiscount
-    global NetSales
-
-    print(">>START: verifyTotalItemsBill")
-    if returnamt > 0:
-        assert int(GrossSales) == preGrossSales               \
-               # + int(CashSales) + int(CreditSales)
-        assert int(TotalDiscount) == (preTotalDiscount )
-        # + CashDiscount + CreditDiscount)
-        assert int(TotalSalesReturn) == (preTotalSalesReturn + returnamt)
-        # + ReturnCashSales + ReturnCreditSales)
-        assert int(TotalReturnDiscount) == preTotalReturnDiscount
-                                            # ReturnCashDiscount + ReturnCreditDiscount)
-        assert int(NetSales) ==(preNetSales - returnamt)
-                                # GrossSales - TotalDiscount - TotalSalesReturn + TotalReturnDiscount)
-    print("<<END: verifyTotalItemsBill")
+    print("<<END: verifyEHSBillReport")
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
