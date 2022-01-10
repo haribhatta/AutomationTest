@@ -13,6 +13,9 @@ if appName == "LPH":
       #admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      #IT user
+      itUserID = 'bhuwan'
+      itUserPwD = 'pass123'
       #billing user
       foUserID = 'ashmita' #LPH user
       foUserPwD = 'pass123'
@@ -91,6 +94,15 @@ if appName == "LPH":
       departmentGyno = "GYNAE & OBS"
       doctorGynoEHS = "Dr. Anupa Thapa"
       doctor2 = "Mr. admin admin"
+###Wards
+      generalWard = "Labour Ward"
+      generalBedFeature = "General Bed"
+###Discount Scheme
+      discountScheme = "Helpless"
+      discountSchemeChildUN = "Child Under Nutrition"
+      #discountSchemeName = "Helpless (50%)"
+      #discountSchemePct = 50
+
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###############################################################################
