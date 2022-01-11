@@ -16,12 +16,13 @@ foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynaeEHS = GSV.doctorGynoEHS
-priceCategoryType = "EHS"
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).HospitalNo
 print("Status:Passed - > TC001 CreateAppointmentNew")
 # 2. Create an appointment for old patient.
 LA.oldPatientRegistration(EMR, HospitalNo, doctorGynaeEHS, departmentGynae)
