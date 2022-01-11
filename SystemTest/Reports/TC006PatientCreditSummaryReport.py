@@ -24,7 +24,7 @@ foUserPwd = GSV.foUserPwD
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
 LBR.getPatientCreditSummary(EMR)
 #pcsr.logout()
 #pcsr.closeBrowser()

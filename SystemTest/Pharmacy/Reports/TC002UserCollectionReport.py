@@ -33,12 +33,14 @@ rate = GSV.drug1Rate
 amount = qty*rate
 totalamount = amount
 remark = "This is test return."
-
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 # To get random patient information
 AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)

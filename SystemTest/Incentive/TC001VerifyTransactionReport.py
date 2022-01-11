@@ -15,14 +15,15 @@ adminUserPwd = GSV.adminUserPwD
 
 paymode = "Cash"
 itemprice = GSV.opdRate
-
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
 # incentive % = 60%
 
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 LB.counteractivation(EMR)
 LI.synchBilingIncentive()
-LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LI.getIncentiveTransactionReport(EMR)
 LI.preIncentiveTransactionReport()
 LI.synchBilingIncentive()

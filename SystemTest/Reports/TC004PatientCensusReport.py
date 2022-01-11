@@ -8,13 +8,16 @@ import Library.LibModuleBillingReports as LBR
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 opdRate = GSV.opdRate
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LBR.getPatientCensus(EMR)
 LBR.preSystemPatientCensus()
-LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.getPatientCensus(EMR)
 LBR.verifyPatientCensus(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, provisional=0)
 AC.logout()

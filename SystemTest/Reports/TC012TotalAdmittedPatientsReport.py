@@ -10,11 +10,14 @@ foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 Doctor1 = GSV.doctorGyno
 Department1 = GSV.departmentGyno
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=Department1, doctor=Doctor1).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=Department1, doctor=Doctor1, priceCategoryType=priceCategoryType).HospitalNo
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0,HospitalNo=HospitalNo, doctor=Doctor1, department=Department1)
 LBR.verifyTotalAdmittedPatients(EMR, HospitalNo)
 AC.logout()

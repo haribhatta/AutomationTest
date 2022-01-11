@@ -16,7 +16,7 @@ radioTestUSG = GSV.USG
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation()
-hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae).HospitalNo
+hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
 print("hospitalNo", hospitalNo)
 InvoiceNo=LB.multiplebillingclick(hospitalNo,labTestTFT, radioTestUSG)
 LB.verifymultipleclickbilling(InvoiceNo)

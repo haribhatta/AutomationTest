@@ -12,12 +12,16 @@ foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 rateOPD = GSV.opdRate
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LBR.getSalesDayBook(EMR)
 ###
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemSalesDayBook()
 LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=rateOPD, cashreturn=0, credit=0, creditreturn=0)
@@ -27,7 +31,7 @@ LBR.preSystemSalesDayBook()
 LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=0, cashreturn=rateOPD, credit=0, creditreturn=0)
 ###
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemSalesDayBook()
 LBR.getSalesDayBook(EMR)
 LBR.verifySalesDayBook(cash=0, cashreturn=0, credit=rateOPD, creditreturn=0)

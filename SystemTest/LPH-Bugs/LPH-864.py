@@ -31,14 +31,16 @@ usgtest = GSV.USG
 usgprice = GSV.usgRate
 admisioncharge = GSV.admitRate
 deposit = 1000
-
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 
 # 1. Cash Invoice
 LBR.getBillingDashboard(EMR)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=department, doctor=doctor).InvoiceNo  # cash = opdticket
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=department, doctor=doctor, priceCategoryType=priceCategoryType).InvoiceNo  # cash = opdticket
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,

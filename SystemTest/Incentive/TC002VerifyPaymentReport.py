@@ -15,11 +15,13 @@ import Library.LibModuleAccounting as LACC
 # front desk user login
 adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
-
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 LB.counteractivation(EMR)
-LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LI.getIncentivePaymentReport(EMR)
 LI.preIncentivePaymentReport()
 #ip.createLedgerIncentivePayment()

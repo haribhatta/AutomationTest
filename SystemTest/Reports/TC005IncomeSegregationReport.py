@@ -23,13 +23,16 @@ usgtest = GSV.USG
 usgprice = GSV.usgRate
 doctor = GSV.doctorGyno
 department = GSV.departmentGyno
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LBR.getIncomeSegregation(EMR)
 LBR.preSystemIncomeSegregation()
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=rateOPD, cashreturn=0, credit=0, creditreturn=0, provision=0)
 print(">>>>>>Start>Cash Return")
@@ -37,7 +40,7 @@ LBR.preSystemIncomeSegregation()
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="this is bill return 1")
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashreturn=rateOPD, credit=0, creditreturn=0, provision=0)
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemIncomeSegregation()
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashreturn=0, credit=rateOPD, creditreturn=0, provision=0)
@@ -47,7 +50,7 @@ LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is 
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashreturn=0, credit=0, creditreturn=rateOPD, provision=0)
 
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0, HospitalNo=HospitalNo, doctor=doctor, department=department)
 LBR.getIncomeSegregation(EMR)
 LB.createIPprovisionalBill(danpheEMR=EMR,HospitalNo=HospitalNo, test=usgtest)

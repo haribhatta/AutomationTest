@@ -36,6 +36,10 @@ usgtest = GSV.USG
 usgprice = GSV.usgRate
 admisioncharge = GSV.admitRate
 deposit = 1000
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
@@ -43,7 +47,7 @@ LB.counteractivation(EMR)
 # 1. Cash Invoice
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo  # cash = opdticket
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo  # cash = opdticket
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -58,7 +62,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit
 # 5. Credit Invoice
 print("##### Credit Invoice #####")
 LBR.getBillingDashboard(EMR)
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
