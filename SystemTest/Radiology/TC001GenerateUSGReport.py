@@ -12,6 +12,10 @@ foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 radioTestUSG = GSV.USG
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)

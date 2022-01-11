@@ -25,6 +25,9 @@ labUserId = GSV.labUserID
 labUserPwd = GSV.labUserPwD
 labTestTFT = GSV.TFT
 radioTestUSG = GSV.USG
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
 #############
 AC.login(foUserId, foUserPwd)
 ############

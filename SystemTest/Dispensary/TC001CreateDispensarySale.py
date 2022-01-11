@@ -16,6 +16,9 @@ phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
 drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)

@@ -20,11 +20,14 @@ import Library.LibModuleAppointment as LA
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.getPatientCreditSummary(EMR)
 #pcsr.logout()
 #pcsr.closeBrowser()
