@@ -86,9 +86,9 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
             dropdown1.select_by_visible_text(discountScheme)
         elif discountScheme != 0 and AppName == "SNCH":
             danpheEMR.find_element_by_id("Membership").click()
-            dropdown1 = Select(danpheEMR.find_element_by_xpath("//select[@id='Menbership']"))
+            dropdown = Select(danpheEMR.find_element_by_xpath("//select[@id='Membership']"))
             time.sleep(3)
-            dropdown1.select_by_visible_text("Social Service Unit")
+            dropdown.select_by_visible_text("Social Service Unit")
             time.sleep(5)
             danpheEMR.find_element_by_id("Scheme").click()
             dropdown1 = Select(danpheEMR.find_element_by_xpath("//select[@id='Scheme']"))
