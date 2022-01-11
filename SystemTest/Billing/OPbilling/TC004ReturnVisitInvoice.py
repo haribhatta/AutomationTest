@@ -21,7 +21,7 @@ doctorGynae = GSV.doctorGyno
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-InvoiceNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
 print("Status:Passed - > TC001 CreateAppointmentNew")
 # 2. Create an appointment for old patient.
 #LB.getBillingDashboard()

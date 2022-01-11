@@ -21,7 +21,7 @@ itemrate = GSV.opdRate
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode="CREDIT", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode="CREDIT", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 LB.verifyCreditNoteDuplicateInvoice(EMR)
 LB.creditSettlements(EMR, HospitalNo)
 LB.verifyCreditSettlement()  #This function need to add in LibModuleBilling library file.

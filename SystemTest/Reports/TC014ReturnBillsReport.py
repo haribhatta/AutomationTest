@@ -21,7 +21,7 @@ LB.counteractivation(EMR)
 time.sleep(2)
 LBR.getReturnBillReport(EMR)
 LBR.preReturnBillReprot()
-InvoiceNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal").InvoiceNo
+InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal").InvoiceNo
 #Cash Bill Return
 LB.returnBillingInvoice(EMR, InvoiceNo, "TestReturn")
 LBR.getReturnBillReport(EMR)
@@ -35,7 +35,7 @@ LBR.getReturnBillReport(EMR)
 LBR.verifyReturnBillReport(returnamt=opdRate, returnDiscount=discountPct)
 '''
 #Credit Bill Return
-InvoiceNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal").InvoiceNo
+InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal").InvoiceNo
 LBR.preReturnBillReprot()
 LB.returnBillingInvoice(EMR, InvoiceNo, "TestReturn")
 LBR.getReturnBillReport(EMR)

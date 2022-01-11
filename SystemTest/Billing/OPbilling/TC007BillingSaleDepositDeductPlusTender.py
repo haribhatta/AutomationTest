@@ -20,7 +20,7 @@ radioTestUSG = GSV.USG
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
 LB.opDeposit(EMR, HospitalNo=HospitalNo, amount=GSV.deposit)
 LB.opDepositDbiling(EMR, HospitalNo=HospitalNo, deposit=GSV.deposit, testname=GSV.USG)
 #LB.verifyopdinvoice(deposit=GSV.deposit, billamt=GSV.usgRate)

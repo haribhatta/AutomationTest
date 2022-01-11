@@ -19,7 +19,7 @@ doctorGynae = GSV.doctorGyno
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 print("Status:Passed - > TC001 CreateAppointmentNew")
 #oblx.verifyopdinvoice(deposit=0, billamt=500)

@@ -13,12 +13,12 @@ foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 radioTestUSG = GSV.USG
-
+priceCategoryType = "Normal"
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
 # 2. Create Insurance Patient for Existing patient
-LI.ExistingPatientNewVisit(EMR, HospitalNo, departmentGynae, labtest=)
+LI.ExistingPatientNewVisit(EMR)
 

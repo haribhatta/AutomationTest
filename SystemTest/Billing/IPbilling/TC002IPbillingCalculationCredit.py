@@ -17,7 +17,7 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LADT.dischargeRandomPatient(EMR)  # This action is to free bed to admit new patient (Pre-condition to run test script).
 paymode = "CREDIT"
-HospitalNo = LA.patientquickentry(EMR, discountpc=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 LADT.admitDisTrans(EMR, 1, 0, 0, HospitalNo, 0, GSV.doctorGyno, GSV.departmentGyno)
 LB.getIPbillingDetails(EMR, HospitalNo, paymode)
 LB.preIPbillingDetails()
