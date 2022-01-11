@@ -16,7 +16,7 @@ foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 priceCategoryType = "Normal"
-discountScheme = GSV.discountSchemeChildUN
+discountScheme = GSV.discountSchemeName
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)

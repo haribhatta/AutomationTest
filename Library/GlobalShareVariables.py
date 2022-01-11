@@ -98,10 +98,8 @@ if appName == "LPH":
       generalWard = "Labour Ward"
       generalBedFeature = "General Bed"
 ###Discount Scheme
-      discountScheme = "Helpless"
-      discountSchemeChildUN = "Child Under Nutrition"
-      #discountSchemeName = "Helpless (50%)"
-      #discountSchemePct = 50
+      discountSchemeType = "Helpless"
+      discountSchemeName = "Helpless (50%)"
 
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
@@ -187,6 +185,9 @@ if appName == "SNCH":
       bedFeature = "BED CHARGE General Ward"
 ###Users Name:
       user = "admin"
+###Discount Scheme
+      discountSchemeType = "SocialService"
+      discountSchemeName = "Social Service Unit"
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
@@ -274,6 +275,9 @@ if appName == "MPH":
       bedFeature = "General Non-Covid Ward"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
+###Discount Scheme
+      discountSchemeType = "StaffFamily"
+      discountSchemeName = "Staff Family (30%)"
 ###############################################################################
 
    #def __str__():
