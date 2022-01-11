@@ -31,10 +31,13 @@ doctorGynae = GSV.doctorGyno
 # pharmacy desk user login
 phUserId = GSV.pharmacyUserID
 phUserPwd = GSV.pharmacyUserPwD
-#############
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 drug = GSV.drug1BrandName
 rate = GSV.drug1Rate

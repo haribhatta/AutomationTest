@@ -26,7 +26,7 @@ phUserPwd = GSV.pharmacyUserPwD
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).HospitalNo
+HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 drug = GSV.drug1BrandName
 rate = GSV.drug1Rate

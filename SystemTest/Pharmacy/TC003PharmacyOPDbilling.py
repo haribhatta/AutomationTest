@@ -27,11 +27,14 @@ genericname = GSV.drug1GenericName
 rate = GSV.drug1Rate
 quantity = 1
 mode = "Cash"
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)

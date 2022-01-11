@@ -25,20 +25,23 @@ drugname = GSV.drug1BrandName
 quantity = 2
 rate = GSV.drug1Rate
 returnremark = "This is auto return"
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 paymentmode = "CREDIT"
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-InvoiceNo = LP.createPharmacyInvoiceTC(danpheEMR=EMR, HospitalNo=HospitalNo, drugname=drugname, qty=quantity, paymentmode=paymentmode)
+InvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=quantity, drugName=drugname, paymentmode=paymentmode)
 #RPI.verifyPharmacyInvoice3(drugname, quantity, rate)
 LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=quantity, returnremark=returnremark)
-LD.verifyReturnPharmacyInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode=paymentmode, returnRemark=returnremark)
+LD.verifyReturnPharmacyInvoice(danpheEMR=EMR, paymentmode=paymentmode, returnRemark=returnremark, InvoiceNo=InvoiceNo)
 AC.logout()
 AC.closeBrowser()
 # This has open bug: EMR-2630

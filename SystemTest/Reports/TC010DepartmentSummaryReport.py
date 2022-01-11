@@ -12,20 +12,23 @@ import Library.LibModuleBillingReports as LBR
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 opdRae = GSV.opdRate
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LBR.getDepartmentSummary(EMR)
 LBR.preSystemDepartmentSummary()
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.getDepartmentSummary(EMR)
 LBR.verifyDepartmentSummary(cash=opdRae, cashreturn=0, credit=0, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)
 LB.returnBillingInvoice(EMR, InvoiceNo, "This is cash return.")
 LBR.preSystemDepartmentSummary()
 LBR.getDepartmentSummary(EMR)
 LBR.verifyDepartmentSummary(cash=0, cashreturn=opdRae, credit=0, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemDepartmentSummary()
 LBR.getDepartmentSummary(EMR)
 LBR.verifyDepartmentSummary(cash=0, cashreturn=0, credit=opdRae, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)

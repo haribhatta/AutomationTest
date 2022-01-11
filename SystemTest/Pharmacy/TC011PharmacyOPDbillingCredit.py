@@ -23,17 +23,20 @@ drugname = "SINEX TAB"
 quantity = 1
 mode = "Credit"
 rate = 3
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LB.verifyopdinvoice(danpheEMR=EMR, deposit=0, billamt=500)
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-LP.createPharmacyInvoiceTC(EMR, HospitalNo=HospitalNo, drugname=drugname, qty=quantity, paymentmode=mode)
+LD.createDispensarySale(EMR, HospitalNo=HospitalNo, drugName=drugname, qty=quantity, paymentmode=mode)
 LP.verifyPharmacyInvoice3(EMR, drugname, quantity, rate)
 AC.logout()
 AC.closeBrowser()

@@ -21,7 +21,7 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
 paymode = "Credit"
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
 LB.createProvisionalBill(HospitalNo, usgtest=GSV.bed)
 LB.createlabxrayinvoice('Credit', HospitalNo, GSV.USG, GSV.xray)
 time.sleep(2)
