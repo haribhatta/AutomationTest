@@ -3,6 +3,7 @@ import random
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.common.keys import Keys
 
 AppName = GSV.appName
 
@@ -22,13 +23,13 @@ def patientRegistration(danpheEMR):
       danpheEMR.find_element_by_xpath("//input[@type='tel']").send_keys(contactno)
       print(contactno)
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-         danpheEMR.find_element_by_link_text("Register Patient").click()
          danpheEMR.find_element_by_id("regPatFirstName").send_keys("auto")
          sname = str(random.randint(1111, 9999))
          danpheEMR.find_element_by_xpath("(//input[@value=''])[3]").send_keys("preg", sname)
          gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
          gender.select_by_visible_text("Female")
-      time.sleep(9)
+      danpheEMR.find_element_by_id("txtPanNumber").send_keys(Keys.ENTER)
+      time.sleep(5)
       danpheEMR.find_element_by_id("regPatientSubmitBtn").click()
       time.sleep(7)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)
