@@ -8,7 +8,10 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 EMR = AC.openBrowser()
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 #############
 # front desk user login
 foUserId = GSV.foUserID

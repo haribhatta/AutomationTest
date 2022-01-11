@@ -14,7 +14,8 @@ import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleADT as LADT
 ########
-#AC.applicationSelection()
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
 ########
@@ -22,9 +23,9 @@ AC.login(GSV.foUserID, GSV.foUserPwD)
 ########
 LB.counteractivation(EMR)
 ######## 1. Create OP visit.
-HospitalNo = LA.patientquickentry(EMR, 0, 'Cash',department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 ######## 2. Admit above patient.
-LADT.admitDisTrans(EMR, admit=1, discharge=0, trasfer=0, hospitalNO=HospitalNo, deposit=0,doctor=GSV.doctorGyno, department=GSV.departmentGyno)
+LADT.admitDisTrans(EMR, admit=1, discharge=0, trasfer=0, HospitalNo=HospitalNo, deposit=0,doctor=GSV.doctorGyno, department=GSV.departmentGyno)
 #LB.getIPbillingDetails(HospitalNo=HospitalNo, paymentmode=paymode)
 #LB.preIPbillingDetails()
 LB.createIPprovisionalBill(EMR, HospitalNo=HospitalNo, test=GSV.TFT)

@@ -11,13 +11,16 @@ import Library.LibModuleADT as LADT
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LADT.dischargeRandomPatient(EMR)  # This action is to free bed to admit new patient (Pre-condition to run test script).
 paymode = "CREDIT"
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LADT.admitDisTrans(EMR, 1, 0, 0, HospitalNo, 0, GSV.doctorGyno, GSV.departmentGyno)
 LB.getIPbillingDetails(EMR, HospitalNo, paymode)
 LB.preIPbillingDetails()
