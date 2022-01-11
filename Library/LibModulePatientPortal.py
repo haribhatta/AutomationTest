@@ -28,7 +28,7 @@ def patientRegistration(danpheEMR):
          danpheEMR.find_element_by_xpath("(//input[@value=''])[3]").send_keys("preg", sname)
          gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
          gender.select_by_visible_text("Female")
-      time.sleep(5)
+      time.sleep(9)
       danpheEMR.find_element_by_id("regPatientSubmitBtn").click()
       time.sleep(7)
       danpheEMR.find_element_by_id("quickFilterInput").send_keys(contactno)

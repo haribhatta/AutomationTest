@@ -140,16 +140,11 @@ def followUpAppointment(danpheEMR):
                 print("test1")
                 time.sleep(3)
                 danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
+                time.sleep(3)
+                danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
             except:
-                # danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
-                print("test2")
                 pass
-        time.sleep(3)
-        # danpheEMR.find_element_by_xpath("//button[contains(text(),' Add Followup Visit ')]").click()
-        time.sleep(5)
-        danpheEMR.find_element_by_id("btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
-        # danpheEMR.find_element_by_xpath("//i[@class='btn btn-danger']").click()
-
+    print("END: lets create appointment followup")
 
 def oldPatientRegistration(danpheEMR, HospitalNo, DoctorName, Department):
     print(">>Create Old Appointment: START")

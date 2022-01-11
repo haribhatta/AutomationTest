@@ -10,7 +10,7 @@ foUserPwd = GSV.foUserPwD
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-LP.patientRegistration()
+LP.patientRegistration(EMR)
 #pr.logout()
 #pr.closeBrowser()
 print("Status:Passed -> TC001 PatientRegistrationPrintHealthCard")
