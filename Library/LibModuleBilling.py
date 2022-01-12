@@ -710,6 +710,9 @@ def modifyDischargeDate(danpheEMR, HospitalNo):
     danpheEMR.find_element_by_link_text("View Details").click()
     time.sleep(5)
 def verifyConfirmDischarge(danpheEMR, HospitalNo, paymentmode):
+    global actualChange
+    global actualToBePaid
+    global actualTender
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
         time.sleep(3)
@@ -733,73 +736,64 @@ def verifyConfirmDischarge(danpheEMR, HospitalNo, paymentmode):
             time.sleep(3)
             danpheEMR.find_element_by_css_selector(".btn-danger").click()
             time.sleep(2)
-        global tobepaid
-        tobepaid = danpheEMR.find_element_by_xpath("(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
-        print("tobepaid", tobepaid)
-        #print("ToBePaid", ToBePaid)
-        #assert int(ToBePaid) == int(tobepaid)
-        tender = danpheEMR.find_element_by_xpath("(//td[text()='Tender']/following-sibling::td)[1]").text
+        actualToBePaid = danpheEMR.find_element_by_xpath("(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
+        actualToBePaid = float(actualToBePaid)
+        print("actualToBePaid", actualToBePaid)
+        actualTender = danpheEMR.find_element_by_xpath("(//td[text()='Tender']/following-sibling::td)[1]").text
         #assert int(Tender) == int(tender)
-        change = danpheEMR.find_element_by_xpath("(//td[text()='Change']/following-sibling::td)[1]").text
+        print("actualTender:", actualTender)
+        actualChange = danpheEMR.find_element_by_xpath("(//td[text()='Change']/following-sibling::td)[1]").text
+        print("actualChange:", actualChange)
         #assert int(ChangeReturn) == int(change)
         danpheEMR.find_element_by_xpath("//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
         time.sleep(2)
         danpheEMR.find_element_by_xpath("//button[@type='button' and text()=' Confirm Discharge ']").click()
         time.sleep(7)
 def verifyDischargeInvoice(danpheEMR, paymentmode):
+    global actualBillAmount
+    global actualBillGrandTotal
+    global actualBillToBePaid
+    global actualBillTender
+    global actualChange
     time.sleep(3)
     print("Start>>verifyDischargeInvoice")
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        AMOUNT = danpheEMR.find_element_by_xpath("//span[contains(text(),'Amount:')]//parent::div").text
-        print("GrandTotal", AMOUNT)
-        Amount1 = AMOUNT.partition(": ")[2]
-        print("Amount1", Amount1)
-        Amount1 = Amount1.replace(',', '')
-        print("Amount1", Amount1)
-        Amountzero = Amount1.partition(".")[0]
-        print("Amountzero", Amountzero)
-        Amountone = Amount1.partition(".")[1]
-        print("Amountone", Amountone)
-        # randTotal2 = GrandTotal.partition("TOTAL: ")[0]
-        BillingTotal = tobepaid
-        print("BillingTotal:", BillingTotal)
-        x = int(BillingTotal)
-        print("x", x)
-        y = int(Amountzero)
-        print("y", y)
-        assert x == y
-        GRANDTOTAL = danpheEMR.find_element_by_xpath("//span[contains(text(),'Grand Total:')]//parent::div").text
-        print("GRANDTOTAL", GRANDTOTAL)
-        GrandTotal1 = GRANDTOTAL.partition(": ")[2]
-        print("GrandTotal1", GrandTotal1)
-        GrandTotal = GrandTotal1.partition(".")[0]
-        print("GrandTotal:", GrandTotal)
-        GrandTotal = GrandTotal.replace(',', '')
-        print("GrandTotal:", GrandTotal)
-        x = int(GrandTotal)
-        print("x", x)
-        #y = int(NetTotal)
-        #assert y == x
+        ###
+        actualBillAmount = danpheEMR.find_element_by_xpath("//span[contains(text(),'Amount:')]//parent::div").text
+        print("actualBillAmount:", actualBillAmount)
+        actualBillGrandTotal = danpheEMR.find_element_by_xpath("//span[contains(text(),'Grand Total:')]//parent::div").text
+        print("actualBillGrandTotal:", actualBillGrandTotal)
+        actualBillGrandTotal = actualBillGrandTotal.partition(": ")[2]
+        print("actualBillGrandTotal:", actualBillGrandTotal)
+        actualBillGrandTotal = actualBillGrandTotal.replace(',', '')
+        print("actualBillGrandTotal:", actualBillGrandTotal)
+        actualBillGrandTotal = actualBillGrandTotal.partition(".")[0]
+        print("actualBillGrandTotal", actualBillGrandTotal)
+        actualBillGrandTotal = float(actualBillGrandTotal)
+        print("actualBillGrandTotal:", actualBillGrandTotal)
+        ###
         if paymentmode == "Cash":
-            TOBEPAID = danpheEMR.find_element_by_xpath("//span[contains(text(),'To Be Paid:')]//parent::div").text
-            ToBePaid = TOBEPAID.partition(": ")[2]
-            paidamount = ToBePaid.partition(".")[0]
-            x = int(paidamount)
-            print("paidamount", x)
-            y = int(ToBePaid)
-            print("y", y)
-            assert x == y
-            tender = danpheEMR.find_element_by_xpath(
-                "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
-            print("tender", tender)
-            assert int(Tender) == int(tender)
+            actualBillToBePaid = danpheEMR.find_element_by_xpath("//span[contains(text(),'To Be Paid:')]//parent::div").text
+            print("actualBillToBePaid:", actualBillToBePaid)
+            actualBillToBePaid = actualBillToBePaid.partition(": ")[2]
+            actualBillToBePaid = actualBillToBePaid.partition(".")[0]
+            actualBillToBePaid = actualBillToBePaid.replace(',', '')
+            print("actualBillToBePaid", actualBillToBePaid)
+            actualBillToBePaid = float(actualBillToBePaid)
+            print("actualBillToBePaid", actualBillToBePaid)
+            #assert actualGrandTotal == actualBillToBePaid
+            #actualBillTender = danpheEMR.find_element_by_xpath(
+            #    "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
+            #print("actualTender", actualTender)
+            #actualBillTender = float(actualBillTender)
+            #assert actualBillTender == float(Tender)
         else:
-            amounttobepaid = danpheEMR.find_element_by_xpath(
+            actualBillToBePaid = danpheEMR.find_element_by_xpath(
                 "//td/strong[text()='Amount to be Paid ']//parent::td//following-sibling::td").text
-            amounttobepaid = amounttobepaid.partition(".")[0]
-            amounttobepaid = amounttobepaid.replace(',', '')
-            print("amounttobepaid", amounttobepaid)
-            assert int(amounttobepaid) == int(ToBePaid)
+            actualBillToBePaid = actualBillToBePaid.partition(".")[0]
+            actualBillToBePaid = actualBillToBePaid.replace(',', '')
+            print("actualBillToBePaid", actualBillToBePaid)
+            #assert int(amounttobepaid) == int(ToBePaid)
         element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
         time.sleep(2)
         danpheEMR.execute_script("arguments[0].click();", element)
