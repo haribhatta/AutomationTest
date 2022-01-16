@@ -153,7 +153,8 @@ def dischargeRandomPatient(danpheEMR):
          time.sleep(3)
          danpheEMR.find_element_by_xpath("(//button[@type='button'])[5]").click()
          time.sleep(3)
-         danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+         #danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+         danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
          time.sleep(14)
       time.sleep(5)
 def checkAutoAddItems(danpheEMR):
