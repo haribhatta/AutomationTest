@@ -56,10 +56,10 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             danpheEMR.find_element_by_id("SaveAdmission").click()
             time.sleep(2)
             if AppName == "LPH":
-                danpheEMR.find_element_by_id("btnAdtSticker").click()
+                #danpheEMR.find_element_by_id("btnAdtSticker").click()
                 time.sleep(4)
-                #danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger']").click()
-                danpheEMR.find_element_by_id("btnPrintRecipt").send_key(Keys.ESCAPE)
+                danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger']").click()
+                #danpheEMR.find_element_by_id("btnPrintRecipt").send_key(Keys.ESCAPE)
             else:
                 danpheEMR.find_element_by_id("btnAdtSticker").click()
                 #danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
