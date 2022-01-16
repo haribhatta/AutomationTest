@@ -6,7 +6,6 @@ import Library.LibModuleBilling as LB
 #AC.applicationSelection()
 EMR = AC.openBrowser()
 
-
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
@@ -20,5 +19,5 @@ LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
 HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
 # 2. Create Insurance Patient for Existing patient
-LI.ExistingPatientNewVisit(EMR)
+LI.ExistingPatientNewVisit(EMR, HospitalNo, departmentGynae)
 

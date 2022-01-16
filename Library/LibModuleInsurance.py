@@ -10,7 +10,7 @@ AppName = GSV.appName
 ########
 #Module:Incentive ******************
 
-def ExistingPatientNewVisit(danpheEMR):
+def ExistingPatientNewVisit(danpheEMR, HospitalNo, Department):
     global NSHI
     print("Start >> Existing Patient Registration")
     danpheEMR.find_element_by_link_text("GovInsurance").click()
@@ -31,7 +31,7 @@ def ExistingPatientNewVisit(danpheEMR):
     danpheEMR.find_element_by_id("quickFilterInput").send_keys(NSHI)
     time.sleep(3)
     danpheEMR.find_element_by_link_text("New Visit").click()
-    danpheEMR.find_element_by_id("txtDepartment").send_keys(department)
+    danpheEMR.find_element_by_id("txtDepartment").send_keys(Department)
     danpheEMR.find_element_by_id("txtDepartment").send_keys(Keys.TAB)
     time.sleep(3)
     danpheEMR.find_element_by_id("btnPrintInvoice").click()
@@ -39,7 +39,6 @@ def ExistingPatientNewVisit(danpheEMR):
     danpheEMR.find_element_by_id("btnPrintInsSticker").send_keys(Keys.ESCAPE)
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Insurance Billing").click()
-    danpheEMR.
 
 
 def insurancePatientRegistration(danpheEMR):
