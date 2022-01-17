@@ -60,6 +60,7 @@ def returnBillingInvoice(danpheEMR, InvoiceNo, returnmsg):
         time.sleep(9)
         danpheEMR.find_element_by_id("txtRetQty_0").send_keys(1)
         danpheEMR.find_element_by_id("txtReturnRemarks").send_keys(returnmsg)
+        time.sleep(3)
         danpheEMR.find_element_by_id("btnSubmit").click()
         time.sleep(3)
         returnremark = danpheEMR.find_element_by_xpath("//div[contains(text(), ' Remarks:')]").text
