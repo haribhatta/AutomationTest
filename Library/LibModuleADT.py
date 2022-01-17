@@ -6,6 +6,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 
+
 #danpheEMR = AC.danpheEMR
 #print("DanpheEMR", danpheEMR)
 AppName = GSV.appName
@@ -14,7 +15,7 @@ AppName = GSV.appName
 def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doctor, department):
       if admit == 1:
          if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-            time.sleep(3)
+            time.sleep(1)
             danpheEMR.find_element_by_link_text("ADT").click()
             time.sleep(3)
             danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
@@ -33,9 +34,13 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
                 danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(GSV.doctorGyno)
                 danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(Keys.ENTER)
                 time.sleep(3)
-            wardID = Select(danpheEMR.find_element_by_id("WardId"))
-            time.sleep(3)
-            wardID.select_by_visible_text(GSV.generalWard)
+
+            danpheEMR.find_element_by_id("WardId").click()
+            danpheEMR.find_element_by_id("WardId").send_keys(Keys.DOWN)
+            danpheEMR.find_element_by_id("WardId").send_keys(Keys.ENTER)
+            # wardID = Select(danpheEMR.find_element_by_id("WardId"))
+            # time.sleep(2)
+            # wardID.select_by_visible_text(GSV.generalWard)
             time.sleep(3)
             danpheEMR.find_element_by_id("BedFeatureId").click()
             time.sleep(3)
@@ -43,7 +48,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             time.sleep(1)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.DOWN)
             danpheEMR.find_element_by_id("BedFeatureId").send_keys(Keys.ENTER)
-            danpheEMR.find_element_by_id("BedFeatureId").click()
+            # danpheEMR.find_element_by_id("BedFeatureId").click()
             time.sleep(2)
             danpheEMR.find_element_by_id("BedId").click()
             time.sleep(0.5)
@@ -51,7 +56,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             danpheEMR.find_element_by_id("BedId").send_keys(Keys.DOWN)
             time.sleep(2)
             danpheEMR.find_element_by_id("BedId").send_keys(Keys.ENTER)
-            danpheEMR.find_element_by_id("BedId").click()
+            # danpheEMR.find_element_by_id("BedId").click()
             time.sleep(2)
             danpheEMR.find_element_by_id("SaveAdmission").click()
             time.sleep(2)
@@ -95,8 +100,12 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
          danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys(Keys.TAB)
          # danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys()
 
-         WardID= Select(danpheEMR.find_element_by_id('WardId').send_keys(Keys.ENTER))
-         WardID.select_by_visible_text(GSV.generalWard)
+         danpheEMR.find_element_by_id("WardId").click()
+         danpheEMR.find_element_by_id("WardId").send_keys(Keys.ARROW_DOWN)
+         danpheEMR.find_element_by_id("WardId").send_keys(Keys.ENTER)
+         # time.sleep(1)
+         # WardID = Select(danpheEMR.find_element_by_id('WardId').send_keys(Keys.ENTER))
+         # WardID.select_by_visible_text(GSV.generalWard)
          # # select by value and index
          # select.select_by_value('1')
          time.sleep(2)

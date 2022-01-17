@@ -8,10 +8,7 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 EMR = AC.openBrowser()
-########
-priceCategoryType = "Normal"
-discountScheme = GSV.discountSchemeName
-########
+
 #############
 # front desk user login
 foUserId = GSV.foUserID
@@ -22,7 +19,7 @@ doctorGynae = GSV.doctorGyno
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal").HospitalNo
 #can.verifyopdinvoice(deposit=0, billamt=500)
 print("Status:Passed - > TC001 CreateAppointmentNew")
 #oblx.verifyopdinvoice(deposit=0, billamt=500)

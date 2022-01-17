@@ -4,16 +4,22 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
 import Library.GlobalShareVariables as GSV
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 AppName = GSV.appName
+
+
 def counteractivation(danpheEMR):
     print(">>Activate Billing Counter: START")
-    time.sleep(5)
     danpheEMR.find_element_by_link_text("Billing").click()
-    time.sleep(11)
-    danpheEMR.find_element_by_xpath("(//a[contains(@href, '#/Billing/CounterActivate')])[2]").click()
+    time.sleep(2)
+    danpheEMR.find_element_by_link_text("Counter Activate")
     danpheEMR.find_element_by_css_selector(".col-md-2:nth-child(1) img").click()
     print("Activate Billing Counter: END<<")
+
+
 def verifyopdinvoice(danpheEMR, deposit, billamt):
     print(">>Verify OPD Invoice Details: START")
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
@@ -128,34 +134,42 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     print("Hospital Number:", HospitalNo)
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         danpheEMR.find_element_by_link_text("Billing").click()
-        time.sleep(5)
+        danpheEMR.implicitly_wait(10)
         danpheEMR.find_element_by_id("srch_PatientList").click()
         danpheEMR.find_element_by_id("srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(5)
-        danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
-        time.sleep(5)
-        danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
-        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(imagingtest)
-        time.sleep(1)
-        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(1)
-        price1 = danpheEMR.find_element_by_xpath("//input[@name='total']").get_attribute('value')
-        time.sleep(1)
-        danpheEMR.find_element_by_css_selector("a > .btn-success").click()
-        time.sleep(1)
-        danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(labtest)
-        time.sleep(1)
-        danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(Keys.RETURN)
         time.sleep(2)
+        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.TAB)
+        danpheEMR.find_element_by_id("srch_PatientList").send_keys(Keys.ENTER)
+        element = WebDriverWait(danpheEMR, 10)
+        element.until(
+            EC.element_to_be_clickable((By.ID, "btn_billRequest"))
+        ).click()
+
+        # danpheEMR.find_element_by_xpath("//button[@id='btn_billRequest']").click()
+        wait = WebDriverWait(danpheEMR, 20)
+        wait.until(
+            EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
+        ).click()
+
+        # danpheEMR.find_element_by_id("srchbx_ItemName_0").click()
+        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(imagingtest)
+        danpheEMR.find_element_by_id("srchbx_ItemName_0").send_keys(Keys.TAB)
+        price1 = danpheEMR.find_element_by_xpath("//input[@name='total']").get_attribute('value')
+        danpheEMR.find_element_by_css_selector("a > .btn-success").click()
+        danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(labtest)
+        danpheEMR.find_element_by_id("srchbx_ItemName_1").send_keys(Keys.RETURN)
+        price = WebDriverWait(danpheEMR, 10)
+        price.until(
+            EC.visibility_of_element_located((By.XPATH, "(//input[@name='total'])[2]"))
+        )
         price2 = danpheEMR.find_element_by_xpath("(//input[@name='total'])[2]").get_attribute('value')
         totalprice = int(price1) + int(price2)
         print("Total Price:", totalprice)
-        time.sleep(3)
         danpheEMR.find_element_by_xpath("//input[@value='Print INVOICE']").click()
-        time.sleep(9)
+        InNo =  WebDriverWait(danpheEMR, 10)
+        InNo.until(
+            EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]"))
+        )
         # InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]/child::span").text
         InvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
         danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
