@@ -793,11 +793,13 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
             TOBEPAID = TOBEPAID.partition(".")[0]
             TOBEPAID = TOBEPAID.replace(',', '')
             print("TOBEPAID:", TOBEPAID)
+            ''' # commenting this due to removal of Tender/Change field in IP Invoice.
             tender = danpheEMR.find_element_by_xpath(
                 "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
             print("tender", tender)
             tender = float(tender)
             assert tender == actualTender
+            '''
         elif paymentmode == "CREDIT":
             amounttobepaid = danpheEMR.find_element_by_xpath(
                 "//span[contains(text(),'To Be Paid:')]//parent::div").text
