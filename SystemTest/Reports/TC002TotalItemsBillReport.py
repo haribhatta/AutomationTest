@@ -8,8 +8,8 @@ import Library.LibModuleADT as LADT
 import time
 
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+itUserId = GSV.itUserID
+itUserPwd = GSV.itUserPwD
 opdAmt = GSV.opdRate
 user = GSV.foUserID
 ########
@@ -17,7 +17,7 @@ priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
-AC.login(foUserId, foUserPwd)
+AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
 InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
