@@ -40,6 +40,22 @@ def createManualVoucher():
       time.sleep(2)
       danpheEMR.find_element_by_css_selector(".fa-plus").click()
       danpheEMR.find_element_by_id("DrCr_2").click()
+def PosttoAccounting():
+      danpheEMR.find_element_by_link_text("Accounting").click()
+      time.sleep(5)
+      danpheEMR.find_element_by_link_text("Post to Accounting").click()
+      time.sleep(5)
+      Module = Select(danpheEMR.find_element_by_id("sectionid"))
+      time.sleep(5)
+      Module.select_by_visible_text("Billing")
+      time.sleep(5)
+      Voucher = Select(danpheEMR.find_element_by_id("voucherhead"))
+      time.sleep(5)
+      Voucher.select_by_visible_text("life")
+      time.sleep(5)
+      danpheEMR.find_element_by_xpath("//button[@title='Load records of selected date']").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_xpath("//button[@title='save selected to accounting'][1]").click()
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles

@@ -269,7 +269,6 @@ if appName == "MPH":
 ###Doctors/Departments Name:
       doctorGyno = "Dr. Anjali Subedi"
       departmentGyno = "OBG Gynae"
-      doctor2 = "Dr. Junu Shrestha"
 ###Wards Name:
       generalWard = "General Non-Covid Ward"
       bedFeature = "General Non-Covid Ward"
@@ -278,6 +277,12 @@ if appName == "MPH":
 ###Discount Scheme
       discountSchemeType = "StaffFamily"
       discountSchemeName = "Staff Family (30%)"
+      ###Doctors/Departments List
+      doctorNephro = "Dr. Eva Gauchan"
+      departmentNephro = "Pediatrics "
+      doctor2 = "Dr. Junu Shrestha"
+
+
 ###############################################################################
 
    #def __str__():

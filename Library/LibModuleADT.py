@@ -92,10 +92,11 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
          danpheEMR.find_element_by_id("DepartmentName").click()
          danpheEMR.find_element_by_id("DepartmentName").send_keys(department)
          danpheEMR.find_element_by_id("DepartmentName").send_keys(Keys.TAB)
+         danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys(Keys.TAB)
          # danpheEMR.find_element_by_id("SecondaryDoctorName").send_keys()
 
-         Ward = Select(danpheEMR.find_element_by_id('WardId'))
-         Ward.select_by_visible_text('ICU')
+         WardID= Select(danpheEMR.find_element_by_id('WardId').send_keys(Keys.ENTER))
+         WardID.select_by_visible_text(GSV.generalWard)
          # # select by value and index
          # select.select_by_value('1')
          time.sleep(2)
