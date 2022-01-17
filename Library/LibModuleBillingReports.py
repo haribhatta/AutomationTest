@@ -342,60 +342,20 @@ def verifyPatientCensus(cash, cashreturn, credit, creditreturn, provisional):
 #Module:Report: Income Segregation Report*****************
 def getIncomeSegregation(danpheEMR):
       print(">>START: getIncomeSegregation")
-      global sysunit
-      global syscashgrosssales
-      global syscashdiscount
-      global syscreditgrosssales
-      global syscreditdiscount
-      global sysreturnqty
-      global sysreturnamount
-      global sysreturndiscount
-      global systotalgrosssales
-      global systotaldiscount
-      global systotalnetsales
+      global actualCashSales    #A
+      global actualCreditSales  #B
+      global actualGrossSales    #C
+      global actualCashDiscount    #D
+      global actualCreditDiscount  #E
+      global actualTotalDiscount   #F
+      global actualReturnCashSales    #G
+      global actualReturnCreditSales  #H
+      global actualTotalSalesReturn #I
+      global actualReturnCashDiscount   #J
+      global actualReturnCreditDiscount   #K
+      global actualTotalReturnDiscount  #L
+      global actualNetSales #M
       time.sleep(3)
-      # if appPort == '81':
-      #    danpheEMR.find_element_by_link_text("Reports").click()
-      #    time.sleep(3)
-      #    danpheEMR.find_element_by_link_text("Billing Reports").click()
-      #    time.sleep(3)
-      #    danpheEMR.find_element_by_xpath("//i[contains(.,'Income Segregation')]").click()
-      #    time.sleep(5)
-      #    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      #    time.sleep(15)
-      #    sysunit = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[1]").text
-      #    print("sysunit", sysunit)
-      #    syscashgrosssales = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[2]").text
-      #    print("syscashgrosssales", syscashgrosssales)
-      #    syscashdiscount = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[3]").text
-      #    print("syscashdiscount", syscashdiscount)
-      #    syscreditgrosssales = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[4]").text
-      #    print("syscreditgrosssales", syscreditgrosssales)
-      #    syscreditdiscount = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[5]").text
-      #    print("syscreditdiscount", syscreditdiscount)
-      #    sysreturnqty = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[6]").text
-      #    print("sysreturnqty", sysreturnqty)
-      #    sysreturnamount = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[7]").text
-      #    print("sysreturnamount", sysreturnamount)
-      #    sysreturndiscount = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[8]").text
-      #    print("sysreturndiscount", sysreturndiscount)
-      #    systotalgrosssales = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[9]").text
-      #    print("systotalgrosssales", systotalgrosssales)
-      #    systotaldiscount = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[10]").text
-      #    print("systotaldiscount", systotaldiscount)
-      #    systotalnetsales = danpheEMR.find_element_by_xpath(
-      #       "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
-      #    print("systotalnetsales", systotalnetsales)
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
          danpheEMR.find_element_by_link_text("Reports").click()
          time.sleep(3)
@@ -405,124 +365,132 @@ def getIncomeSegregation(danpheEMR):
          time.sleep(5)
          danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
          time.sleep(15)
-         #sysunit = danpheEMR.find_element_by_xpath(
-         #   "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[1]").text
-         #print("sysunit", sysunit)
-         #syscashgrosssales = danpheEMR.find_element_by_xpath(
-         #   "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[2]").text
-         #print("syscashgrosssales", syscashgrosssales)
-         syscashdiscount = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[3]").text
-         print("syscashdiscount", syscashdiscount)
-         syscreditgrosssales = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[4]").text
-         print("syscreditgrosssales", syscreditgrosssales)
-         syscreditdiscount = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[5]").text
-         print("syscreditdiscount", syscreditdiscount)
-         sysreturnqty = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[6]").text
-         print("sysreturnqty", sysreturnqty)
-         sysreturnamount = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[7]").text
-         print("sysreturnamount", sysreturnamount)
-         sysreturndiscount = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[8]").text
-         print("sysreturndiscount", sysreturndiscount)
-         systotalgrosssales = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[9]").text
-         print("systotalgrosssales", systotalgrosssales)
-         systotaldiscount = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[10]").text
-         print("systotaldiscount", systotaldiscount)
-         systotalnetsales = danpheEMR.find_element_by_xpath(
-            "//td[contains(text(), 'Unit')]/parent::tr/following-sibling::tr[3]/td[11]").text
-         print("systotalnetsales", systotalnetsales)
+        #A
+         actualCashSales = danpheEMR.find_element_by_xpath(
+            "(//td[contains(text(),'Cash Sales')]/following-sibling::td)[1]").text
+         actualCashSales = float(actualCashSales)
+         print("actualCashSales", actualCashSales)
+         #B
+         actualCreditSales = danpheEMR.find_element_by_xpath(
+            "(//td[contains(text(),'Credit Sales')]/following-sibling::td)[1]").text
+         actualCreditSales = float(actualCreditSales)
+         print("actualCreditSales", actualCreditSales)
+         #C
+         actualGrossSales = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Gross Sales')]/following-sibling::td").text
+         actualGrossSales = float(actualGrossSales)
+         print("actualGrossSales", actualGrossSales)
+         #D
+         actualCashDiscount = danpheEMR.find_element_by_xpath(
+            "(//td[contains(text(),'Cash Discount')]/following-sibling::td)[1]").text
+         actualCashDiscount = float(actualCashDiscount)
+         print("actualCashDiscount", actualCashDiscount)
+         #E
+         actualCreditDiscount = danpheEMR.find_element_by_xpath(
+            "(//td[contains(text(),'Credit Discount')]/following-sibling::td)[1]").text
+         actualCreditDiscount = float(actualCreditDiscount)
+         print("actualCreditDiscount", actualCreditDiscount)
+         #F
+         actualTotalDiscount = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Total Discount')]/following-sibling::td").text
+         actualTotalDiscount = float(actualTotalDiscount)
+         print("actualTotalDiscount", actualTotalDiscount)
+         #G
+         actualReturnCashSales = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Return Cash Sales')]/following-sibling::td").text
+         actualReturnCashSales = float(actualReturnCashSales)
+         print("actualReturnCashSales", actualReturnCashSales)
+         #H
+         actualReturnCreditSales = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Return Credit Sales')]/following-sibling::td").text
+         actualReturnCreditSales = float(actualReturnCreditSales)
+         print("actualReturnCreditSales", actualReturnCreditSales)
+         #I
+         actualTotalSalesReturn = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Total Sales Return')]/following-sibling::td").text
+         actualTotalSalesReturn = float(actualTotalSalesReturn)
+         print("actualTotalSalesReturn", actualTotalSalesReturn)
+         #j
+         actualReturnCashDiscount = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Return Cash Discount')]/following-sibling::td").text
+         actualReturnCashDiscount = float(actualReturnCashDiscount)
+         print("actualReturnCashDiscount", actualReturnCashDiscount)
+         #k
+         actualReturnCreditDiscount = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Return Credit Discount')]/following-sibling::td").text
+         actualReturnCreditDiscount = float(actualReturnCreditDiscount)
+         print("actualReturnCreditDiscount", actualReturnCreditDiscount)
+         #l
+         actualTotalReturnDiscount = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Total Return Discount')]/following-sibling::td").text
+         actualTotalReturnDiscount = float(actualTotalReturnDiscount)
+         print("actualTotalReturnDiscount", actualTotalReturnDiscount)
+         #m
+         actualNetSales = danpheEMR.find_element_by_xpath(
+            "//td[contains(text(),'Net Sales')]/following-sibling::td").text
+         actualNetSales = float(actualNetSales)
+         print("actualNetSales", actualNetSales)
       print("<<END getIncomeSegregation")
 def preSystemIncomeSegregation():
       print(">>START: preSystemIncomeSegregation")
-      global presysunit
-      global presyscashgrosssales
-      global presyscashdiscount
-      global presyscreditgrosssales
-      global presyscreditdiscount
-      global presysreturnqty
-      global presysreturnamount
-      global presysreturndiscount
-      global presystotalgrosssales
-      global presystotaldiscount
-      global presystotalnetsales
-      presysunit = float(sysunit)
-      print("presysunit", presysunit)
-      presyscashgrosssales = int(syscashgrosssales)
-      print("presyscashgrosssales", presyscashgrosssales)
-      presyscashdiscount = int(syscashdiscount)
-      print("presyscashdiscount", presyscashdiscount)
-      presyscreditgrosssales = int(syscreditgrosssales)
-      print("presyscreditgrosssales", presyscreditgrosssales)
-      presyscreditdiscount = int(syscreditdiscount)
-      print("presyscreditdiscount", presyscreditdiscount)
-      presysreturnqty = int(sysreturnqty)
-      print("presysreturnqty", presysreturnqty)
-      presysreturnamount = int(sysreturnamount)
-      print("presysreturnamount", presysreturnamount)
-      presysreturndiscount = int(sysreturndiscount)
-      print("presysreturndiscount", presysreturndiscount)
-      presystotalgrosssales = int(systotalgrosssales)
-      print("presystotalgrosssales", presystotalgrosssales)
-      presystotaldiscount = int(systotaldiscount)
-      print("presystotaldiscount", presystotaldiscount)
-      presystotalnetsales = int(systotalnetsales)
-      print("presystotalnetsales", presystotalnetsales)
+      global preCashSales    #A
+      global preCreditSales  #B
+      global preGrossSales    #C
+      global preCashDiscount    #D
+      global preCreditDiscount  #E
+      global preTotalDiscount   #F
+      global preReturnCashSales    #G
+      global preReturnCreditSales  #H
+      global preTotalSalesReturn #I
+      global preReturnCashDiscount   #J
+      global preReturnCreditDiscount   #K
+      global preTotalReturnDiscount  #L
+      global preNetSales #M
+      preCashSales = actualCashSales
+      preCreditSales = actualCreditSales
+      preGrossSales = actualGrossSales
+      preCashDiscount = actualCashDiscount
+      preCreditDiscount = actualCreditDiscount
+      preTotalDiscount = actualTotalDiscount
+      preReturnCashSales = actualReturnCashSales
+      preReturnCreditSales = actualReturnCreditSales
+      preTotalSalesReturn = actualTotalSalesReturn
+      preReturnCashDiscount = actualReturnCashDiscount
+      preReturnCreditDiscount = actualReturnCreditDiscount
+      preTotalReturnDiscount = actualTotalReturnDiscount
+      preNetSales = actualNetSales
       print("<<END preSystemIncomeSegregation")
-def verifyIncomeSegregation(cash, cashreturn, credit, creditreturn, provision):
+def verifyIncomeSegregation(cash, cashReturn, credit, creditReturn, discount, provision):
       print(">>START: verifyIncomeSegregation")
-      unit = 0
-      returnqty = 0
-      if cash > 0 or credit > 0:
-         returnqty = 0
-         unit = 1
-      elif cashreturn > 0 or creditreturn > 0:
-         returnqty = 1
-         unit = 0
-      # if appPort == '81':
-      #    calcUnit = presysunit + unit - returnqty
-      #    print("calcUnit", calcUnit)
-      #    print("sysunit", sysunit)
-      #    assert int(sysunit) == int(calcUnit)
-      #    print("syscashgrosssales", syscashgrosssales)
-      #    calcCashGrossSales = int(presyscashgrosssales + cash)
-      #    print("calcCashGrossSales", calcCashGrossSales)
-      #    assert int(syscashgrosssales) == int(presyscashgrosssales + cash) #Issues: LPH-866,...  .Issue on: V1.9.0,.....
-      #    assert int(syscashdiscount) == presyscashdiscount + 0
-      #    assert int(syscreditgrosssales) == presyscreditgrosssales + credit
-      #    assert int(syscreditdiscount) == presyscreditdiscount + 0
-      #    assert int(sysreturnqty) == presysreturnqty + returnqty
-      #    assert int(sysreturnamount) == presysreturnamount + cashreturn + creditreturn
-      #    assert int(sysreturndiscount) == presysreturndiscount + 0
-      #    assert int(systotalgrosssales) == presystotalgrosssales + cash - cashreturn + credit - creditreturn
-      #    assert int(systotaldiscount) == presystotaldiscount + 0
-      #    assert int(systotalnetsales) == presystotalnetsales + cash - cashreturn + credit - creditreturn
-      #    print("<<END verifyIncomeSegregation")
       if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-         calcUnit = presysunit + unit
-         print("calcUnit", calcUnit)
-         print("sysunit", sysunit)
-         assert int(sysunit) == int(calcUnit)
-         print("syscashgrosssales", syscashgrosssales)
-         calcCashGrossSales = int(presyscashgrosssales + cash)
-         print("calcCashGrossSales", calcCashGrossSales)
-         assert int(syscashgrosssales) == int(presyscashgrosssales + cash) #Issues: LPH-866,...  .Issue on: V1.9.0,.....
-         assert int(syscashdiscount) == presyscashdiscount + 0
-         assert int(syscreditgrosssales) == presyscreditgrosssales + credit
-         assert int(syscreditdiscount) == presyscreditdiscount + 0
-         assert int(sysreturnqty) == presysreturnqty + returnqty
-         assert int(sysreturnamount) == presysreturnamount + cashreturn + creditreturn
-         assert int(sysreturndiscount) == presysreturndiscount + 0
-         assert int(systotalgrosssales) == presystotalgrosssales + cash - cashreturn + credit - creditreturn
-         assert int(systotaldiscount) == presystotaldiscount + 0
-         assert int(systotalnetsales) == presystotalnetsales + cash - cashreturn + credit - creditreturn
-         print("<<END verifyIncomeSegregation")
+          expectedCashSales = preCashSales + cash
+          print("expectedCashSales:", expectedCashSales)
+          assert expectedCashSales == actualCashSales
+          expectedCreditSales = preCreditSales + credit
+          assert expectedCreditSales == actualCreditSales
+          expectedGrossSales = preGrossSales + cash + credit
+          assert expectedGrossSales == actualGrossSales
+          expectedCashDiscount = preCashDiscount + discount
+          assert expectedCashDiscount == actualCashDiscount
+          expectedCreditDiscount = preCreditDiscount + discount
+          assert expectedCreditDiscount == actualCreditDiscount
+          expectedTotalDiscount = preTotalDiscount + discount
+          assert expectedTotalDiscount == actualTotalDiscount
+          expectedReturnCashSales = preReturnCashSales + cashReturn
+          assert expectedReturnCashSales == actualReturnCashSales
+          expectedReturnCreditSales = preReturnCreditSales + creditReturn
+          assert expectedReturnCreditSales == actualReturnCreditSales
+          expectedTotalSalesReturn = preTotalSalesReturn + cashReturn + creditReturn
+          assert expectedTotalSalesReturn == actualTotalSalesReturn
+          expectedReturnCashDiscount = preReturnCashDiscount + discount
+          assert expectedReturnCashDiscount == actualReturnCashDiscount
+          expectedReturnCreditDiscount = preReturnCreditDiscount + discount
+          assert expectedReturnCreditDiscount == actualReturnCreditDiscount
+          expectedTotalReturnDiscount = preTotalReturnDiscount + discount
+          assert expectedTotalReturnDiscount == actualTotalReturnDiscount
+          expectedNetSales = preNetSales + cash + credit - cashReturn - creditReturn
+          assert expectedNetSales == actualNetSales
+          print("<<END verifyIncomeSegregation")
 ######## Patient Credit Summary Report
 def getPatientCreditSummary(danpheEMR):
       print(">>START: getPatientCreditSummary")
