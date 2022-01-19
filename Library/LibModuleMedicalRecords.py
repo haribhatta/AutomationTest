@@ -1,9 +1,6 @@
 from selenium import webdriver
 import time
 import random
-
-from selenium.common.exceptions import NoSuchElementException
-
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
@@ -29,7 +26,6 @@ def addBirthCertificate(danpheEMR, HospitalNo):
       time.sleep(3)
       number = str(random.randint(1, 9999))
       danpheEMR.find_element_by_id("certNum").send_keys(number)
-      print(number)
       time.sleep(3)
       birthCondition = Select(danpheEMR.find_element_by_id("ddlBirthCondition"))
       birthCondition.select_by_visible_text("Live Birth")
@@ -37,35 +33,11 @@ def addBirthCertificate(danpheEMR, HospitalNo):
       gender.select_by_visible_text("Male")
       time.sleep(3)
       danpheEMR.find_element_by_id("babyWt").send_keys(2.2)
-      time.sleep(2)
-      # birthType = Select(danpheEMR.find_element_by_id("ddlBirthType")).click()
-      # birthType.select_by_visible_text(" Spontaneous Vaginal Delivery")
-      # time.sleep(3)
-      danpheEMR.find_element_by_xpath("//button[contains(text(),'Add Certificate')]").click()
-      danpheEMR.find_element_by_xpath("//button[contains(text(),'Submit')]").click()
-      # return number for the verifying the certificate number
-      return number
+      birthType = Select(danpheEMR.find_element_by_id("ddlBirthType"))
+      birthType.select_by_visible_text(" Spontaneous Vaginal Delivery")
+      time.sleep(3)
    print("<<END: addBirthCertificate")
-
-def verifyaddbirthCertificate(danpheEMR , certNo):
-   print("Verifying Certificate Start")
-   danpheEMR.find_element_by_link_text("MedicalRecords").click()
-   time.sleep(5)
-   danpheEMR.find_element_by_link_text("Birth List").click()
-   time.sleep(3)
-   danpheEMR.find_element_by_id("quickFilterInput").send_keys(certNo)
-   time.sleep(2)
-   try:
-      danpheEMR.find_element_by_xpath("(//a[contains(text(),'Certificate')])[2]").click()
-      danpheEMR.find_element_by_xpath("//button[contains(text(),'Cancel')]").click()
-      print("End of Verifying Certificate")
-
-   except NoSuchElementException:
-       print("Not verified")
-       raise NoSuchElementException("FileNotFoundError")
-
-
-def addMRwithDischargeTypeDeath(danpheEMR, HospitalNo):
+def addMRwithDischargeTypeDeath(danpheEMR):
    print(">>START: addMRwithDischargeTypeDeath")
    ######## add MR with discharge Type = Death goes here
    if  AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
@@ -74,26 +46,23 @@ def addMRwithDischargeTypeDeath(danpheEMR, HospitalNo):
       time.sleep(5)
       danpheEMR.find_element_by_link_text("MR Inpatient List").click()
       time.sleep(3)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(2112109496)
       danpheEMR.find_element_by_xpath("//button[contains(text(),'Load Patients')]").click()
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
       time.sleep(3)
       danpheEMR.find_element_by_xpath("//a[contains(text(),'Add MR')]").click()
-      time.sleep(3)
-      dischargeType = Select(danpheEMR.find_element(By.XPATH, "//select"))
-      dischargeType.select_by_visible_text("Death")
-      time.sleep(3)
-      dischargeCondition = Select(danpheEMR.find_element(By.CSS_SELECTOR, ".row:nth-child(4) .cstm-field-sel"))
-      dischargeCondition.select_by_visible_text('Post Operative Death')
-      time.sleep(3)
-      deathPeriod = Select(danpheEMR.find_element(By.CSS_SELECTOR, ".row:nth-child(5) .cstm-field-sel"))
-      time.sleep(1)
-      deathPeriod.select_by_visible_text("<48")
+      danpheEMR.find_element(By.CSS_SELECTOR, ".cstm-field-sel").click()
+      dropdown = danpheEMR.find_element(By.XPATH, "//select[@class='cstm-field-sel ng-pristine ng-valid ng-touched']")
+      dropdown.find_element(By.XPATH, "//option[. = 'Death']").click() ##
+      danpheEMR.find_element(By.CSS_SELECTOR, ".row:nth-child(4) .cstm-field-sel").click()
+      dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".row:nth-child(4) .cstm-field-sel")
+      time.sleep(4)
+      dropdown.find_element(By.XPATH, "//option[. = 'Post Operative Death']").click() ##
+      danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-7 > .ng-untouched").click()
+      dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-7 > .ng-untouched")
+      dropdown.find_element(By.XPATH, "//option[. = '<48']").click() ##
       danpheEMR.find_element(By.ID, "icd10code").send_keys("A00 | Cholera")
-      number = str(random.randint(1, 9999))
-      danpheEMR.find_element_by_id("certNum").send_keys(number)
-      print(number)
+      #danpheEMR.find_element(By.ID, "certNum").click()
       danpheEMR.find_element(By.ID, "Submit").click()
-      # danpheEMR.find_element(By.ID, "certNum").send_keys()
       danpheEMR.find_element(By.CSS_SELECTOR, ".all-buttons > .green").click()
       time.sleep(3)
 
