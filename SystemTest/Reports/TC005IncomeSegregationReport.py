@@ -56,7 +56,7 @@ LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=rateOPD
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0, HospitalNo=HospitalNo, doctor=doctor, department=department)
 LBR.getIncomeSegregation(EMR)
-LB.createIPprovisionalBill(danpheEMR=EMR,HospitalNo=HospitalNo, test=usgtest)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, test=usgtest)
 LBR.preSystemIncomeSegregation()
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=0, discount=0, provision=usgprice)

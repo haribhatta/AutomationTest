@@ -64,14 +64,14 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         print("Sir name", sname1)
         FullName = fname + mname + sname1
         print("Full name of patient:", FullName)
-        age = random.randint(5, 99)
+        age = random.randint(15, 45)
         danpheEMR.find_element_by_css_selector(".row > .form-control").send_keys(age)
         danpheEMR.find_element_by_css_selector(".input-group > .ng-valid").click()  #
         dropdown = danpheEMR.find_element_by_css_selector(".ng-dirty")  #
         dropdown.find_element_by_xpath("//option[. = 'Years']").click()  #
         danpheEMR.find_element_by_css_selector(".ng-dirty").click()  #
         gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
-        gender.select_by_visible_text("Male")
+        gender.select_by_visible_text("Female")
         phoneNo = random.randint(9111111111, 9999999999)
         danpheEMR.find_element_by_id("txtPhone").send_keys(phoneNo)
         if discountScheme != 0 and AppName == "LPH":

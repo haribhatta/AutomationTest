@@ -19,10 +19,10 @@ EMR = AC.openBrowser()
 AC.login(mrUserId, mrUserPwd)
 LMRR.getInpatientMorbidityReport(EMR)
 LMRR.storeInpatientMorbidityReport(EMR)
-LMR.addMRwithDischargeTypeDeath(EMR)
+
+LMR.addMRwithDischargeTypeDeath(EMR, HospitalNo=HospitalNo)
 LMRR.getInpatientMorbidityReport(EMR)
 LMRR.verifyInpatientMorbidityReport(EMR)
 
-time.sleep(2)
 AC.logout()
 AC.closeBrowser()
