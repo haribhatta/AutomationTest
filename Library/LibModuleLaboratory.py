@@ -59,9 +59,9 @@ def verifyLabReport(danpheEMR, HospitalNo):
     if AppName == "LPH" or "SNCH":
         danpheEMR.find_element_by_link_text("PendingReports").click()
         danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-        time.sleep(2)
+        time.sleep(5)
         danpheEMR.find_element_by_link_text("View Details").click()
-        time.sleep(3)
+        time.sleep(5)
         danpheEMR.find_element_by_xpath("//button[contains(.,'Verify ')]").click()
 def printLabReport(danpheEMR, HospitalNo, t3, t4, tsh):
       danpheEMR.find_element_by_link_text("Laboratory").click()

@@ -61,10 +61,9 @@ if appName == "LPH":
       #EHS Billing
       opdRateEHS = 400
 ###Pharmacy/Dispensary Items Name:
-      drug1BrandName = 'NIKO DROP 15ML BOTTLE'
-      drug1BrandRate = 25
-      drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
-      drug1Rate = 25
+      drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
+      drug1Rate = 5
+      drug1BrandName = 'PETOR 40 MG'
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5

@@ -14,7 +14,8 @@ doctorGynae = GSV.doctorGyno
 # pharmacy user login
 phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
-drugSinex = GSV.drugSinexName
+drug1Name = GSV.drug1BrandName
+drug2Rate = GSV.drug1Rate
 paymentMode = 'Cash'
 ########
 priceCategoryType = "Normal"
@@ -27,7 +28,7 @@ AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drugSinex, paymentmode=paymentMode)
+pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode=paymentMode)
 LD.returnPharmacyInvoice(EMR, pInvoiceNo, qty=1, returnremark="Wrong entry")
 AC.logout()
 AC.closeBrowser()
