@@ -30,7 +30,7 @@ HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="
 # LB.createlabxrayinvoice(HospitalNo=HospitalNo, labtest=labitem, imagingtest = imagingitem)
 ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=deposit, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
 print("Patient admitted successfully")
-ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=0, trasfer=1, deposit=deposit, HospitalNo=HospitalNo, department=GSV.departmentNephro, doctor=GSV.doctorGyno)
+ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=0, trasfer=1, deposit=deposit, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
 print("Patient Transferred successfully")
 ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, trasfer=0, deposit=deposit, HospitalNo=HospitalNo, department=GSV.doctorGyno, doctor=GSV.doctorGyno)
 print("Patient Discharged successfully")
