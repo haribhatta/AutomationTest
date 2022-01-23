@@ -11,7 +11,7 @@ foUserPwd = GSV.foUserPwD
 user = GSV.foUserID
 #
 opdRate = GSV.opdRate
-discountType = GSV.discountScheme
+discountType = GSV.discountSchemeName
 #discountTypeName = GSV.discountSchemeName
 #discountTypePct = GSV.discountSchemePct
 #AC.applicationSelection()
