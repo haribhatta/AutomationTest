@@ -1119,10 +1119,11 @@ def verifyReturnBillReport(returnamt, returnDiscount):
     print("<<END: verifyReturnBillReport")
 
 ######## Report: Cancel Bill
-def verifyCancelBillReport(danpheEMR, HospitalNo, expectedTotalAmt):
+def verifyCancelBillReport(danpheEMR, HospitalNo, expectedTotalCancelAmt):
     print(">>START: verifyCancelBillReport")
     global actualHospitalNo
-    global expectedTotalCancelAmt
+    expectedTotalCancelAmt = float(expectedTotalCancelAmt)
+    print("expectedTotalCancelAmt:", expectedTotalCancelAmt)
     danpheEMR.find_element_by_link_text("Reports").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Billing Reports").click()
@@ -1133,11 +1134,12 @@ def verifyCancelBillReport(danpheEMR, HospitalNo, expectedTotalAmt):
     time.sleep(9)
     danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
     actualHospitalNo = danpheEMR.find_element_by_xpath("(//div[@col-id='HospitalNo'])[2]").text
-    print("actualHospitalNo : ",actualHospitalNo)
+    print("actualHospitalNo : ", actualHospitalNo)
     assert actualHospitalNo == HospitalNo
-    actualTotalAmt = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
-    print("actualTotalAmt:",actualTotalAmt)
-    assert actualTotalAmt == expectedTotalAmt
+    actualTotalCancelAmt = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
+    actualTotalCancelAmt = float(actualTotalCancelAmt)
+    print("actualTotalCancelAmt:", actualTotalCancelAmt)
+    assert actualTotalCancelAmt == expectedTotalCancelAmt
     print("<<END: verifyCancelBillReport")
 ######## Report: EHS Bill
 def getEHSBillReport(danpheEMR):
