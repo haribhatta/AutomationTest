@@ -11,10 +11,11 @@ foUserPwd = GSV.foUserPwD
 user = GSV.foUserID
 departmentGynae = GSV.departmentGyno
 doctorGynaeEHS = GSV.doctorGynoEHS
-priceCategoryType = "EHS"
-#
 opdRate = GSV.opdRate
-#AC.applicationSelection()
+###
+priceCategoryType = "EHS"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
@@ -47,7 +48,7 @@ LBR.verifyEHSBillReport()
 #Scenario-B1: EHS Discount Cash billing
 LBR.getEHSBillReport(EMR)
 LBR.preEHSBillReport()
-InvoiceNo3 = LA.patientquickentry(EMR, discountScheme=GSV.discountScheme, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
+InvoiceNo3 = LA.patientquickentry(EMR, discountScheme=discountScheme, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
 print("InvoiceNo3", InvoiceNo3)
 LBR.getEHSBillReport(EMR)
 LBR.verifyEHSBillReport()
@@ -59,7 +60,7 @@ LBR.verifyEHSBillReport()
 #Scenario-B3: EHS Discount Credit billing
 LBR.getEHSBillReport(EMR)
 LBR.preEHSBillReport()
-InvoiceNo4 = LA.patientquickentry(EMR, discountScheme=GSV.discountScheme, paymentmode='Credit', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
+InvoiceNo4 = LA.patientquickentry(EMR, discountScheme=discountScheme, paymentmode='Credit', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
 print("InvoiceNo4", InvoiceNo4)
 LBR.getEHSBillReport(EMR)
 LBR.verifyEHSBillReport()
