@@ -5,14 +5,17 @@ import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
 
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+itUserId = GSV.itUserID
+itUserPwd = GSV.itUserPwD
 opdRate = GSV.opdRate
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 EMR = AC.openBrowser()
-AC.login(foUserId, foUserPwd)
+AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountpc=50, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 LBR.verifyDiscountReport(danpheEMR=EMR, HospitalNo=HospitalNo, cash=opdRate, discountpc=50)
 AC.logout()
 AC.closeBrowser()

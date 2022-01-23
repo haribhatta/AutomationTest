@@ -589,7 +589,8 @@ def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
       receiptno = danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
       print(receiptno)
       hospitalno = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
-      print(hospitalno)
+      print("hospitalno", hospitalno)
+      print("HospitalNo", HospitalNo)
       assert HospitalNo == hospitalno
       subtotal = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[5]").text
       print(subtotal)
