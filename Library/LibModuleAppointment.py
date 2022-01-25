@@ -71,7 +71,7 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         dropdown.find_element_by_xpath("//option[. = 'Years']").click()  #
         danpheEMR.find_element_by_css_selector(".ng-dirty").click()  #
         gender = Select(danpheEMR.find_element_by_xpath("//select[@formcontrolname='Gender']"))
-        gender.select_by_visible_text("Male")
+        gender.select_by_visible_text("Female")
         phoneNo = random.randint(9111111111, 9999999999)
         danpheEMR.find_element_by_id("txtPhone").send_keys(phoneNo)
         if discountScheme != 0 and AppName == "LPH":
@@ -118,7 +118,6 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         # return [InvoiceNo, HospitalNo]
     print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
     print("Create New Appointment: END<<")
-
 
 def followUpAppointment(danpheEMR):
     print("lets create appointment followup")

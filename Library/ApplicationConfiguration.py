@@ -16,7 +16,8 @@ def openBrowser():
 def closeBrowser():
       print(">>Close Browser: START")
       danpheEMR.close()
-      print("Close Browser: END<<")
+      print("###TEST CASE: PASSED###")
+      #print("Close Browser: END<<")
 def login(userid, pwd):
       print(">>LogIn: START")
       time.sleep(5)

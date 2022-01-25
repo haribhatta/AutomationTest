@@ -31,6 +31,8 @@ if appName == "LPH":
       #pharmacy user
       pharmacyUserID = 'debika'
       pharmacyUserPwD = 'pass123'
+      pharmacyUserName = 'Debika'
+      #pharmacyUserName = 'Ms. Debika'
       #nurse user
       nurseUserID = 'admin'
       nurseUserPwD = 'pass123'
@@ -96,6 +98,10 @@ if appName == "LPH":
 ###Wards
       generalWard = "Labour Ward"
       generalBedFeature = "General Bed"
+###ADT:
+      admitWard = "Labour Ward"
+      admitBed = "General Bed"
+
 ###Discount Scheme
       discountSchemeType = "Helpless"
       discountSchemeName = "Helpless (50%)"
