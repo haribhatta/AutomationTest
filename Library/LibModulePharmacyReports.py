@@ -195,6 +195,142 @@ def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, 
       assert float(sysnetamount) == float(netamount)
       assert int(sysdiscountamount) == presysdiscountamount + discount
       print("<<END: verifyPharmacyCashCollectionSummary")
+def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
+      print(">>START: getPharmacyDepositBalanceReport")
+      global sysdepositamt
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+      time.sleep(9)
+      assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+      sysdepositamt = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
+      print("<<END: getPharmacyDepositBalanceReport")
+def verifyPharmacyDepositBalanceReport(danpheEMR, HospitalNo, deposit, depositreturn):
+      print(">>START: verifyPharmacyDepositBalanceReport")
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+      time.sleep(9)
+      assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+      depositbalance = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
+      assert depositbalance == sysdepositamt + deposit - depositreturn
+      print("<<END: verifyPharmacyDepositBalanceReport")
+def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
+      print(">>START: getPharmacyOpeningEndingStockSummaryReport")
+      global sysdrugname
+      global sysopeningstock
+      global sysendingstock
+      danpheEMR.find_element_by_link_text('Pharmacy').click()
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text('Report').click()
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+      time.sleep(3)
+      sysdrugname = danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
+      print("sysdrugname", sysdrugname)
+      assert sysdrugname == drugname
+      sysopeningstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+      print("sysopeningstock", sysopeningstock)
+      sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+      print("sysendingstock", sysendingstock)
+      print("<<END: getPharmacyOpeningEndingStockSummaryReport")
+def preSystemPharmacyOpeningEndingStockSummaryReport():
+      print(">>START: preSystemPharmacyOpeningEndingStockSummaryReport")
+      global presysdrugname
+      global presysdrugbatch
+      global presysdrugexpiry
+      global presysopeningstock
+      global presysendingstock
+      presysopeningstock = sysopeningstock
+      presysendingstock = sysendingstock
+      presysdrugname = sysdrugname
+      presysdrugbatch = sysdrugbatch
+      presysdrugexpiry = sysdrugexpiry
+      print("<<END: preSystemPharmacyOpeningEndingStockSummaryReport")
+def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
+      print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
+      danpheEMR.find_element_by_link_text('Pharmacy').click()
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text('Report').click()
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(presysdrugname, ' ', presysdrugbatch)
+      time.sleep(7)
+      assert presysdrugname == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
+      assert presysdrugbatch == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
+      assert presysdrugexpiry == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]/span").text
+      assert presysopeningstock == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+      sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+      assert int(sysendingstock) == int(presysendingstock) - qty
+      print("<<END: verifyPharmacyOpeningEndingStockSummaryReport")
+def getPharmacyStockManageDetailReport(danpheEMR, drugname):
+      print(">>START: getPharmacyStockManageDetailReport")
+      global ManageQuantity
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Stock Manage Detail Report')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+      time.sleep(5)
+      ManageQuantity = danpheEMR.find_element_by_xpath(
+            "(//div[@col-id='Quantity'])[2]").text  # There is open bug (EMR-2588) to list down latest manage record to top.
+      print("Manage Quantity", ManageQuantity)
+      print("<<END: getPharmacyStockManageDetailReport")
+def preSystemPharmacyStockManageDetailReport():
+      print(">>START: preSystemPharmacyStockManageDetailReport")
+      global xManageQuantity
+      xManageQuantity = ManageQuantity
+def verifyPharmacyStockManageDetailReport(In, Out):
+      assert int(ManageQuantity) == int(xManageQuantity) + In - Out
+      print("<<END: preSystemPharmacyStockManageDetailReport")
+def verifyStockItemsReport(danpheEMR, drugname):
+      print(">>START: verifyStockItemsReport")
+      danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//i[contains(text(),'Stock Items')]").click()
+      time.sleep(5)
+      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(drugname)
+      time.sleep(1)
+      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.ARROW_DOWN)
+      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.TAB)
+      danpheEMR.find_element_by_xpath("//select").send_keys("Dispensary")
+      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+      time.sleep(3)
+      sysqty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
+      print("sysqty", sysqty)
+      print("drugqtySS", drugqtySS)
+      assert int(drugqtySS) == int(sysqty)
+      print("<<END: verifyStockItemsReport")
+def wait_for_window(timeout=2):
+      time.sleep(round(timeout / 1000))
+      wh_now = danpheEMR.window_handles
+      wh_then = vars["window_handles"]
+      if len(wh_now) > len(wh_then):
+         return set(wh_now).difference(set(wh_then)).pop()
+
+########Purchase Reports:
+
+########Sales Reports:
+###User Collection Report-
 def getPharmacyUserCollectionReport(danpheEMR, user):
       print(">>START: getPharmacyUserCollectionReport")
       global actualNetCashCollection
@@ -376,137 +512,36 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
       assert actualTotalCashCollection == expectedTotalCashCollection
 
       print("<<END: verifySystemPharmacyUserCollectionReport")
-def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
-      print(">>START: getPharmacyDepositBalanceReport")
-      global sysdepositamt
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(3)
+###Narcotic Daily Sales Report-
+def verifySystemPharmacyNarcoticDailySalesReport(danpheEMR, invoiceNo, totalAmount):
+      print(">>START: verifySystemPharmacyNarcoticDailySalesReport")
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
       danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(9)
-      assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-      sysdepositamt = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
-      print("<<END: getPharmacyDepositBalanceReport")
-def verifyPharmacyDepositBalanceReport(danpheEMR, HospitalNo, deposit, depositreturn):
-      print(">>START: verifyPharmacyDepositBalanceReport")
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(3)
-      danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
-      time.sleep(9)
-      assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-      depositbalance = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
-      assert depositbalance == sysdepositamt + deposit - depositreturn
-      print("<<END: verifyPharmacyDepositBalanceReport")
-def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
-      print(">>START: getPharmacyOpeningEndingStockSummaryReport")
-      global sysdrugname
-      global sysopeningstock
-      global sysendingstock
-      danpheEMR.find_element_by_link_text('Pharmacy').click()
-      time.sleep(2)
-      danpheEMR.find_element_by_link_text('Report').click()
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      time.sleep(9)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
-      time.sleep(3)
-      sysdrugname = danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
-      print("sysdrugname", sysdrugname)
-      assert sysdrugname == drugname
-      sysopeningstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
-      print("sysopeningstock", sysopeningstock)
-      sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
-      print("sysendingstock", sysendingstock)
-      print("<<END: getPharmacyOpeningEndingStockSummaryReport")
-def preSystemPharmacyOpeningEndingStockSummaryReport():
-      print(">>START: preSystemPharmacyOpeningEndingStockSummaryReport")
-      global presysdrugname
-      global presysdrugbatch
-      global presysdrugexpiry
-      global presysopeningstock
-      global presysendingstock
-      presysopeningstock = sysopeningstock
-      presysendingstock = sysendingstock
-      presysdrugname = sysdrugname
-      presysdrugbatch = sysdrugbatch
-      presysdrugexpiry = sysdrugexpiry
-      print("<<END: preSystemPharmacyOpeningEndingStockSummaryReport")
-def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
-      print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
-      danpheEMR.find_element_by_link_text('Pharmacy').click()
-      time.sleep(2)
-      danpheEMR.find_element_by_link_text('Report').click()
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      time.sleep(9)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(presysdrugname, ' ', presysdrugbatch)
-      time.sleep(7)
-      assert presysdrugname == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
-      assert presysdrugbatch == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-      assert presysdrugexpiry == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]/span").text
-      assert presysopeningstock == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
-      sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
-      assert int(sysendingstock) == int(presysendingstock) - qty
-      print("<<END: verifyPharmacyOpeningEndingStockSummaryReport")
-def getPharmacyStockManageDetailReport(danpheEMR, drugname):
-      print(">>START: getPharmacyStockManageDetailReport")
-      global ManageQuantity
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Stock Manage Detail Report')]").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Sales").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Narcotics Daily Sales')]").click()
       time.sleep(2)
       danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(15) # Due to performance issue there is open bug in Jira: EMR-4775
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
       time.sleep(9)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
-      time.sleep(5)
-      ManageQuantity = danpheEMR.find_element_by_xpath(
-            "(//div[@col-id='Quantity'])[2]").text  # There is open bug (EMR-2588) to list down latest manage record to top.
-      print("Manage Quantity", ManageQuantity)
-      print("<<END: getPharmacyStockManageDetailReport")
-def preSystemPharmacyStockManageDetailReport():
-      print(">>START: preSystemPharmacyStockManageDetailReport")
-      global xManageQuantity
-      xManageQuantity = ManageQuantity
-def verifyPharmacyStockManageDetailReport(In, Out):
-      assert int(ManageQuantity) == int(xManageQuantity) + In - Out
-      print("<<END: preSystemPharmacyStockManageDetailReport")
-def verifyStockItemsReport(danpheEMR, drugname):
-      print(">>START: verifyStockItemsReport")
-      danpheEMR.find_element_by_link_text("Pharmacy").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_link_text("Report").click()
-      time.sleep(2)
-      danpheEMR.find_element_by_xpath("//i[contains(text(),'Stock Items')]").click()
-      time.sleep(5)
-      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(drugname)
-      time.sleep(1)
-      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.ARROW_DOWN)
-      danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.TAB)
-      danpheEMR.find_element_by_xpath("//select").send_keys("Dispensary")
-      danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
-      time.sleep(3)
-      sysqty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
-      print("sysqty", sysqty)
-      print("drugqtySS", drugqtySS)
-      assert int(drugqtySS) == int(sysqty)
-      print("<<END: verifyStockItemsReport")
-def wait_for_window(timeout=2):
-      time.sleep(round(timeout / 1000))
-      wh_now = danpheEMR.window_handles
-      wh_then = vars["window_handles"]
-      if len(wh_now) > len(wh_then):
-         return set(wh_now).difference(set(wh_then)).pop()
+      sysInvoiceNo = danpheEMR.find_element_by_xpath("(//div[@col-id='InvoicePrintId'])[2]").text
+      print("sysInvoiceNo:", sysInvoiceNo)
+      print("invoiceNo:", invoiceNo)
+      assert sysInvoiceNo == invoiceNo
+      sysTotalAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
+      print("sysTotalAmount:", sysTotalAmount)
+      print("totalAmount:", totalAmount)
+      assert sysTotalAmount == totalAmount
+      print("<<END: verifySystemPharmacyNarcoticDailySalesReport")
+
+
+######## Stock Reports:
 
 def __str__():
       return
