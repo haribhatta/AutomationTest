@@ -613,7 +613,85 @@ def verifySystemPharmacyBillWiseSalesReport(danpheEMR, invoiceNo, cash, cashRetu
       assert expectedTotalAmount == actualTotalAmount
 
       print("<<END: verifySystemPharmacyBillWiseSalesReport")
-
+###Sales Summary Report-
+def getSystemPharmacySalesSummaryReport(danpheEMR):
+      print("Start: getSystemPharmacySalesSummaryReport:")
+      global actualCashSales
+      global actualCashSalesRefund
+      global actualNetCashSales
+      global actualCreditSales
+      global actualCreditSalesRefund
+      global actualNetCreditSales
+      global actualTotalSales
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Sales").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Sales Summary')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(3)
+      actualCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Sales')])[1]/following-sibling::td").text
+      actualCashSales = float(actualCashSales)
+      print("actualCashSales", actualCashSales)
+      actualCashSalesRefund = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Sales Refund')])[1]/following-sibling::td").text
+      actualCashSalesRefund = float(actualCashSalesRefund)
+      print("actualCashSalesRefund", actualCashSalesRefund)
+      actualNetCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Net Cash Sales')])[1]/following-sibling::td").text
+      actualNetCashSales = float(actualNetCashSales)
+      print("actualNetCashSales", actualNetCashSales)
+      actualCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Sales')])[1]/following-sibling::td").text
+      actualCreditSales = float(actualCreditSales)
+      print("actualCreditSales", actualCreditSales)
+      actualCreditSalesRefund = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Sales Refund')])[1]/following-sibling::td").text
+      actualCreditSalesRefund = float(actualCreditSalesRefund)
+      print("actualCreditSalesRefund", actualCreditSalesRefund)
+      actualNetCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Net Credit Sales')])[1]/following-sibling::td").text
+      actualNetCreditSales = float(actualNetCreditSales)
+      print("actualNetCreditSales", actualNetCreditSales)
+      actualTotalSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Total Sales')])[1]/following-sibling::td").text
+      actualTotalSales = float(actualTotalSales)
+      print("actualTotalSales", actualTotalSales)
+      print("End: getSystemPharmacySalesSummaryReport:")
+def preSystemPharmacySalesSummaryReport():
+      print("Start: getSystemPharmacySalesSummaryReport:")
+      global preCashSales
+      global preCashSalesRefund
+      global preNetCashSales
+      global preCreditSales
+      global preCreditSalesRefund
+      global preNetCreditSales
+      global preTotalSales
+      preCashSales = actualCashSales
+      preCashSalesRefund = actualCashSalesRefund
+      preNetCashSales = actualNetCashSales
+      preCreditSales = actualCreditSales
+      preCreditSalesRefund = actualCreditSalesRefund
+      preNetCreditSales = actualNetCreditSales
+      preTotalSales = actualTotalSales
+      print("End: getSystemPharmacySalesSummaryReport:")
+def verifySystemPharmacySalesSummaryReport(danpheEMR, cash, cashReturn, credit, creditReturn):
+      print("Start: getSystemPharmacySalesSummaryReport:")
+      expectedCashSales = preCashSales + cash
+      assert actualCashSales == expectedCashSales
+      expectedCashSalesRefund = preCashSalesRefund + cashReturn
+      assert actualCashSalesRefund == expectedCashSalesRefund
+      expectedNetCashSales = preNetCashSales + cash - cashReturn
+      assert actualNetCashSales == expectedNetCashSales
+      expectedCreditSales = preCreditSales + credit
+      assert actualCreditSales == expectedCreditSales
+      expectedCreditSalesRefund = preCreditSalesRefund + creditReturn
+      assert actualCreditSalesRefund == expectedCreditSalesRefund
+      expectedNetCreditSales = preNetCreditSales + credit - creditReturn
+      assert actualNetCreditSales == expectedNetCreditSales
+      expectedTotalSales = preTotalSales + cash - cashReturn + credit - creditReturn
+      assert actualTotalSales == expectedTotalSales
+      print("End: getSystemPharmacySalesSummaryReport:")
 
 ######## Stock Reports:
 
