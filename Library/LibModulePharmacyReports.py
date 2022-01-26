@@ -692,6 +692,14 @@ def verifySystemPharmacySalesSummaryReport(danpheEMR, cash, cashReturn, credit, 
       expectedTotalSales = preTotalSales + cash - cashReturn + credit - creditReturn
       assert actualTotalSales == expectedTotalSales
       print("End: getSystemPharmacySalesSummaryReport:")
+def getPharmacyExpiryReport():
+      print("End: getPharmacyExpiryReport:")
+      ###### EMR-4779 : ticket need to get deployed to test the expiry report, otherwise it's of no use.
+      print("End: getPharmacyExpiryReport:")
+def verifyPharmacyExpiryReport():
+      print("End: verifyPharmacyExpiryReport:")
+      ###### EMR-4779 : ticket need to get deployed to test the expiry report, otherwise it's of no use.
+      print("End: verifyPharmacyExpiryReport:")
 
 ######## Stock Reports:
 

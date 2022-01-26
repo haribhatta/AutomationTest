@@ -1,15 +1,13 @@
 '''
+Scripted by: Hari
 Objective:
-To test Pharmacy> User Collection report with below check points:
+To test Pharmacy> Expiry Report with below check points:
 1. Cash Sale
 2. Cash Sale Return
 3. Credit Sale
 4. Credit Settlement
 5. Credit Sale Return
-6. Deposit
-7. Deposit Return
-8. Estimation bill (i.e. Provisional).
-9. Cancel estimation bill.
+
 '''
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
@@ -45,35 +43,8 @@ AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-######## Create anonymous pharmacy sale
-LP.createPharmacyInvoiceAnonymous(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode='Cash')
-LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
-LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
-######## Create pharmacy cash sale
-pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugname, qty=qty, paymentmode='Cash')
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Return pharmacy case sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=totalamount, credit=0, creditreturn=0, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Create pharmacy credit sale
-pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugname, paymentmode='Credit')
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Return pharmacy credit sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=amount, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
+LPR.getPharmacyExpiryReport()
+LPR.verifyPharmacyExpiryReport()
+
 AC.logout()
 AC.closeBrowser()
-
-# Test script is failling with bug: EMR-2764.
