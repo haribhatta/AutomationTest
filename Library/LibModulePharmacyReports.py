@@ -692,16 +692,66 @@ def verifySystemPharmacySalesSummaryReport(danpheEMR, cash, cashReturn, credit, 
       expectedTotalSales = preTotalSales + cash - cashReturn + credit - creditReturn
       assert actualTotalSales == expectedTotalSales
       print("End: getSystemPharmacySalesSummaryReport:")
+########Stock Reports:
+###Pharmacy>Expiry Report-
 def getPharmacyExpiryReport():
-      print("End: getPharmacyExpiryReport:")
+      print("Start: getPharmacyExpiryReport:")
       ###### EMR-4779 : ticket need to get deployed to test the expiry report, otherwise it's of no use.
       print("End: getPharmacyExpiryReport:")
 def verifyPharmacyExpiryReport():
-      print("End: verifyPharmacyExpiryReport:")
+      print("Start: verifyPharmacyExpiryReport:")
       ###### EMR-4779 : ticket need to get deployed to test the expiry report, otherwise it's of no use.
       print("End: verifyPharmacyExpiryReport:")
-
-######## Stock Reports:
+###Pharmacy>Return From Customer Report
+def getPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo):
+      print("Start: getPharmacyReturnFromCustomerReport:")
+      global actualTotalReturnedAmount
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Stock").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Return From Customer Report')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(3)
+      actualTotalReturnedAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),' Total Returned Amount ')]/following-sibling::td").text
+      actualTotalReturnedAmount = float(actualTotalReturnedAmount)
+      print("End: getPharmacyReturnFromCustomerReport:")
+def prePharmacyReturnFromCustomerReport():
+      print("Start: prePharmacyReturnFromCustomerReport:")
+      global preTotalReturnedAmount
+      preTotalReturnedAmount = actualTotalReturnedAmount
+      print("End: prePharmacyReturnFromCustomerReport:")
+def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn):
+      print("Start: verifyPharmacyReturnFromCustomerReport:")
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Stock").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Return From Customer Report')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(3)
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
+      time.sleep(3)
+      sysInvoiceNo = danpheEMR.find_element_by_xpath("(//div[@col-id='IssueNo'])[2]").text
+      sysInvoiceNo = sysInvoiceNo.partition("PH")[2]
+      print("sysInvoiceNo", sysInvoiceNo)
+      assert sysInvoiceNo == invoiceNo
+      expectedTotalReturnedAmount = preTotalReturnedAmount + cashReturn
+      assert actualTotalReturnedAmount == expectedTotalReturnedAmount
+      print("End: verifyPharmacyReturnFromCustomerReport:")
+########Supplier Reports:
 
 def __str__():
       return
