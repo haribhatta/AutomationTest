@@ -721,13 +721,14 @@ def getPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo):
       time.sleep(3)
       actualTotalReturnedAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),' Total Returned Amount ')]/following-sibling::td").text
       actualTotalReturnedAmount = float(actualTotalReturnedAmount)
+      print("actualTotalReturnedAmount", actualTotalReturnedAmount)
       print("End: getPharmacyReturnFromCustomerReport:")
 def prePharmacyReturnFromCustomerReport():
       print("Start: prePharmacyReturnFromCustomerReport:")
       global preTotalReturnedAmount
       preTotalReturnedAmount = actualTotalReturnedAmount
       print("End: prePharmacyReturnFromCustomerReport:")
-def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn):
+def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, creditReturn):
       print("Start: verifyPharmacyReturnFromCustomerReport:")
       if AppName == "LPH":
             danpheEMR.find_element_by_link_text("Store").click()
@@ -748,7 +749,8 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn):
       sysInvoiceNo = sysInvoiceNo.partition("PH")[2]
       print("sysInvoiceNo", sysInvoiceNo)
       assert sysInvoiceNo == invoiceNo
-      expectedTotalReturnedAmount = preTotalReturnedAmount + cashReturn
+      expectedTotalReturnedAmount = preTotalReturnedAmount + cashReturn + creditReturn
+      print("expectedTotalReturnedAmount", expectedTotalReturnedAmount)
       assert actualTotalReturnedAmount == expectedTotalReturnedAmount
       print("End: verifyPharmacyReturnFromCustomerReport:")
 ########Supplier Reports:

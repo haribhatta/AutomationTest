@@ -29,7 +29,6 @@ phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
 drug1Name = GSV.drug1BrandName
 drug1Rate = GSV.drug1Rate
-paymentMode = 'Cash'
 totalAmount = drug1Rate * 1
 ########
 priceCategoryType = "Normal"
@@ -40,15 +39,22 @@ AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
-# Start of Return From Customer Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode=paymentMode)
+###Pharmacy Cash Sale
+pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode='Cash')
 LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo)
 LPR.prePharmacyReturnFromCustomerReport()
+### Pharmacy Cash Return
 LD.returnPharmacyInvoice(EMR, pInvoiceNo, qty=1, returnremark="Wrong entry")
 LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo)
-LPR.verifyPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cashReturn=totalAmount)
-
+LPR.verifyPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cashReturn=totalAmount, creditReturn=0)
+### Pharmacy Credit Sale
+pInvoiceNo1 = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode='Credit')
+LPR.prePharmacyReturnFromCustomerReport()
+### Pharmacy Credit Sale Return
+LD.returnPharmacyInvoice(EMR, pInvoiceNo1, qty=1, returnremark="Wrong entry")
+LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1)
+LPR.verifyPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1, cashReturn=0, creditReturn=totalAmount)
 AC.logout()
 AC.closeBrowser()
