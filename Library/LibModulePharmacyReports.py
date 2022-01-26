@@ -539,6 +539,80 @@ def verifySystemPharmacyNarcoticDailySalesReport(danpheEMR, invoiceNo, totalAmou
       print("totalAmount:", totalAmount)
       assert sysTotalAmount == totalAmount
       print("<<END: verifySystemPharmacyNarcoticDailySalesReport")
+###Bill-Wise Sales Report-
+def getSystemPharmacyBillWiseSalesReport(danpheEMR):
+      print(">>START: verifySystemPharmacyBillWiseSalesReport")
+      global actualSubTotalAmount
+      global actualDiscountAmount
+      global actualTotalAmount
+
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Sales").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Bill-wise Sales')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(3)
+      actualSubTotalAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[1]").text
+      actualSubTotalAmount = float(actualSubTotalAmount)
+      print("actualSubTotalAmount:", actualSubTotalAmount)
+      actualDiscountAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[2]").text
+      actualDiscountAmount = float(actualDiscountAmount)
+      print("actualDiscountAmount:", actualDiscountAmount)
+      actualTotalAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[3]").text
+      actualTotalAmount = float(actualTotalAmount)
+      print("actualTotalAmount:", actualTotalAmount)
+def preSystemPharmacyBillWiseSalesReport():
+      global preSubTotalAmount
+      global preDiscountAmount
+      global preTotalAmount
+      preSubTotalAmount = actualSubTotalAmount
+      preDiscountAmount = actualDiscountAmount
+      preTotalAmount = actualTotalAmount
+def verifySystemPharmacyBillWiseSalesReport(danpheEMR, invoiceNo, cash, cashReturn, credit, creditReturn, totalAmount, discountAmount):
+      print(">>START: verifySystemPharmacyBillWiseSalesReport")
+      if AppName == "LPH":
+            danpheEMR.find_element_by_link_text("Store").click()
+      elif AppName == "MPH" or AppName == "SNCH":
+            danpheEMR.find_element_by_link_text("Pharmacy").click()
+      time.sleep(9)
+      danpheEMR.find_element_by_link_text("Report").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_link_text("Sales").click()
+      time.sleep(4)
+      danpheEMR.find_element_by_xpath("//i[contains(.,'Bill-wise Sales')]").click()
+      time.sleep(2)
+      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      time.sleep(15) # Due to performance issue there is open bug in Jira: EMR-4775
+      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
+      time.sleep(9)
+      sysInvoiceNo = danpheEMR.find_element_by_xpath("(//div[@col-id='InvoicePrintId'])[2]").text
+      print("sysInvoiceNo:", sysInvoiceNo)
+      print("invoiceNo:", invoiceNo)
+      assert sysInvoiceNo == invoiceNo
+      sysTotalAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
+      sysTotalAmount = int(sysTotalAmount)
+      print("sysTotalAmount:", sysTotalAmount)
+      print("totalAmount:", totalAmount)
+      assert sysTotalAmount == totalAmount
+
+      expectedSubTotalAmount = preSubTotalAmount + cash - cashReturn + credit - creditReturn
+      print("expectedSubTotalAmount:", expectedSubTotalAmount)
+      assert expectedSubTotalAmount == actualSubTotalAmount
+      expectedDiscountAmount = preDiscountAmount + discountAmount
+      print("expectedDiscountAmount:", expectedDiscountAmount)
+      assert expectedDiscountAmount == actualDiscountAmount
+      expectedTotalAmount = preTotalAmount + cash - cashReturn + credit - creditReturn - discountAmount
+      print("expectedTotalAmount:", expectedTotalAmount)
+      assert expectedTotalAmount == actualTotalAmount
+
+      print("<<END: verifySystemPharmacyBillWiseSalesReport")
 
 
 ######## Stock Reports:
