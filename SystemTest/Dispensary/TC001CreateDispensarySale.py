@@ -15,7 +15,7 @@ doctorGynae = GSV.doctorGyno
 phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
 drug1Name = GSV.drug1BrandName
-drug2Rate = GSV.drug1Rate
+drug1Rate = GSV.drug1Rate
 paymentMode = 'Cash'
 ########
 priceCategoryType = "Normal"
