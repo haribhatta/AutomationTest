@@ -65,7 +65,7 @@ if appName == "LPH":
 ###Pharmacy/Dispensary Items Name:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
       drug1Rate = 5
-      drug1BrandName = 'PETOR 40 MG'
+      drug1BrandName = 'PANTOPRAZOLE 40 MG TAB'
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5
@@ -77,6 +77,7 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
+      supplier = "A.G. HEALTHCARE"
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -170,6 +171,7 @@ if appName == "SNCH":
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
+      supplier = "Shremad Tech."
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
