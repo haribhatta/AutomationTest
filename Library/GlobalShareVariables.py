@@ -77,6 +77,8 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
+      drug1NarcoticName = "MORFIUM 10 MG TAB"
+      drug1NarcoticRate = 4.5
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -285,6 +287,9 @@ if appName == "MPH":
 ###Wards Name:
       generalWard = "General Non-Covid Ward"
       bedFeature = "General Non-Covid Ward"
+      ###ADT:
+      admitWard = "GENERAL-COVID WARD"
+      admitBed = "General"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###Discount Scheme
