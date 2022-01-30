@@ -64,8 +64,8 @@ if appName == "LPH":
       opdRateEHS = 400
 ###Pharmacy/Dispensary Items Name:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
-      drug1Rate = 5
-      drug1BrandName = 'PANTOPRAZOLE 40 MG TAB'
+      drug1Rate = 8
+      drug1BrandName = 'PETOR 40 MG '
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5
@@ -78,6 +78,8 @@ if appName == "LPH":
       drugSinexRate = 3
       Testdrug = "testdrugreport"
       supplier = "A.G. HEALTHCARE"
+      insurancedrug = "AMFAST 5MG TAB"
+
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
