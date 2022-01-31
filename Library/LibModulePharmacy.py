@@ -4,6 +4,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import random
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 ########
 AppName = GSV.appName
@@ -295,11 +296,14 @@ def createPharmacyInvoiceAnonymous(danpheEMR, drugname, qty, paymentmode):
 def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>Start: Create purchase order in pharmacy")
     danpheEMR.find_element_by_link_text("Pharmacy").click()
-    time.sleep(5)
-    danpheEMR.find_element_by_xpath("/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[1]/ul/li[2]/a").click()
-    time.sleep(3)
-    danpheEMR.find_element_by_xpath("/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div/ul/li[1]/a").click()
-    time.sleep(3)
+    if AppName == "LPH":
+        danpheEMR.find_element_by_xpath("//a[contains(text(),'Order')]").click()
+
+    elif AppName == "SNCH":
+        danpheEMR.find_element_by_xpath("//a[contains(text(),'Purchase')]").click()
+    # time.sleep(3)
+    # danpheEMR.find_element_by_xpath("/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div/ul/li[1]/a").click()
+    # time.sleep(3)
     #danpheEMR.find_element_by_link_text("Order").click()
     #danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderItems')]").click()
     #danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control").click()
@@ -392,13 +396,12 @@ def createPharmacyGoodsReceipt(danpheEMR, qty, DrugName, grPrice):
     if AppName == 'SNCH':
         danpheEMR.find_element_by_link_text("Pharmacy").click()
         time.sleep(2)
-        danpheEMR.find_element_by_link_text("Order").click()
+        danpheEMR.find_element_by_link_text("Purchase").click()
         time.sleep(2)
         danpheEMR.find_element_by_link_text("Goods Receipt").click()
-        time.sleep(7)
-        danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys("Aayush surgichem")
+        danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys("AAKAR ENTERPRISES")
         danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys(Keys.TAB)
-        gRNo = random.randint(100, 9999)
+        gRNo = random.randint(1000, 999999)
         print("GR No:", gRNo)
         danpheEMR.find_element_by_xpath("//input[@placeholder='Invoice No']").send_keys(gRNo)
         danpheEMR.find_element_by_id("btn_AddNew").click()
@@ -415,26 +418,88 @@ def createPharmacyGoodsReceipt(danpheEMR, qty, DrugName, grPrice):
         danpheEMR.find_element_by_id("btn_Save").click()
         # danpheEMR.find_element_by_xpath("//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
         danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success tooltip']").click()
-        time.sleep(14)
-        goodsReceiptNo = danpheEMR.find_element_by_xpath("(//div[@col-id='GoodReceiptPrintId'])[2]").text
-    print("goodsReceiptNo:", goodsReceiptNo)
+        obj = danpheEMR.switch_to.alert
+        obj.accept()
+        time.sleep(2)
+        goodsReceiptNo = danpheEMR.find_element_by_xpath("//div[@id='print-good-reciept']/div/div/div[5]/p/b").text
+        print("goodsReceiptNo:", goodsReceiptNo)
+        danpheEMR.find_element_by_id("printButton").send_keys(Keys.ESCAPE)
+
+    if AppName == "LPH":
+        danpheEMR.find_element_by_link_text("Store").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("Order").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("Goods Receipt").click()
+        danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys("A.G. HEALTHCARE")
+        danpheEMR.find_element_by_xpath("//input[@placeholder='Select Supplier']").send_keys(Keys.TAB)
+        gRNo = random.randint(1000, 999999)
+        print("GR No:", gRNo)
+        danpheEMR.find_element_by_xpath("//input[@placeholder='Invoice No']").send_keys(gRNo)
+        danpheEMR.find_element_by_id("btn_AddNew").click()
+        time.sleep(7)
+        danpheEMR.find_element_by_id("txt_ItemName").send_keys(DrugName)
+        danpheEMR.find_element_by_id("txt_ItemName").send_keys(Keys.TAB)
+        time.sleep(3)
+        danpheEMR.find_element_by_id("txt_BatchNo").send_keys(gRNo)
+        danpheEMR.find_element_by_id("ItemQTy").send_keys(qty)
+        print("grPrice", grPrice)
+        grPrice = int(grPrice)
+        danpheEMR.find_element_by_id("GRItemPrice").send_keys(grPrice)
+        danpheEMR.find_element_by_id("Margin").send_keys(14)
+        danpheEMR.find_element_by_id("btn_Save").click()
+        # danpheEMR.find_element_by_xpath("//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
+        danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success tooltip']").click()
+        obj = danpheEMR.switch_to.alert
+        obj.accept()
+        time.sleep(2)
+        goodsReceiptNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
+        print("goodsReceiptNo:", goodsReceiptNo)
+        time.sleep(2)
+        danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+
+
 def cancelPharmacyGoodsReceipt(danpheEMR):
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text("Order").click()
-    time.sleep(2)
-    danpheEMR.find_element_by_link_text("Goods Receipt List").click()
-    time.sleep(2)
-    danpheEMR.find_element_by_xpath("(//a[contains(text(), 'View')])[1]").click()
-    time.sleep(3)
-    sysGRno = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Goods Receipt No.:')]").text
-    print("sysGRno", sysGRno)
-    danpheEMR.find_element_by_xpath("//button[@title='Cancel Goods Receipt']").click()
-    time.sleep(2)
-    assert danpheEMR.switch_to.alert.text == "NOTE !!! Do you want to cancel Good Receipt?"
-    time.sleep(3)
-    danpheEMR.switch_to.alert.accept()
-    time.sleep(7)
+    if AppName == "LPH":
+        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element_by_link_text("Order").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_xpath("(//a[contains(text(), 'View')])[1]").click()
+        time.sleep(3)
+        sysGRno = danpheEMR.find_element_by_xpath("//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
+        print("sysGRno", sysGRno)
+        time.sleep(5)
+        temp = danpheEMR.find_element_by_xpath("//button[@title='Cancel Goods Receipt']").text
+        print("temp", temp)
+        # Unable to click Cancel Goods Receipt so Test case fail for LPH
+        #cancel.is_displayed()
+        #cancel.is_selected()
+        time.sleep(4)
+        danpheEMR.find_element_by_xpath("//button[@class='btn  btn-small btn-danger']").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_id("CancelRemarks").send_keys("Cancel to test")
+        danpheEMR.find_element_by_xpath("//button[contains(text(),'Proceed')]").click()
+    if AppName == "SNCH":
+        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element_by_link_text("Purchase").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_xpath("(//a[contains(text(), 'View')])[1]").click()
+        time.sleep(3)
+        sysGRno = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Goods Receipt No.:')]").text
+        print("sysGRno", sysGRno)
+        danpheEMR.find_element_by_xpath("//button[@title='Cancel Goods Receipt']").click()
+        time.sleep(2)
+        danpheEMR.find_element_by_id("CancelRemarks").send_keys("Cancel to test")
+        danpheEMR.find_element_by_xpath("//button[contains(text(),'Proceed')]").click()
+    # assert danpheEMR.switch_to.alert.text == "NOTE !!! Do you want to cancel Good Receipt?"
+    # time.sleep(3)
+    # danpheEMR.switch_to.alert.accept()
+    # time.sleep(7)
 def getPharmacyGoodsReceiptListAmount(danpheEMR):
     print(">>Start:getPharmacyGoodsReceiptListAmount")
     global SubTotal
@@ -510,22 +575,37 @@ def createPharmacyOPDBilling(danpheEMR, qty, paymentmode):
     pInvoiceNo = danpheEMR.find_element_by_xpath("//div[4]/div/div/p").text
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
     print("Create Pharmacy OPD Invoice: END<<")
-def verifyPharmacyGoodsReceipt(danpheEMR, qty, DrugName):
+def verifyPharmacyGoodsReceipt(danpheEMR, DrugName):
     time.sleep(3)
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
-    danpheEMR.find_element_by_link_text("Order").click()
-    danpheEMR.find_element_by_link_text("Goods Receipt List").click()
-    time.sleep(7)
-    danpheEMR.find_element_by_link_text("View").click()
-    time.sleep(3)
-    sysdrugname = danpheEMR.find_element_by_xpath("//td[2]/b").text
-    print("sysdrugname:", sysdrugname)
-    assert sysdrugname == DrugName
-    danpheEMR.find_element_by_css_selector(".fa-times").click()
-def closePopupApplication(danpheEMR, saleinvoice):
-    time.sleep(7)
+    if AppName == "LPH":
+        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element_by_link_text("Order").click()
+        danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+        time.sleep(7)
+        danpheEMR.find_element_by_link_text("View").click()
+        time.sleep(3)
+        sysdrugname = danpheEMR.find_element_by_xpath("//div[@id='printpage']/div[2]/table/tbody/tr/td[3]").text
+        print("sysdrugname is :", sysdrugname)
+        assert DrugName == sysdrugname
+        time.sleep(3)
+        danpheEMR.find_element_by_id("btnPrintRecipt").send_keys(Keys.ESCAPE)
+    if AppName == "SNCH":
+        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element_by_link_text("Purchase").click()
+        danpheEMR.find_element_by_link_text("Goods Receipt List").click()
+        time.sleep(7)
+        danpheEMR.find_element_by_link_text("View").click()
+        time.sleep(3)
+        sysdrugname = danpheEMR.find_element_by_xpath("//td[2]/b").text
+        print("sysdrugname:", sysdrugname)
+        assert DrugName == sysdrugname
+        danpheEMR.find_element_by_id("printButton").send_keys(Keys.ESCAPE)
+
+
+def closePopupApplication(danpheEMR):
+    time.sleep(1)
     danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger history-del-btn']").click()
-    time.sleep(3)
+    time.sleep(2)
 def viewPharmacyOrderList(danpheEMR, SupplierName, drugName):
     print(">>START: viewPharmacyOrderList")
     danpheEMR.find_element_by_link_text("Pharmacy").click()

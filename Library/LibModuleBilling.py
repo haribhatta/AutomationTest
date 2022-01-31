@@ -12,6 +12,7 @@ AppName = GSV.appName
 
 
 def counteractivation(danpheEMR):
+    time.sleep(5)
     print(">>Activate Billing Counter: START")
     danpheEMR.find_element_by_link_text("Billing").click()
     time.sleep(5)

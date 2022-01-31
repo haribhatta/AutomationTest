@@ -64,8 +64,8 @@ if appName == "LPH":
       opdRateEHS = 400
 ###Pharmacy/Dispensary Items Name:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
-      drug1Rate = 5
-      drug1BrandName = 'PETOR 40 MG'
+      drug1Rate = 8
+      drug1BrandName = 'PETOR 40 MG '
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5
@@ -77,8 +77,9 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
-      drug1NarcoticName = "MORFIUM 10 MG TAB"
-      drug1NarcoticRate = 4.5
+      supplier = "A.G. HEALTHCARE"
+      insurancedrug = "AMFAST 5MG TAB"
+
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -172,6 +173,7 @@ if appName == "SNCH":
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
+      supplier = "Shremad Tech."
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
@@ -287,9 +289,6 @@ if appName == "MPH":
 ###Wards Name:
       generalWard = "General Non-Covid Ward"
       bedFeature = "General Non-Covid Ward"
-      ###ADT:
-      admitWard = "GENERAL-COVID WARD"
-      admitBed = "General"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###Discount Scheme
