@@ -39,10 +39,15 @@ LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is 
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
 LBR.verifyDoctorSummary(cash=0, cashreturn=0, credit=0, creditreturn=opdCharge, discount=0, provisional=0, provisionalcancel=0)
-InvoiceNo3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=50, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
+InvoiceNo3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
-LBR.verifyDoctorSummary(cash=opdCharge, cashreturn=0, credit=0, creditreturn=0, discount=250, provisional=0, provisionalcancel=0)
+discount = discountScheme.partition("(")[2]
+discount = discount.partition("%)")[0]
+discount = int(discount)
+print("Discount:", discount)
+discountAmount = opdCharge*discount/100
+LBR.verifyDoctorSummary(cash=opdCharge, cashreturn=0, credit=0, creditreturn=0, discount=discountAmount, provisional=0, provisionalcancel=0)
 AC.logout()
 AC.closeBrowser()
 
