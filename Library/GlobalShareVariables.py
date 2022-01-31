@@ -65,7 +65,7 @@ if appName == "LPH":
 ###Pharmacy/Dispensary Items Name:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
       drug1Rate = 8
-      drug1BrandName = 'PETOR 40 MG '
+      drug1BrandName = 'PANTOPRAZOLE 40 MG TAB'
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5

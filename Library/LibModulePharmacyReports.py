@@ -851,8 +851,41 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, cre
       print("expectedTotalReturnedAmount", expectedTotalReturnedAmount)
       assert actualTotalReturnedAmount == expectedTotalReturnedAmount
       print("End: verifyPharmacyReturnFromCustomerReport:")
+
+
 ########Supplier Reports:
 
+def getSupplierStockReport(danpheEMR, supplier):
+    global totalAmount
+    time.sleep(3)
+    if AppName == "LPH":
+        danpheEMR.find_element_by_link_text('Store').click()
+    elif AppName == "SNCH":
+        danpheEMR.find_element_by_link_text("Pharmacy").click()
+    time.sleep(2)
+    danpheEMR.find_element_by_link_text('Report').click()
+    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
+    danpheEMR.find_element_by_xpath("//i[contains(.,'Supplier Stock ')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "supplierName").send_keys(supplier)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "supplierName").send_keys(Keys.DOWN)
+    danpheEMR.find_element(By.ID, "supplierName").send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Show Report')]").click()
+    time.sleep(2)
+    totalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]").text
+    totalAmount = int(totalAmount)
+    print("Total Amount of selected date of given supplier is  : ", totalAmount)
+
+def preSupplierStockReport():
+    global pretotalAmount
+    pretotalAmount = totalAmount
+    print("pre Total Stock amount of given supplier is :", pretotalAmount)
+
+def verifysupplierStockReport():
+    print("START>>verifying the Stock Summary Report")
+    assert pretotalAmount == totalAmount
+    print("END>> Verifying Stock Summary Report")
 
 def __str__():
     return
