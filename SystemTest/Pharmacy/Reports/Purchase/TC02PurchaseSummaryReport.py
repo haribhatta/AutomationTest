@@ -42,13 +42,12 @@ EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LMPR.getPurchaseSummaryReport(EMR)
 LMPR.prePurchaseSummaryReport()
-LP.createPharmacyGoodsReceipt(EMR, 2, DrugName=drugname, grPrice=5)
+LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5)
 LP.verifyPharmacyGoodsReceipt(EMR, DrugName=GSV.drug1BrandName)
 LP.cancelPharmacyGoodsReceipt(EMR)
-LP.closePopupApplication(EMR)
 LMPR.getPurchaseSummaryReport(EMR)
 LMPR.verifypurchasesummary()
 AC.logout()
 AC.closeBrowser()
 
-# Test script is Not Passed for LPH due to Cancel Good Receipt is unable to click
+
