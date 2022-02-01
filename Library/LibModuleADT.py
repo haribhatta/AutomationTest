@@ -66,11 +66,14 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
                 #danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger']").click()
                 danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger' and contains(text(),'X')]").click()
                 #danpheEMR.find_element_by_id("btnPrintRecipt").send_key(Keys.ESCAPE)
-            else:
+            elif AppName == "MPH":
                 danpheEMR.find_element_by_id("btnAdtSticker").click()
                 #danpheEMR.find_element_by_id("btnAdtSticker").send_keys(Keys.ESCAPE)
+            else:
+                danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger' and contains(text(),'X')]").click()
             print("Patient successfully admitted.")
             time.sleep(2)
+
       elif discharge == 1:
          time.sleep(5)
          danpheEMR.find_element_by_link_text("Billing").click()
@@ -166,7 +169,7 @@ def dischargeRandomPatient(danpheEMR):
          time.sleep(3)
          #danpheEMR.find_element_by_id("btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
          danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']").click()
-         time.sleep(14)
+         time.sleep(5)
       time.sleep(5)
 def checkAutoAddItems(danpheEMR):
       danpheEMR.find_element_by_link_text("Settings").click()

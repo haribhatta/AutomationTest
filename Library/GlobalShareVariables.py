@@ -193,6 +193,7 @@ if appName == "SNCH":
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
 ###Wards Name:
+      admitWard= "General Ward"
       generalWard = "General Ward"
       GeneralWard = "ICU"
       #wardid = "General Ward"
