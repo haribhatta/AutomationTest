@@ -562,7 +562,8 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
     print("cash", cash)
     print("cashreturn", cashreturn)
     # 1
-    expectedNetCashCollection = preNetCashCollection + cash - cashreturn
+    expectedNetCashCollection = preNetCashCollection + cash - cashreturn + creditsettlement
+    print("expectedNetCashCollection:", expectedNetCashCollection)
     assert actualNetCashCollection == expectedNetCashCollection
     # 2
     expectedGrossTotalSales = preGrossTotalSales + cash + credit
