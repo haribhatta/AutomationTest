@@ -25,7 +25,7 @@ print("hospitalNo", HospitalNo)
 LB.createUSGinvoice(EMR, HospitalNo=HospitalNo, USGtest=radioTestUSG)
 AC.logout()
 ######## Radiology user login
-radioUserId = GSV.radioUserID
+radioUserId = GSV.adminUserID
 radioUserPwd = GSV.radioUserPwD
 AC.login(radioUserId, radioUserPwd)
 ######## Radiology Report generation
