@@ -64,8 +64,8 @@ if appName == "LPH":
       opdRateEHS = 400
 ###Pharmacy/Dispensary Items Name:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
-      drug1Rate = 8
-      drug1BrandName = 'PANTOPRAZOLE 40 MG TAB'
+      drug1Rate = 5
+      drug1BrandName = 'PETOR 40 MG'
       drug2BrandName = "MACLAR 500MG TAB"
       drug2GenericName = "CLARITHROMYCIN"
       drug2Rate = 563.5
@@ -198,6 +198,9 @@ if appName == "SNCH":
       GeneralWard = "ICU"
       #wardid = "General Ward"
       bedFeature = "BED CHARGE General Ward"
+      ###ADT:
+      admitWard = "Pediatric Ward"
+      admitBed = "Pediatric Bed Charge"
 ###Users Name:
       user = "admin"
 ###Discount Scheme
