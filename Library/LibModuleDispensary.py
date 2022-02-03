@@ -139,7 +139,21 @@ def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark)
         # danpheEMR.find_element_by_css_selector(".fa-close").click()
 
     print(">>Verify Return Pharmacy Invoice: END")
-
+def settlePharmacyCreditInvoice(danpheEMR, HospitalNo, InvoiceNo):
+    print(">>Create Dispensary Sale to Hospital Patient: START")
+    danpheEMR.find_element_by_link_text("Dispensary").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Sale").click()
+    danpheEMR.find_element_by_link_text("Settlement").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//a[@danphe-grid-action='showDetails']").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//input[@value='Proceed']").click()
+    time.sleep(2)
+    danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+    time.sleep(3)
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
