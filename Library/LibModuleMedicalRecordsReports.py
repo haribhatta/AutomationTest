@@ -11,6 +11,8 @@ HospitalNo = None
 # Module:Appointment --------------------
 def getHospitalServiceSummaryReport(danpheEMR):
    print(">>START: getHospitalServiceSummaryReport")
+   global actualTotalPatientsAdmitted
+   global actualTotalLabSeriveProvided
    if  AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
       time.sleep(2)
       danpheEMR.find_element_by_link_text("MedicalRecords").click()
@@ -20,15 +22,33 @@ def getHospitalServiceSummaryReport(danpheEMR):
       danpheEMR.find_element_by_xpath("//i[contains(text(),'Hospital Service Summary Report')]").click()
       time.sleep(3)
       danpheEMR.find_element_by_xpath("//button[contains(text(),' Show Report ')]").click()
-      time.sleep(4)
+      time.sleep(14)
+      actualTotalPatientsAdmitted = danpheEMR.find_element_by_xpath("//b[contains(text(),'Total Patients Admitted')]/parent::td/following-sibling::td").text
+      actualTotalPatientsAdmitted = int(actualTotalPatientsAdmitted)
+      print("actualTotalPatientsAdmitted:", actualTotalPatientsAdmitted)
+      actualTotalLabSeriveProvided = danpheEMR.find_element_by_xpath("//td[contains(text(),'Total Laboratory Service Provided')]/following-sibling::td[2]").text
+      actualTotalLabSeriveProvided = int(actualTotalLabSeriveProvided)
+      print("actualTotalLabSeriveProvided:", actualTotalLabSeriveProvided)
    print("<<END: getHospitalServiceSummaryReport")
-def storeHospitalServiceSummaryReport(danpheEMR):
+def preHospitalServiceSummaryReport(danpheEMR):
    print("Start >> assignHospitalServiceSummaryReport")
    ######## Code goes here
+   global preTotalPatientsAdmitted
+   global preTotalLabSeriveProvided
+   preTotalPatientsAdmitted = actualTotalPatientsAdmitted
+   preTotalLabSeriveProvided = actualTotalLabSeriveProvided
    print("End >> assignHospitalServiceSummaryReport")
-def verifyHospitalServiceSummaryReport(danpheEMR):
+def verifyHospitalServiceSummaryReport(danpheEMR, labBill, admit):
    print("Start >> verifyHospitalServiceSummaryReport")
    ######## Code goes here
+   global expectedTotalPatientsAdmitted
+   global expectedTotalLabSeriveProvided
+   expectedTotalPatientsAdmitted = preTotalPatientsAdmitted + admit
+   print("expectedTotalPatientsAdmitted:", expectedTotalPatientsAdmitted)
+   assert expectedTotalPatientsAdmitted == actualTotalPatientsAdmitted
+   expectedTotalLabSeriveProvided = preTotalLabSeriveProvided + labBill
+   print("expectedTotalLabSeriveProvided:", expectedTotalLabSeriveProvided)
+   assert expectedTotalLabSeriveProvided == actualTotalLabSeriveProvided
    print("End >> verifyHospitalServiceSummaryReport")
 
 def getInpatientMorbidityReport(danpheEMR):
