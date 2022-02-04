@@ -59,7 +59,7 @@ def consumptionStore(danpheEMR, itemName, qty, store):
         danpheEMR.find_element_by_link_text("SubStore").click()
         time.sleep(9)
         try:
-            danpheEMR.find_element_by_xpath("//i[contains(text(),'ADMINISTRATION')]").click()
+            danpheEMR.find_element_by_xpath("//i[contains(text(),'"+store+"')]").click()
             #danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
         except:
             pass
@@ -86,15 +86,15 @@ def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inven
         danpheEMR.find_element_by_xpath("//i[contains(text(),'Medical Inventory')]").click()
     print("Inventory Selection End")
 
-def createInventoryDirectDispatch(danpheEMR, itemname, qty, store):
+def createInventoryDirectDispatch(danpheEMR, itemname, qty, inventory, store):
     print(">>START: directDispatch")
     global RequsitionNo
-    if AppName == 'SNCH' or AppName== 'LPH' or AppName == 'MPH':
+    if AppName == 'SNCH' or AppName == 'LPH' or AppName == 'MPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)
         try:
-            danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+            danpheEMR.find_element_by_xpath("//i[contains(text(),'"+inventory+"')]").click()
         except:
             pass
         time.sleep(3)
@@ -254,7 +254,7 @@ def verifyPurchaseRequest(danpheEMR, PRNo, ItemName, qty):
         assert PRNo1 == PRNo
     print(">>END: veriifyPurchaseRequest")
 
-def InventoryStockManage(danpheEMR, managetype):
+def InventoryStockManage(danpheEMR, managetype, itemName):
     print(">>START: InventoryStockManage")
     global actualAvailableQty
     global grNo
@@ -263,7 +263,7 @@ def InventoryStockManage(danpheEMR, managetype):
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Stock").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(itemName)
     time.sleep(2)
     actualAvailableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
     actualAvailableQty = int(actualAvailableQty)
@@ -276,7 +276,7 @@ def InventoryStockManage(danpheEMR, managetype):
     print("Unit Price", UnitPrice)
     danpheEMR.find_element_by_xpath("//i[@class='fa fa-backward']").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(itemName)
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'Manage Stock')]").click()
     time.sleep(3)
@@ -304,7 +304,7 @@ def InventoryStockManage(danpheEMR, managetype):
         time.sleep(3)
     danpheEMR.find_element_by_xpath("//input[@value='Update Stock']").click()
     time.sleep(3)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(itemName)
     time.sleep(2)
     newavailableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
     newavailableQty = int(newavailableQty)
@@ -318,7 +318,7 @@ def InventoryStockManage(danpheEMR, managetype):
         print("expectedAvailableQty:", expectedAvailableQty)
         assert newavailableQty == expectedAvailableQty
 
-def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty):
+def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty, storeName):
     danpheEMR.find_element_by_link_text("Inventory").click()
     time.sleep(3)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
@@ -327,7 +327,7 @@ def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty):
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("nursing store")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys(storeName)
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//span[contains(.,'Requisition ID')]").click()
     time.sleep(3)

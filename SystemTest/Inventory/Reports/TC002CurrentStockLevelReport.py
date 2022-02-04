@@ -29,8 +29,6 @@ qty = 1
 rate = GSV.storeItem1Rate
 print("Rate:", rate)
 store1 = "ADMINISTRATION"
-store2 = "OPERATION THEATER"
-#Inventory1 = GSV.Inventory1
 Inventory1 = "General Inventory"
 ########
 EMR = AC.openBrowser()
@@ -39,7 +37,7 @@ LI.selectInventory(danpheEMR=EMR, inventory=Inventory1)
 LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
 LI.preInventoryStoreCurrentStockLevelReport()
 #dispatch requisition or direct dispatch: This need to deduct qty/amount from main store and increase in substore
-LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, store=store1)
+LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory=Inventory1, store=store1)
 '''
 # For CoreCFG parameter setting-'Receive not needed': store need to received the items to increase in it's store
 LI.receivedStoreDispatch(store=store1)
@@ -66,3 +64,5 @@ LI.InventoryStockManage(danpheEMR=EMR, managetype='out')
 LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
 LI.verifyInventoryStoreCurrentStockLevelReport(type="SubStoreConsumption", qty=qty, unitprice=rate)
 '''
+AC.logout()
+AC.closeBrowser()

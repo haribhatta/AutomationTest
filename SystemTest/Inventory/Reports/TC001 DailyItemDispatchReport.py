@@ -1,16 +1,16 @@
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleInventory as LI
 
 # front desk user login
 adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
-
-didr = A()
-
-itemname = GSV.A4Paper
+itemName = 'PLANE SCISSOR 6"'
 qty = 1
-
-didr.openBrowser()
-didr.login(adminUserId, adminUserPwd)
-didr.createInventoryDirectDispatch(itemname, qty)
-didr.verifyInventoryDailyItemDispatchReport(itemname, qty)
+inventoryName = 'General Inventory'
+storeName = 'OPD'
+########
+EMR = AC.openBrowser()
+AC.login(adminUserId, adminUserPwd)
+LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=itemName, qty=qty, inventory=inventoryName, store=storeName)
+LI.verifyInventoryDailyItemDispatchReport(danpheEMR=EMR, itemname=itemName, qty=qty, storeName=storeName)
