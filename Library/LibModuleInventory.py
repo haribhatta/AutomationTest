@@ -3,6 +3,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import random
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 AppName = GSV.appName
 
@@ -52,19 +53,23 @@ def editInventoryGoodsReceipt(danpheEMR):
         danpheEMR.find_element_by_id("qtyip0").send_keys(2)
         danpheEMR.find_element_by_id("SaveGoodsReceiptbtn").click()
 
-def InventoryConsumption(danpheEMR, item, qty, store):
+def consumptionStore(danpheEMR, itemName, qty, store):
     time.sleep(5)
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("SubStore").click()
-        time.sleep(3)
-        danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
+        time.sleep(9)
+        try:
+            danpheEMR.find_element_by_xpath("//i[contains(text(),'ADMINISTRATION')]").click()
+            #danpheEMR.find_element_by_xpath("//i[contains(text(),'Billing Store')]").click()
+        except:
+            pass
         time.sleep(2)
         danpheEMR.find_element_by_link_text("Consumption").click()
         time.sleep(2)
         danpheEMR.find_element_by_link_text("New Consumption").click()
         time.sleep(2)
         danpheEMR.find_element_by_id("itemName0").clear()
-        danpheEMR.find_element_by_id("itemName0").send_keys(item)
+        danpheEMR.find_element_by_id("itemName0").send_keys(itemName)
         danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").clear()
         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").send_keys(qty)
@@ -88,7 +93,10 @@ def createInventoryDirectDispatch(danpheEMR, itemname, qty, store):
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)
-        danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        try:
+            danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+        except:
+            pass
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Internal").click()
         time.sleep(5)
@@ -104,7 +112,9 @@ def createInventoryDirectDispatch(danpheEMR, itemname, qty, store):
         danpheEMR.find_element_by_id("qtyip0").send_keys(qty)
         danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
         time.sleep(5)
-        Quantity = danpheEMR.find_element_by_name("availableQuantity").text
+        Quantity = danpheEMR.find_element_by_xpath("//input[@name='availableQuantity']").get_attribute("value")
+        print("Available Quantity :", Quantity)
+        Quantity = int(Quantity)
         print("Available Quantity :", Quantity)
         # danpheEMR.find_element_by_id("qtyip0").send_keys(Keys.ENTER)
         danpheEMR.find_element_by_id("remarks").send_keys("Direct dispatch test")
@@ -246,24 +256,27 @@ def verifyPurchaseRequest(danpheEMR, PRNo, ItemName, qty):
 
 def InventoryStockManage(danpheEMR, managetype):
     print(">>START: InventoryStockManage")
+    global actualAvailableQty
+    global grNo
+    global UnitPrice
     danpheEMR.find_element_by_link_text("Inventory").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Stock").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
     time.sleep(2)
-    availableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
-    availableQty = int(availableQty)
-    print("case1", availableQty)
+    actualAvailableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
+    actualAvailableQty = int(actualAvailableQty)
+    print("actualAvailableQty", actualAvailableQty)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'View')]").click()
+    time.sleep(6)
     grNo = danpheEMR.find_element_by_xpath("(//div[@col-id='GoodsReceiptNo'])[2]").text
     print("Goods Receipt No", grNo)
-    global UnitPrice
     UnitPrice = danpheEMR.find_element_by_xpath("(//div[@col-id='ItemRate'])[2]").text
     print("Unit Price", UnitPrice)
     danpheEMR.find_element_by_xpath("//i[@class='fa fa-backward']").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'Manage Stock')]").click()
     time.sleep(3)
@@ -272,29 +285,38 @@ def InventoryStockManage(danpheEMR, managetype):
     assert grNo == grNoTemp
     currentQty = danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").get_attribute("value")
     print("currentQty", currentQty)
-    currentQty = float(currentQty)
-    modifyin = int(currentQty + 1)
-    modifyOut = int(currentQty - 1)
-    print("modifyOut", modifyOut)
+    currentQty = int(currentQty)
+    assert currentQty == actualAvailableQty
+    modifyin = currentQty + 1
+    modifyOut = currentQty - 1
     print("modifyin", modifyin)
+    print("modifyOut", modifyOut)
     danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").clear()
+    time.sleep(3)
     if managetype == "in":
         danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyin)
+        time.sleep(3)
         print("Manage In done")
     if managetype == "out":
         danpheEMR.find_element_by_xpath("//input[@name='ModQuantity']").send_keys(modifyOut)
+        time.sleep(3)
         print("Manage Out done")
         time.sleep(3)
     danpheEMR.find_element_by_xpath("//input[@value='Update Stock']").click()
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PHOTOCOPY PAPER (CUTTING)")
+    time.sleep(3)
+    danpheEMR.find_element_by_id("quickFilterInput").send_keys("PLANE SCISSOR 6")
     time.sleep(2)
     newavailableQty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailQuantity']/child::span/child::div)[1]").text
+    newavailableQty = int(newavailableQty)
     print("newavailableQty", newavailableQty)  #
-    print("availableQty", availableQty)  #
     if managetype == "in":
-        assert int(newavailableQty) == int(availableQty + 1)
+        expectedAvailableQty = actualAvailableQty + 1
+        print("expectedAvailableQty", expectedAvailableQty)
+        assert newavailableQty == expectedAvailableQty
     if managetype == "out":
-        assert int(newavailableQty) == availableQty - 1
+        expectedAvailableQty = actualAvailableQty - 1
+        print("expectedAvailableQty:", expectedAvailableQty)
+        assert newavailableQty == expectedAvailableQty
 
 def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty):
     danpheEMR.find_element_by_link_text("Inventory").click()
@@ -318,72 +340,102 @@ def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty):
     print(qty)
     assert element2 == str(qty)
 
-def getInventoryCurrentStockLevelReport(danpheEMR, store):
-    global TotalStockQuantity
-    global TotalStockValue
+def getInventoryStoreCurrentStockLevelReport(danpheEMR, inventory, store):
+    global actualTotalStockQuantityInventory
+    global actualTotalStockValueInventory
+    global actualTotalStockQuantityStore
+    global actualTotalStockValueStore
+    time.sleep(3)
     danpheEMR.find_element_by_link_text("Inventory").click()
+    time.sleep(3)
+    try:
+        danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+    except:
+        pass
     time.sleep(3)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
     time.sleep(2)
     danpheEMR.find_element_by_xpath("//i[contains(.,'Current Stock Level')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_css_selector(".fa-remove").click()
-    danpheEMR.find_element_by_xpath("//span[contains(.,'---Select Item---')]").click()
-    danpheEMR.find_element_by_xpath("//input[@type='text']").send_keys(store)
-    if store == "Main Store":
-        danpheEMR.find_element_by_xpath("//label[contains(.,'Main Store')]").click()
-    if store == "OT Store":
-        danpheEMR.find_element_by_xpath("//label[contains(.,'OT Store')]").click()
-    danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
-    time.sleep(3)
-    danpheEMR.find_element_by_xpath("(//a[contains(text(),'View')])[1]").click()
-    time.sleep(3)
-    sysStoreName = danpheEMR.find_element_by_xpath(
-        "(//th[contains(text(),' Store Name ')]/parent::tr/following-sibling::tr/child::td)[1]").text
-    print("sysStoreName", sysStoreName)
-    assert store == sysStoreName
-    danpheEMR.find_element_by_xpath("//a[@title='Cancel']").click()
-    time.sleep(7)
-    TotalStockQuantity = danpheEMR.find_element_by_xpath(
+    ### for main inventory stock
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-remove").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").send_keys("general inventory")
+    danpheEMR.find_element(By.CSS_SELECTOR, "span > .pure-checkbox > label").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".btn > .fa").click()
+    time.sleep(5)
+    actualTotalStockQuantityInventory = danpheEMR.find_element_by_xpath(
         "//b[contains(text(),' Total Stock Quantity ')]/parent::span/parent::td/following-sibling::td[1]").text
-    print("TotalStockQuantity-:", TotalStockQuantity)
-    TotalStockValue = danpheEMR.find_element_by_xpath(
+    actualTotalStockQuantityInventory = float(actualTotalStockQuantityInventory)
+    print("actualTotalStockQuantityInventory-:", actualTotalStockQuantityInventory)
+    actualTotalStockValueInventory = danpheEMR.find_element_by_xpath(
         "//b[contains(text(),' Total Stock Value ')]/parent::span/parent::td/following-sibling::td[1]").text
-    TotalStockValue = TotalStockValue.replace(',', '')
-    print("TotalStockValue:", TotalStockValue)
+    actualTotalStockValueInventory = actualTotalStockValueInventory.replace(',', '')
+    actualTotalStockValueInventory = float(actualTotalStockValueInventory)
+    print("actualTotalStockValueInventory:", actualTotalStockValueInventory)
+    ### for sub store stock
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-remove").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".pure-checkbox:nth-child(30) > label").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//span[contains(text(),'Load')]").click()
+    #danpheEMR.driver.find_element(By.CSS_SELECTOR, ".btn > .fa").click()
+    #danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(30)").click()
+    #danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(30)").send_keys("ADMINISTRATION")
+    #danpheEMR.find_element(By.CSS_SELECTOR, "span > .pure-checkbox > label").click()
+    #danpheEMR.find_element(By.CSS_SELECTOR, ".btn > .fa").click()
+    time.sleep(5)
+    actualTotalStockQuantityStore = danpheEMR.find_element_by_xpath(
+        "//b[contains(text(),' Total Stock Quantity ')]/parent::span/parent::td/following-sibling::td[1]").text
+    actualTotalStockQuantityStore = float(actualTotalStockQuantityStore)
+    print("actualTotalStockQuantityStore-:", actualTotalStockQuantityStore)
+    actualTotalStockValueStore = danpheEMR.find_element_by_xpath(
+        "//b[contains(text(),' Total Stock Value ')]/parent::span/parent::td/following-sibling::td[1]").text
+    actualTotalStockValueStore = actualTotalStockValueStore.replace(',', '')
+    actualTotalStockValueStore = float(actualTotalStockValueStore)
+    print("actualTotalStockValueStore:", actualTotalStockValueStore)
 
-def preInventoryCurrentStockLevelReport():
-    global preTotalStockQuantity
-    global preTotalStockValue
-    preTotalStockQuantity = float(TotalStockQuantity)
-    preTotalStockValue = float(TotalStockValue)
-
-def verifyInventoryCurrentStockLevelReport(type, qty, unitprice):
-    global calcTotalStockQuantity
-    global calcTotalStockValue
-    print("preTotalStockQuantity", preTotalStockQuantity)
-    print("TotalStockQuantity", TotalStockQuantity)
-    print("qty", qty)
-    calcQtyValue = float(qty * unitprice)
-    if type == "out":
-        calcTotalStockQuantity = format(preTotalStockQuantity - qty)
-        calcTotalStockValue = float(preTotalStockValue - calcQtyValue)
-    if type == "in":
-        calcTotalStockQuantity = float(preTotalStockQuantity + qty)
-        calcTotalStockValue = float(preTotalStockValue + calcQtyValue)
-    print("calcTotalStockQuantity", calcTotalStockQuantity)
-    calcTotalStockQuantityf = calcTotalStockQuantity.partition(".")[0]
-    TotalStockQuantityf = TotalStockQuantity.partition(".")[0]
-    print("calcTotalStockQuantityf", calcTotalStockQuantityf)
-    print("TotalStockQuantityf", TotalStockQuantityf)
-    assert TotalStockQuantityf == calcTotalStockQuantityf
-    print("calcQtyValue", calcQtyValue)
-    print("calcTotalStockValue", calcTotalStockValue)
-    print("TotalStockValue", TotalStockValue)
-    calcTotalStockValue = float(calcTotalStockValue)
-    TotalStockValuec = float(TotalStockValue)
-    assert round(float(TotalStockValuec)) == round(float(calcTotalStockValue))
-
+def preInventoryStoreCurrentStockLevelReport():
+    global preTotalStockQuantityInventory
+    global preTotalStockValueInventory
+    global preTotalStockQuantityStore
+    global preTotalStockValueStore
+    ### for main inventory stock
+    preTotalStockQuantityInventory = actualTotalStockQuantityInventory
+    preTotalStockValueInventory = actualTotalStockValueInventory
+    ### for sub store stock
+    preTotalStockQuantityStore = actualTotalStockQuantityStore
+    preTotalStockValueStore = actualTotalStockValueStore
+def verifyInventoryStoreCurrentStockLevelReport(type, qty, unitprice):
+    global expectedTotalStockQuantityInventory
+    global expectedTotalStockValueInventory
+    global expectedTotalStockQuantityStore
+    global expectedTotalStockValueStore
+    ### for Main Inventory stock verification
+    if type == 'DirectDispatch':
+        ### for Main Inventory stock verification
+        expectedTotalStockQuantityInventory = preTotalStockQuantityInventory - qty
+        print("expectedTotalStockQuantityInventory:", expectedTotalStockQuantityInventory)
+        assert actualTotalStockQuantityInventory == expectedTotalStockQuantityInventory
+        expectedTotalStockValueInventory = preTotalStockValueInventory - qty*unitprice
+        print("expectedTotalStockValueInventory:", expectedTotalStockValueInventory)
+        assert actualTotalStockValueInventory == expectedTotalStockValueInventory
+        ### for sub Store Stock verification
+        expectedTotalStockQuantityStore = preTotalStockQuantityStore + qty
+        print("expectedTotalStockQuantityStore:", expectedTotalStockQuantityStore)
+        assert actualTotalStockQuantityStore == expectedTotalStockQuantityStore
+        expectedTotalStockValueStore = preTotalStockValueStore + qty * unitprice
+        print("expectedTotalStockValueStore:", expectedTotalStockValueStore)
+        assert actualTotalStockValueStore == expectedTotalStockValueStore
+    elif type == 'SubStoreConsumption':
+        ### for sub Store Stock verification
+        expectedTotalStockQuantityStore = preTotalStockQuantityStore - qty
+        print("expectedTotalStockQuantityStore:", expectedTotalStockQuantityStore)
+        assert actualTotalStockQuantityStore == expectedTotalStockQuantityStore
+        expectedTotalStockValueStore = preTotalStockValueStore - qty*unitprice
+        print("expectedTotalStockValueStore:", expectedTotalStockValueStore)
+        assert actualTotalStockValueStore == expectedTotalStockValueStore
 def selectInventory(danpheEMR, inventory):
     time.sleep(5)
     if AppName == 'SNCH':

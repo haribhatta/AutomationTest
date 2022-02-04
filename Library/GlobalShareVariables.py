@@ -88,6 +88,8 @@ if appName == "LPH":
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
+      storeItem1Name = "PLANE SCISSOR 6"
+      storeItem1Rate = 25
       #stationaryItem1 = "DOTPEN"
       stationaryItem1 = "USG PAPER"
 ###Sub Stores Name:
@@ -193,7 +195,6 @@ if appName == "SNCH":
       supplierShremad = "Shremad Tech."
       supplierName2 = "AAKAR ENTERPRISES"
 ###Wards Name:
-      admitWard= "General Ward"
       generalWard = "General Ward"
       GeneralWard = "ICU"
       #wardid = "General Ward"

@@ -6,8 +6,8 @@ import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+itUserId = GSV.itUserID
+itUserPwd = GSV.itUserPwD
 user = GSV.foUserID
 departmentGynae = GSV.departmentGyno
 doctorGynaeEHS = GSV.doctorGynoEHS
@@ -17,7 +17,7 @@ priceCategoryType = "EHS"
 discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
-AC.login(foUserId, foUserPwd)
+AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
 #Scenario-A1: EHS Cash billing

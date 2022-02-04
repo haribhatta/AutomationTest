@@ -6,38 +6,63 @@
 # Scenarios to check:
 # 1. Verify stock level for manage out case.
 # 2. Verify stock level for manage in cas.
-# 3. Verify stock level for dispatch out case.
-# 4. Verify stock level for goods receipt case.
+# 3. Verify stock level for dispatch out case. #dispatch requisition case
+# 4. Verify stock level for goods receipt case. #consumption case
 
-from TestActionLibrary import A
-from GlobalShareVariables import GSV
+import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
+import Library.LibModuleInventory as LI
+
 
 # front desk user login
-adminUserId = GSV.adminUserID
-adminUserPwd = GSV.adminUserPwD
-
-cs = A()
-item = GSV.PhotocopyPaper
+storeUserId = GSV.adminUserID
+storeUserPwd = GSV.adminUserPwD
+opdAmt = GSV.opdRate
+user = GSV.foUserID
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
+item = GSV.storeItem1Name
+print("Item:", item)
 qty = 1
-rate = GSV.photocopypaperRate
-store1 = "Main Store"
-store2 = "OT Store"
-Inventory1 = GSV.Inventory1
+rate = GSV.storeItem1Rate
+print("Rate:", rate)
+store1 = "ADMINISTRATION"
+store2 = "OPERATION THEATER"
+#Inventory1 = GSV.Inventory1
+Inventory1 = "General Inventory"
+########
+EMR = AC.openBrowser()
+AC.login(storeUserId, storeUserPwd)
+LI.selectInventory(danpheEMR=EMR, inventory=Inventory1)
+LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
+LI.preInventoryStoreCurrentStockLevelReport()
+#dispatch requisition or direct dispatch: This need to deduct qty/amount from main store and increase in substore
+LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, store=store1)
+'''
+# For CoreCFG parameter setting-'Receive not needed': store need to received the items to increase in it's store
+LI.receivedStoreDispatch(store=store1)
+'''
+LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
+LI.verifyInventoryStoreCurrentStockLevelReport(type="DirectDispatch", qty=qty, unitprice=rate)
+#consumption case: This need to deduct qty/amount from subStore and no change in main store
+LI.preInventoryStoreCurrentStockLevelReport()
+LI.consumptionStore(danpheEMR=EMR, itemName=item, qty=qty, store=store1)
+LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
+LI.verifyInventoryStoreCurrentStockLevelReport(type="SubStoreConsumption", qty=qty, unitprice=rate)
+'''
+############# Manage Stock is disable for all hospitals hence Manage Stock scenario is kept OnHold ########
 
-cs.openBrowser()
-cs.login(adminUserId, adminUserPwd)
-cs.selectInventory(inventory=Inventory1)
-cs.getInventoryCurrentStockLevelReport(store=store1)
-cs.preInventoryCurrentStockLevelReport()
-cs.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)
-cs.getInventoryCurrentStockLevelReport(store=store1)
-print("Start: Stock Out proces")
-cs.verifyInventoryCurrentStockLevelReport(type="out", qty=qty, unitprice=rate)
-cs.getInventoryCurrentStockLevelReport(store=store2)
-cs.preInventoryCurrentStockLevelReport()
-cs.createInventoryDirectDispatch(itemname=item, qty=qty, store=store2)
-# store need to received the items to increase in it's store
-cs.receivedStoreDispatch(store=store2)
-cs.getInventoryCurrentStockLevelReport(store=store2)
-print("Start: Store In process")
-cs.verifyInventoryCurrentStockLevelReport(type="in", qty=qty, unitprice=rate)
+#Manage Stock case: ManageIn must increase qty/amount and ManageOut must decrease qty/amount.
+## Action: ManageIn
+LI.preInventoryStoreCurrentStockLevelReport()
+LI.InventoryStockManage(danpheEMR=EMR, managetype='in')
+LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
+LI.verifyInventoryStoreCurrentStockLevelReport(type="SubStoreConsumption", qty=qty, unitprice=rate)
+## Action: ManageOut
+LI.preInventoryStoreCurrentStockLevelReport()
+LI.InventoryStockManage(danpheEMR=EMR, managetype='out')
+LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
+LI.verifyInventoryStoreCurrentStockLevelReport(type="SubStoreConsumption", qty=qty, unitprice=rate)
+'''
