@@ -2,6 +2,7 @@ import time
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 import Library.GlobalShareVariables as GSV
+from selenium.webdriver.common.by import By
 ########
 #danpheEMR = AC.danpheEMR
 AppName = GSV.appName
@@ -1262,6 +1263,7 @@ def getSummaryReport(danpheEMR):
         rowCount = x+2
         if rowCount < 22:
             row = str(rowCount)
+            print("row:", row)
             PreviousDueAmt = danpheEMR.find_element_by_xpath("(//div[@col-id='PreviousDueAmount'])[" + row + "]").text
             PreviousDueAmt = float(PreviousDueAmt)
             print("PreviousDueAmt:", PreviousDueAmt)
@@ -1275,12 +1277,12 @@ def getSummaryReport(danpheEMR):
             DueAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='DueAmount'])[" + row + "]").text
             DueAmount = float(DueAmount)
             print("DueAmount:", DueAmount)
-            print("<<END: getSummaryReport")
             expectedDueAmount = PreviousDueAmt + CollectionTillDate - HandoverTillDate
             print("expectedDueAmount:", expectedDueAmount)
             expectedDueAmount = int(expectedDueAmount)
             DueAmount = int(DueAmount)
             assert DueAmount == expectedDueAmount
+            assert DueAmount >= 0
         elif rowCount == 22:
             danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
             time.sleep(5)
@@ -1300,13 +1302,55 @@ def getSummaryReport(danpheEMR):
             DueAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='DueAmount'])[" + row + "]").text
             DueAmount = float(DueAmount)
             print("DueAmount:", DueAmount)
-            print("<<END: getSummaryReport")
             expectedDueAmount = PreviousDueAmt + CollectionTillDate - HandoverTillDate
             print("expectedDueAmount:", expectedDueAmount)
             expectedDueAmount = int(expectedDueAmount)
             DueAmount = int(DueAmount)
             assert DueAmount == expectedDueAmount
-
+            assert DueAmount >= 0
+        print("<<END: getSummaryReport")
+def verifyUserCollectionVsHandOverReport(danpheEMR):
+    print("Start: Get Reports>Billing Reports>User Collection Report")
+    global TotalCollectionInUserCollection
+    global TotalCollectionInHandover
+    danpheEMR.find_element_by_link_text("Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Billing Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//i[contains(.,'User Collection')]").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//span[@class='icon-range-ddl dropdown-toggle']").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Last 3 Months").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+    time.sleep(9)
+    TotalCollectionInUserCollection = danpheEMR.find_element_by_xpath(
+        "//td[contains(text(),' Total Collection ')]//following-sibling::td").text
+    print("TotalCollectionInUserCollection:", TotalCollectionInUserCollection)
+    TotalCollectionInUserCollection = float(TotalCollectionInUserCollection)
+    print("TotalCollectionInUserCollection:", TotalCollectionInUserCollection)
+    ###
+    print("Get Billing>Handover>DailyCollection Vs Handover Report")
+    danpheEMR.find_element_by_link_text("Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Handover").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("DailyCollection Vs Handover Report").click()
+    time.sleep(3)
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//span[@class='icon-range-ddl dropdown-toggle']").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Last 3 Months").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success']").click()
+    time.sleep(9)
+    TotalCollectionInHandover = danpheEMR.find_element_by_xpath("//b[contains(text(),'Total')]/parent::td/following-sibling::td[1]").text
+    print("TotalCollectionInHandover:", TotalCollectionInHandover)
+    TotalCollectionInHandover = float(TotalCollectionInHandover)
+    print("TotalCollectionInHandover:", TotalCollectionInHandover)
+    assert TotalCollectionInHandover == TotalCollectionInUserCollection
+    print("End: Get Reports>Billing Reports>User Collection Report")
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
