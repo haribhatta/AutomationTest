@@ -565,7 +565,7 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
     print("cash", cash)
     print("cashreturn", cashreturn)
     # 1
-    expectedNetCashCollection = preNetCashCollection + cash - cashreturn + creditsettlement
+    expectedNetCashCollection = preNetCashCollection + cash - cashreturn
     print("expectedNetCashCollection:", expectedNetCashCollection)
     assert actualNetCashCollection == expectedNetCashCollection
     # 2
@@ -890,7 +890,7 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, cre
     print("End: verifyPharmacyReturnFromCustomerReport:")
 
 
-########Stock Reports:
+########Supplier Reports:
 
 def getSupplierStockReport(danpheEMR, supplier):
     global totalAmount

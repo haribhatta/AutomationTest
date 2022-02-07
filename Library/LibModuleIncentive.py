@@ -1,21 +1,21 @@
 import time
+import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.LibModuleAppointment as LA
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+AppName = GSV.appName
 ########
 #Module:Incentive ******************
-def synchBilingIncentive():
+def synchBilingIncentive(danpheEMR):
       danpheEMR.find_element_by_link_text("Incentive").click()
       time.sleep(3)
       danpheEMR.find_element_by_link_text("Bill Sync").click()
       time.sleep(3)
       danpheEMR.find_element_by_xpath("//button[contains(.,' Sync Billing to Incentives')]").click()
       time.sleep(5)
-def getIncentiveTransactionReport(doctorName):
+def getIncentiveTransactionReport(danpheEMR, doctorName):
       global quantity
       global incentiveAmt
       global tdsAmount
@@ -60,7 +60,7 @@ def verifyIncentiveTransactionReport(cash, credit):
       netPayableCalc = incentiveAmtCalc - tdsAmtCalc
       print("netPayableCalc", netPayableCalc)
       assert float(netPayable) == float(xnetPayable) + netPayableCalc
-def IncentivePayment(doctorName):
+def IncentivePayment(danpheEMR, doctorName):
       danpheEMR.find_element_by_link_text("Incentive").click()
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Payment").click()
@@ -74,7 +74,7 @@ def IncentivePayment(doctorName):
       danpheEMR.find_element_by_xpath("//textarea").send_keys("This is test payment")
       danpheEMR.find_element_by_xpath("//button[contains(.,'Make Payment')]").click()
       time.sleep(5)
-def createLedgerIncentivePayment(doctorName):
+def createLedgerIncentivePayment(danpheEMR, doctorName):
       danpheEMR.find_element_by_link_text("Incentive").click()
       time.sleep(2)
       danpheEMR.find_element_by_link_text("Payment").click()
@@ -84,7 +84,7 @@ def createLedgerIncentivePayment(doctorName):
       danpheEMR.find_element_by_xpath("//strong[contains(.,'Create ledger for selected doctor')]").click()
       time.sleep(3)
       danpheEMR.find_element_by_link_text("Create New Ledger").click()
-def getIncentivePaymentReport(doctorName):
+def getIncentivePaymentReport(danpheEMR, doctorName):
       global TotalIncome
       global TDSAmt
       global NetIncome
@@ -117,7 +117,7 @@ def verifyIncentivePaymentReport():
       assert TDSAmt == xTDSAmt # + tdsAmtCalc
       assert NetIncome == xNetIncome # + netIncomeCalc
       assert AdjustedAmount == xAdjustedAmount # + adjustAmtCalc
-def getIncentivePatientVsServiceReport(doctorName):
+def getIncentivePatientVsServiceReport(danpheEMR, doctorName):
       global IncentiveAmt
       global TDSAmt
       global NetPayable

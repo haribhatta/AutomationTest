@@ -159,6 +159,8 @@ def dischargeRandomPatient(danpheEMR):
          time.sleep(2)
          danpheEMR.find_element_by_link_text("IPBilling").click()
          time.sleep(2)
+         danpheEMR.find_element_by_id("quickFilterInput").send_keys("Auto Test")
+         time.sleep(3)
          danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(9)
          danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()
