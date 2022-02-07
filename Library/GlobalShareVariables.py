@@ -79,6 +79,8 @@ if appName == "LPH":
       Testdrug = "testdrugreport"
       supplier = "A.G. HEALTHCARE"
       insurancedrug = "AMFAST 5MG TAB"
+      drug1NarcoticName = "MORFIUM 10 MG TAB"
+      drug1NarcoticRate ="4"
 
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"

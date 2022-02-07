@@ -1,23 +1,20 @@
 '''
 Scripted by: Alina
 Objective:
-To test Pharmacy> Item-wise Sales report with below check points:
+To test Pharmacy> Sales Statement Report with below check points:
 1. Cash Sale
 2. Cash Sale Return
 3. Credit Sale
 4. Credit Settlement
 5. Credit Sale Return
-6. Deposit
-7. Deposit Return
-8. Estimation bill (i.e. Provisional).
-9. Cancel estimation bill.
+
 '''
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleAppointment as LA
 import Library.LibModulePharmacy as LP
 import Library.LibModuleDispensary as LD
-import Library.LibModulePharmacyReports as LMPR
+import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleBilling as LB
 
 # pharmacy desk user login
@@ -42,20 +39,11 @@ AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
-#Start Item Wise Sales Report
+# Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.preSystemPharmacyItemWiseSalesReport()
+LPR.getsalesstatementreport(danpheEMR=EMR)
+LPR.presalesstatementreport()
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=totalAmount, credit=0, qty=qty)
-######## Create pharmacy credit sale
-LMPR.preSystemPharmacyItemWiseSalesReport()
-pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugName, paymentmode='Credit')
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=0, credit=totalAmount, qty=qty)
-AC.logout()
-AC.closeBrowser()
-
+LPR.getsalesstatementreport(danpheEMR=EMR)

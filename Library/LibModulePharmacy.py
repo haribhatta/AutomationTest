@@ -646,7 +646,7 @@ def verifyPharmacyGoodsReceipt(danpheEMR, DrugName):
         sysdrugname = danpheEMR.find_element(By.XPATH, "//div[@id='printpage']/div[2]/table/tbody/tr/td[3]").text
         print("sysdrugname is :", sysdrugname)
         assert DrugName == sysdrugname
-        time.sleep(3)
+        time.sleep(5)
         danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     if AppName == "SNCH":
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
