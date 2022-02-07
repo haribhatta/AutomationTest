@@ -1242,6 +1242,70 @@ def verifyEHSBillReport():
     print(">>START: verifyEHSBillReport")
 
     print("<<END: verifyEHSBillReport")
+def getSummaryReport(danpheEMR):
+    global row
+    print(">>START: getSummaryReport")
+    danpheEMR.find_element_by_link_text("Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Handover").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Summary Report").click()
+    time.sleep(3)
+    records = danpheEMR.find_element_by_xpath("//div[@class='page-items']").text
+    print("records:", records)
+    records = records.partition("Showing ")[2]
+    print("records:", records)
+    records = records.partition(" /")[0]
+    records = int(records)
+    print("records:", records)
+    for x in range(records):
+        rowCount = x+2
+        if rowCount < 22:
+            row = str(rowCount)
+            PreviousDueAmt = danpheEMR.find_element_by_xpath("(//div[@col-id='PreviousDueAmount'])[" + row + "]").text
+            PreviousDueAmt = float(PreviousDueAmt)
+            print("PreviousDueAmt:", PreviousDueAmt)
+            CollectionTillDate = danpheEMR.find_element_by_xpath(
+                "(//div[@col-id='CollectionTillDate'])[" + row + "]").text
+            CollectionTillDate = float(CollectionTillDate)
+            print("CollectionTillDate:", CollectionTillDate)
+            HandoverTillDate = danpheEMR.find_element_by_xpath("(//div[@col-id='HandoverTillDate'])[" + row + "]").text
+            HandoverTillDate = float(HandoverTillDate)
+            print("HandoverTillDate:", HandoverTillDate)
+            DueAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='DueAmount'])[" + row + "]").text
+            DueAmount = float(DueAmount)
+            print("DueAmount:", DueAmount)
+            print("<<END: getSummaryReport")
+            expectedDueAmount = PreviousDueAmt + CollectionTillDate - HandoverTillDate
+            print("expectedDueAmount:", expectedDueAmount)
+            expectedDueAmount = int(expectedDueAmount)
+            DueAmount = int(DueAmount)
+            assert DueAmount == expectedDueAmount
+        elif rowCount == 22:
+            danpheEMR.find_element_by_xpath("//button[contains(text(),'Next')]").click()
+            time.sleep(5)
+        elif rowCount > 22:
+            row = str(rowCount - 21)
+            print("row:", row)
+            PreviousDueAmt = danpheEMR.find_element_by_xpath("(//div[@col-id='PreviousDueAmount'])[" + row + "]").text
+            PreviousDueAmt = float(PreviousDueAmt)
+            print("PreviousDueAmt:", PreviousDueAmt)
+            CollectionTillDate = danpheEMR.find_element_by_xpath(
+                "(//div[@col-id='CollectionTillDate'])[" + row + "]").text
+            CollectionTillDate = float(CollectionTillDate)
+            print("CollectionTillDate:", CollectionTillDate)
+            HandoverTillDate = danpheEMR.find_element_by_xpath("(//div[@col-id='HandoverTillDate'])[" + row + "]").text
+            HandoverTillDate = float(HandoverTillDate)
+            print("HandoverTillDate:", HandoverTillDate)
+            DueAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='DueAmount'])[" + row + "]").text
+            DueAmount = float(DueAmount)
+            print("DueAmount:", DueAmount)
+            print("<<END: getSummaryReport")
+            expectedDueAmount = PreviousDueAmt + CollectionTillDate - HandoverTillDate
+            print("expectedDueAmount:", expectedDueAmount)
+            expectedDueAmount = int(expectedDueAmount)
+            DueAmount = int(DueAmount)
+            assert DueAmount == expectedDueAmount
 
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
