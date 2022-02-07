@@ -25,7 +25,7 @@ EMR = AC.openBrowser()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 LBR.verifyUserCollectionVsHandOverReport(EMR)
-#LBR.verifyTotalItemsBill(returnamt=opdAmt)
+#Current Issue: EMR-4827
 time.sleep(2)
 AC.logout()
 AC.closeBrowser()
