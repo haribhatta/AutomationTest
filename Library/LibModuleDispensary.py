@@ -31,6 +31,7 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     danpheEMR.find_element_by_link_text("Dispensary").click()
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Sale").click()
+    time.sleep(3)
     danpheEMR.find_element_by_id("patient-search").click()
     danpheEMR.find_element_by_id("patient-search").send_keys(HospitalNo)
     time.sleep(3)

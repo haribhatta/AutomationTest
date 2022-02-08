@@ -1,23 +1,20 @@
 '''
 Scripted by: Alina
 Objective:
-To test Pharmacy> Item-wise Sales report with below check points:
+To test Pharmacy> Patient Wise Sales Report with below check points:
 1. Cash Sale
 2. Cash Sale Return
 3. Credit Sale
 4. Credit Settlement
 5. Credit Sale Return
-6. Deposit
-7. Deposit Return
-8. Estimation bill (i.e. Provisional).
-9. Cancel estimation bill.
+
 '''
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleAppointment as LA
 import Library.LibModulePharmacy as LP
 import Library.LibModuleDispensary as LD
-import Library.LibModulePharmacyReports as LMPR
+import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleBilling as LB
 
 # pharmacy desk user login
@@ -42,20 +39,33 @@ AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
 AC.logout()
-#Start Item Wise Sales Report
+# Start of Patient Wise Sales Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.preSystemPharmacyItemWiseSalesReport()
+LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
+LPR.prePatientWiseSalesDetails()
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=totalAmount, credit=0, qty=qty)
+LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
+LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=totalAmount, cashreturn=0, credit=0, creditreturn=0)
+
+######## Return pharmacy cash sale
+LPR.prePatientWiseSalesDetails()
+LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
+LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
+LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, cashreturn=totalAmount, credit=0, creditreturn=0)
+
 ######## Create pharmacy credit sale
-LMPR.preSystemPharmacyItemWiseSalesReport()
+LPR.prePatientWiseSalesDetails()
 pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugName, paymentmode='Credit')
-LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=0, credit=totalAmount, qty=qty)
+LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
+LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, cashreturn=0, credit=totalAmount, creditreturn=0)
+
+######## Return pharmacy credit sale
+LPR.prePatientWiseSalesDetails()
+LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
+LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, cashreturn=0, credit=0, creditreturn=totalAmount)
+
 AC.logout()
 AC.closeBrowser()
-
