@@ -1346,7 +1346,6 @@ def verifyUserCollectionVsHandOverReport(danpheEMR):
     danpheEMR.find_element_by_xpath("//button[@class='btn green btn-success']").click()
     time.sleep(9)
     TotalCollectionInHandover = danpheEMR.find_element_by_xpath("//b[contains(text(),'Total')]/parent::td/following-sibling::td[1]").text
-    print("TotalCollectionInHandover:", TotalCollectionInHandover)
     TotalCollectionInHandover = float(TotalCollectionInHandover)
     print("TotalCollectionInHandover:", TotalCollectionInHandover)
     assert TotalCollectionInHandover == TotalCollectionInUserCollection
