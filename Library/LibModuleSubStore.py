@@ -2,6 +2,7 @@ import time
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 
 AppName = GSV.appName
 #Module: SubStore Test Actions
@@ -60,11 +61,12 @@ def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
       #ssReqNo1 =
       print("<<END: verifySubStoreRequisition")
 
-def receiveInventoryDispatch(danpheEMR, ssReqNo):
+def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
       print("Start>> createSubStoreRequisition")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
+      danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
       danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory')]").click()
       #danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
       #time.sleep(5)
@@ -121,14 +123,39 @@ def prestockcountSub(stock):
       return preStock
 
 def verifyStockSub(qty, preStock, stock):
-    time.sleep(2)
-    print("Start to Verify Stock")
-    print("Prestock of substore's item  is :", int(preStock))
-    print("Substore's Item Stock is :", int(stock))
-    assert int(qty) == int(stock) - int(preStock)
-    print("End of Verifying Stock")
+     time.sleep(2)
+     print("Start to Verify Stock")
+     print("Prestock of substore's item  is :", int(preStock))
+     print("Substore's Item Stock is :", int(stock))
+     assert int(qty) == int(stock) - int(preStock)
+     print("End of Verifying Stock")
 
-def wait_for_window(timeout=2):
+def createNewConsumption(danpheEMR, substore, itemName):
+      print(">>Start : Consumption of item by Staff")
+      danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
+      time.sleep(2)
+      # since store is choosen no need to choose this
+      # danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+      time.sleep(1)
+      # danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+      danpheEMR.find_element(By.XPATH, "//div[2]/ul/li[2]/a").click()
+      danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/WardSupply/Inventory/Consumption')]").click()
+      danpheEMR.find_element(By.XPATH, " //a[contains(text(),'New Consumption')]").click()
+      time.sleep(2)
+      danpheEMR.find_element(By.ID, "itemName0").click()
+      danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
+      time.sleep(2)
+      danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
+      danpheEMR.find_element(By.ID, "remark").send_keys("Consumption by  user name Sabitri")
+      danpheEMR.find_element(By.ID, "save").click()
+
+
+
+
+
+
+
+def wait_for_window(danpheEMR, timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
       wh_then = vars["window_handles"]

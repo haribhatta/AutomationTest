@@ -9,44 +9,24 @@ import Library.LibModuleSubStore as LSS
 storeUserId = GSV.storeUserID
 storeUserPwd = GSV.storeUserPwD
 
-item = GSV.PhotocopyPaper
-rate = GSV.photocopypaperRate
+item = "Pencil"
+rate = 5
 qty = 1
 store1 = "Main Store"
-store2 = "OT Store"
+store2 = "Accounting Store"
 ########
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 LI.selectInventory(danpheEMR=EMR, inventory="General Inventory")
-LI.getInventorySummaryReport(danpheEMR=EMR)
-LI.preInventorySummaryReport()
-LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=item, rate=rate)
-LI.getInventorySummaryReport(danpheEMR=EMR)
-purchaseamount = rate*qty
-print("purchaseamount", purchaseamount)
-LI.verifyInventorySummaryReport(purchaseqty=qty, purchaseamount=purchaseamount, consumeqty=0, consumeamount=0, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)
-
-# inventory rquisition from substore
-# verification from verification module
-# dispatch from inventory
-# received by substore person
-LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, store=store2)
-#LSS.receivedStoreDispatch(store2)
-LI.preInventorySummaryReport()
-#LI.InventoryConsumption(item=item, qty=qty, store=store2)
-consumptionamount = rate*qty
 LI.getInventorySummaryReport(EMR)
-LI.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=qty, consumeamount=consumptionamount, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)
 LI.preInventorySummaryReport()
-LI.InventoryStockManage(danpheEMR=EMR, managetype='in')
-manageinamount = rate*qty
+LI.createInventoryGoodReceipt(EMR, qty, item, rate)
+LI.receiveGoodReceipt(EMR)
+RequsitionNo = LI.createInventoryDirectDispatch(EMR, item, qty, "General Inventory", store2)
+print(RequsitionNo)
+LSS.receiveInventoryDispatch(EMR, substore=store2, ssReqNo=RequsitionNo)
+LSS.createNewConsumption(danpheEMR=EMR, substore=store2, itemName=item)
 LI.getInventorySummaryReport(EMR)
-LI.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=0, consumeamount=0, manageinqty=qty, manageinamount=manageinamount, manageoutqty=0, manageoutamount=0)
-LI.preInventorySummaryReport()
-LI.InventoryStockManage(danpheEMR=EMR, managetype='out')
-manageoutamount = rate*qty
-LI.getInventorySummaryReport(danpheEMR=EMR)
-LI.verifyInventorySummaryReport(purchaseqty=0, purchaseamount=0, consumeqty=0, consumeamount=0, manageinqty=0,
-                                 manageinamount=0, manageoutqty=qty, manageoutamount=manageoutamount)
+LI.verifyInventorySummaryReport(purchaseqty=1, purchaseamount=5, consumeqty=1, consumeamount=8, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)
 AC.logout()
 AC.closeBrowser()
