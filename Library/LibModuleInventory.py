@@ -1,6 +1,5 @@
 import time
 import Library.GlobalShareVariables as GSV
-import Library.ApplicationConfiguration as AC
 import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -34,10 +33,11 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate):
         danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
         time.sleep(3)
         danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Goods Receipt List')]").click()
+        return BillNo
     print("<<END: createGoodReceipt")
 
 
-def editInventoryGoodsReceipt(danpheEMR):
+def editInventoryGoodsReceipt(danpheEMR, BillNo):
     print(">>START: edit GoodReceipt")
     time.sleep(2)
     if AppName == 'SNCH':
@@ -636,12 +636,38 @@ def receiveGoodReceipt(danpheEMR):
     danpheEMR.find_element(By.ID, "ReceiveButton").click()
 
 
+def getCancelPoReport(danpheEMR, pono):
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Reports')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Inventory/Reports/Purchase']").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(), 'Cancelled PO and GR')]").click()
+    danpheEMR.find_element(By.XPATH, "//b[contains(text(), 'Cancelled PO')]").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(pono)
+    view = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/a")
+    view.is_displayed()
+
+
+def getCancelGR(danpheEMR, BillNo):
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Reports')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Inventory/Reports/Purchase']").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(), 'Cancelled PO and GR')]").click()
+    danpheEMR.find_element(By.XPATH, "//*[@class='btn blue' and @type='button']").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(BillNo)
+    view = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]/a")
+    view.is_displayed()
+
+
+
+
 
 
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
-    wh_then = vars["window_handles"]
+    wh_then = vars("window_handles")
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
 
