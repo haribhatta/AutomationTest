@@ -13,8 +13,8 @@ import Library.LibModuleADT as LADT
 import time
 
 # front desk user login
-itUserId = GSV.itUserID
-itUserPwd = GSV.itUserPwD
+itUserId = GSV.adminUserID
+itUserPwd = GSV.adminUserPwD
 opdAmt = GSV.opdRate
 user = GSV.foUserID
 ########
