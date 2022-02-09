@@ -127,7 +127,7 @@ def createInventoryDirectDispatch(danpheEMR, itemname, qty, inventory, store):
         time.sleep(5)
         danpheEMR.find_element_by_id("directDispatchButton").click()
         time.sleep(5)
-        if AppName == 'LPH' or AppName == "SNCH":
+        if AppName == 'LPH':
             RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'निकासा नं:')]").text
             RequsitionNo = int(str(RequsitionNo).replace("निकासा नं:", ""))
             print(RequsitionNo)
