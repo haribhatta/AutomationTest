@@ -49,11 +49,15 @@ def insurancePatientRegistration(danpheEMR):
       danpheEMR.find_element(By.LINK_TEXT, "GovInsurance").click()
       time.sleep(3)
       danpheEMR.find_element(By.LINK_TEXT, "Patient List").click()
+      time.sleep(3)
       danpheEMR.find_element(By.ID, "btnNewInsurancePat").click()
       fname = str(random.randint(1111, 9999))
+      time.sleep(3)
       danpheEMR.find_element(By.ID, "aptPatFirstName").send_keys("insu", fname)
+      time.sleep(3)
       #danpheEMR.find_element(By.ID, "middleName").send_keys("Patient")
       danpheEMR.find_element(By.ID, "lastName").send_keys("registration")
+      time.sleep(3)
       dropdown = danpheEMR.find_element(By.ID, "selGender")
       dropdown.find_element(By.XPATH, "//option[. = 'Male']").click()
       danpheEMR.find_element(By.ID, "selGender").click()
@@ -73,10 +77,12 @@ def insurancePatientRegistration(danpheEMR):
 
 
 def insuranceNewVisit(danpheEMR, NSHI):
+      global HospitalNo
       print(">> Start: Create insurance patient new visit")
       danpheEMR.find_element(By.LINK_TEXT, "GovInsurance").click()
       time.sleep(3)
       danpheEMR.find_element(By.LINK_TEXT, "Patient List").click()
+      time.sleep(3)
       danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(NSHI)
       time.sleep(2)
       danpheEMR.find_element(By.XPATH, "//a[contains(text(),'New Visit')]").click()
@@ -87,9 +93,11 @@ def insuranceNewVisit(danpheEMR, NSHI):
       time.sleep(2)
       danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
       time.sleep(3)
+      HospitalNo = danpheEMR.find_element_by_xpath("//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
+      print("HospitalNo:", HospitalNo)
       danpheEMR.find_element(By.ID, "btnPrintInsSticker")
       danpheEMR.find_element(By.ID, "btnPrintInsSticker").send_keys(Keys.ESCAPE)
-
+      return HospitalNo
 
 def EmergencyRegistration(danpheEMR):
        danpheEMR.find_element(By.LINK_TEXT, "Emergency").click()
@@ -131,7 +139,9 @@ def verifyinsurancePatientBimaSummaryValue(rate):
     assert presummaryValue == summaryValue - rate
     print("END>> Insurance Sales Summary Verified")
 
-def insuranceSell(danpheEMR, NSHINO , genericname, drugname):
+def insuranceDispensarySell(danpheEMR, NSHINO , genericname, drugname):
+    global PreInvoiceNo
+    print("Start >> insurance Dispensary Sell")
     time.sleep(3)
     danpheEMR.find_element(By.ID, "patient-search").send_keys(NSHINO)
     time.sleep(2)
@@ -149,8 +159,81 @@ def insuranceSell(danpheEMR, NSHINO , genericname, drugname):
     danpheEMR.find_element(By.ID, "qty0").send_keys(Keys.ENTER)
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(2)
+    PreInvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+    print("PreInvoiceNo", PreInvoiceNo)
+    PreInvoiceNo = PreInvoiceNo.partition("PH")[2]
+    print("PreInvoiceNo", PreInvoiceNo)
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice")
     danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
+    return PreInvoiceNo
+    print("END >> insurance Dispensary Sell")
+
+
+def NewInsurancePatientBilling(danpheEMR, NSHI, lab):
+    global PreInvoiceNo
+    print("Start >>> NewInsurancePatientBilling <<<")
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "GovInsurance").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Patient List").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(NSHI)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Insurance Billing')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "items-box0").send_keys(lab)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "items-box0").send_keys(Keys.ENTER)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quantity_0").send_keys(1)
+    danpheEMR.find_element(By.ID, "quantity_0").send_keys(Keys.ENTER)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btn_printInvoice").click()
+    time.sleep(2)
+    PreInvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
+    print("PreInvoiceNo", PreInvoiceNo)
+    PreInvoiceNo = PreInvoiceNo.partition("INS")[2]
+    print("PreInvoiceNo", PreInvoiceNo)
+    time.sleep(2)
+    element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
+    time.sleep(2)
+    danpheEMR.execute_script("arguments[0].click();", element)
+    time.sleep(5)
+
+    return PreInvoiceNo
+    print("Create OPD Invoice: 1 Lab Items: END<<")
+
+
+def PatientWiseClaimReport(danpheEMR, HospitalNo, PreInvoiceNo):
+    print("Start >>> PatientWiseClaimReport <<<")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "GovInsurance").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Patient List").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/app-insurance/div[1]/ul/li[4]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Ins Patient Wise Claims')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btn_showClaims").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH,"//div/div[2]/div[2]/div/div[2]/div[2]/div/div/table/tbody/tr/td[3]/button").click()
+    time.sleep(2)
+    print("PreInvoice:", PreInvoiceNo)
+    Invoice = danpheEMR.find_element(By.XPATH, "//td[contains(text(),' "+PreInvoiceNo+"')]").text
+    print("Invoice : ", Invoice)
+    assert PreInvoiceNo == Invoice
+    danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+    time.sleep(3)
+
+
 
 
 
