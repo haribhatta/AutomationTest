@@ -645,7 +645,7 @@ def verifyDepositBalanceReport(danpheEMR, HospitalNo, deposit):
          print("x", x)
          print("y", y)
          assert x == y
-      print("<<END: verifyDepositBalanceReport")
+      print("<<END: BalanceReport")
 #Module: Billing report: Department Summary Report**********
 def getDepartmentSummary(danpheEMR):
       global sysgrosstotal
@@ -1350,6 +1350,69 @@ def verifyUserCollectionVsHandOverReport(danpheEMR):
     print("TotalCollectionInHandover:", TotalCollectionInHandover)
     assert TotalCollectionInHandover == TotalCollectionInUserCollection
     print("End: Get Reports>Billing Reports>User Collection Report")
+
+def verifydepositbalancereportall(danpheEMR):
+    global row
+    print(">>START: verify Deposit Balance Report")
+    danpheEMR.find_element_by_link_text("Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Billing Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_xpath("//i[contains(.,'Deposit Balance')]").click()
+    time.sleep(3)
+    records = danpheEMR.find_element_by_xpath("//div[@class='page-items']").text
+    print("records:", records)
+    records = records.partition("Showing ")[2]
+    print("records:", records)
+    records = records.partition(" /")[0]
+    records = int(records)
+    print("records:", records)
+    for x in range(records):
+        rowCount = x + 2
+        if rowCount < 20:
+            row = str(rowCount)
+            print("row:", row)
+            Balance = danpheEMR.find_element_by_xpath("(//div[@col-id='Balance'])[" + row + "]").text
+            Balance = float(Balance)
+            print("Balance:", Balance)
+            if Balance >= 0 :
+                print("Total Balance: ", Balance)
+            elif Balance < 0 :
+                print("Amount Cannot be negative: ", Balance)
+
+### To test Total Refund < Total Deposit ###
+
+def RefundCheckOfDepositBalanceReport(danpheEMR):
+    global row
+    print(">>START: verify Deposit Balance Report")
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element_by_link_text("Billing Reports").click()
+    time.sleep(5)
+    danpheEMR.find_element_by_xpath("//i[contains(.,'Deposit Balance')]").click()
+    time.sleep(5)
+    records = danpheEMR.find_element_by_xpath("//div[@class='page-items']").text
+    print("records:", records)
+    records = records.partition("Showing ")[2]
+    print("records:", records)
+    records = records.partition(" /")[0]
+    records = int(records)
+    print("records:", records)
+    for x in range(records):
+        rowCount = x + 2
+        if rowCount < 20:
+            row = str(rowCount)
+            print("row:", row)
+            Deposit = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalDeposit'])[" + row + "]").text
+            Deposit = float(Deposit)
+            print("Total Deposit:", Deposit)
+            Refunded = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalRefunded'])[" + row + "]").text
+            Refunded = float(Refunded)
+            print("Total Refunded :", Refunded)
+            assert float(Deposit) >= float(Refunded)
+            print(" Actual Refunded : ", Refunded)
+
 def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
