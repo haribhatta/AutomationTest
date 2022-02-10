@@ -649,7 +649,7 @@ def getCancelPoReport(danpheEMR, pono):
     view.is_displayed()
 
 
-def getCancelGR(danpheEMR, BillNo):
+def getCancelGRReport(danpheEMR, BillNo):
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Reports')]").click()

@@ -24,6 +24,6 @@ pono = LP.createPurchaseOrder(EMR, itemName1=item, qty=qty, rate=rate, itemName2
 print("Purchase Order Number is :", pono)
 LP.cancelPurchaseOrder(EMR, pono)
 LI.getCancelPoReport(EMR, pono)
-LI.getCancelGR(EMR, BillNo)
+LI.getCancelGRReport(EMR, BillNo)
 AC.logout()
 AC.closeBrowser()
