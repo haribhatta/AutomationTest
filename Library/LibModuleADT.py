@@ -31,7 +31,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
             danpheEMR.find_element_by_id("RequestingDeptId").click()
             time.sleep(3)
             if AppName == "SNCH" or AppName == "MPH":
-                danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(GSV.doctorGyno)
+                danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(doctor)
                 danpheEMR.find_element_by_id("AdmittingDoctorId").send_keys(Keys.ENTER)
                 time.sleep(3)
 
