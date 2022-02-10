@@ -66,7 +66,7 @@ def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
       time.sleep(6)
       danpheEMR.find_element_by_link_text("SubStore").click()
       time.sleep(5)
-      danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+      # danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
       danpheEMR.find_element_by_xpath("//a[contains(text(),'Inventory')]").click()
       #danpheEMR.find_element_by_xpath("//i[contains(text(),'Administration Store')]").click()
       #time.sleep(5)

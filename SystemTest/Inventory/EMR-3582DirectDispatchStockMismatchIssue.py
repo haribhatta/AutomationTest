@@ -16,23 +16,27 @@ foUserId = GSV.adminUserID
 foUserPwd = GSV.foUserPwD
 itemname = 'A4 PAPER'
 qty = 1
-store = 'Emergency Sto'
-StoreName = 'Emergency Sto'
+store = 'Emergency Store'
+StoreName = 'Emergency Store'
 ItemName = 'A4 PA'
+rate = 10
 
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
-LI.activateInventory(inventory='General Inventory')
-itemstock = LI.countStock(itemname=itemname)
+LI.activateInventory(EMR, inventory='General Inventory')
+BillNo = LI.createInventoryGoodReceipt(EMR, qty, itemname, rate=rate)
+LI.receiveGoodReceipt(EMR)
+itemstock = LI.countStock(EMR, itemname=itemname)
 preitemstock = LI.preCountStock(itemstock)
-requisitionNo = LI.createInventoryDirectDispatch(itemname=itemname, qty=qty, store=store)
-itemstock = LI.countStock(itemname=itemname)
+requisitionNo = LI.createInventoryDirectDispatch(EMR, itemname=itemname, qty=qty, inventory='General Inventory', store=store)
+itemstock = LI.countStock(EMR, itemname=itemname)
 LI.verifyStock(qty, preitemstock, itemstock)
-LS.selectSubStore(substore="Emergency Store")
-stock = LS.countStockSub(itemname)
+LS.selectSubStore(EMR, substore="Emergency Store")
+LS.receiveInventoryDispatch(EMR, substore=store, ssReqNo=requisitionNo)
+stock = LS.countStockSub(EMR, itemname)
 preStock = LS.prestockcountSub(stock)
-LS.receiveInventoryDispatch(ssReqNo=requisitionNo)
-stock = LS.countStockSub(itemname)
+LS.receiveInventoryDispatch(EMR, substore=store, ssReqNo=requisitionNo)
+stock = LS.countStockSub(EMR, itemname)
 LS.verifyStockSub(qty, preStock, stock)
 
 # LI.verifyInventoryDirectDispatch(RequisitionNo=requisitionNo, itemname=ItemName, qty=qty, store=StoreName)
