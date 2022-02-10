@@ -25,6 +25,7 @@ EMR = AC.openBrowser()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 LBR.getSummaryReport(EMR)
+LBR.verify
 #LBR.verifyTotalItemsBill(returnamt=opdAmt)
 time.sleep(2)
 AC.logout()
