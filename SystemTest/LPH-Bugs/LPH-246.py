@@ -15,7 +15,7 @@ deposit = 0
 
 EMR = AC.openBrowser()
 AC.login(adminId, adminPwd)
-HospitalNo = LPP.patientRegistration()
+HospitalNo = LPP.patientRegistration(EMR)
 LB.counteractivation(EMR)
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno)
 AC.logout()
