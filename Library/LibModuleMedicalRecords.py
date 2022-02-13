@@ -34,12 +34,13 @@ def addBirthCertificate(danpheEMR, HospitalNo):
       gender = Select(danpheEMR.find_element_by_id("sex"))
       gender.select_by_visible_text("Male")
       time.sleep(3)
-      danpheEMR.find_element_by_id("babyWt").send_keys(2.2)
-      time.sleep(2)
+      danpheEMR.find_element_by_id("babyWt").send_keys(2)
+      time.sleep(5)
       # birthType = Select(danpheEMR.find_element_by_id("ddlBirthType")).click()
       # birthType.select_by_visible_text(" Spontaneous Vaginal Delivery")
       # time.sleep(3)
       danpheEMR.find_element_by_xpath("//button[contains(text(),'Add Certificate')]").click()
+      time.sleep(5)
       danpheEMR.find_element_by_xpath("//button[contains(text(),'Submit')]").click()
       # return number for the verifying the certificate number
       return number

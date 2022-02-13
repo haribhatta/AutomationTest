@@ -80,6 +80,12 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer,HospitalNo, deposit, doct
          time.sleep(2)
          danpheEMR.find_element_by_link_text("IPBilling").click()
          time.sleep(2)
+         if HospitalNo == 'Auto Test':
+             danpheEMR.find_element_by_id("quickFilterInput").send_keys("Auto Test")
+             time.sleep(5)
+         else:
+             danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+             time.sleep(3)
          danpheEMR.find_element_by_link_text("View Details").click()
          time.sleep(5)
          danpheEMR.find_element_by_xpath("//button[contains(.,'Discharge')]").click()

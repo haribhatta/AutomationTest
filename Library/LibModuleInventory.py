@@ -11,7 +11,7 @@ AppName = GSV.appName
 def createInventoryGoodReceipt(danpheEMR, qty, item, rate):
     print(">>START: createGoodReceipt")
     global BillNo
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("Procurement").click()
         time.sleep(5)
         danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
@@ -32,7 +32,9 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate):
         danpheEMR.find_element_by_id("rateip0").send_keys(rate)
         danpheEMR.find_element_by_xpath("//input[@value='Receipt']").click()
         time.sleep(3)
-        danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Goods Receipt List')]").click()
+        #danpheEMR.find_element_by_xpath("//button[contains(text(),'Back to Goods Receipt List')]").click()
+        danpheEMR.find_element_by_xpath("//button[contains(text(),'Edit Receipt')]").send_keys(Keys.ESCAPE)
+        time.sleep(2)
         return BillNo
     print("<<END: createGoodReceipt")
 
@@ -40,7 +42,7 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate):
 def editInventoryGoodsReceipt(danpheEMR, BillNo):
     print(">>START: edit GoodReceipt")
     time.sleep(2)
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("Procurement").click()
         time.sleep(2)
         danpheEMR.find_element_by_link_text("Goods Arrival Notification").click()
@@ -83,7 +85,7 @@ def consumptionStore(danpheEMR, itemName, qty, store):
 def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inventory'):
     print("Inventory Selection Start")
     danpheEMR.find_element_by_link_text("Inventory").click()
-    time.sleep(2)
+    time.sleep(5)
     if inventory == 'General Inventory':
         danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
     else:
@@ -127,17 +129,18 @@ def createInventoryDirectDispatch(danpheEMR, itemname, qty, inventory, store):
         time.sleep(5)
         danpheEMR.find_element_by_id("directDispatchButton").click()
         time.sleep(5)
+        '''
         if AppName == 'LPH':
             RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'निकासा नं:')]").text
             RequsitionNo = int(str(RequsitionNo).replace("निकासा नं:", ""))
             print(RequsitionNo)
-        else:
-            RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
+        '''
+
+        RequsitionNo = danpheEMR.find_element_by_xpath("//div[contains(text(),'Requisition No:')]/child::b").text
         print("Requisition Number is :", RequsitionNo)
         danpheEMR.find_element_by_xpath("//button[contains(.,'Back to Requisition List')]").click()
     print("<<END: directDispatch")
     return RequsitionNo
-
 
 def countStock(danpheEMR, itemname):
     danpheEMR.find_element_by_link_text("Inventory").click()
@@ -174,7 +177,7 @@ def verifyStock(qty, preitemstock, itemstock):
 
 def verifyInventoryDirectDispatch(danpheEMR, RequisitionNo, itemname, qty, store):
     print(">>Start: verifyInventoryDirectDispatch")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(2)
@@ -192,7 +195,7 @@ def verifyInventoryDirectDispatch(danpheEMR, RequisitionNo, itemname, qty, store
 
 def dispatchRequisition(danpheEMR, ssReqNo, GeneralInventory, itemname, qty):
     print(">>START: DispatchRequisition")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)
@@ -216,7 +219,7 @@ def dispatchRequisition(danpheEMR, ssReqNo, GeneralInventory, itemname, qty):
 
 def verifyDispatchRequisition(danpheEMR, ssReqNo):
     print(">>START: verifyDispatchRequisition")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_xpath("//label[2]/span").click()
         danpheEMR.find_element_by_id("quickFilterInput").send_keys(ssReqNo)
         time.sleep(3)
@@ -231,7 +234,7 @@ def verifyDispatchRequisition(danpheEMR, ssReqNo):
 
 def createPurchaseRequest(danpheEMR, ItemName, qty):
     print(">>START: createPurchaseRequest")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)
@@ -256,7 +259,7 @@ def createPurchaseRequest(danpheEMR, ItemName, qty):
 
 def verifyPurchaseRequest(danpheEMR, PRNo, ItemName, qty):
     print(">>START: verifyPurchaseRequest")
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         time.sleep(3)
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(9)
@@ -463,7 +466,7 @@ def verifyInventoryStoreCurrentStockLevelReport(type, qty, unitprice):
 
 def selectInventory(danpheEMR, inventory):
     time.sleep(5)
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(5)
         danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
@@ -472,82 +475,96 @@ def selectInventory(danpheEMR, inventory):
 
 def selectDispensary(danpheEMR, dispensary):
     time.sleep(5)
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("Dispensary").click()
         time.sleep(5)
         danpheEMR.find_element_by_xpath("//i[contains(text(),'MainDispensary')]").click()
         time.sleep(3)
 
-
 def getInventorySummaryReport(danpheEMR):
-    global OpeningValue
-    global OpeningQty
-    global PurchaseValue
-    global PurchaseQty
-    global StockManageInValue
-    global StockManageInQty
-    global StockManageOutValue
-    global StockManageOutQty
-    global ConsumptionValue
-    global ConsumptionQty
-    global ClosingValue
-    global ClosingQty
+    global actualOpeningValue
+    global actualOpeningQty
+    global actualPurchaseValue
+    global actualPurchaseQty
+    global actualStockManageInValue
+    global actualStockManageInQty
+    global actualStockManageOutValue
+    global actualStockManageOutQty
+    global actualConsumptionValue
+    global actualConsumptionQty
+    global actualClosingValue
+    global actualClosingQty
+
     time.sleep(3)
-    if AppName == 'SNCH':
+    if AppName == 'SNCH' or AppName == 'LPH':
         danpheEMR.find_element_by_link_text("Inventory").click()
         time.sleep(5)
+        try:
+            danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
+            time.sleep(3)
+        except:
+            pass
         danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
         time.sleep(3)
         danpheEMR.find_element_by_xpath("//i[contains(.,'Inventory Summary')]").click()
         time.sleep(3)
         danpheEMR.find_element_by_xpath("//button[contains(.,' Load')]").click()
         time.sleep(7)
-        OpeningValue = danpheEMR.find_element_by_xpath(
+        actualOpeningValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        OpeningValue = float(OpeningValue.replace(',', ''))
-        print("OpeningValue", OpeningValue)
-        OpeningQty = danpheEMR.find_element_by_xpath(
+        print("actualOpeningValue:", actualOpeningValue)
+        actualOpeningValue = float(actualOpeningValue.replace(',', ''))
+        print("actualOpeningValue", actualOpeningValue)
+        actualOpeningQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("OpeningQty", OpeningQty)
-        PurchaseValue = danpheEMR.find_element_by_xpath(
+        actualOpeningQty = int(actualOpeningQty)
+        print("actualOpeningQty", actualOpeningQty)
+        actualPurchaseValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        PurchaseValue = float(PurchaseValue.replace(',', ''))
-        print("PurchaseValue", PurchaseValue)
-        PurchaseQty = danpheEMR.find_element_by_xpath(
+        print("actualPurchaseValue:", actualPurchaseValue)
+        actualPurchaseValue = float(actualPurchaseValue.replace(',', ''))
+        print("actualPurchaseValue", actualPurchaseValue)
+        actualPurchaseQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("PurchaseQty", PurchaseQty)
-        StockManageInValue = danpheEMR.find_element_by_xpath(
+        actualPurchaseQty = int(actualPurchaseQty)
+        print("actualPurchaseQty", actualPurchaseQty)
+        actualStockManageInValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        StockManageInValue = float(StockManageInValue.replace(',', ''))
-        print("StockManageInValue", StockManageInValue)
-        StockManageInQty = danpheEMR.find_element_by_xpath(
+        actualStockManageInValue = float(actualStockManageInValue.replace(',', ''))
+        print("actualStockManageInValue:, actualStockManageInValue")
+        print("actualStockManageInValue", actualStockManageInValue)
+        actualStockManageInQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("StockManageInQty", StockManageInQty)
-        StockManageOutValue = danpheEMR.find_element_by_xpath(
+        actualStockManageInQty = int(actualStockManageInQty)
+        print("actualStockManageInQty", actualStockManageInQty)
+        actualStockManageOutValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        StockManageOutValue = float(StockManageOutValue.replace(',', ''))
-        print("StockManageOutValue", StockManageOutValue)
-        StockManageOutQty = danpheEMR.find_element_by_xpath(
+        actualStockManageOutValue = float(actualStockManageOutValue.replace(',', ''))
+        print("actualStockManageOutValue", actualStockManageOutValue)
+        actualStockManageOutQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("StockManageOutQty", StockManageOutQty)
-        ConsumptionValue = danpheEMR.find_element_by_xpath(
+        actualStockManageOutQty = int(actualStockManageOutQty)
+        print("actualStockManageOutQty", actualStockManageOutQty)
+        actualConsumptionValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        ConsumptionValue = float(ConsumptionValue.replace(',', ''))
-        print("ConsumptionValue", ConsumptionValue)
-        ConsumptionQty = danpheEMR.find_element_by_xpath(
+        print("actualConsumptionValue:", actualConsumptionValue)
+        actualConsumptionValue = float(actualConsumptionValue.replace(',', ''))
+        print("actualConsumptionValue", actualConsumptionValue)
+        actualConsumptionQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("ConsumptionQty", ConsumptionQty)
-        ClosingValue = danpheEMR.find_element_by_xpath(
+        actualConsumptionQty = int(actualConsumptionQty)
+        print("actualConsumptionQty", actualConsumptionQty)
+        actualClosingValue = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        ClosingValue = float(ClosingValue.replace(',', ''))
-        print("ClosingValue", ClosingValue)
-        ClosingQty = danpheEMR.find_element_by_xpath(
+        actualClosingValue = float(actualClosingValue.replace(',', ''))
+        print("actualClosingValue", actualClosingValue)
+        actualClosingQty = danpheEMR.find_element_by_xpath(
             "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("ClosingQty", ClosingQty)
-
+        actualClosingQty = int(actualClosingQty)
+        print("actualClosingQty", actualClosingQty)
 
 def preInventorySummaryReport():
-
+    print("Start: preInventorySummaryReport")
     global preOpeningValue
     global preOpeningQty
     global prePurchaseValue
@@ -560,70 +577,60 @@ def preInventorySummaryReport():
     global preConsumptionQty
     global preClosingValue
     global preClosingQty
-    preOpeningValue = OpeningValue
-    preOpeningQty = OpeningQty
-    prePurchaseValue = PurchaseValue
-    prePurchaseQty = PurchaseQty
-    preStockManageInValue = StockManageInValue
-    preStockManageInQty = StockManageInQty
-    preStockManageOutValue = StockManageOutValue
-    preStockManageOutQty = StockManageOutQty
-    preConsumptionValue = ConsumptionValue
-    preConsumptionQty = ConsumptionQty
-    preClosingValue = ClosingValue
-    preClosingQty = ClosingQty
-
+    preOpeningValue = actualOpeningValue
+    preOpeningQty = actualOpeningQty
+    prePurchaseValue = actualPurchaseValue
+    prePurchaseQty = actualPurchaseQty
+    preStockManageInValue = actualStockManageInValue
+    preStockManageInQty = actualStockManageInQty
+    preStockManageOutValue = actualStockManageOutValue
+    preStockManageOutQty = actualStockManageOutQty
+    preConsumptionValue = actualConsumptionValue
+    preConsumptionQty = actualConsumptionQty
+    preClosingValue = actualClosingValue
+    preClosingQty = actualClosingQty
+    print("End: preInventorySummaryReport")
 
 def verifyInventorySummaryReport(purchaseqty, purchaseamount, consumeqty, consumeamount, manageinqty, manageinamount,
                                  manageoutqty, manageoutamount):
     print(">>Start : Verifying the Inventory Summary Report")
-    print("preOpeningValue", preOpeningValue)
-    print("OpeningValue", OpeningValue)
     time.sleep(3)
-    assert OpeningValue == preOpeningValue
-    assert OpeningQty == preOpeningQty
-    x = PurchaseValue
-    print("x", x)
-    y = prePurchaseValue + purchaseamount
-    print("y", y)
-    assert x == y
-    assert int(PurchaseQty) == int(prePurchaseQty) + purchaseqty
-    calcNewStockManageInValue = preStockManageInValue + manageinamount  #
-    print("calcNewStockManageInValue", calcNewStockManageInValue)  #
-    print("StockManageInValue", StockManageInValue)
-    print("preStockManageInValue", preStockManageInValue)
-    print("manageinamount", manageinamount)
-    assert StockManageInValue == preStockManageInValue + manageinamount  # script failing with bug: EMR-2832
-    assert int(StockManageInQty) == int(preStockManageInQty) + manageinqty
-    assert StockManageOutValue == preStockManageOutValue + manageoutamount
-    assert int(StockManageOutQty) == int(preStockManageOutQty) + manageoutqty
-    print("ConsumptionValue", ConsumptionValue)
-    print("preConsumptionValue", preConsumptionValue)
-    print("consumeamount", consumeamount)
-    tempSum = float(preConsumptionValue) + float(consumeamount)
-    print("TempSum", tempSum)
-    assert int(ConsumptionValue) == int(tempSum)
-    assert int(ConsumptionQty) == int(preConsumptionQty) + consumeqty
-    print("ClosingValue", ClosingValue)
-    print("preClosingValue", preClosingValue)
-    print("purchaseamount", purchaseamount)
-    print("consumeamount", consumeamount)
-    print("manageinamount", manageinamount)
-    tempclosing = float(preClosingValue) + float(purchaseamount) + float(manageinamount) - float(consumeamount) - float(
-        manageoutamount)
-    print("tempclosing", tempclosing)
-    assert float(ClosingValue) == float(tempclosing)
-    print("ClosingQty", ClosingQty)
-    print("preClosingQty", preClosingQty)
-    print("purchaseqty", purchaseqty)
-    print("consumeqty", consumeqty)
-    print("manageinqty", manageinqty)
-    tempclosingqty = float(preClosingQty) + purchaseqty + manageinqty - consumeqty - manageoutqty
-    print("tempclosingqty", tempclosingqty)
-    print("ClosingQty", ClosingQty)
-    assert float(ClosingQty) == float(tempclosingqty)
+    expectedOpeningValue = preOpeningValue
+    print("expectedOpeningValue:", expectedOpeningValue)
+    assert actualOpeningValue == expectedOpeningValue
+    expectedOpeningQty = preOpeningQty
+    print("expectedOpeningQty:", expectedOpeningQty)
+    assert actualOpeningQty == expectedOpeningQty
+    expectedPurchaseValue = prePurchaseValue + purchaseamount
+    print("expectedPurchaseValue:", expectedPurchaseValue)
+    assert actualPurchaseValue == expectedPurchaseValue
+    expectedPurchaseQty = prePurchaseQty + purchaseqty
+    assert actualPurchaseQty == expectedPurchaseQty
+    expectedStockManageInValue = preStockManageInValue + manageinamount  # script failing with bug: EMR-2832
+    print("expectedStockManageInValue:", expectedStockManageInValue)
+    assert actualStockManageInValue == expectedStockManageInValue
+    expectedStockManageInQty = preStockManageInQty + manageinqty
+    print("expectedStockManageInQty:", expectedStockManageInQty)
+    assert actualStockManageInQty == expectedStockManageInQty
+    expectedStockManageOutValue = preStockManageOutValue + manageoutamount
+    print("expectedStockManageOutValue:", expectedStockManageOutValue)
+    assert expectedStockManageOutValue == expectedStockManageOutValue
+    expectedStockManageOutQty = preStockManageOutQty + manageoutqty
+    print("expectedStockManageOutQty:", expectedStockManageOutQty)
+    assert actualStockManageOutQty == expectedStockManageOutQty
+    expectedConsumptionValue = preConsumptionValue + float(consumeamount)
+    print("expectedConsumptionValue:", expectedConsumptionValue)
+    assert actualConsumptionValue == expectedConsumptionValue
+    expectedConsumptionQty = preConsumptionQty + consumeqty
+    print("expectedConsumptionQty:", expectedConsumptionQty)
+    assert actualConsumptionQty == expectedConsumptionQty
+    expectedClosingValue = float(preClosingValue) + float(purchaseamount) + float(manageinamount) - float(consumeamount) - float(manageoutamount)
+    print("expectedClosingValue:", expectedClosingValue)
+    assert actualClosingValue == expectedClosingValue
+    expectedClosingQty = float(preClosingQty) + purchaseqty + manageinqty - consumeqty - manageoutqty
+    print("expectedClosingQty:", expectedClosingQty)
+    assert actualClosingQty == expectedClosingQty
     print("END>> Verifying Inventory Summary Report")
-
 
 def receiveGoodReceipt(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()

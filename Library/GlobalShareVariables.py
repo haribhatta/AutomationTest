@@ -95,8 +95,8 @@ if appName == "LPH":
       #stationaryItem1 = "DOTPEN"
       stationaryItem1 = "USG PAPER"
 ###Sub Stores Name:
-      SubStore1 = "General"
-      SubStore2 = "PostOps"
+      SubStore1 = "ACCOUNT"
+      SubStore2 = "ADMINISTRATION"
 ###Doctors/Departments Name:
       doctorGyno = "Dr. doctor doctor"
       departmentGyno = "GYNAE & OBS"

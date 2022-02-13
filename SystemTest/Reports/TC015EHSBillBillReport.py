@@ -20,6 +20,7 @@ EMR = AC.openBrowser()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
+LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType) # fulfilling pre-condition
 #Scenario-A1: EHS Cash billing
 LBR.getEHSBillReport(EMR)
 LBR.preEHSBillReport()
