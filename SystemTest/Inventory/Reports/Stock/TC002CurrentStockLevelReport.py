@@ -15,8 +15,8 @@ import Library.LibModuleInventory as LI
 
 
 # front desk user login
-storeUserId = GSV.adminUserID
-storeUserPwd = GSV.adminUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 opdAmt = GSV.opdRate
 user = GSV.foUserID
 ########
@@ -32,7 +32,7 @@ store1 = "ADMINISTRATION"
 Inventory1 = "General Inventory"
 ########
 EMR = AC.openBrowser()
-AC.login(storeUserId, storeUserPwd)
+AC.login(adminUserId, adminUserPwd)
 LI.selectInventory(danpheEMR=EMR, inventory=Inventory1)
 LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
 LI.preInventoryStoreCurrentStockLevelReport()

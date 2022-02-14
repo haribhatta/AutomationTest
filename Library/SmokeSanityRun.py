@@ -13,6 +13,8 @@ appVersion = input("Please entry version for Test Summary Report")
 AppName = GSV.appName
 print("app name test", AppName)
 
+global Originalfile
+
 if scheduletype == '1':
     Originalfile = smokesanityfile + AppName + ".xlsx"
 
@@ -21,9 +23,11 @@ elif scheduletype == '2':
     print("Originalfile:", Originalfile)
 
 duplicatefile = smokesanityresult + AppName + appVersion + ".xlsx"
-print("This is test", duplicatefile)
+print("This is duplicate file", duplicatefile)
 print("This is original file", Originalfile)
+
 rows = sc.getTotalrows(Originalfile, 'test')
+print("rows:", rows)
 
 def files(file, file1, rows, *args):
     global runEnv

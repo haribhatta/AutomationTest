@@ -4,8 +4,8 @@ import Library.LibModuleInventory as LI
 import Library.LibModuleProcurement as LP
 
 # front desk user login
-storeUserId = GSV.storeUserID
-storeUserPwd = GSV.storeUserPwD
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
 
 item = "Pencil"
 rate = 5
@@ -14,7 +14,7 @@ store1 = "Main Store"
 store2 = "Accounting Store"
 ########
 EMR = AC.openBrowser()
-AC.login(storeUserId, storeUserPwd)
+AC.login(adminUserId, adminUserPwd)
 LI.activateInventory(EMR, 'General Inventory')
 LI.getPurchaseSummaryReport(EMR)
 LI.prePurchaseSummaryReport()

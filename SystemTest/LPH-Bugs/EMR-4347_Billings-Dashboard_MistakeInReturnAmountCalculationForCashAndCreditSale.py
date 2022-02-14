@@ -1,4 +1,8 @@
 '''
+########
+Scripted By:
+Scripted Environment:
+########
 Issue : Return amount is not subtracted from Subtotal.
 
 Steps to reproduce:
@@ -23,8 +27,8 @@ import Library.LibModuleADT as LADT
 EMR = AC.openBrowser()
 #############
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+itUserId = GSV.itUserID
+itUserPwd = GSV.itUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 
@@ -41,7 +45,7 @@ priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 ########
 #############
-AC.login(foUserId, foUserPwd)
+AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 ########
 # 1. Cash Invoice
