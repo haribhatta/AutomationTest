@@ -1,8 +1,5 @@
 import time
-import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.select import Select
-import Library.LibModuleAppointment as LA
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.by import By
 
@@ -24,50 +21,50 @@ def getPharmacyDashboard(danpheEMR):
     global ProvisionalItems
     global UnpaidInvoices
     time.sleep(5)
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
     time.sleep(3)
-    TotalSale = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Total Sale')]/following-sibling::b").text
+    TotalSale = danpheEMR.find_element(By.XPATH, "//h4[contains(text(),'Total Sale')]/following-sibling::b").text
     print("Total Sale", TotalSale)
     TotalSale = TotalSale.partition(": ")[2]
     TotalSale = float(TotalSale)
     print("Total Sale", TotalSale)
-    CashReturn = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Cash Return')]/following-sibling::b").text
+    CashReturn = danpheEMR.find_element(By.XPATH, "//h4[contains(text(),'Cash Return')]/following-sibling::b").text
     print("CashReturn", CashReturn)
     CashReturn = CashReturn.partition(": ")[2]
     CashReturn = float(CashReturn)
     print("CashReturn", CashReturn)
-    CreditReturn = danpheEMR.find_element_by_xpath("//h4[contains(text(),'Credit Return')]/following-sibling::b").text
+    CreditReturn = danpheEMR.find_element(By.XPATH, "//h4[contains(text(),'Credit Return')]/following-sibling::b").text
     print("CreditReturn", CreditReturn)
     CreditReturn = CreditReturn.partition(": ")[2]
     CreditReturn = float(CreditReturn)
     print("CreditReturn", CreditReturn)
-    NetCashCollection = danpheEMR.find_element_by_xpath(
+    NetCashCollection = danpheEMR.find_element(By.XPATH, 
         "//h4[contains(text(),'Net Cash Collection')]/following-sibling::b").text
     print("NetCashCollection", NetCashCollection)
     NetCashCollection = NetCashCollection.partition(": ")[2]
     NetCashCollection = float(NetCashCollection)
     print("NetCashCollection", NetCashCollection)
-    DepositAmount = danpheEMR.find_element_by_xpath(
+    DepositAmount = danpheEMR.find_element(By.XPATH, 
         "//h4[contains(text(),'Deposit Amount')]/following-sibling::b").text
     print("Deposit Amount", DepositAmount)
     DepositAmount = DepositAmount.partition(": ")[2]
     DepositAmount = float(DepositAmount)
     print("DepositAmount", DepositAmount)
-    DepositReturned = danpheEMR.find_element_by_xpath(
+    DepositReturned = danpheEMR.find_element(By.XPATH, 
         "//h4[contains(text(),'Deposit Returned')]/following-sibling::b").text
     print("Deposit Returned", DepositReturned)
     DepositReturned = DepositReturned.partition(": ")[2]
     DepositReturned = float(DepositReturned)
     print("DepositReturned", DepositReturned)
-    ProvisionalItems = danpheEMR.find_element_by_xpath(
+    ProvisionalItems = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'PROVISIONAL ITEMS')]/following-sibling::td").text
     print("PROVISIONAL ITEMS", ProvisionalItems)
     ProvisionalItems = ProvisionalItems.partition("Rs.")[2]
     ProvisionalItems = float(ProvisionalItems)
     print("ProvisionalItems", ProvisionalItems)
-    UnpaidInvoices = danpheEMR.find_element_by_xpath(
+    UnpaidInvoices = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'UNPAID INVOICES')]/following-sibling::td").text
     print("UNPAID INVOICES", UnpaidInvoices)
     UnpaidInvoices = UnpaidInvoices.partition("Rs.")[2]
@@ -142,30 +139,30 @@ def getPharmacyCashCollectionSummary(danpheEMR, user):
     global sysnetamount
     global sysdiscountamount
     if AppName == 'SNCH':
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(2)
-        danpheEMR.find_element_by_link_text("Report").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Report").click()
         time.sleep(2)
-        danpheEMR.find_element_by_link_text("Sales").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
         time.sleep(2)
-        danpheEMR.find_element_by_xpath("//i[contains(.,'Cash Collection Summary')]").click()
+        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Cash Collection Summary')]").click()
         time.sleep(2)
-        danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
         time.sleep(9)
-        danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(user)
         time.sleep(2)
-        username = danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-        sysinvoiceamount = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[3]").text
+        username = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+        sysinvoiceamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[3]").text
         print(sysinvoiceamount)
-        sysinvoicereturned = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text
+        sysinvoicereturned = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]").text
         print(sysinvoicereturned)
-        sysdeposit = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[5]").text
+        sysdeposit = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[5]").text
         print(sysdeposit)
-        sysdepositreturn = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[6]").text
+        sysdepositreturn = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[6]").text
         print(sysdepositreturn)
-        sysnetamount = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+        sysnetamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
         print(sysnetamount)
-        sysdiscountamount = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+        sysdiscountamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]").text
         print(sysdiscountamount)
     print("<<END: getPharmacyCashCollectionSummary")
 
@@ -213,31 +210,31 @@ def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, 
 def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
     print(">>START: getPharmacyDepositBalanceReport")
     global sysdepositamt
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Deposit Balance Report ')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(9)
-    assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-    sysdepositamt = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
+    assert HospitalNo == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+    sysdepositamt = int(danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]").text)
     print("<<END: getPharmacyDepositBalanceReport")
 
 
 def verifyPharmacyDepositBalanceReport(danpheEMR, HospitalNo, deposit, depositreturn):
     print(">>START: verifyPharmacyDepositBalanceReport")
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//i[contains(text(),'Deposit Balance Report ')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Deposit Balance Report ')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(9)
-    assert HospitalNo == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-    depositbalance = int(danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]").text)
+    assert HospitalNo == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+    depositbalance = int(danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]").text)
     assert depositbalance == sysdepositamt + deposit - depositreturn
     print("<<END: verifyPharmacyDepositBalanceReport")
 
@@ -249,21 +246,21 @@ def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
     global sysendingstock
     global sysdrugbatch
     global sysdrugexpiry
-    danpheEMR.find_element_by_link_text('Pharmacy').click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text('Report').click()
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(9)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
     time.sleep(3)
-    sysdrugname = danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
+    sysdrugname = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div").text
     print("sysdrugname", sysdrugname)
     assert sysdrugname == drugname
-    sysopeningstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
+    sysopeningstock = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
     print("sysopeningstock", sysopeningstock)
-    sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+    sysendingstock = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]").text
     print("sysendingstock", sysendingstock)
     print("<<END: getPharmacyOpeningEndingStockSummaryReport")
 
@@ -285,20 +282,20 @@ def preSystemPharmacyOpeningEndingStockSummaryReport():
 
 def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
     print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
-    danpheEMR.find_element_by_link_text('Pharmacy').click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text('Report').click()
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Opening and Ending Stock Summary')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(9)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(presysdrugname, ' ', presysdrugbatch)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(presysdrugname, ' ', presysdrugbatch)
     time.sleep(7)
-    assert presysdrugname == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div").text
-    assert presysdrugbatch == danpheEMR.find_element_by_xpath("//div[3]/div[2]/div/div/div/div[2]").text
-    assert presysdrugexpiry == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[4]/span").text
-    assert presysopeningstock == danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[7]").text
-    sysendingstock = danpheEMR.find_element_by_xpath("//div[2]/div/div/div/div[8]").text
+    assert presysdrugname == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div").text
+    assert presysdrugbatch == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+    assert presysdrugexpiry == danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]/span").text
+    assert presysopeningstock == danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
+    sysendingstock = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]").text
     assert int(sysendingstock) == int(presysendingstock) - qty
     print("<<END: verifyPharmacyOpeningEndingStockSummaryReport")
 
@@ -306,17 +303,17 @@ def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
 def getPharmacyStockManageDetailReport(danpheEMR, drugname):
     print(">>START: getPharmacyStockManageDetailReport")
     global ManageQuantity
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Stock Manage Detail Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Stock Manage Detail Report')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(9)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(drugname)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
     time.sleep(5)
-    ManageQuantity = danpheEMR.find_element_by_xpath(
+    ManageQuantity = danpheEMR.find_element(By.XPATH, 
         "(//div[@col-id='Quantity'])[2]").text  # There is open bug (EMR-2588) to list down latest manage record to top.
     print("Manage Quantity", ManageQuantity)
     print("<<END: getPharmacyStockManageDetailReport")
@@ -335,20 +332,20 @@ def verifyPharmacyStockManageDetailReport(In, Out):
 
 def verifyStockItemsReport(danpheEMR, drugname):
     print(">>START: verifyStockItemsReport")
-    danpheEMR.find_element_by_link_text("Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//i[contains(text(),'Stock Items')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Stock Items')]").click()
     time.sleep(5)
-    danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(drugname)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='--Select Item--']").send_keys(drugname)
     time.sleep(1)
-    danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.ARROW_DOWN)
-    danpheEMR.find_element_by_xpath("//input[@placeholder='--Select Item--']").send_keys(Keys.TAB)
-    danpheEMR.find_element_by_xpath("//select").send_keys("Dispensary")
-    danpheEMR.find_element_by_xpath("//button[contains(.,' Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='--Select Item--']").send_keys(Keys.ARROW_DOWN)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='--Select Item--']").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.XPATH, "//select").send_keys("Dispensary")
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(3)
-    sysqty = danpheEMR.find_element_by_xpath("(//div[@col-id='AvailableQuantity'])[2]").text
+    sysqty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
     print("sysqty", sysqty)
     print("drugqtySS", drugqtySS)
     assert int(drugqtySS) == int(sysqty)
@@ -361,13 +358,13 @@ def getPurchaseSummaryReport(danpheEMR):
     global balance
     time.sleep(3)
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text('Store').click()
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
     else:
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text('Report').click()
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Purchase Summary')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Purchase Summary')]").click()
     time.sleep(5)
     purchase = danpheEMR.find_element(By.XPATH,
                                       "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div").text
@@ -409,16 +406,16 @@ def getItemWisePurchaseReport(danpheEMR):
     global TotalPurchaseValue
     time.sleep(3)
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text('Store').click()
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
     else:
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text('Report').click()
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
     time.sleep(5)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Item Wise Purchase Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Item Wise Purchase Report')]").click()
     time.sleep(5)
-    danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click
     time.sleep(5)
     TotalPurchaseQuantity = danpheEMR.find_element(By.XPATH, "//table/tbody/tr[1]/td[1]/span/b").text
     print("Total Purchase Quantity is : ", TotalPurchaseQuantity)
@@ -455,10 +452,10 @@ def verifyItemWisePurchaseReport():
 
 
 
-def wait_for_window(timeout=2):
+def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
-    wh_then = vars["window_handles"]
+    wh_then = vars("window_handles")
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
 
@@ -484,92 +481,92 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
     global actualLessCashDiscount
     global actualTotalCashCollection
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     elif AppName == "MPH" or AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(4)
-    danpheEMR.find_element_by_link_text("Sales").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'User Collection')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'User Collection')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(3)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(user)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(user)
     time.sleep(9)
     # 1
-    actualNetCashCollection = danpheEMR.find_element_by_css_selector(".blinkAmount").text
+    actualNetCashCollection = danpheEMR.find_element(By.CSS_SELECTOR, ".blinkAmount").text
     print("actualNetCashCollection", actualNetCashCollection)
     actualNetCashCollection = actualNetCashCollection.partition("(")[2]
     actualNetCashCollection = actualNetCashCollection.partition(")")[0]
     actualNetCashCollection = float(actualNetCashCollection)
     print("actualNetCashCollection", actualNetCashCollection)
     # 2
-    actualGrossTotalSales = danpheEMR.find_element_by_xpath(
+    actualGrossTotalSales = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Gross Total Sales')]/following-sibling::td").text
     actualGrossTotalSales = float(actualGrossTotalSales)
     print("actualGrossTotalSales", actualGrossTotalSales)
     # 3
-    actualDiscount = danpheEMR.find_element_by_xpath("//td[contains(text(),'Discount')]/following-sibling::td").text
+    actualDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Discount')]/following-sibling::td").text
     actualDiscount = float(actualDiscount)
     print("actualDiscount", actualDiscount)
     # 4
-    actualReturnSubTotal = danpheEMR.find_element_by_xpath(
+    actualReturnSubTotal = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Return SubTotal')]/following-sibling::td").text
     actualReturnSubTotal = float(actualReturnSubTotal)
     print("actualReturnSubTotal", actualReturnSubTotal)
     # 5
-    actualReturnDiscount = danpheEMR.find_element_by_xpath(
+    actualReturnDiscount = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Return Discount')]/following-sibling::td").text
     actualReturnDiscount = float(actualReturnDiscount)
     print("actualReturnDiscount", actualReturnDiscount)
     # 6
-    actualReturnAmount = danpheEMR.find_element_by_xpath(
+    actualReturnAmount = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Return Amount')]/following-sibling::td").text
     actualReturnAmount = float(actualReturnAmount)
     print("actualReturnAmount", actualReturnAmount)
     # 7
-    actualNetSales = danpheEMR.find_element_by_xpath(
+    actualNetSales = danpheEMR.find_element(By.XPATH, 
         "//strong[contains(text(),'Net Sales')]/parent::td/following-sibling::td").text
     actualNetSales = float(actualNetSales)
     print("actualNetSales", actualNetSales)
     # 8
-    actualVATAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),'VAT Amount')]/following-sibling::td").text
+    actualVATAmount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'VAT Amount')]/following-sibling::td").text
     actualVATAmount = float(actualVATAmount)
     print("actualVATAmount", actualVATAmount)
     # 9
-    actualLessCreditAmount = danpheEMR.find_element_by_xpath(
+    actualLessCreditAmount = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Less Credit Amount')]/following-sibling::td").text
     actualLessCreditAmount = float(actualLessCreditAmount)
     print("actualLessCreditAmount", actualLessCreditAmount)
     # 10
-    actualAddDepositReceived = danpheEMR.find_element_by_xpath(
+    actualAddDepositReceived = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Add Deposit Received')]/following-sibling::td").text
     actualAddDepositReceived = float(actualAddDepositReceived)
     print("actualAddDepositReceived", actualAddDepositReceived)
     # 11
-    actualDepositDeducted = danpheEMR.find_element_by_xpath(
+    actualDepositDeducted = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Deposit Deducted')]/following-sibling::td").text
     actualDepositDeducted = float(actualDepositDeducted)
     print("actualDepositDeducted", actualDepositDeducted)
     # 12
-    actualLessDepositRefund = danpheEMR.find_element_by_xpath(
+    actualLessDepositRefund = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Less Deposit Refund')]/following-sibling::td").text
     actualLessDepositRefund = float(actualLessDepositRefund)
     print("actualLessDepositRefund", actualLessDepositRefund)
     # 13
-    actualAddCollectionFromReceivables = danpheEMR.find_element_by_xpath(
+    actualAddCollectionFromReceivables = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Add Collection From Receivables')]/following-sibling::td").text
     actualAddCollectionFromReceivables = float(actualAddCollectionFromReceivables)
     print("actualAddCollectionFromReceivables", actualAddCollectionFromReceivables)
     # 14
-    actualLessCashDiscount = danpheEMR.find_element_by_xpath(
+    actualLessCashDiscount = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Less Cash Discount')]/following-sibling::td").text
     actualLessCashDiscount = float(actualLessCashDiscount)
     print("actualLessCashDiscount", actualLessCashDiscount)
     # 15
-    actualTotalCashCollection = danpheEMR.find_element_by_xpath(
+    actualTotalCashCollection = danpheEMR.find_element(By.XPATH, 
         "//td[contains(text(),'Total Cash Collection')]/following-sibling::td").text
     actualTotalCashCollection = float(actualTotalCashCollection)
     print("actualTotalCashCollection", actualTotalCashCollection)
@@ -672,15 +669,15 @@ def getPatientWiseSalesDetails(danpheEMR, HospitalNo):
     global TotalSalesRefund
     global TotalNetSales
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     elif AppName == "MPH" or AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(4)
-    danpheEMR.find_element_by_link_text("Sales").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Patient-wise Sales Detail')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Patient-wise Sales Detail')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "SearchPatientBox").send_keys(HospitalNo)
     time.sleep(2)
@@ -708,15 +705,15 @@ def prePatientWiseSalesDetails():
 
 def VerifyPatientWiseSalesDetail(danpheEMR, HospitalNo, cash , credit , cashreturn, creditreturn):
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     elif AppName == "MPH" or AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(4)
-    danpheEMR.find_element_by_link_text("Sales").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Patient-wise Sales Detail')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Patient-wise Sales Detail')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "SearchPatientBox").send_keys(HospitalNo)
     time.sleep(2)
@@ -739,25 +736,25 @@ def VerifyPatientWiseSalesDetail(danpheEMR, HospitalNo, cash , credit , cashretu
 def verifySystemPharmacyNarcoticDailySalesReport(danpheEMR, invoiceNo, totalAmount):
       print(">>START: verifySystemPharmacyNarcoticDailySalesReport")
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Sales").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Narcotics Daily Sales')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Narcotics Daily Sales')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(15) # Due to performance issue there is open bug in Jira: EMR-4775
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
+      danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
       time.sleep(9)
-      sysInvoiceNo = danpheEMR.find_element_by_xpath("(//div[@col-id='InvoicePrintId'])[2]").text
+      sysInvoiceNo = danpheEMR.find_element(By.XPATH, "(//div[@col-id='InvoicePrintId'])[2]").text
       print("sysInvoiceNo:", sysInvoiceNo)
       print("invoiceNo:", invoiceNo)
       assert sysInvoiceNo == invoiceNo
-      sysTotalAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
+      sysTotalAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='TotalAmount'])[2]").text
       print("sysTotalAmount:", sysTotalAmount)
       print("totalAmount:", totalAmount)
       assert sysTotalAmount == totalAmount
@@ -770,25 +767,25 @@ def getSystemPharmacyBillWiseSalesReport(danpheEMR):
       global actualTotalAmount
 
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Sales").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Bill-wise Sales')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Bill-wise Sales')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(3)
-      actualSubTotalAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[1]").text
+      actualSubTotalAmount = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[1]").text
       actualSubTotalAmount = float(actualSubTotalAmount)
       print("actualSubTotalAmount:", actualSubTotalAmount)
-      actualDiscountAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[2]").text
+      actualDiscountAmount = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[2]").text
       actualDiscountAmount = float(actualDiscountAmount)
       print("actualDiscountAmount:", actualDiscountAmount)
-      actualTotalAmount = danpheEMR.find_element_by_xpath("(//td[contains(text(),'MainDispensary')]/following-sibling::td)[3]").text
+      actualTotalAmount = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[3]").text
       actualTotalAmount = float(actualTotalAmount)
       print("actualTotalAmount:", actualTotalAmount)
 def preSystemPharmacyBillWiseSalesReport():
@@ -801,25 +798,25 @@ def preSystemPharmacyBillWiseSalesReport():
 def verifySystemPharmacyBillWiseSalesReport(danpheEMR, invoiceNo, cash, cashReturn, credit, creditReturn, totalAmount, discountAmount):
       print(">>START: verifySystemPharmacyBillWiseSalesReport")
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Sales").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Bill-wise Sales')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Bill-wise Sales')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(15) # Due to performance issue there is open bug in Jira: EMR-4775
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
+      danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
       time.sleep(9)
-      sysInvoiceNo = danpheEMR.find_element_by_xpath("(/sale").text
+      sysInvoiceNo = danpheEMR.find_element(By.XPATH, "(/sale").text
       print("sysInvoiceNo:", sysInvoiceNo)
       print("invoiceNo:", invoiceNo)
       assert sysInvoiceNo == invoiceNo
-      sysTotalAmount = danpheEMR.find_element_by_xpath("(//div[@col-id='TotalAmount'])[2]").text
+      sysTotalAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='TotalAmount'])[2]").text
       sysTotalAmount = int(sysTotalAmount)
       print("sysTotalAmount:", sysTotalAmount)
       print("totalAmount:", totalAmount)
@@ -845,31 +842,31 @@ def getSystemPharmacyItemWiseSalesReport(danpheEMR, drugName):
         global Net
 
         if AppName == "LPH":
-              danpheEMR.find_element_by_link_text("Store").click()
+              danpheEMR.find_element(By.LINK_TEXT, "Store").click()
         elif AppName == "MPH" or AppName == "SNCH":
-              danpheEMR.find_element_by_link_text("Pharmacy").click()
+              danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(9)
-        danpheEMR.find_element_by_link_text("Report").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Report").click()
         time.sleep(4)
-        danpheEMR.find_element_by_link_text("Sales").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
         time.sleep(4)
-        danpheEMR.find_element_by_xpath("//i[contains(.,'Item-wise Sales')]").click()
+        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Item-wise Sales')]").click()
         time.sleep(3)
-        danpheEMR.find_element_by_xpath("//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(drugName)
-        danpheEMR.find_element_by_xpath("//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(Keys.DOWN)
-        danpheEMR.find_element_by_xpath("//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(Keys.ENTER)
-        danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+        danpheEMR.find_element(By.XPATH, "//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(drugName)
+        danpheEMR.find_element(By.XPATH, "//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(Keys.DOWN)
+        danpheEMR.find_element(By.XPATH, "//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div[2]/my-app/div[1]/div/div[2]/div[2]/div/div[1]/div/div/div/div/input").send_keys(Keys.ENTER)
+        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
         time.sleep(3)
-        TotalSalesQuantity = danpheEMR.find_element_by_xpath("//table/tbody/tr/td[2]/span").text
+        TotalSalesQuantity = danpheEMR.find_element(By.XPATH, "//table/tbody/tr/td[2]/span").text
         TotalSalesQuantity = float(TotalSalesQuantity)
         print("TotalSalesQuantity:", TotalSalesQuantity)
-        TotalSalesValue = danpheEMR.find_element_by_xpath("//table/tbody/tr/td[4]/span").text
+        TotalSalesValue = danpheEMR.find_element(By.XPATH, "//table/tbody/tr/td[4]/span").text
         TotalSalesValue = float(TotalSalesValue)
         print("TotalSalesValue:", TotalSalesValue)
-        TotalStockValue = danpheEMR.find_element_by_xpath("//table/tbody/tr/td[6]/span").text
+        TotalStockValue = danpheEMR.find_element(By.XPATH, "//table/tbody/tr/td[6]/span").text
         TotalStockValue = float(TotalStockValue)
         print("TotalStockValue:", TotalStockValue)
-        Net = danpheEMR.find_element_by_xpath("//table/tbody/tr/td[8]/span").text
+        Net = danpheEMR.find_element(By.XPATH, "//table/tbody/tr/td[8]/span").text
         Net = float(Net)
         print("Net:", Net)
 def preSystemPharmacyItemWiseSalesReport():
@@ -904,37 +901,37 @@ def getSystemPharmacySalesSummaryReport(danpheEMR):
       global actualNetCreditSales
       global actualTotalSales
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Sales").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Sales Summary')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Sales Summary')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(3)
-      actualCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Sales')])[1]/following-sibling::td").text
+      actualCashSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Cash Sales')])[1]/following-sibling::td").text
       actualCashSales = float(actualCashSales)
       print("actualCashSales", actualCashSales)
-      actualCashSalesRefund = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Cash Sales Refund')])[1]/following-sibling::td").text
+      actualCashSalesRefund = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Cash Sales Refund')])[1]/following-sibling::td").text
       actualCashSalesRefund = float(actualCashSalesRefund)
       print("actualCashSalesRefund", actualCashSalesRefund)
-      actualNetCashSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Net Cash Sales')])[1]/following-sibling::td").text
+      actualNetCashSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Net Cash Sales')])[1]/following-sibling::td").text
       actualNetCashSales = float(actualNetCashSales)
       print("actualNetCashSales", actualNetCashSales)
-      actualCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Sales')])[1]/following-sibling::td").text
+      actualCreditSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Credit Sales')])[1]/following-sibling::td").text
       actualCreditSales = float(actualCreditSales)
       print("actualCreditSales", actualCreditSales)
-      actualCreditSalesRefund = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Credit Sales Refund')])[1]/following-sibling::td").text
+      actualCreditSalesRefund = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Credit Sales Refund')])[1]/following-sibling::td").text
       actualCreditSalesRefund = float(actualCreditSalesRefund)
       print("actualCreditSalesRefund", actualCreditSalesRefund)
-      actualNetCreditSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Net Credit Sales')])[1]/following-sibling::td").text
+      actualNetCreditSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Net Credit Sales')])[1]/following-sibling::td").text
       actualNetCreditSales = float(actualNetCreditSales)
       print("actualNetCreditSales", actualNetCreditSales)
-      actualTotalSales = danpheEMR.find_element_by_xpath("(//td[contains(text(),'Total Sales')])[1]/following-sibling::td").text
+      actualTotalSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Total Sales')])[1]/following-sibling::td").text
       actualTotalSales = float(actualTotalSales)
       print("actualTotalSales", actualTotalSales)
       print("End: getSystemPharmacySalesSummaryReport:")
@@ -987,19 +984,19 @@ def getPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo):
       print("Start: getPharmacyReturnFromCustomerReport:")
       global actualTotalReturnedAmount
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Stock").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Return From Customer Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Return From Customer Report')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(3)
-      actualTotalReturnedAmount = danpheEMR.find_element_by_xpath("//td[contains(text(),' Total Returned Amount ')]/following-sibling::td").text
+      actualTotalReturnedAmount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),' Total Returned Amount ')]/following-sibling::td").text
       actualTotalReturnedAmount = float(actualTotalReturnedAmount)
       print("actualTotalReturnedAmount", actualTotalReturnedAmount)
       print("End: getPharmacyReturnFromCustomerReport:")
@@ -1011,21 +1008,21 @@ def prePharmacyReturnFromCustomerReport():
 def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, creditReturn):
       print("Start: verifyPharmacyReturnFromCustomerReport:")
       if AppName == "LPH":
-            danpheEMR.find_element_by_link_text("Store").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Store").click()
       elif AppName == "MPH" or AppName == "SNCH":
-            danpheEMR.find_element_by_link_text("Pharmacy").click()
+            danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
       time.sleep(9)
-      danpheEMR.find_element_by_link_text("Report").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Report").click()
       time.sleep(4)
-      danpheEMR.find_element_by_link_text("Stock").click()
+      danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
       time.sleep(4)
-      danpheEMR.find_element_by_xpath("//i[contains(.,'Return From Customer Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//i[contains(.,'Return From Customer Report')]").click()
       time.sleep(2)
-      danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+      danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
       time.sleep(3)
-      danpheEMR.find_element_by_id("quickFilterInput").send_keys(invoiceNo)
+      danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
       time.sleep(3)
-      sysInvoiceNo = danpheEMR.find_element_by_xpath("(//div[@col-id='IssueNo'])[2]").text
+      sysInvoiceNo = danpheEMR.find_element(By.XPATH, "(//div[@col-id='IssueNo'])[2]").text
       sysInvoiceNo = sysInvoiceNo.partition("PH")[2]
       print("sysInvoiceNo", sysInvoiceNo)
       assert sysInvoiceNo == invoiceNo
@@ -1041,13 +1038,13 @@ def getSupplierStockReport(danpheEMR, supplier):
     global totalAmount
     time.sleep(3)
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text('Store').click()
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
     elif AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
-    danpheEMR.find_element_by_link_text('Report').click()
-    danpheEMR.find_element_by_xpath("//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Supplier Stock ')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Supplier Stock ')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "supplierName").send_keys(supplier)
     time.sleep(2)
@@ -1084,31 +1081,31 @@ def getStockTransferReport(danpheEMR):
 
     time.sleep(3)
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     elif AppName == "MPH" or AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(4)
-    danpheEMR.find_element_by_link_text("Sales").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Sales Statement')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Sales Statement')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_xpath("//button[contains(.,'Show Report')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(3)
-    actualSalesValue = danpheEMR.find_element_by_xpath("(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[2]").text
+    actualSalesValue = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[2]").text
     actualSalesValue = float(actualSalesValue)
     print("actualSalesValue", actualSalesValue)
-    actualSalesCost = danpheEMR.find_element_by_xpath("(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[3])").text
+    actualSalesCost = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[3])").text
     actualSalesCost = float(actualSalesCost)
     print("actualSalesCost", actualSalesCost)
-    actualSalesReturnValue = danpheEMR.find_element_by_xpath("(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[4])").text
+    actualSalesReturnValue = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[4])").text
     actualSalesReturnValue = float(actualSalesReturnValue)
     print("actualSalesReturnValue", actualSalesReturnValue)
-    actualSalesReturnCost = danpheEMR.find_element_by_xpath("(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
+    actualSalesReturnCost = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
     actualSalesReturnCost = float(actualSalesReturnCost)
     print("actualSalesReturnCost", actualSalesReturnCost)
-    actualProfit = danpheEMR.find_element_by_xpath("(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]").text
+    actualProfit = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]").text
     actualProfit = float(actualProfit)
     print("actualProfit", actualProfit)
     print("END>>> Get Sales Statement >>>")
@@ -1134,17 +1131,17 @@ def presalesstatementreport():
 def verifynarcoticstockreport(danpheEMR, qty, DrugName, grPrice):
     print("START >>> Verifying Narcotic Stock Report>>")
     if AppName == "LPH":
-        danpheEMR.find_element_by_link_text("Store").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     elif AppName == "MPH" or AppName == "SNCH":
-        danpheEMR.find_element_by_link_text("Pharmacy").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
-    danpheEMR.find_element_by_link_text("Report").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(4)
-    danpheEMR.find_element_by_link_text("Stock").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
     time.sleep(4)
-    danpheEMR.find_element_by_xpath("//i[contains(.,'Narcotics Stock')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Narcotics Stock')]").click()
     time.sleep(2)
-    danpheEMR.find_element_by_id("quickFilterInput").send_keys(DrugName, qty, grPrice)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName, qty, grPrice)
     time.sleep(9)
 
 
