@@ -62,7 +62,7 @@ def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
       print("<<END: verifySubStoreRequisition")
 
 def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
-      print("Start>> createSubStoreRequisition")
+      print("Start>> receiveInventoryDispatch")
       time.sleep(6)
       danpheEMR.find_element_by_link_text("Settings").click()
       time.sleep(3)
@@ -92,7 +92,7 @@ def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
             time.sleep(3)
             danpheEMR.refresh()
             time.sleep(7)
-      print("End>> createSubStoreRequisition")
+      print("End>> receiveInventoryDispatch")
       return EnableReceivedItemInSubstore
 
 def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):

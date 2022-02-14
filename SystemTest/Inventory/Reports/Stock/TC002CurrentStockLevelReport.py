@@ -12,6 +12,7 @@
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleInventory as LI
+import Library.LibModuleSubStore as LSS
 
 
 # front desk user login
@@ -28,8 +29,8 @@ print("Item:", item)
 qty = 1
 rate = GSV.storeItem1Rate
 print("Rate:", rate)
-store1 = "ADMINISTRATION"
-Inventory1 = "General Inventory"
+store1 = GSV.store1
+Inventory1 = GSV.Inventory1
 ########
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
@@ -37,11 +38,12 @@ LI.selectInventory(danpheEMR=EMR, inventory=Inventory1)
 LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
 LI.preInventoryStoreCurrentStockLevelReport()
 #dispatch requisition or direct dispatch: This need to deduct qty/amount from main store and increase in substore
-LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory=Inventory1, store=store1)
+dispatchNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory=Inventory1, store=store1)
 '''
 # For CoreCFG parameter setting-'Receive not needed': store need to received the items to increase in it's store
-LI.receivedStoreDispatch(store=store1)
 '''
+LSS.receiveInventoryDispatch(danpheEMR=EMR, substore=store1, ssReqNo=dispatchNo)
+
 LI.getInventoryStoreCurrentStockLevelReport(danpheEMR=EMR, inventory=Inventory1, store=store1)
 LI.verifyInventoryStoreCurrentStockLevelReport(type="DirectDispatch", qty=qty, unitprice=rate)
 #consumption case: This need to deduct qty/amount from subStore and no change in main store

@@ -59,8 +59,9 @@ def editInventoryGoodsReceipt(danpheEMR, BillNo):
 
 
 def consumptionStore(danpheEMR, itemName, qty, store):
+    print("START>>consumptionStore")
     time.sleep(5)
-    if AppName == 'SNCH' or AppName == 'LPH':
+    if AppName == 'SNCH' or AppName == 'LPH' or AppName == 'MPH':
         danpheEMR.find_element_by_link_text("SubStore").click()
         time.sleep(9)
         try:
@@ -78,8 +79,10 @@ def consumptionStore(danpheEMR, itemName, qty, store):
         danpheEMR.find_element_by_id("itemName0").send_keys(Keys.TAB)
         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").clear()
         danpheEMR.find_element_by_xpath("//input[@id='qtyip0']").send_keys(qty)
+        time.sleep(5)
         danpheEMR.find_element_by_css_selector(".btn-success").click()
-        time.sleep(2)
+        time.sleep(5)
+    print("END>>consumptionStore")
 
 
 def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inventory'):
@@ -370,21 +373,21 @@ def getInventoryStoreCurrentStockLevelReport(danpheEMR, inventory, store):
     global actualTotalStockValueStore
     time.sleep(3)
     danpheEMR.find_element_by_link_text("Inventory").click()
-    time.sleep(3)
+    time.sleep(5)
     try:
         danpheEMR.find_element_by_xpath("//i[contains(text(),'General Inventory')]").click()
     except:
         pass
     time.sleep(3)
     danpheEMR.find_element_by_xpath("//a[contains(text(),'Reports')]").click()
-    time.sleep(2)
+    time.sleep(6)
     danpheEMR.find_element_by_xpath("//i[contains(.,'Current Stock Level')]").click()
     time.sleep(2)
     ### for main inventory stock
     danpheEMR.find_element(By.CSS_SELECTOR, ".fa-remove").click()
     danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
     danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").click()
-    danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").send_keys("general inventory")
+    danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").send_keys(inventory)
     danpheEMR.find_element(By.CSS_SELECTOR, "span > .pure-checkbox > label").click()
     danpheEMR.find_element(By.CSS_SELECTOR, ".btn > .fa").click()
     time.sleep(5)
@@ -398,6 +401,21 @@ def getInventoryStoreCurrentStockLevelReport(danpheEMR, inventory, store):
     actualTotalStockValueInventory = float(actualTotalStockValueInventory)
     print("actualTotalStockValueInventory:", actualTotalStockValueInventory)
     ### for sub store stock
+    #testing code
+    danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-remove").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    #danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Search']").send_keys(store)
+    #danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(2)").send_keys(store)
+    time.sleep(3)
+    danpheEMR.find_element(By.CSS_SELECTOR, "span > .pure-checkbox > label").click()
+    time.sleep(2)
+    danpheEMR.find_element_by_xpath("//span[contains(text(),'Load')]").click()
+    time.sleep(3)
+    ###
+    '''
     danpheEMR.find_element(By.CSS_SELECTOR, ".fa-remove").click()
     danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
     danpheEMR.find_element(By.CSS_SELECTOR, ".pure-checkbox:nth-child(30) > label").click()
@@ -408,6 +426,7 @@ def getInventoryStoreCurrentStockLevelReport(danpheEMR, inventory, store):
     # danpheEMR.find_element(By.CSS_SELECTOR, ".ng-untouched:nth-child(30)").send_keys("ADMINISTRATION")
     # danpheEMR.find_element(By.CSS_SELECTOR, "span > .pure-checkbox > label").click()
     # danpheEMR.find_element(By.CSS_SELECTOR, ".btn > .fa").click()
+    '''
     time.sleep(5)
     actualTotalStockQuantityStore = danpheEMR.find_element_by_xpath(
         "//b[contains(text(),' Total Stock Quantity ')]/parent::span/parent::td/following-sibling::td[1]").text

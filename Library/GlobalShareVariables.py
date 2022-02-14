@@ -97,6 +97,7 @@ if appName == "LPH":
 ###Sub Stores Name:
       SubStore1 = "ACCOUNT"
       SubStore2 = "ADMINISTRATION"
+      store1 = "ADMINISTRATION"
 ###Doctors/Departments Name:
       doctorGyno = "Dr. doctor doctor"
       departmentGyno = "GYNAE & OBS"
@@ -292,6 +293,7 @@ if appName == "MPH":
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
+      store1 = "Administration Sub Store"
 ###Doctors/Departments Name:
       doctorGyno = "Dr. Anjali Subedi"
       departmentGyno = "OBG Gynae"
