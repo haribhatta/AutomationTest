@@ -72,10 +72,10 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         time.sleep(2)
         danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
         if HospitalNo == 'Auto Test':
-            danpheEMR.find_element_by_id("quickFilterInput").send_keys("Auto Test")
+            danpheEMR.find_find_element(By.ID, "quickFilterInput").send_keys("Auto Test")
             time.sleep(5)
         else:
-            danpheEMR.find_element_by_id("quickFilterInput").send_keys(HospitalNo)
+            danpheEMR.find_find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
             time.sleep(3)
         danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
         time.sleep(5)
@@ -168,7 +168,7 @@ def checkAutoAddItems(danpheEMR):
     # assert autoaddBeditemvalue == "autoaddBeditemvalue   True"        rework needed
 
 
-def wait_for_window(timeout=2):
+def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
     wh_then = vars("window_handles")
