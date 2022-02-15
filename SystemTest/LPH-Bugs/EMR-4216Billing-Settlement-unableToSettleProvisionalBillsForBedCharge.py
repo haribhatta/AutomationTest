@@ -7,8 +7,8 @@ import Library.GlobalShareVariables as GSV
 from Library import ApplicationConfiguration as AC
 from Library import LibModuleBilling as LB
 from Library import LibModuleAppointment as LA
-import time     
 
+import time
 
 # front desk user login
 foUserId = GSV.adminUserID

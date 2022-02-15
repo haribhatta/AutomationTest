@@ -1,6 +1,7 @@
 from selenium import webdriver
 import time
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -33,12 +34,12 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
     danpheEMR.find_element(By.XPATH, "//input[@value='']").send_keys(DrugName)
     danpheEMR.find_element(By.XPATH, "//input[@value='']").send_keys(Keys.RETURN)
     time.sleep(3)
-    # danpheEMR.find_element(By.CSS_SELECTOR, "//select").click()
+    # danpheEMR.find_element_by_css_selector("//select").click()
     danpheEMR.find_element(By.XPATH, "//div[4]/div/div/div/input").send_keys("HIMALAYAN")  # Company
     danpheEMR.find_element(By.XPATH, "//div[4]/div/div/div/input").send_keys(Keys.RETURN)
     danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(genericName)  # itemType
     danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(Keys.RETURN)  # itemType
-    # danpheEMR.find_element(By.CSS_SELECTOR, ".ng-touched:nth-child(1)").send_keys("ABGEL")
+    # danpheEMR.find_element_by_css_selector(".ng-touched:nth-child(1)").send_keys("ABGEL")
     danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys("Tablet")  # unit
     danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys(Keys.RETURN)  # unit
     danpheEMR.find_element(By.XPATH, "//div[7]/div/div/div/input").send_keys(genericName)  # genericName
@@ -245,10 +246,10 @@ def manageStoreStock(danpheEMR, drugname, type, qty):
     danpheEMR.find_element(By.LINK_TEXT, "Manage Item").click()
     time.sleep(2)
     if type == "In":
-        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(1) > span").click()
+        danpheEMR.find_element_by_css_selector(".mt-checkbox:nth-child(1) > span").click()
         drugqtyMScalc = int(drugqtyMS) + qty
     elif type == "Out":
-        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(2) > span").click()
+        danpheEMR.find_element_by_css_selector(".mt-checkbox:nth-child(2) > span").click()
         drugqtyMScalc = int(drugqtyMS) - qty
     danpheEMR.find_element(By.XPATH, "//input[@name='UpdatedQty']").send_keys(qty)
     danpheEMR.find_element(By.XPATH, "//textarea[@name='Remark']").send_keys("Stock adjusted")
@@ -275,7 +276,7 @@ def createPharmacyInvoice(danpheEMR, HospitalNo, qty, paymentmode):
     time.sleep(5)
     drugavlqty = danpheEMR.find_element(By.XPATH, "(//input[@value=''])[6]").get_attribute("Value")
     print("Drug Available qty:", drugavlqty)
-    drugavlqty = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(8) > .form-control").text
+    drugavlqty = danpheEMR.find_element_by_css_selector("td:nth-child(8) > .form-control").text
     print("Drug Available qty:", drugavlqty)
     danpheEMR.find_element(By.ID, "qty-box0").click()
     danpheEMR.find_element(By.ID, "qty-box0").clear()
@@ -335,22 +336,22 @@ def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     # time.sleep(3)
     # danpheEMR.find_element(By.LINK_TEXT, "Order").click()
     # danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderItems')]").click()
-    # danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-9 > .form-control").click()
+    # danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control").click()
     # time.sleep(9)
-    # dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-9 > .form-control")
+    # dropdown = danpheEMR.find_element_by_css_selector(".col-md-9 > .form-control")
     # time.sleep(3)
     # dropdown.find_element(By.XPATH, "//option[. = 'Shremad Tech.']").click()
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(supplierName)
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(Keys.TAB)
     danpheEMR.find_element(By.ID, "ItemName0").send_keys(drugName)
     time.sleep(3)
-    danpheEMR.find_element(By.NAME,  "quantity").click()
+    danpheEMR.find_element_by_name("quantity").click()
     time.sleep(3)
-    danpheEMR.find_element(By.NAME,  "quantity").send_keys("100")
-    danpheEMR.find_element(By.NAME,  "price").click()
-    danpheEMR.find_element(By.NAME,  "price").send_keys("1")
-    # danpheEMR.find_element(By.CSS_SELECTOR, ".page-content").click()
-    danpheEMR.find_element(By.CSS_SELECTOR, ".text-right > .btn-success").click()
+    danpheEMR.find_element_by_name("quantity").send_keys("100")
+    danpheEMR.find_element_by_name("price").click()
+    danpheEMR.find_element_by_name("price").send_keys("1")
+    # danpheEMR.find_element_by_css_selector(".page-content").click()
+    danpheEMR.find_element_by_css_selector(".text-right > .btn-success").click()
     time.sleep(5)
 
 
@@ -684,7 +685,7 @@ def viewPharmacyOrderList(danpheEMR, SupplierName, drugName):
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
-    wh_then = vars("window_handles")
+    wh_then = vars["window_handles"]
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
 

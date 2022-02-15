@@ -1,6 +1,7 @@
 import time
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
+
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
@@ -17,7 +18,6 @@ discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
-AC.verifyLogIn(EMR)
 LB.counteractivation(EMR)
 time.sleep(2)
 #####Scenario: Cash Invoice with no Discount

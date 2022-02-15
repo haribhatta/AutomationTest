@@ -1,4 +1,5 @@
 import time
+import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.by import By
@@ -1534,10 +1535,10 @@ def RefundCheckOfDepositBalanceReport(danpheEMR):
             print(" Actual Refunded : ", Refunded)
 
 
-def wait_for_window(danpheEMR, timeout = 2):
+def wait_for_window(timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
-    wh_then = vars("window_handles")
+    wh_then = vars["window_handles"]
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
 

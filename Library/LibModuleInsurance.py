@@ -1,8 +1,10 @@
 import time
+import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
+import Library.LibModuleAppointment as LA
 import random
 ########
 AppName = GSV.appName
@@ -91,7 +93,7 @@ def insuranceNewVisit(danpheEMR, NSHI):
       time.sleep(2)
       danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
       time.sleep(3)
-      HospitalNo = danpheEMR.find_element(By.XPATH, "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
+      HospitalNo = danpheEMR.find_element_by_xpath("//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
       print("HospitalNo:", HospitalNo)
       danpheEMR.find_element(By.ID, "btnPrintInsSticker")
       danpheEMR.find_element(By.ID, "btnPrintInsSticker").send_keys(Keys.ESCAPE)
@@ -157,7 +159,7 @@ def insuranceDispensarySell(danpheEMR, NSHINO , genericname, drugname):
     danpheEMR.find_element(By.ID, "qty0").send_keys(Keys.ENTER)
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(2)
-    PreInvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    PreInvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
     print("PreInvoiceNo", PreInvoiceNo)
     PreInvoiceNo = PreInvoiceNo.partition("PH")[2]
     print("PreInvoiceNo", PreInvoiceNo)
@@ -189,15 +191,16 @@ def NewInsurancePatientBilling(danpheEMR, NSHI, lab):
     time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_printInvoice").click()
     time.sleep(2)
-    PreInvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    PreInvoiceNo = danpheEMR.find_element_by_xpath("//p[contains(text(), 'Invoice No:')]").text
     print("PreInvoiceNo", PreInvoiceNo)
     PreInvoiceNo = PreInvoiceNo.partition("INS")[2]
     print("PreInvoiceNo", PreInvoiceNo)
     time.sleep(2)
-    element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
+    element = danpheEMR.find_element_by_xpath("//a[@class='btn btn-danger del-btn']")
     time.sleep(2)
     danpheEMR.execute_script("arguments[0].click();", element)
     time.sleep(5)
+
     return PreInvoiceNo
     print("Create OPD Invoice: 1 Lab Items: END<<")
 
@@ -227,17 +230,17 @@ def PatientWiseClaimReport(danpheEMR, HospitalNo, PreInvoiceNo):
     Invoice = danpheEMR.find_element(By.XPATH, "//td[contains(text(),' "+PreInvoiceNo+"')]").text
     print("Invoice : ", Invoice)
     assert PreInvoiceNo == Invoice
-    danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+    danpheEMR.find_element_by_xpath("//button[@class='btn btn-danger' and contains(text(),'X')]").click()
     time.sleep(3)
 
 
 
 
 
-def wait_for_window(danpheEMR, timeout=2):
+def wait_for_window(timeout=2):
       time.sleep(round(timeout / 1000))
       wh_now = danpheEMR.window_handles
-      wh_then = vars("window_handles")
+      wh_then = vars["window_handles"]
       if len(wh_now) > len(wh_then):
          return set(wh_now).difference(set(wh_then)).pop()
 

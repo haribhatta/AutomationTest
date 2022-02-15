@@ -3,6 +3,8 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
+import Library.LibModulePatientPortal as LP
+import Library.LibModuleADT as LADT
 import time
 
 # front desk user login
