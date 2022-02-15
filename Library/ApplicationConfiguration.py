@@ -6,48 +6,48 @@ from selenium.webdriver.common.by import By
 
 
 def openBrowser():
-    print(">>Open Browser: START")
+    print("START>>openBrowser")
     global danpheEMR
     ChromePath = LSV.ChromeDriverPath
     danpheEMR = webdriver.Chrome(executable_path=ChromePath)
     danpheEMR.set_window_position(-2000, 0)
     danpheEMR.maximize_window()
     danpheEMR.get(GSV.appURL)
-    print("Open Browser: END<<")
+    print("END>>openBrowser")
     return danpheEMR
 
 
 def closeBrowser():
-    print(">>Close Browser: START")
+    print("START>>closeBrowser")
     danpheEMR.close()
+    print("END>>closeBrowser")
     print("###TEST CASE: PASSED###")
-    # print("Close Browser: END<<")
 
 
 def login(userid, pwd):
-    print(">>LogIn: START")
+    print("START>>login")
     time.sleep(5)
     danpheEMR.find_element(By.ID, "username_id").send_keys(userid)
     danpheEMR.find_element(By.ID, "password").send_keys(pwd)
     danpheEMR.find_element(By.ID, "login").submit()
-    print("LogIn: END<<")
+    print("END>>login")
 
 
 def verifyLogIn(danpheEMR):
-    print("Start:verifyLogIn")
+    print("START>>verifyLogIn")
     title = danpheEMR.title
     print(title)
     assert title == "DanpheHealth"
-    print("End: verifyLogin")
+    print("END>>verifyLogIn")
 
 
 def logout():
-    print(">>LogOut: START")
+    print("START>>logout")
     time.sleep(3)
     danpheEMR.find_element(By.CSS_SELECTOR, ".dropdown-toggle:nth-child(1) > .fa").click()
     time.sleep(1)
     danpheEMR.find_element(By.LINK_TEXT, "Log Out").click()
-    print("LogOut: END<<")
+    print("END>>logout")
 
 
 def wait_for_window(danpheEMR, timeout=2):
