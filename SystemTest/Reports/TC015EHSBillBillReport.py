@@ -1,7 +1,6 @@
 import time
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
-
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
