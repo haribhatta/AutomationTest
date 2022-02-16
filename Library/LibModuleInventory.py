@@ -3,38 +3,44 @@ import Library.GlobalShareVariables as GSV
 import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.select import Select
 
 AppName = GSV.appName
 
 
 # Module:Inventory---------------------------------------------------------
-def createInventoryGoodReceipt(danpheEMR, qty, item, rate):
+def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
     print(">>START: createGoodReceipt")
     global BillNo
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//a[contains(.,' Create Goods Receipt')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH,  "//input[@onclick='this.select();']").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.CSS_SELECTOR,   ".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
-        BillNo = random.randint(100, 99999)
-        print("Bill No", BillNo)
-        danpheEMR.find_element(By.XPATH,  "//input[@formcontrolname='BillNo']").send_keys(BillNo)  # LPH-934, LPH_V1.9.3
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(item)
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.TAB)
-        danpheEMR.find_element(By.ID, "qtyip0").send_keys(qty)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "rateip0").clear()
-        danpheEMR.find_element(By.ID, "rateip0").send_keys(rate)
-        danpheEMR.find_element(By.XPATH,  "//input[@value='Receipt']").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Goods Receipt List')]").click()
-        return BillNo
+    #if AppName == 'SNCH':
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH,  "//a[contains(.,' Create Goods Receipt')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH,  "//input[@onclick='this.select();']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.CSS_SELECTOR,   ".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
+    BillNo = random.randint(100, 99999)
+    print("Bill No", BillNo)
+    danpheEMR.find_element(By.XPATH,  "//input[@formcontrolname='BillNo']").send_keys(BillNo)  # LPH-934, LPH_V1.9.3
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(item)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "qtyip0").send_keys(qty)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "rateip0").clear()
+    danpheEMR.find_element(By.ID, "rateip0").send_keys(rate)
+    if paymentMode == 'Cash':
+        payMode = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname='PaymentMode']"))
+        payMode.select_by_visible_text("Cash")
+    danpheEMR.find_element(By.XPATH,  "//input[@value='Receipt']").click()
+    time.sleep(3)
+    #danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Goods Receipt List')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Cancel GR ')]").send_keys(Keys.ESCAPE)
     print("<<END: createGoodReceipt")
+    return BillNo
 
 
 def editInventoryGoodsReceipt(danpheEMR, BillNo):
@@ -82,8 +88,9 @@ def consumptionStore(danpheEMR, itemName, qty, store):
 
 def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inventory'):
     print("Inventory Selection Start")
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-    time.sleep(2)
+    time.sleep(5)
     if inventory == 'General Inventory':
         danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
     else:
@@ -662,22 +669,23 @@ def getCancelGRReport(danpheEMR, BillNo):
 
 
 def getPurchaseSummaryReport(danpheEMR):
+    print("START>>getPurchaseSummaryReport")
     danpheEMR.implicitly_wait(10)
-    global creditSubTotal
-    global creditDiscount
-    global creditVat
-    global creditOtherCharge
-    global creditTotalAmount
-    global cashSubTotal
-    global cashDiscount
-    global cashVat
-    global cashOtherCharge
-    global cashTotalAmount
-    global totalSubTotal
-    global totalDiscount
-    global totalVat
-    global totalOtherCharge
-    global totalTotalAmount
+    global actualCreditSubTotal
+    global actualCreditDiscount
+    global actualCreditVat
+    global actualCreditOtherCharge
+    global actualCreditTotalAmount
+    global actualCashSubTotal
+    global actualCashDiscount
+    global actualCashVat
+    global actualCashOtherCharge
+    global actualCashTotalAmount
+    global actualTotalSubTotal
+    global actualTotalDiscount
+    global actualTotalVat
+    global actualTotalOtherCharge
+    global actualTotalTotalAmount
 
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
     time.sleep(3)
@@ -688,186 +696,189 @@ def getPurchaseSummaryReport(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//*[@class='btn green btn-success' and @type='button']").click()
     time.sleep(3)
 
-    creditSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[2]/span").text
-    creditSubTotal = int(str(creditSubTotal).replace(",", ""))
-    print("Sub Total of Credit Purchase is :", creditSubTotal)
+    actualCreditSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[2]/span").text
+    actualCreditSubTotal = int(str(actualCreditSubTotal).replace(",", ""))
+    print("actualCreditSubTotal", actualCreditSubTotal)
 
-    creditDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[3]/span").text
-    creditDiscount = int(creditDiscount)
-    print("Discount for Credit Purchase is :", creditDiscount)
+    actualCreditDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[3]/span").text
+    actualCreditDiscount = actualCreditDiscount.replace(',', '')
+    actualCreditDiscount = int(actualCreditDiscount)
+    print("actualCreditDiscount:", actualCreditDiscount)
 
-    creditVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]/span").text
-    creditVat = int(creditVat)
-    print("Vat for Credit Purchase is :", creditVat)
+    actualCreditVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]/span").text
+    actualCreditVat = actualCreditVat.replace(',', '')
+    actualCreditVat = int(actualCreditVat)
+    print("actualCreditVat:", actualCreditVat)
 
-    creditOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[5]/span").text
-    creditOtherCharge = int(creditOtherCharge)
-    print("Other Charge of credit purchase is :", creditOtherCharge)
+    actualCreditOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[5]/span").text
+    actualCreditOtherCharge = actualCreditOtherCharge.replace(',', '')
+    actualCreditOtherCharge = int(actualCreditOtherCharge)
+    print("actualCreditOtherCharge:", actualCreditOtherCharge)
 
-    creditTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[6]/span").text
-    creditTotalAmount = int(str(creditTotalAmount).replace(",", ""))
-    print("Total Amount of Credit Sale is :", creditTotalAmount)
+    actualCreditTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[6]/span").text
+    actualCreditTotalAmount = actualCreditTotalAmount.replace(',', '')
+    actualCreditTotalAmount = int(str(actualCreditTotalAmount).replace(",", ""))
+    print("actualCreditTotalAmount:", actualCreditTotalAmount)
 
-    cashSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
-    cashSubTotal = int(cashSubTotal)
-    print("Subtotal of Cash Purchase is :", cashSubTotal)
+    actualCashSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
+    actualCashSubTotal = actualCashSubTotal.replace(',', '')
+    actualCashSubTotal = int(actualCashSubTotal)
+    print("actualCashSubTotal:", actualCashSubTotal)
 
-    cashDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[3]/span").text
-    cashDiscount = int(cashDiscount)
-    print("Discount of Cash Purchase is ", cashDiscount)
+    actualCashDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[3]/span").text
+    actualCashDiscount = actualCashDiscount.replace(',', '')
+    actualCashDiscount = int(actualCashDiscount)
+    print("actualCashDiscount:", actualCashDiscount)
 
-    cashVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[4]/span").text
-    cashVat = int(cashVat)
-    print("Vat of cash Purchase is :", cashVat)
+    actualCashVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[4]/span").text
+    actualCashVat = actualCashVat.replace(',', '')
+    actualCashVat = int(actualCashVat)
+    print("actualCashVat:", actualCashVat)
 
-    cashOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[5]/span").text
-    cashOtherCharge = int(cashOtherCharge)
-    print(cashOtherCharge)
+    actualCashOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[5]/span").text
+    actualCashOtherCharge = actualCashOtherCharge.replace(',', '')
+    actualCashOtherCharge = int(actualCashOtherCharge)
+    print("actualCashOtherCharge:", actualCashOtherCharge)
 
-    cashTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[6]/span").text
-    cashTotalAmount = int(cashTotalAmount)
-    print("Total Amount of Cash Purchase is :", cashTotalAmount)
+    actualCashTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[6]/span").text
+    actualCashTotalAmount = actualCashTotalAmount.replace(',', '')
+    actualCashTotalAmount = int(actualCashTotalAmount)
+    print("actualCashTotalAmount:", actualCashTotalAmount)
 
-    totalSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
-    totalSubTotal = int(str(totalSubTotal).replace(",",""))
-    print("Total Sum of SubTotal is ", totalSubTotal)
+    actualTotalSubTotal = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
+    actualTotalSubTotal = actualTotalSubTotal.replace(',', '')
+    actualTotalSubTotal = int(str(actualTotalSubTotal).replace(",",""))
+    print("actualTotalSubTotal:", actualTotalSubTotal)
 
-    totalDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[3]/span").text
-    totalDiscount = int(totalDiscount)
-    print("Total Discount of Cash and Credit Purchase is :", totalDiscount)
+    actualTotalDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[3]/span").text
+    actualTotalDiscount = actualTotalDiscount.replace(',', '')
+    actualTotalDiscount = int(actualTotalDiscount)
+    print("actualTotalDiscount:", actualTotalDiscount)
 
-    totalVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[4]/span").text
-    totalVat = int(totalVat)
-    print("Total vat of Credit and Cash Purchase is ", totalVat)
+    actualTotalVat = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[4]/span").text
+    actualTotalVat = actualTotalVat.replace(',', '')
+    actualTotalVat = int(actualTotalVat)
+    print("actualTotalVat:", actualTotalVat)
 
-    totalOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[5]/span").text
-    totalOtherCharge = int(totalOtherCharge)
-    print("Total other charge of cash and credit Purchase is :", totalOtherCharge)
+    actualTotalOtherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[5]/span").text
+    actualTotalOtherCharge = actualTotalOtherCharge.replace(',', '')
+    actualTotalOtherCharge = int(actualTotalOtherCharge)
+    print("actualTotalOtherCharge:", actualTotalOtherCharge)
 
-    totalTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[6]/span").text
-    totalTotalAmount = int(str(totalTotalAmount).replace(",", ""))
-    print("Total Amount of Cash and Credit Purchase is :", totalTotalAmount)
+    actualTotalTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[6]/span").text
+    actualTotalTotalAmount = actualTotalTotalAmount.replace(',', '')
+    actualTotalTotalAmount = int(str(actualTotalTotalAmount).replace(",", ""))
+    print("actualTotalTotalAmount:", actualTotalTotalAmount)
+    print("END>>getPurchaseSummaryReport")
 
 
 def prePurchaseSummaryReport():
-    global precreditSubTotal
-    global precreditDiscount
-    global precreditVat
-    global precreditOtherCharge
-    global precreditTotalAmount
-    global precashSubTotal
-    global precashDiscount
-    global precashVat
-    global precashOtherCharge
-    global precashTotalAmount
-    global pretotalSubTotal
-    global pretotalDiscount
-    global pretotalVat
-    global pretotalOtherCharge
-    global pretotalTotalAmount
+    print("START>>prePurchaseSummaryReport")
+    global preCreditSubTotal
+    global preCreditDiscount
+    global preCreditVat
+    global preCreditOtherCharge
+    global preCreditTotalAmount
+    global preCashSubTotal
+    global preCashDiscount
+    global preCashVat
+    global preCashOtherCharge
+    global preCashTotalAmount
+    global preTotalSubTotal
+    global preTotalDiscount
+    global preTotalVat
+    global preTotalOtherCharge
+    global preTotalTotalAmount
 
-    precreditSubTotal = creditSubTotal
-    print("Previous SubTotal of credit purchase is:", precreditSubTotal)
+    preCreditSubTotal = actualCreditSubTotal
+    preCreditDiscount = actualCreditDiscount
+    preCreditVat = actualCreditVat
+    preCreditOtherCharge = actualCreditOtherCharge
+    preCreditTotalAmount = actualCreditTotalAmount
+    preCashSubTotal = actualCashSubTotal
+    preCashDiscount = actualCashDiscount
+    preCashVat = actualCashVat
+    preCashOtherCharge = actualCashOtherCharge
+    preCashTotalAmount = actualCashTotalAmount
+    preTotalSubTotal = actualTotalSubTotal
+    preTotalDiscount = actualTotalDiscount
+    preTotalVat = actualTotalVat
+    preTotalOtherCharge = actualTotalOtherCharge
+    preTotalTotalAmount = actualTotalTotalAmount
 
-    precreditDiscount = creditDiscount
-    print("Previous Discount of Credit Purchase is :", precreditDiscount)
-
-    precreditVat = creditVat
-    print("Previous credit Vat is :", precreditVat)
-
-    precreditOtherCharge = creditOtherCharge
-    print("Previous Credit Other Charge is :", precreditOtherCharge)
-
-    precreditTotalAmount = creditTotalAmount
-    print("Previous Credit Total Amount is :", precreditTotalAmount)
-
-    precashSubTotal = cashSubTotal
-    print("previous cash Sub Total is :", precashSubTotal)
-
-    precashDiscount = cashDiscount
-    print("Previous cash Discount is :", precashDiscount)
-
-    precashVat = cashVat
-    print("Previous Cash Vat is :", precashVat)
-
-    precashOtherCharge = cashOtherCharge
-    print("Previous Cash Other Chagre is :", precashOtherCharge)
-
-    precashTotalAmount = cashTotalAmount
-    print("Previous Cash Total Amount is :", precashTotalAmount)
-
-    pretotalSubTotal = totalSubTotal
-    print("Previous Total  SubTotal is :", pretotalSubTotal)
-
-    pretotalDiscount = totalDiscount
-    print("Previous Total Discount is :", pretotalDiscount)
-
-    pretotalVat = totalVat
-    print("Previous Total Vat is :", pretotalVat)
-
-    pretotalOtherCharge = totalOtherCharge
-    print("Previous Total Other Charge is :", pretotalOtherCharge)
-
-    pretotalTotalAmount = totalTotalAmount
-    print("Previous Total Amount is :", pretotalTotalAmount)
+    print("END>>prePurchaseSummaryReport")
 
 
-def verifyPurchaseSummaryReportAfterGR(qty, rate):
-    print("START>> Verifying Purchase Summary Report After Good Receipt")
-    global creditSubTotal
-    global creditDiscount
-    global creditVat
-    global creditOtherCharge
-    global creditTotalAmount
-    global cashSubTotal
-    global cashDiscount
-    global cashVat
-    global cashOtherCharge
-    global cashTotalAmount
-    global totalSubTotal
-    global totalDiscount
-    global totalVat
-    global totalOtherCharge
-    global totalTotalAmount
+def verifyPurchaseSummaryReportAfterGR(qty, rate, amountCashEntryGR, amountCreditEntryGR, amountCashCancelGR, amountCreditCancelGR):
+    print("START>>verifyPurchaseSummaryReportAfterGR")
+    global expectedCreditSubTotal
+    global expectedCreditDiscount
+    global expectedCreditVat
+    global expectedCreditOtherCharge
+    global expectedCreditTotalAmount
+    global expectedCashSubTotal
+    global expectedCashDiscount
+    global expectedCashVat
+    global expectedCashOtherCharge
+    global expectedCashTotalAmount
+    global expectedTotalSubTotal
+    global expectedTotalDiscount
+    global expectedTotalVat
+    global expectedTotalOtherCharge
+    global expectedTotalTotalAmount
 
-    global precreditSubTotal
-    global precreditDiscount
-    global precreditVat
-    global precreditOtherCharge
-    global precreditTotalAmount
-    global precashSubTotal
-    global precashDiscount
-    global precashVat
-    global precashOtherCharge
-    global precashTotalAmount
-    global pretotalSubTotal
-    global pretotalDiscount
-    global pretotalVat
-    global pretotalOtherCharge
-    global pretotalTotalAmount
+    print("amountCashEntryGR:", amountCashEntryGR)
+    print("amountCashCancelGR:", amountCashCancelGR)
+    print("amountCreditEntryGR:", amountCreditEntryGR)
+    print("amountCreditCancelGR:", amountCreditCancelGR)
+    expectedCreditSubTotal = preCreditSubTotal + amountCreditEntryGR - amountCreditCancelGR
+    print("expectedCreditSubTotal:", expectedCreditSubTotal)
+    assert expectedCreditSubTotal == actualCreditSubTotal
+    expectedCreditDiscount = preCreditDiscount + 0
+    print("expectedCreditDiscount:", expectedCreditDiscount)
+    assert expectedCreditDiscount == actualCreditDiscount
+    expectedCreditVat = preCreditVat + 0
+    print("expectedCreditVat:", expectedCreditVat)
+    assert expectedCreditVat == actualCreditVat
+    expectedCreditOtherCharge = preCreditOtherCharge + 0
+    print("expectedCreditOtherCharge:", expectedCreditOtherCharge)
+    assert expectedCreditOtherCharge == actualCreditOtherCharge
+    expectedCreditTotalAmount = preCreditTotalAmount + amountCreditEntryGR - amountCreditCancelGR
+    print("expectedCreditTotalAmount:", expectedCreditTotalAmount)
+    assert expectedCreditTotalAmount == actualCreditTotalAmount
 
-    itemrate = qty * rate
-    itemrate = float(itemrate)
-    print(itemrate)
-    assert creditSubTotal == precreditSubTotal + itemrate
-    assert creditDiscount == precreditDiscount + 0
-    assert creditVat == precreditVat + 0
-    assert creditOtherCharge == precreditOtherCharge + 0
-    assert creditTotalAmount == precreditTotalAmount + itemrate
+    expectedCashSubTotal = preCashSubTotal + amountCashEntryGR - amountCashCancelGR
+    print("expectedCashSubTotal:", expectedCashSubTotal)
+    assert expectedCashSubTotal == actualCashSubTotal
+    expectedCashDiscount = preCashDiscount + 0
+    print("expectedCashDiscount:", expectedCashDiscount)
+    assert expectedCashDiscount == actualCashDiscount
+    expectedCashVat = preCashVat + 0
+    print("expectedCashVat:", expectedCashVat)
+    assert expectedCashVat == actualCashVat
+    expectedCashOtherCharge = preCashOtherCharge + 0
+    print("expectedCashOtherCharge:", expectedCashOtherCharge)
+    assert expectedCashOtherCharge == actualCashOtherCharge
+    expectedCashTotalAmount = preCashTotalAmount + amountCashEntryGR - amountCashCancelGR
+    print("expectedCashTotalAmount:", expectedCashTotalAmount)
+    assert expectedCashTotalAmount == actualCashTotalAmount
 
-    assert cashSubTotal == precashSubTotal + 0
-    assert cashDiscount == precashDiscount + 0
-    assert cashVat == precashVat + 0
-    assert cashOtherCharge == precashOtherCharge + 0
-    assert cashTotalAmount == precashTotalAmount + 0
+    expectedTotalSubTotal = preTotalSubTotal + amountCashEntryGR + amountCreditEntryGR - amountCashCancelGR - amountCreditCancelGR
+    print("expectedTotalSubTotal:", expectedTotalSubTotal)
+    assert expectedTotalSubTotal == actualTotalSubTotal
+    expectedTotalDiscount = preTotalDiscount + 0
+    print("expectedTotalDiscount:", expectedTotalDiscount)
+    assert expectedTotalDiscount == actualTotalDiscount
+    expectedTotalVat = preTotalVat + 0
+    print("expectedTotalVat:", expectedTotalVat)
+    assert expectedTotalVat == actualTotalVat
+    expectedTotalOtherCharge = preTotalOtherCharge + 0
+    print("expectedTotalOtherCharge:", expectedTotalOtherCharge)
+    assert expectedTotalOtherCharge == actualTotalOtherCharge
+    expectedTotalTotalAmount = preTotalTotalAmount + amountCashEntryGR + amountCreditEntryGR - amountCashCancelGR - amountCreditCancelGR
+    print("expectedTotalTotalAmount:", expectedCashSubTotal)
+    assert expectedTotalTotalAmount == expectedTotalTotalAmount
 
-    assert totalSubTotal == pretotalSubTotal + itemrate
-    assert totalSubTotal == cashSubTotal + creditSubTotal
-    assert totalDiscount == cashDiscount + creditDiscount
-    assert totalVat == cashVat + creditVat
-    assert totalOtherCharge == cashOtherCharge + creditOtherCharge
-    assert totalTotalAmount == pretotalTotalAmount + itemrate
-    assert totalTotalAmount == cashTotalAmount + creditTotalAmount
     print("END>> Verifying Purchase Summary Report After Good Receipt")
 
 
