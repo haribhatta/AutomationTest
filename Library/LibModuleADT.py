@@ -11,60 +11,69 @@ AppName = GSV.appName
 
 # Module:ADT -----------------------------
 def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doctor, department):
+    print("START>>admitDisTrans")
+    ### Check Core CFG Parameter Value
+    global admittingDoctorMandatory
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("AdtNewAdmissionDisplaySettings")
+    admittingDoctorMandatory = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("admittingDoctorMandatory:", admittingDoctorMandatory)
+    admittingDoctorMandatory = admittingDoctorMandatory.partition(",")[0]
+    admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
+    print("admittingDoctorMandatory:", admittingDoctorMandatory)
     if admit == 1:
-        if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-            time.sleep(1)
-            danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
+        time.sleep(1)
+        danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+        time.sleep(3)
+        danpheEMR.find_element(By.LINK_TEXT, "Admit").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "admissionCase").click()
+        dropdown = danpheEMR.find_element(By.ID, "admissionCase")
+        dropdown.find_element(By.XPATH, "//option[. = 'General']").click()
+        danpheEMR.find_element(By.ID, "admissionCase").click()
+        danpheEMR.find_element(By.ID, "RequestingDeptId").send_keys(department)
+        danpheEMR.find_element(By.ID, "RequestingDeptId").send_keys(Keys.ENTER)
+        danpheEMR.find_element(By.ID, "RequestingDeptId").click()
+        time.sleep(3)
+        if admittingDoctorMandatory == "true":
+            danpheEMR.find_element(By.ID, "AdmittingDoctorId").send_keys(doctor)
+            danpheEMR.find_element(By.ID, "AdmittingDoctorId").send_keys(Keys.ENTER)
             time.sleep(3)
-            danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-            time.sleep(3)
-            danpheEMR.find_element(By.LINK_TEXT, "Admit").click()
-            time.sleep(3)
-            danpheEMR.find_element(By.ID, "admissionCase").click()
-            dropdown = danpheEMR.find_element(By.ID, "admissionCase")
-            dropdown.find_element(By.XPATH, "//option[. = 'General']").click()
-            danpheEMR.find_element(By.ID, "admissionCase").click()
-            danpheEMR.find_element(By.ID, "RequestingDeptId").send_keys(department)
-            danpheEMR.find_element(By.ID, "RequestingDeptId").send_keys(Keys.ENTER)
-            danpheEMR.find_element(By.ID, "RequestingDeptId").click()
-            time.sleep(3)
-            if AppName == "SNCH" or AppName == "MPH":
-                danpheEMR.find_element(By.ID, "AdmittingDoctorId").send_keys(doctor)
-                danpheEMR.find_element(By.ID, "AdmittingDoctorId").send_keys(Keys.ENTER)
-                time.sleep(3)
 
-            danpheEMR.find_element(By.ID, "WardId").click()
-            wardName = Select(danpheEMR.find_element(By.ID, "WardId"))
-            time.sleep(2)
-            wardName.select_by_visible_text(GSV.admitWard)
-            time.sleep(3)
-            danpheEMR.find_element(By.ID, "BedFeatureId").click()
-            time.sleep(3)
-            danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.ENTER)
-            time.sleep(1)
-            danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.DOWN)
-            danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.ENTER)
-            # danpheEMR.find_element(By.ID, "BedFeatureId").click()
-            time.sleep(2)
-            danpheEMR.find_element(By.ID, "BedId").click()
-            time.sleep(0.5)
-            danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
-            danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.DOWN)
-            time.sleep(2)
-            danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
-            time.sleep(2)
-            danpheEMR.find_element(By.ID, "SaveAdmission").click()
-            time.sleep(2)
-            if AppName == "LPH":
-                time.sleep(5)
-                danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
-            elif AppName == "MPH":
-                danpheEMR.find_element(By.ID, "btnAdtSticker").click()
-
-            else:
-                danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
-            print("Patient successfully admitted.")
-            time.sleep(2)
+        danpheEMR.find_element(By.ID, "WardId").click()
+        wardName = Select(danpheEMR.find_element(By.ID, "WardId"))
+        time.sleep(2)
+        wardName.select_by_visible_text(GSV.admitWard)
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "BedFeatureId").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.ENTER)
+        time.sleep(1)
+        danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.DOWN)
+        danpheEMR.find_element(By.ID, "BedFeatureId").send_keys(Keys.ENTER)
+        # danpheEMR.find_element(By.ID, "BedFeatureId").click()
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "BedId").click()
+        time.sleep(0.5)
+        danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
+        danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.DOWN)
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "SaveAdmission").click()
+        time.sleep(2)
+        if AppName == "LPH":
+            time.sleep(5)
+            danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+        elif AppName == "MPH":
+            danpheEMR.find_element(By.ID, "btnAdtSticker").click()
+        else:
+            danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+        print("Patient successfully admitted.")
+        time.sleep(2)
 
     elif discharge == 1:
         time.sleep(5)
@@ -85,8 +94,6 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//pat-ip-bill-summary/div/div[2]/div/div/div/div/a").click()
-
-
     elif trasfer == 1:
         danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
         time.sleep(3)
@@ -111,11 +118,12 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
         danpheEMR.find_element(By.ID, "Remarks").send_keys("Transfer to ICU ward")
         danpheEMR.find_element(By.XPATH, "//input[@name='name']").click()
+    print("END>>admitDisTrans")
 
 
 def cancelDischarge(danpheEMR, HospitalNo):
     # To cancel discharge user need to return discharge invoice
-    print("Start: cancel discharge")
+    print("START>>cancelDischarge")
     danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Discharged Patients").click()
@@ -128,29 +136,29 @@ def cancelDischarge(danpheEMR, HospitalNo):
     time.sleep(2)
     danpheEMR.find_element(By.ID, "Approve").click()
     time.sleep(5)
-    print("End: cancel discharge")
+    print("END>>cancelDischarge")
 
 
 def dischargeRandomPatient(danpheEMR):
+    print("START>>dischargeRandomPatient")
     time.sleep(2)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("Auto Test")
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
-        time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("Auto Test")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
     time.sleep(5)
+    print("END>>dischargeRandomPatient")
 
 
 def checkAutoAddItems(danpheEMR):
