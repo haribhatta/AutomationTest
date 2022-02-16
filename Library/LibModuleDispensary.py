@@ -13,11 +13,10 @@ AppName = GSV.appName
 def activatePharmacyCounter(danpheEMR, dispensaryName):
     print(">>Start: Pharmacy Counter Activate: START")
     time.sleep(7)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
-        time.sleep(7)
-        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + dispensaryName + "')]").click()
-        time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(7)
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + dispensaryName + "')]").click()
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Counter").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//h5").click()

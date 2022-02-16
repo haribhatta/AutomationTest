@@ -355,9 +355,9 @@ if appName == "RTM":
       admitRate = 1500
 ###Pharmacy/Dispensary Items Name:
       dispensaryName = "MainDispensary"
-      drug1BrandName = "SINEX TAB"
-      drug1GenericName = "quinapril"
-      drug1Rate = 3
+      drug1BrandName = "SAMCOBA 1500 MG"
+      drug1GenericName = "mecobalamin"
+      drug1Rate = 20
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
