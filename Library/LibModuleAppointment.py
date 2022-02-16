@@ -2,9 +2,12 @@ from selenium import webdriver
 import time
 import random
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 # danpheEMR = AC.danpheEMR
 # print("DanpheEMR", danpheEMR)
@@ -148,7 +151,7 @@ def oldPatientRegistration(danpheEMR, HospitalNo, DoctorName, Department):
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Appointment").click()
         time.sleep(2)
-    x = int(HospitalNo) - 35
+    x = int(HospitalNo) - 36
     print("old patient:", x)
     time.sleep(2)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(x)
@@ -158,11 +161,10 @@ def oldPatientRegistration(danpheEMR, HospitalNo, DoctorName, Department):
     danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Department)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)
-    time.sleep(3)
     if AppName != "LPH":
         danpheEMR.find_element(By.ID, "doctorName").send_keys(DoctorName)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
-    time.sleep(5)
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     # verify = popup.danpheEMR.find_element(By.XPATH, "//b[contains(text(),' Please bring this invoice on your next visit. ')]").text
     print("InvoiceNo", InvoiceNo)

@@ -15,7 +15,9 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
     ### Check Core CFG Parameter Value
     global admittingDoctorMandatory
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("AdtNewAdmissionDisplaySettings")
     admittingDoctorMandatory = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
     print("admittingDoctorMandatory:", admittingDoctorMandatory)

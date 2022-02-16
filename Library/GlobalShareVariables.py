@@ -5,6 +5,7 @@ appName = input("Please enter project/application name:\n"
                 "MMH\n"
                 "LPH\n"
                 "MPH\n"
+                "RTM\n"
                 "Core\n")
 
 if appName == "LPH":
@@ -312,6 +313,94 @@ if appName == "MPH":
 
 
 ###############################################################################
+########Defining Variables for Rhythm
+###############################################################################
+if appName == "RTM":
+      appURL = "http://202.51.74.168:85/"
+###Login Credentials:
+      # admin user
+      adminUserID = 'admin'
+      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'admin'
+      foUserPwD = 'pass123'
+      #IT user
+      itUserID = 'admin'
+      itUserPwD = 'pass123'
+      #pharmacy user
+      pharmacyUserID = 'admin'
+      pharmacyUserPwD = 'pass123'
+      pharmacyUserName = 'admin admin'
+      #laboratory user
+      labUserID = 'admin'
+      labUserPwD = 'pass123'
+      #Inventory user
+      storeUserID = 'admin'
+      storeUserPwD = 'pass123'
+### Bill Items Name:
+      opdRate = 500
+      deposit = 200
+      CBC = "CBC"
+      TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      T3 = "FT3"
+      T4 = "FT4"
+      TSH = "TSH"
+      TFTRate = 1200
+      LDH = "LDH"
+      UrineRE = "URINE R/E" # this gets changed on V1.49.3
+      BTCT = "BT/CT"
+      btctRate = 300
+      USG = "USG ABDOMIN AND PELVIS"
+      usgRate = 1000
+      admitRate = 1500
+###Pharmacy/Dispensary Items Name:
+      dispensaryName = "MainDispensary"
+      drug1BrandName = "SINEX TAB"
+      drug1GenericName = "quinapril"
+      drug1Rate = 3
+      drug2BrandName = 'ASTHALIN 2 MG TAB'
+      drug2BrandRate = 1.14
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      drugSinexName = 'SINEX TAB'
+      drugSinexRate = 3
+      drugAasma = 'AASMA 150 XR TAB'
+      Testdrug = "Testdrugreport"
+      supplier = "Shremad Tech."
+###Inventory/Store Items Name:
+      GeneralInventory = "General Inventory"
+      Dispensary1 = "General Inventory"
+      A4Paper = 'A4 PAPER'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      stationaryItem1 = "PENCIL"
+      File = "FILE"
+###Sub Stores Name:
+      SubStore1 = "General"
+      SubStore2 = "PostOps"
+###Doctors/Departments List
+      doctorGyno = "Dr. Lata Gautam"
+      departmentGyno = "PSYCHIATRIC"
+      departmentNephro = "Nephro"
+###Suppliers Name list
+      supplierShremad = "Shremad Tech."
+      supplierName2 = "AAKAR ENTERPRISES"
+###Wards Name:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      #wardid = "General Ward"
+      bedFeature = "General"
+      ###ADT:
+      admitWard = "General Ward"
+      admitBed = "Pediatric Bed Charge"
+###Users Name:
+      user = "admin"
+###Discount Scheme
+      discountSchemeType = "Staff"
+      discountSchemeName = "Staff (50%)"
 
    #def __str__():
     #  return
