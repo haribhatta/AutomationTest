@@ -417,15 +417,25 @@ def getItemWisePurchaseReport(danpheEMR):
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Item Wise Purchase Report')]").click()
     time.sleep(5)
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(5)
-    TotalPurchaseQuantity = danpheEMR.find_element(By.XPATH, "//table/tbody/tr[1]/td[1]/span/b").text
+    TotalPurchaseQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[2]/span").text
+    TotalPurchaseQuantity = TotalPurchaseQuantity.replace(",", "")
+    TotalPurchaseQuantity = int(TotalPurchaseQuantity)
     print("Total Purchase Quantity is : ", TotalPurchaseQuantity)
-    TotalPurchaseValueExcludingVAT = danpheEMR.find_element(By.XPATH, "//table/tbody/tr[2]/td[1]/span/b").text
+
+    TotalPurchaseValueExcludingVAT = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
+    TotalPurchaseValueExcludingVAT = TotalPurchaseValueExcludingVAT.replace(",", "")
+    TotalPurchaseValueExcludingVAT = int(TotalPurchaseValueExcludingVAT)
     print("Total Purchase Value ExcludingVAT is : ", TotalPurchaseValueExcludingVAT)
-    TotalVATAmount = danpheEMR.find_element(By.XPATH, "//table/tbody/tr[3]/td[1]/span/b").text
+
+    TotalVATAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
+    TotalVATAmount = int(TotalVATAmount)
     print("Total VAT Amount is : ", TotalVATAmount)
-    TotalPurchaseValue = danpheEMR.find_element(By.XPATH, "//table/tbody/tr[4]/td[1]/span/b").text
+
+    TotalPurchaseValue = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[4]/td[2]/span").text
+    TotalPurchaseValue = TotalPurchaseValue.replace(",", "")
+    TotalPurchaseValue = int(TotalPurchaseValue)
     print("Total Purchase Value is : ", TotalPurchaseValue)
 
 
@@ -437,21 +447,27 @@ def preItemWisePurchaseReport():
     global preTotalPurchaseValue
 
     preTotalPurchaseQuantity = TotalPurchaseQuantity
-    print("Total Purchase Quantity amount is :", preTotalPurchaseQuantity)
+    preTotalPurchaseQuantity = int(preTotalPurchaseQuantity)
+    print("PreTotal Purchase Quantity amount is :", preTotalPurchaseQuantity)
+
     preTotalPurchaseValueExcludingVAT = TotalPurchaseValueExcludingVAT
-    print("Total Purchase Value Excluding VAT is :", preTotalPurchaseValueExcludingVAT)
+    preTotalPurchaseValueExcludingVAT = int(preTotalPurchaseValueExcludingVAT)
+    print("PreTotal Purchase Value Excluding VAT is :", preTotalPurchaseValueExcludingVAT)
+
     preTotalVATAmount = TotalVATAmount
-    print("Total VAT Amount is :", preTotalVATAmount)
+    print("PreTotal VAT Amount is :", preTotalVATAmount)
+
     preTotalPurchaseValue = TotalPurchaseValue
-    print("Total Purchase Value is :", preTotalPurchaseValue)
+    preTotalPurchaseValue = int(preTotalPurchaseValue)
+    print("PreTotal Purchase Value is :", preTotalPurchaseValue)
 
 
-def verifyItemWisePurchaseReport():
+def verifyItemWisePurchaseReport(qty, purchaseValue):
     print("START>>verifying the Item Wise Purchase Report ")
-    assert preTotalPurchaseQuantity == TotalPurchaseQuantity
-    assert preTotalPurchaseValueExcludingVAT == TotalPurchaseValueExcludingVAT
+    assert TotalPurchaseQuantity == preTotalPurchaseQuantity + qty
+    assert TotalPurchaseValueExcludingVAT == preTotalPurchaseValueExcludingVAT + purchaseValue
     assert preTotalVATAmount == TotalVATAmount
-    assert preTotalPurchaseValue == TotalPurchaseValue
+    assert TotalPurchaseValue == preTotalPurchaseValue + purchaseValue
     print("END>> Verifying Item Wise Purchase Report")
 
 

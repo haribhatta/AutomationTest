@@ -181,7 +181,7 @@ if appName == "SNCH":
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
-      supplier = "Shremad Tech."
+      supplier = "AAKAR ENTERPRISES"
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
@@ -361,7 +361,7 @@ if appName == "RTM":
       dispensaryName = "MainDispensary"
       drug1BrandName = "SAMCOBA 1500 MG"
       drug1GenericName = "mecobalamin"
-      drug1Rate = 20
+      drug1Rate = 5
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
@@ -373,7 +373,7 @@ if appName == "RTM":
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
-      supplier = "Shremad Tech."
+      supplier = "AARATI MEDITCHA PVT"
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
@@ -391,7 +391,7 @@ if appName == "RTM":
       departmentNephro = "Nephro"
 ###Suppliers Name list
       supplierShremad = "Shremad Tech."
-      supplierName2 = "AAKAR ENTERPRISES"
+      supplierName2 = "AARATI MEDITCHA PVT"
 ###Wards Name:
       generalWard = "General Ward"
       GeneralWard = "ICU"
