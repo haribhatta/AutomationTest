@@ -683,42 +683,41 @@ def getIPbillingDetails(danpheEMR, HospitalNo, paymentmode):
     global actualChangeReturn
     actualTender = 0
     actualChangeReturn = 0
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(5)
-        if paymentmode == "CREDIT":
-            paymentoptions = Select(
-                danpheEMR.find_element(By.XPATH, "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-            paymentoptions.select_by_visible_text("CREDIT")
-        actualBillingTotal = danpheEMR.find_element(By.XPATH,
-            "//td[contains(.,' Sub Total ')]/following-sibling::td").text
-        actualBillingTotal = actualBillingTotal.replace(',', '')
-        actualBillingTotal = float(actualBillingTotal)
-        print("actualBillingTotal", actualBillingTotal)
-        actualNetTotal = danpheEMR.find_element(By.XPATH, "//td[contains(.,'Total Amount')]/following-sibling::td").text
-        actualNetTotal = actualNetTotal.replace(',', '')
-        actualNetTotal = float(actualNetTotal)
-        print("actualNetTotal", actualNetTotal)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(5)
+    if paymentmode == "CREDIT":
+        paymentoptions = Select(
+            danpheEMR.find_element(By.XPATH, "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+        paymentoptions.select_by_visible_text("CREDIT")
+    actualBillingTotal = danpheEMR.find_element(By.XPATH,
+        "//td[contains(.,' Sub Total ')]/following-sibling::td").text
+    actualBillingTotal = actualBillingTotal.replace(',', '')
+    actualBillingTotal = float(actualBillingTotal)
+    print("actualBillingTotal", actualBillingTotal)
+    actualNetTotal = danpheEMR.find_element(By.XPATH, "//td[contains(.,'Total Amount')]/following-sibling::td").text
+    actualNetTotal = actualNetTotal.replace(',', '')
+    actualNetTotal = float(actualNetTotal)
+    print("actualNetTotal", actualNetTotal)
 
-        if paymentmode != "CREDIT":
-            actualToBePaid = danpheEMR.find_element(By.XPATH,
-                "//td[contains(.,'To Be Paid')]/following-sibling::td").text
-            actualToBePaid = actualToBePaid.replace(',', '')
-            actualToBePaid = float(actualToBePaid)
-            print("actualToBePaid", actualToBePaid)
-            actualTender = danpheEMR.find_element(By.NAME, "Tender").get_attribute("value")
-            actualTender = float(actualTender)
-            print("actualTender", actualTender)
-            actualChangeReturn = danpheEMR.find_element(By.XPATH,
-                "//td[contains(.,'Change/Return :')]/following-sibling::td").text
-            actualChangeReturn = float(actualChangeReturn)
-            print("actualChangeReturn", actualChangeReturn)
+    if paymentmode != "CREDIT":
+        actualToBePaid = danpheEMR.find_element(By.XPATH,
+            "//td[contains(.,'To Be Paid')]/following-sibling::td").text
+        actualToBePaid = actualToBePaid.replace(',', '')
+        actualToBePaid = float(actualToBePaid)
+        print("actualToBePaid", actualToBePaid)
+        actualTender = danpheEMR.find_element(By.NAME, "Tender").get_attribute("value")
+        actualTender = float(actualTender)
+        print("actualTender", actualTender)
+        actualChangeReturn = danpheEMR.find_element(By.XPATH,
+            "//td[contains(.,'Change/Return :')]/following-sibling::td").text
+        actualChangeReturn = float(actualChangeReturn)
+        print("actualChangeReturn", actualChangeReturn)
     print("End<<getIPbillingDetails")
 
 
@@ -739,7 +738,7 @@ def preIPbillingDetails(paymentmode):
 
 
 def verifyIPbillingDetails(testrate, canceltest, paymentmode):
-    expectedBillingTotal = int(preBillingTotal + testrate - canceltest)
+    expectedBillingTotal = float(preBillingTotal + testrate - canceltest)
     print("expectedBillingTotal", expectedBillingTotal)
     assert actualBillingTotal == expectedBillingTotal
     expectedNetTotal = preNetTotal + testrate - canceltest

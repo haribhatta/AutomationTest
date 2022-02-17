@@ -10,20 +10,8 @@ AppName = GSV.appName
 
 
 # Module:ADT -----------------------------
-def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doctor, department):
+def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doctor, department, admittingDoctorMandatory):
     print("START>>admitDisTrans")
-    ### Check Core CFG Parameter Value
-    global admittingDoctorMandatory
-    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("AdtNewAdmissionDisplaySettings")
-    admittingDoctorMandatory = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
-    print("admittingDoctorMandatory:", admittingDoctorMandatory)
-    admittingDoctorMandatory = admittingDoctorMandatory.partition(",")[0]
-    admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
-    print("admittingDoctorMandatory:", admittingDoctorMandatory)
     if admit == 1:
         time.sleep(1)
         danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
@@ -150,16 +138,19 @@ def dischargeRandomPatient(danpheEMR):
     time.sleep(2)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("Auto Test")
     time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-    time.sleep(9)
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
-    time.sleep(5)
+    try:
+        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+        time.sleep(9)
+        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
+        time.sleep(5)
+    except:
+        pass
     print("END>>dischargeRandomPatient")
 
 

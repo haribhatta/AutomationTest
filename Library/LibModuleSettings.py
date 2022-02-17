@@ -1,16 +1,14 @@
 import time
 from selenium.webdriver.common.by import By
-import Library.ApplicationConfiguration as AC
+import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
 import random
 
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
-
+AppName = GSV.appName
 
 ########
-def Setting_add_employee():
+def Setting_add_employee(danpheEMR):
     global randomnum
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
     time.sleep(5)
@@ -28,7 +26,7 @@ def Setting_add_employee():
     danpheEMR.find_element(By.ID, "Add").click()
 
 
-def Setting_Adding_User():
+def Setting_Adding_User(danpheEMR):
     global randomnum
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
     time.sleep(5)
@@ -46,7 +44,7 @@ def Setting_Adding_User():
     danpheEMR.find_element(By.ID, "Addbtn").click()
 
 
-def checkAutoAddItems():
+def checkAutoAddItems(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),' ADT ')]").click()
@@ -59,6 +57,21 @@ def checkAutoAddItems():
     print("autoaddbillitemvalue", autoaddbillitemvalue)
     print("autoaddBeditemvalue", autoaddBeditemvalue)
 
+######## Check Core CFG Parameter Value
+def checkCoreCFGparameter(danpheEMR):
+    print("START>>checkCoreCFGparameter")
+    global admittingDoctorMandatory
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("AdtNewAdmissionDisplaySettings")
+    admittingDoctorMandatory = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("admittingDoctorMandatory:", admittingDoctorMandatory)
+    admittingDoctorMandatory = admittingDoctorMandatory.partition(",")[0]
+    admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
+    print("admittingDoctorMandatory:", admittingDoctorMandatory)
+    return admittingDoctorMandatory
 
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
