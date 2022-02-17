@@ -9,10 +9,10 @@ import Library.LibModuleAppointment as LA
 import Library.LibModuleBilling as LB
 import Library.LibModuleADT as LADT
 import Library.LibModuleSettings as LS
-# admin user login
+# front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-# front desk user login
+# admin user login
 adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
 ########
