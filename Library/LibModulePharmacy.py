@@ -472,6 +472,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
 
 
     if AppName == "LPH":
+        time.sleep(3)
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
