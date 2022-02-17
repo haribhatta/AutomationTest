@@ -354,9 +354,9 @@ if appName == "RTM":
       UrineRE = "URINE R/E" # this gets changed on V1.49.3
       BTCT = "BT/CT"
       btctRate = 300
-      USG = "USG ABDOMIN AND PELVIS"
+      USG = "ULTRA SOUND"
       usgRate = 1000
-      admitRate = 1500
+      admitRate = 1200
 ###Pharmacy/Dispensary Items Name:
       dispensaryName = "MainDispensary"
       drug1BrandName = "SAMCOBA 1500 MG"

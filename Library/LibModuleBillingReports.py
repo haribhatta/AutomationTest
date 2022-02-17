@@ -377,80 +377,79 @@ def getIncomeSegregation(danpheEMR):
     global actualTotalReturnDiscount  # L
     global actualNetSales  # M
     time.sleep(3)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Income Segregation')]").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
-        time.sleep(15)
-        # A
-        actualCashSales = danpheEMR.find_element(By.XPATH,
-            "(//td[contains(text(),'Cash Sales')]/following-sibling::td)[1]").text
-        actualCashSales = float(actualCashSales)
-        print("actualCashSales", actualCashSales)
-        # B
-        actualCreditSales = danpheEMR.find_element(By.XPATH,
-            "(//td[contains(text(),'Credit Sales')]/following-sibling::td)[1]").text
-        actualCreditSales = float(actualCreditSales)
-        print("actualCreditSales", actualCreditSales)
-        # C
-        actualGrossSales = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Gross Sales')]/following-sibling::td").text
-        actualGrossSales = float(actualGrossSales)
-        print("actualGrossSales", actualGrossSales)
-        # D
-        actualCashDiscount = danpheEMR.find_element(By.XPATH,
-            "(//td[contains(text(),'Cash Discount')]/following-sibling::td)[1]").text
-        actualCashDiscount = float(actualCashDiscount)
-        print("actualCashDiscount", actualCashDiscount)
-        # E
-        actualCreditDiscount = danpheEMR.find_element(By.XPATH,
-            "(//td[contains(text(),'Credit Discount')]/following-sibling::td)[1]").text
-        actualCreditDiscount = float(actualCreditDiscount)
-        print("actualCreditDiscount", actualCreditDiscount)
-        # F
-        actualTotalDiscount = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Total Discount')]/following-sibling::td").text
-        actualTotalDiscount = float(actualTotalDiscount)
-        print("actualTotalDiscount", actualTotalDiscount)
-        # G
-        actualReturnCashSales = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Return Cash Sales')]/following-sibling::td").text
-        actualReturnCashSales = float(actualReturnCashSales)
-        print("actualReturnCashSales", actualReturnCashSales)
-        # H
-        actualReturnCreditSales = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Return Credit Sales')]/following-sibling::td").text
-        actualReturnCreditSales = float(actualReturnCreditSales)
-        print("actualReturnCreditSales", actualReturnCreditSales)
-        # I
-        actualTotalSalesReturn = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Total Sales Return')]/following-sibling::td").text
-        actualTotalSalesReturn = float(actualTotalSalesReturn)
-        print("actualTotalSalesReturn", actualTotalSalesReturn)
-        # j
-        actualReturnCashDiscount = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Return Cash Discount')]/following-sibling::td").text
-        actualReturnCashDiscount = float(actualReturnCashDiscount)
-        print("actualReturnCashDiscount", actualReturnCashDiscount)
-        # k
-        actualReturnCreditDiscount = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Return Credit Discount')]/following-sibling::td").text
-        actualReturnCreditDiscount = float(actualReturnCreditDiscount)
-        print("actualReturnCreditDiscount", actualReturnCreditDiscount)
-        # l
-        actualTotalReturnDiscount = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Total Return Discount')]/following-sibling::td").text
-        actualTotalReturnDiscount = float(actualTotalReturnDiscount)
-        print("actualTotalReturnDiscount", actualTotalReturnDiscount)
-        # m
-        actualNetSales = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Net Sales')]/following-sibling::td").text
-        actualNetSales = float(actualNetSales)
-        print("actualNetSales", actualNetSales)
+    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Income Segregation')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
+    time.sleep(15)
+    # A
+    actualCashSales = danpheEMR.find_element(By.XPATH,
+        "(//td[contains(text(),'Cash Sales')]/following-sibling::td)[1]").text
+    actualCashSales = float(actualCashSales)
+    print("actualCashSales", actualCashSales)
+    # B
+    actualCreditSales = danpheEMR.find_element(By.XPATH,
+        "(//td[contains(text(),'Credit Sales')]/following-sibling::td)[1]").text
+    actualCreditSales = float(actualCreditSales)
+    print("actualCreditSales", actualCreditSales)
+    # C
+    actualGrossSales = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Gross Sales')]/following-sibling::td").text
+    actualGrossSales = float(actualGrossSales)
+    print("actualGrossSales", actualGrossSales)
+    # D
+    actualCashDiscount = danpheEMR.find_element(By.XPATH,
+        "(//td[contains(text(),'Cash Discount')]/following-sibling::td)[1]").text
+    actualCashDiscount = float(actualCashDiscount)
+    print("actualCashDiscount", actualCashDiscount)
+    # E
+    actualCreditDiscount = danpheEMR.find_element(By.XPATH,
+        "(//td[contains(text(),'Credit Discount')]/following-sibling::td)[1]").text
+    actualCreditDiscount = float(actualCreditDiscount)
+    print("actualCreditDiscount", actualCreditDiscount)
+    # F
+    actualTotalDiscount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Total Discount')]/following-sibling::td").text
+    actualTotalDiscount = float(actualTotalDiscount)
+    print("actualTotalDiscount", actualTotalDiscount)
+    # G
+    actualReturnCashSales = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Return Cash Sales')]/following-sibling::td").text
+    actualReturnCashSales = float(actualReturnCashSales)
+    print("actualReturnCashSales", actualReturnCashSales)
+    # H
+    actualReturnCreditSales = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Return Credit Sales')]/following-sibling::td").text
+    actualReturnCreditSales = float(actualReturnCreditSales)
+    print("actualReturnCreditSales", actualReturnCreditSales)
+    # I
+    actualTotalSalesReturn = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Total Sales Return')]/following-sibling::td").text
+    actualTotalSalesReturn = float(actualTotalSalesReturn)
+    print("actualTotalSalesReturn", actualTotalSalesReturn)
+    # j
+    actualReturnCashDiscount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Return Cash Discount')]/following-sibling::td").text
+    actualReturnCashDiscount = float(actualReturnCashDiscount)
+    print("actualReturnCashDiscount", actualReturnCashDiscount)
+    # k
+    actualReturnCreditDiscount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Return Credit Discount')]/following-sibling::td").text
+    actualReturnCreditDiscount = float(actualReturnCreditDiscount)
+    print("actualReturnCreditDiscount", actualReturnCreditDiscount)
+    # l
+    actualTotalReturnDiscount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Total Return Discount')]/following-sibling::td").text
+    actualTotalReturnDiscount = float(actualTotalReturnDiscount)
+    print("actualTotalReturnDiscount", actualTotalReturnDiscount)
+    # m
+    actualNetSales = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Net Sales')]/following-sibling::td").text
+    actualNetSales = float(actualNetSales)
+    print("actualNetSales", actualNetSales)
     print("<<END getIncomeSegregation")
 
 
