@@ -344,16 +344,16 @@ if appName == "RTM":
 ### Bill Items Name:
       opdRate = 500
       deposit = 200
-      CBC = "CBC"
-      TFT = "FREE TFT"   #TFT(FT3,FT4,TSH) CLLEA
-      T3 = "FT3"
-      T4 = "FT4"
+      CBC = "CBC(HB,TC,DC,PLT)"
+      TFT = "TFT(T3,T4,TSH)"   #TFT(FT3,FT4,TSH) CLLEA
+      T3 = "T3"
+      T4 = "T4"
       TSH = "TSH"
-      TFTRate = 1200
-      LDH = "LDH"
-      UrineRE = "URINE R/E" # this gets changed on V1.49.3
+      TFTRate = 1050
+      LDH = "LACTIC DEHYDROGENASE(LDH)"
+      UrineRE = "URINE RE/ME" # this gets changed on V1.49.3
       BTCT = "BT/CT"
-      btctRate = 300
+      btctRate = 350
       USG = "ULTRA SOUND"
       usgRate = 1000
       admitRate = 1200
