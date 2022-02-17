@@ -16,10 +16,10 @@ imagingitem = GSV.USG
 admitcharge = GSV.admitRate
 deposit = 1000
 ########
-# admin user login
+# front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-# front desk user login
+# admin user login
 adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
 ########
