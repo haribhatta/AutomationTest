@@ -533,15 +533,16 @@ def cancelPharmacyGoodsReceipt(danpheEMR):
 
         # danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger history-del-btn']").click()
 
-    if AppName == "SNCH":
+    if AppName != "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Purchase").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Order").click()
         time.sleep(2)
         danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
         time.sleep(5)
         danpheEMR.find_element(By.XPATH, "(//a[contains(text(), 'View')])[1]").click()
         time.sleep(3)
         sysGRno = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Goods Receipt No.:')]").text
+        sysGRno = sysGRno.replace("-", "")
         print("sysGRno", sysGRno)
         danpheEMR.find_element(By.XPATH, "//button[@title='Cancel Goods Receipt']").click()
         time.sleep(2)
