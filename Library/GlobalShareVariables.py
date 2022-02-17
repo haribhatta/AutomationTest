@@ -20,6 +20,7 @@ if appName == "LPH":
       #billing user
       foUserID = 'ashmita' #LPH user
       foUserPwD = 'pass123'
+      foUserName = 'Ms. Ashmita Karki'
       #Lab user
       labUserID = 'karuna'
       labUserPwD = 'pass123'
@@ -128,6 +129,7 @@ if appName == "SNCH":
       #billing user
       foUserID = 'sabitri'
       foUserPwD = 'pass123'
+      foUserName = 'Ms. Sabitri Sharma Adhikari'
       #IT user
       itUserID = 'rn'
       itUserPwD = 'pass123'
@@ -222,6 +224,7 @@ if appName == "MPH":
       #billing user
       foUserID = 'bandana'
       foUserPwD = 'pass123'
+      foUserName = 'Ms. Bandana Harmel'
       #IT user
       itUserID = 'alina'
       itUserPwD = 'pass123'
@@ -322,20 +325,21 @@ if appName == "RTM":
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #billing user
-      foUserID = 'admin'
+      foUserID = 'mamata'
       foUserPwD = 'pass123'
+      foUserName = 'Ms. Mamata Gartaula'
       #IT user
       itUserID = 'admin'
       itUserPwD = 'pass123'
       #pharmacy user
-      pharmacyUserID = 'admin'
+      pharmacyUserID = 'Prekshya'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'admin admin'
+      pharmacyUserName = 'Ms. Prekshya Adhikari'
       #laboratory user
-      labUserID = 'admin'
+      labUserID = 'muna'
       labUserPwD = 'pass123'
       #Inventory user
-      storeUserID = 'admin'
+      storeUserID = 'sunita'
       storeUserPwD = 'pass123'
 ### Bill Items Name:
       opdRate = 500
