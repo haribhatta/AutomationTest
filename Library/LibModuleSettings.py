@@ -72,6 +72,22 @@ def checkCoreCFGparameter(danpheEMR):
     admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
     print("admittingDoctorMandatory:", admittingDoctorMandatory)
     return admittingDoctorMandatory
+def checkCoreLabReportVerify(danpheEMR):
+    print("START>>checkCoreLabReportVerify")
+    global labReportVerify
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("LabReportVerificationNeededB4Print")
+    labReportVerify = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("labReportVerify:", labReportVerify)
+    labReportVerify = labReportVerify.partition(",")[0]
+    print("labReportVerify:", labReportVerify)
+    labReportVerify = labReportVerify.partition(":")[2]
+    print("labReportVerify:", labReportVerify)
+    print("END>>checkCoreLabReportVerify")
+    return labReportVerify
 
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))

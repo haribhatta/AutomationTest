@@ -19,49 +19,47 @@ def collectLabSample(danpheEMR, HospitalNo, testname):
     except:
         print("No OP lab to select")
     time.sleep(5)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Sample Collection ')]").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.CSS_SELECTOR, ".btn").click()
-        time.sleep(9)
-        barcodeno = danpheEMR.find_element(By.CSS_SELECTOR, "tbody:nth-child(2) td:nth-child(3)").text
-        print(barcodeno)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Close')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Sample Collection ')]").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.CSS_SELECTOR, ".btn").click()
+    time.sleep(9)
+    barcodeno = danpheEMR.find_element(By.CSS_SELECTOR, "tbody:nth-child(2) td:nth-child(3)").text
+    print(barcodeno)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Close')]").click()
 
 
 def addLabResult(danpheEMR):
     print("Starting>Adding Lab Report")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
-        time.sleep(1)
-        danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(barcodeno)
-        time.sleep(2)
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Add Result").click()
-        time.sleep(7)
-        # ---------------this is hardcoded for TFT test-----------
-        danpheEMR.find_element(By.ID, "inputbox000").send_keys("2.23")
-        danpheEMR.find_element(By.ID, "inputbox001").send_keys("15.0")
-        danpheEMR.find_element(By.ID, "inputbox002").send_keys("4.05")
-        time.sleep(7)
-        danpheEMR.find_element(By.XPATH, "//div[3]/button").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Proceed')]").click()  # proced for abnormal result
-        time.sleep(3)
-        danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
-        danpheEMR.find_element(By.ID, "btnUpdateSignatories").click()
-        time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(barcodeno)
+    time.sleep(2)
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Add Result").click()
+    time.sleep(7)
+    # ---------------this is hardcoded for TFT test-----------
+    danpheEMR.find_element(By.ID, "inputbox000").send_keys("2.23")
+    danpheEMR.find_element(By.ID, "inputbox001").send_keys("15.0")
+    danpheEMR.find_element(By.ID, "inputbox002").send_keys("4.05")
+    time.sleep(7)
+    danpheEMR.find_element(By.XPATH, "//div[3]/button").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Proceed')]").click()  # proceed for abnormal result
+    time.sleep(3)
+    danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    danpheEMR.find_element(By.ID, "btnUpdateSignatories").click()
+    time.sleep(2)
 
 
-def verifyLabReport(danpheEMR, HospitalNo):
-    print("verifyLabReport:", verifyLabReport)
-    if AppName == "LPH" or "SNCH":
+def verifyLabReport(danpheEMR, HospitalNo, isLabReportVerify):
+    if isLabReportVerify == 'true':
+        print("verifyLabReport:", verifyLabReport)
         danpheEMR.find_element(By.LINK_TEXT, "PendingReports").click()
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(5)
@@ -98,15 +96,14 @@ def checkLabDuplicateRequisition(danpheEMR, HospitalNo, ItemName):
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
     time.sleep(5)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Sample Collection ')]").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
-        time.sleep(5)
-        x = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'No Rows To Show')]", ).text
-        print("x", x)
-        assert x == "No Rows To Show"
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Sample Collection ')]").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
+    time.sleep(5)
+    x = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'No Rows To Show')]", ).text
+    print("x", x)
+    assert x == "No Rows To Show"
     print("End>>checkLabDuplicateRequisition")
 
 
