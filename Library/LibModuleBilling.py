@@ -50,34 +50,33 @@ def verifyopdinvoice(danpheEMR, deposit, billamt):
 def returnBillingInvoice(danpheEMR, InvoiceNo, returnmsg):
     print(">>START: Returning OPD Invoice.", InvoiceNo)
     global returnTotalAmount
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Return Bills").click()
-        time.sleep(4)
-        danpheEMR.find_element(By.NAME, "TransactionId").clear()
-        danpheEMR.find_element(By.NAME, "TransactionId").send_keys(InvoiceNo)
-        time.sleep(2)
-        danpheEMR.find_element(By.CSS_SELECTOR, ".fa-search").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.ID, "txtRetQty_0").send_keys(1)
-        danpheEMR.find_element(By.ID, "txtReturnRemarks").send_keys(returnmsg)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "btnSubmit").click()
-        time.sleep(3)
-        returnremark = danpheEMR.find_element(By.XPATH, "//div[contains(text(), ' Remarks:')]").text
-        returnTotalAmount = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Total Amount ')]/following-sibling::td").text
-        # danpheEMR.find_element(By.ID, "btnPrintRecipt").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH,
-            "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
-        time.sleep(3)
-        print("returnmsgTemp", returnremark)
-        returnremark = returnremark.partition("Remarks: ")[2]
-        print("returnremark", returnremark)
-        print("returnmsg", returnmsg)
-        assert returnremark == returnmsg
-        print("returnTotalAmount", returnTotalAmount)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Return Bills").click()
+    time.sleep(4)
+    danpheEMR.find_element(By.NAME, "TransactionId").clear()
+    danpheEMR.find_element(By.NAME, "TransactionId").send_keys(InvoiceNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-search").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.ID, "txtRetQty_0").send_keys(1)
+    danpheEMR.find_element(By.ID, "txtReturnRemarks").send_keys(returnmsg)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "btnSubmit").click()
+    time.sleep(3)
+    returnremark = danpheEMR.find_element(By.XPATH, "//div[contains(text(), ' Remarks:')]").text
+    returnTotalAmount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Total Amount ')]/following-sibling::td").text
+    # danpheEMR.find_element(By.ID, "btnPrintRecipt").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH,
+        "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
+    time.sleep(3)
+    print("returnmsgTemp", returnremark)
+    returnremark = returnremark.partition("Remarks: ")[2]
+    print("returnremark", returnremark)
+    print("returnmsg", returnmsg)
+    assert returnremark == returnmsg
+    print("returnTotalAmount", returnTotalAmount)
     print("<<END: Return OPD Invoice.")
 
 
@@ -632,48 +631,46 @@ def createUSGinvoice(danpheEMR, HospitalNo, USGtest):
 def createIPprovisionalBill(danpheEMR, HospitalNo, test):
     global testrate
     print(">>START: Cancel Admitted Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,' New Item')]").click()
-        danpheEMR.find_element(By.XPATH, "//input[@id='items-box0']").send_keys(test)
-        time.sleep(2)
-        testrate = int(danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value"))
-        print("testrate", testrate)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Request']").click()
-        time.sleep(9)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' New Item')]").click()
+    danpheEMR.find_element(By.XPATH, "//input[@id='items-box0']").send_keys(test)
+    time.sleep(2)
+    testrate = int(danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value"))
+    print("testrate", testrate)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Request']").click()
+    time.sleep(9)
     print("<<END")
 
 
 def cancelIPprovisionalBill(danpheEMR, HospitalNo, canceltest):
     print(">>START: Cancel IP Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(canceltest)
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Edit").click()
-        danpheEMR.find_element(By.XPATH, "//div/textarea").send_keys("Auto cancel of IP provisional bill items")
-        time.sleep(9)
-        danpheEMR.find_element(By.XPATH, "//div[3]/button[2]").click()
-        time.sleep(3)
-        assert danpheEMR.switch_to.alert.text == "This item will be cancelled. Are you sure you want to continue ?"
-        time.sleep(3)
-        danpheEMR.switch_to.alert.accept()
-        time.sleep(2)
-        danpheEMR.find_element(By.CSS_SELECTOR, ".fa-times").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Keys.RETURN)
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(canceltest)
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Edit").click()
+    danpheEMR.find_element(By.XPATH, "//div/textarea").send_keys("Auto cancel of IP provisional bill items")
+    time.sleep(9)
+    danpheEMR.find_element(By.XPATH, "//div[3]/button[2]").click()
+    time.sleep(3)
+    assert danpheEMR.switch_to.alert.text == "This item will be cancelled. Are you sure you want to continue ?"
+    time.sleep(3)
+    danpheEMR.switch_to.alert.accept()
+    time.sleep(2)
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-times").click()
     print("End of cancel IP Provisional Bill")
 
 
