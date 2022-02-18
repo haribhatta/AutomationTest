@@ -374,6 +374,8 @@ if appName == "RTM":
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
       supplier = "AARATI MEDITCHA PVT"
+      drug1NarcoticName = "LOZ 1 MG"
+      drug1NarcoticRate ="2"
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"

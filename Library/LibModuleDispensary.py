@@ -63,6 +63,45 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     print("Create Pharmacy OPD Invoice: END<<")
     return pInvoiceNo
 
+def createNarcoticDispensarySale(danpheEMR, HospitalNo, drugName, qty, paymentmode):
+    print(">>SRART:createNarcoticDispensarySale")
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "patient-search").click()
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").click()
+    danpheEMR.find_element(By.ID, "item-box0").clear()
+    time.sleep(3)
+    print("drugName:", drugName)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugName)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
+    time.sleep(5)
+    # drugavlqty = danpheEMR.find_element(By.XPATH, "(//input[@value=''])[6]").get_attribute("Value")
+    # print("Drug Available qty:", drugavlqty)
+    danpheEMR.find_element(By.ID, "qty0").click()
+    danpheEMR.find_element(By.ID, "qty0").clear()
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
+    time.sleep(3)
+    if paymentmode == 'Credit':
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        paymentoptions.select_by_visible_text("credit")
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    time.sleep(5)
+    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
+    pInvoiceNo = pInvoiceNo.partition("PH")[2]
+    danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
+    print(">>SRART:createNarcoticDispensarySale")
+    return pInvoiceNo
+
 
 def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     print("<<START: Create Dispensary sales to random customer.")
