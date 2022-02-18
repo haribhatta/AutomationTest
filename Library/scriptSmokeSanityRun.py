@@ -5,25 +5,29 @@ import pathlib
 import os
 import Library.GlobalShareVariables as GSV
 
-billingTestCases = "BillingReportsTestScripts_"
-billingTestCasesResult = "BillingReportsTestScripts_ExecutionResult_"
+smokesanityfile = "excelTestCasesSmokeSanity_"
+smokesanityresult = "excelResultSmokeSanity_"
 scheduletype = input("Enter '1' to schedule new run and '2' to restart previous run")
 appVersion = input("Please entry version for Test Summary Report")
 #AppName = input("Please entry (Application Name) for Test Summary Report")
 AppName = GSV.appName
 print("app name test", AppName)
 
+global Originalfile
+
 if scheduletype == '1':
-    Originalfile = billingTestCases + AppName + ".xlsx"
+    Originalfile = smokesanityfile + AppName + ".xlsx"
 
 elif scheduletype == '2':
-    Originalfile = billingTestCasesResult + AppName + appVersion + ".xlsx"
+    Originalfile = smokesanityresult + AppName + appVersion + ".xlsx"
     print("Originalfile:", Originalfile)
 
-duplicatefile = billingTestCasesResult + AppName + appVersion + ".xlsx"
-print("This is test", duplicatefile)
+duplicatefile = smokesanityresult + AppName + appVersion + ".xlsx"
+print("This is duplicate file", duplicatefile)
 print("This is original file", Originalfile)
+
 rows = sc.getTotalrows(Originalfile, 'test')
+print("rows:", rows)
 
 def files(file, file1, rows, *args):
     global runEnv

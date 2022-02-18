@@ -5,8 +5,8 @@ import pathlib
 import os
 import Library.GlobalShareVariables as GSV
 
-pharmacyTestCases = "PharmacyReportsTestScripts_"
-pharmacyTestCasesResult = "PharmacyReportsTestScripts_ExecutionResult_"
+pharmacyTestCases = "excelTestCasesTestPackPharmacyReports_"
+pharmacyTestCasesResult = "excelResultTestPackPharmacyReports_"
 scheduletype = input("Enter '1' to schedule new run and '2' to restart previous run")
 appVersion = input("Please entry version for Test Summary Report")
 #AppName = input("Please entry (Application Name) for Test Summary Report")

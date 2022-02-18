@@ -29,7 +29,7 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 ######## Precondition Check: isAdmittingDoctorMandatory?
 AC.login(adminUserId, adminUserPwd)
-isDoctorMandatory = LS.checkCoreCFGparameter(danpheEMR=EMR)
+isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 AC.logout()
 ########
 AC.login(foUserId, foUserPwd)

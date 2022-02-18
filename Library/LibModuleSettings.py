@@ -58,8 +58,8 @@ def checkAutoAddItems(danpheEMR):
     print("autoaddBeditemvalue", autoaddBeditemvalue)
 
 ######## Check Core CFG Parameter Value
-def checkCoreCFGparameter(danpheEMR):
-    print("START>>checkCoreCFGparameter")
+def checkCoreCFGadmitDocMandatory(danpheEMR):
+    print("START>>checkCoreCFGadmitDocMandatory")
     global admittingDoctorMandatory
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
     time.sleep(5)
@@ -70,8 +70,10 @@ def checkCoreCFGparameter(danpheEMR):
     print("admittingDoctorMandatory:", admittingDoctorMandatory)
     admittingDoctorMandatory = admittingDoctorMandatory.partition(",")[0]
     admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
-    print("admittingDoctorMandatory:", admittingDoctorMandatory)
+    print("checkCoreCFGadmitDocMandatory:", admittingDoctorMandatory)
     return admittingDoctorMandatory
+
+
 def checkCoreLabReportVerify(danpheEMR):
     print("START>>checkCoreLabReportVerify")
     global labReportVerify
