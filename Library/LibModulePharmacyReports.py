@@ -792,7 +792,7 @@ def getSystemPharmacyBillWiseSalesReport(danpheEMR):
 
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()

@@ -310,11 +310,10 @@ def createPharmacyInvoiceAnonymous(danpheEMR, drugname, qty, paymentmode):
     danpheEMR.find_element(By.ID, "item-box0").send_keys(drugname)
     danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
     time.sleep(5)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
-        danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
-        danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
-        danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
+    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
+    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(5)
     pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
     print("pInvoiceNo", pInvoiceNo)
