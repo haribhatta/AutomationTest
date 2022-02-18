@@ -334,7 +334,8 @@ if appName == "RTM":
       #pharmacy user
       pharmacyUserID = 'Prekshya'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'Ms. Prekshya Adhikari'
+      #pharmacyUserName = 'Ms. Prekshya Adhikari'
+      pharmacyUserName = 'Prekshya Adhikari' # Ms. is removed due to Rhythm 'User Collection Report' not having salutation field.
       #laboratory user
       labUserID = 'muna'
       labUserPwD = 'pass123'
@@ -361,7 +362,7 @@ if appName == "RTM":
       dispensaryName = "MainDispensary"
       drug1BrandName = "SAMCOBA 1500 MG"
       drug1GenericName = "mecobalamin"
-      drug1Rate = 5
+      drug1Rate = 20
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
