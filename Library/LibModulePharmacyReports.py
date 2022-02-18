@@ -502,7 +502,7 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
     global actualTotalCashCollection
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -691,7 +691,7 @@ def getPatientWiseSalesDetails(danpheEMR, HospitalNo):
     global TotalNetSales
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -729,7 +729,7 @@ def prePatientWiseSalesDetails():
 def VerifyPatientWiseSalesDetail(danpheEMR, HospitalNo, cash, credit, cashreturn, creditreturn):
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -759,7 +759,7 @@ def verifySystemPharmacyNarcoticDailySalesReport(danpheEMR, invoiceNo, totalAmou
     print(">>START: verifySystemPharmacyNarcoticDailySalesReport")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -831,7 +831,7 @@ def verifySystemPharmacyBillWiseSalesReport(danpheEMR, invoiceNo, cash, cashRetu
     print(">>START: verifySystemPharmacyBillWiseSalesReport")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -876,7 +876,7 @@ def getSystemPharmacyItemWiseSalesReport(danpheEMR, drugName):
 
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -943,7 +943,7 @@ def getSystemPharmacySalesSummaryReport(danpheEMR):
     global actualTotalSales
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -1043,7 +1043,7 @@ def getPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo):
     global actualTotalReturnedAmount
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -1072,7 +1072,7 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, cre
     print("Start: verifyPharmacyReturnFromCustomerReport:")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -1148,7 +1148,7 @@ def getStockTransferReport(danpheEMR):
     time.sleep(3)
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
@@ -1202,7 +1202,7 @@ def verifynarcoticstockreport(danpheEMR, qty, DrugName, grPrice):
     print("START >>> Verifying Narcotic Stock Report>>")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    elif AppName == "MPH" or AppName == "SNCH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
