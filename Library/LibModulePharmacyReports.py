@@ -1101,7 +1101,7 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, cre
 ########Supplier Reports:
 
 def getSupplierStockReport(danpheEMR, supplier):
-    global totalAmount
+    global actualTotalAmount
     time.sleep(3)
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
@@ -1118,20 +1118,24 @@ def getSupplierStockReport(danpheEMR, supplier):
     danpheEMR.find_element(By.ID, "supplierName").send_keys(Keys.ENTER)
     danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Show Report')]").click()
     time.sleep(2)
-    totalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]").text
-    totalAmount = int(totalAmount)
-    print("Total Amount of selected date of given supplier is  : ", totalAmount)
+    actualTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]").text
+    actualTotalAmount = int(actualTotalAmount)
+    print("Total Amount of selected date of given supplier is  : ", actualTotalAmount)
 
 
 def preSupplierStockReport():
     global pretotalAmount
-    pretotalAmount = totalAmount
+    pretotalAmount = actualTotalAmount
     print("pre Total Stock amount of given supplier is :", pretotalAmount)
 
 
-def verifysupplierStockReport():
+def verifysupplierStockReport(qtyGR, rateGR):
     print("START>>verifying the Stock Summary Report")
-    assert pretotalAmount == totalAmount
+    newPurchaseAmount = qtyGR * rateGR
+    print("newPurchaseAmount:", newPurchaseAmount)
+    expectedTotalAmount = pretotalAmount + newPurchaseAmount
+    print("expectedTotalAmount:", expectedTotalAmount)
+    assert expectedTotalAmount == actualTotalAmount
     print("END>> Verifying Stock Summary Report")
 
 
