@@ -304,6 +304,9 @@ if appName == "MPH":
 ###Wards Name:
       generalWard = "General Non-Covid Ward"
       bedFeature = "General Non-Covid Ward"
+###ADT:
+      admitWard = "General Non-Covid Ward"
+      admitBed = "Pediatric Bed Charge"
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###Discount Scheme

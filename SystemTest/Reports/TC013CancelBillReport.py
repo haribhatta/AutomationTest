@@ -31,7 +31,7 @@ AC.logout()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
-LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=0, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno)
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=0, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, test=USG)
 LB.cancelIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, canceltest=USG)
 LBR.verifyCancelBillReport(danpheEMR=EMR, HospitalNo=HospitalNo, expectedTotalCancelAmt=TotalAmt)

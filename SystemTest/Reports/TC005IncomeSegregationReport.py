@@ -13,11 +13,15 @@ import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleADT as LADT
+import Library.LibModuleSettings as LS
 
 # front desk user login
 itUserId = GSV.itUserID
 itUserPwd = GSV.itUserPwD
-
+# admin user login
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
+###
 rateOPD = GSV.opdRate
 usgtest = GSV.USG
 usgprice = GSV.usgRate
@@ -28,6 +32,9 @@ priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
+AC.login(adminUserId, adminUserPwd)
+isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
+AC.logout()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
 #####Scenario: Cash Invoice with no Discount
@@ -54,7 +61,7 @@ LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=rateOPD, discount=0, provision=0)
 #####Scenario: Cash Invoice with Discount
 HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
-LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0, HospitalNo=HospitalNo, doctor=doctor, department=department)
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0,deposit=0, HospitalNo=HospitalNo, doctor=doctor, department=department, admittingDoctorMandatory=isDoctorMandatory)
 LBR.getIncomeSegregation(EMR)
 LB.createIPprovisionalBill(danpheEMR=EMR,HospitalNo=HospitalNo, test=usgtest)
 LBR.preSystemIncomeSegregation()
