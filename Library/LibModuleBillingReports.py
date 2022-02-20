@@ -627,27 +627,37 @@ def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
     time.sleep(3)
     date = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div/span").text
     print(date)
-    receiptno = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
-    print(receiptno)
-    hospitalno = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[3]").text
-    print("hospitalno", hospitalno)
-    print("HospitalNo", HospitalNo)
-    assert HospitalNo == hospitalno
-    subtotal = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[5]").text
-    print(subtotal)
-    assert cash == int(subtotal)
-    discount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[6]").text
-    print(discount)
-    discountPc = (discountpc * cash / 100)
-    print("discountPc:", discountPc)
-    assert int(discount) == discountPc
+    systemReceiptNo = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+    print("systemReceiptNo:", systemReceiptNo)
+    systemHospitalNo = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[3]").text
+    print("systemHospitalNo", systemHospitalNo)
+    assert HospitalNo == systemHospitalNo
+    systemSubTotal = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[5]").text
+    print("systemSubTotal:", systemSubTotal)
+    systemSubTotal = int(systemSubTotal)
+    assert cash == systemSubTotal
+    systemDiscount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[6]").text
+    print("systemDiscount:", systemDiscount)
+    systemDiscount = int(systemDiscount)
+    ###
+    print("discountpc:", discountpc)
+    discountpc = discountpc.partition("%)")[0]
+    discountpc = discountpc.partition("(")[2]
+    discountpc = int(discountpc)
+    print("discountpc:", discountpc)
+    ###
+    expectedDiscount = (discountpc * cash / 100)
+    print("expectedDiscount:", expectedDiscount)
+    assert systemDiscount == expectedDiscount
     tax = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
     print(tax)
-    totalamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]/span").text
-    print(totalamount)
-    assert int(totalamount) == int(subtotal) - int(discount)
+    systemTotalAmount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]/span").text
+    print("systemTotalAmount:", systemTotalAmount)
+    systemTotalAmount = int(systemTotalAmount)
+    expectedTotalAmount = int(systemSubTotal) - int(systemDiscount)
+    assert systemTotalAmount == expectedTotalAmount
     user = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[9]").text
-    print(user)
+    print("user:", user)
     print("<<END: verifyDiscountReport")
 
 
