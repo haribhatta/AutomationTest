@@ -638,7 +638,9 @@ def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
     assert cash == int(subtotal)
     discount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[6]").text
     print(discount)
-    assert int(discount) == (discountpc * cash / 100)
+    discountPc = (discountpc * cash / 100)
+    print("discountPc:", discountPc)
+    assert int(discount) == discountPc
     tax = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
     print(tax)
     totalamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]/span").text
