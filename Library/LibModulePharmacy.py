@@ -465,7 +465,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
     time.sleep(5)
-    if AppName == 'RTM':
+    if AppName == 'RTM' or AppName == "SNCH":
         #danpheEMR.find_element(By.ID, "saveGr").click()
         time.sleep(3)
         #assert danpheEMR.switch_to.alert.text == "Similar GR found with these Invoices: \n Invoice No.: 262049\n Invoice No.: 303568\n Invoice No.: 99999999\n Want to continue?"
