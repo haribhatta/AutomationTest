@@ -780,6 +780,7 @@ def verifySystemPharmacyNarcoticDailySalesReport(danpheEMR, invoiceNo, totalAmou
     print("invoiceNo:", invoiceNo)
     assert sysInvoiceNo == invoiceNo
     sysTotalAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='TotalAmount'])[2]").text
+    sysTotalAmount = int(sysTotalAmount)
     print("sysTotalAmount:", sysTotalAmount)
     print("totalAmount:", totalAmount)
     assert sysTotalAmount == totalAmount

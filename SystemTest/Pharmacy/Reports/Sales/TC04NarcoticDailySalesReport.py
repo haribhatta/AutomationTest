@@ -29,6 +29,8 @@ drugName = GSV.drug1NarcoticName
 drugRate = GSV.drug1NarcoticRate
 qty = 1
 totalAmount = qty*drugRate
+totalAmount = int(totalAmount)
+print("Total Amount of narcotic sale is", totalAmount)
 remark = "This is test return."
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName

@@ -182,6 +182,8 @@ if appName == "SNCH":
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
       supplier = "AAKAR ENTERPRISES"
+      drug1NarcoticName = "MORFIUM 1ML ING"
+      drug1NarcoticRate = 100
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
