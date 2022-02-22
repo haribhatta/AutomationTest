@@ -21,29 +21,28 @@ def counteractivation(danpheEMR):
 
 def verifyopdinvoice(danpheEMR, deposit, billamt):
     print(">>Verify OPD Invoice Details: START")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        syscontactno = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Contact No:')]").text
-        syscontactno = syscontactno.partition("No: ")[2]
-        print(syscontactno)
-        if deposit < billamt and deposit > 0:
-            DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
-                "//div[@id='printpage']/div/div[5]/div[10]/span").text  # Deposit Deduct/Return:
-            DepositDeductorReturn = DepositDeductorReturn.partition("n: ")[2]
-            print("1: Deposit Deduct/Return: ", DepositDeductorReturn)
-            assert int(DepositDeductorReturn) == deposit
-            systender = danpheEMR.find_element(By.XPATH,
-                "//div[@id='printpage']/div/div[5]/div[10]/span[2]").text  # Tender
-            systender = systender.partition("r: ")[2]
-            systender = systender.partition(".00")[0]
-            Tender = int(billamt) - int(deposit)
-            print("Expected Tender: ", Tender)
-            print("Actual Tender:", systender)
-            assert int(Tender) == int(systender)
-            sysdepositbalance = danpheEMR.find_element(By.XPATH,
-                "//div[@id='printpage']/div/div[5]/div[10]/span[3]").text  # Deposit Balance
-            print("3:", sysdepositbalance)
-            sysdepositbalance = sysdepositbalance.partition("e: ")[2]
-            assert sysdepositbalance == "0"
+    syscontactno = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Contact No:')]").text
+    syscontactno = syscontactno.partition("No: ")[2]
+    print(syscontactno)
+    if deposit < billamt and deposit > 0:
+        DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
+            "//div[@id='printpage']/div/div[5]/div[10]/span").text  # Deposit Deduct/Return:
+        DepositDeductorReturn = DepositDeductorReturn.partition("n: ")[2]
+        print("1: Deposit Deduct/Return: ", DepositDeductorReturn)
+        assert int(DepositDeductorReturn) == deposit
+        systender = danpheEMR.find_element(By.XPATH,
+            "//div[@id='printpage']/div/div[5]/div[10]/span[2]").text  # Tender
+        systender = systender.partition("r: ")[2]
+        systender = systender.partition(".00")[0]
+        Tender = int(billamt) - int(deposit)
+        print("Expected Tender: ", Tender)
+        print("Actual Tender:", systender)
+        assert int(Tender) == int(systender)
+        sysdepositbalance = danpheEMR.find_element(By.XPATH,
+            "//div[@id='printpage']/div/div[5]/div[10]/span[3]").text  # Deposit Balance
+        print("3:", sysdepositbalance)
+        sysdepositbalance = sysdepositbalance.partition("e: ")[2]
+        assert sysdepositbalance == "0"
     print(">>>Verify OPD Invoice. >>End")
 
 
@@ -128,129 +127,126 @@ def verifyCreditNoteDuplicateInvoice(danpheEMR):
 def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.implicitly_wait(10)
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.ENTER)
-        element = WebDriverWait(danpheEMR, 10)
-        element.until(
-            EC.element_to_be_clickable((By.ID, "btn_billRequest"))
-        ).click()
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.implicitly_wait(10)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.ENTER)
+    element = WebDriverWait(danpheEMR, 10)
+    element.until(
+        EC.element_to_be_clickable((By.ID, "btn_billRequest"))
+    ).click()
 
-        # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        wait = WebDriverWait(danpheEMR, 20)
-        wait.until(
-            EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
-        ).click()
+    # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    wait = WebDriverWait(danpheEMR, 20)
+    wait.until(
+        EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
+    ).click()
 
-        # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-        danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
-        price = WebDriverWait(danpheEMR, 10)
-        price.until(
-            EC.visibility_of_element_located((By.XPATH, "(//input[@name='total'])[2]"))
-        )
-        price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
-        totalprice = int(price1) + int(price2)
-        print("Total Price:", totalprice)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        InNo = WebDriverWait(danpheEMR, 10)
-        InNo.until(
-            EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]"))
-        )
-        # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
-        InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-        print("InvoiceNoTemp", InvoiceNo)
-        InvoiceNo = InvoiceNo.partition("BL")[2]
-        print("InvoiceNo", InvoiceNo)
+    # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
+    price = WebDriverWait(danpheEMR, 10)
+    price.until(
+        EC.visibility_of_element_located((By.XPATH, "(//input[@name='total'])[2]"))
+    )
+    price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
+    totalprice = int(price1) + int(price2)
+    print("Total Price:", totalprice)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    InNo = WebDriverWait(danpheEMR, 10)
+    InNo.until(
+        EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]"))
+    )
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
 
 
 def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(1)
-        price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-        time.sleep(1)
-        danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
-        time.sleep(2)
-        price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
-        totalprice = int(price1) + int(price2)
-        print("Total Price:", totalprice)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(3)
-        # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
-        InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(1)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    time.sleep(1)
+    danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
+    time.sleep(2)
+    price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
+    totalprice = int(price1) + int(price2)
+    print("Total Price:", totalprice)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(3)
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
 
-        print("InvoiceNoTemp", InvoiceNo)
-        InvoiceNo = InvoiceNo.partition("BL")[2]
-        print("InvoiceNo", InvoiceNo)
-        return InvoiceNo
-
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
+    return InvoiceNo
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
 
 
 def verifymultipleclickbilling(danpheEMR, InvoiceNo):
-    print(">>START: verifymultipleclickbilling")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints ')]").click()
-        time.sleep(5)
-        print("InvoiceNo:", InvoiceNo)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(InvoiceNo)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Load Invoices')]").click()
-        time.sleep(2)
-        searchResult = danpheEMR.find_element(By.XPATH, "//div[@class='page-items']").text
-        print("searchResult:", searchResult)
-        searchResult = searchResult.partition("Showing ")[2]
-        print("searchResult:", searchResult)
-        searchResult = searchResult.partition(" /")[0]
-        print("searchResult:", searchResult)
-        assert searchResult == "1"
-        danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-        # element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
-        time.sleep(2)
+    print("START>>verifymultipleclickbilling")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints ')]").click()
+    time.sleep(5)
+    print("InvoiceNo:", InvoiceNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(InvoiceNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Load Invoices')]").click()
+    time.sleep(2)
+    searchResult = danpheEMR.find_element(By.XPATH, "//div[@class='page-items']").text
+    print("searchResult:", searchResult)
+    searchResult = searchResult.partition("Showing ")[2]
+    print("searchResult:", searchResult)
+    searchResult = searchResult.partition(" /")[0]
+    print("searchResult:", searchResult)
+    assert searchResult == "1"
+    danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    # element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
+    time.sleep(2)
+    print("END>>verifymultipleclickbilling")
 
 
 def createLabInvoice(danpheEMR, HospitalNo, labtest):
-    print(">>Create OPD Invoice: 1 Lab Items: START")
+    print("START>>createLabInvoice")
     print("Hospital Number:", HospitalNo)
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
     time.sleep(5)
@@ -286,100 +282,91 @@ def createLabInvoice(danpheEMR, HospitalNo, labtest):
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
     print("InvoiceNo", InvoiceNo)
-    print("Create OPD Invoice: 1 Lab Items: END<<")
+    print("END>>createLabInvoice")
 
 
 def createERlabInvoice(danpheEMR, HospitalNo, labtest, labtype):
-    print(">>Create ER LAB Invoice: START")
+    print("START>>createERlabInvoice")
     global InvoiceNo
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "lab_type").send_keys(labtype)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(1)
-        price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-        time.sleep(1)
-        danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(9)
-        InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-        print("InvoiceNoTemp", InvoiceNo)
-        InvoiceNo = InvoiceNo.partition("BL")[2]
-        print("InvoiceNo", InvoiceNo)
-    print("Create ER LAB Invoice: 1 Lab: END<<")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "lab_type").send_keys(labtype)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(1)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    time.sleep(1)
+    danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(9)
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
+    print("END>>createERlabInvoice")
 
 
 def verifylabxrayinvoice():
-    # if appPort == "81":
-    #    print(">>Verify OPD Invoice: 1 Lab + 1 Xray Items: START")
-    #    invoiceNo = danpheEMR.find_element(By.CSS_SELECTOR, ".no-margin:nth-child(1) > span").text
-    #    hospitalNoT = danpheEMR.find_element(By.CSS_SELECTOR, "span > strong").text
-    #    assert HospitalNo == hospitalNoT
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        print(">>Verify OPD Invoice: 1 Lab + 1 Xray Items: START")
-        # InvoiceNoTemp = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-        # hospitalNoTemp = danpheEMR.find_element(By.CSS_SELECTOR, "span > strong").text
-        # assert HospitalNo == hospitalNoT
-    # print("Verify OPD Invoice: 1 Lab + 1 Xray Items: END<<", "HospitalNo", hospitalNoT, "InvoiceNo", invoiceNo)
+    print("START>>verifylabxrayinvoice")
+    ## code goes here
+    print("END>>verifylabxrayinvoice")
 
 
 def verifySampleCollectionDuplicateEntry():
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        print("Start: verifySampleCollectionDuplicateEntry")
+    print("START>>verifySampleCollectionDuplicateEntry")
+    ## code goes here
+    print("START>>verifySampleCollectionDuplicateEntry")
 
 
 def createProvisionalBill(danpheEMR, HospitalNo, usgtest):
-    print(">>START: Create USG Provisional bill")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(usgtest)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Print Provisional Slip ')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "btnPrintProvisionalSlip").send_keys(Keys.ESCAPE)
-        time.sleep(2)
-
-    print("<<END")
+    print("START>>createProvisionalBill")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(usgtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Print Provisional Slip ')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "btnPrintProvisionalSlip").send_keys(Keys.ESCAPE)
+    time.sleep(2)
+    print("END>>createProvisionalBill")
 
 
 def verifyDuplicateBill(danpheEMR, HospitalNo):
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints ')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(3)
-        # danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
-        danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
-        time.sleep(3)
+    print("START>>verifyDuplicateBill")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints ')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    # danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
+    danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+    time.sleep(3)
+    print("END>>verifyDuplicateBill")
 
 
 def createCopyItemInvoice(danpheEMR, paymentmode):
@@ -407,223 +394,219 @@ def createCopyItemInvoice(danpheEMR, paymentmode):
 
 # Module:Billing_OP -----------------
 def opDeposit(danpheEMR, HospitalNo, amount):
-    print(">>>opDeposit>>Start")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "btn_addDeposit").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@name='amount']").send_keys(amount)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Add Deposit and Print']").click()
-        time.sleep(3)
-    print(">>>opDeposit>>End")
+    print("START>>opDeposit")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btn_addDeposit").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@name='amount']").send_keys(amount)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Add Deposit and Print']").click()
+    time.sleep(3)
+    print("END>>opDeposit")
 
 
 def opDepositDbiling(danpheEMR, HospitalNo, deposit, testname):
-    print("lets issue OPD invoice deducting amount from deposit.")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(2)
-        labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
-        labType.select_by_visible_text("OP-LAB")
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(testname)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        itemAprice = danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value")
-        SubTotal = itemAprice
-        DepositBalance = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]").text
-        assert deposit == int(DepositBalance)
-        BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
-        assert deposit == int(BalanceAmount)
-        TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
-        print("TotalAmount", TotalAmount)
-        assert TotalAmount == SubTotal
-        Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-        print("Tender before deposit deduction: ", Tender)
-        assert Tender == TotalAmount
-        danpheEMR.find_element(By.XPATH,
-            "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
-        Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-        print("Tender after deposit deduction: ", Tender)
+    print("START>>opDepositDbiling")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(2)
+    labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
+    labType.select_by_visible_text("OP-LAB")
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(testname)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    itemAprice = danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value")
+    SubTotal = itemAprice
+    DepositBalance = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]").text
+    assert deposit == int(DepositBalance)
+    BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
+    assert deposit == int(BalanceAmount)
+    TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
+    print("TotalAmount", TotalAmount)
+    assert TotalAmount == SubTotal
+    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
+    print("Tender before deposit deduction: ", Tender)
+    assert Tender == TotalAmount
+    danpheEMR.find_element(By.XPATH,
+        "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
+    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
+    print("Tender after deposit deduction: ", Tender)
 
-        if int(DepositBalance) >= int(TotalAmount):
-            assert Tender == "0"
+    if int(DepositBalance) >= int(TotalAmount):
+        assert Tender == "0"
 
-        else:
-            assert int(Tender) == int(TotalAmount) - int(DepositBalance)
+    else:
+        assert int(Tender) == int(TotalAmount) - int(DepositBalance)
 
-        DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
-        print("DepositDeduction:", DepositDeduction)
+    DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
+    print("DepositDeduction:", DepositDeduction)
 
-        if int(DepositBalance) < int(TotalAmount):
-            assert DepositDeduction == DepositBalance
+    if int(DepositBalance) < int(TotalAmount):
+        assert DepositDeduction == DepositBalance
 
-        else:
-            assert DepositDeduction == TotalAmount
+    else:
+        assert DepositDeduction == TotalAmount
 
-        NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
-        assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
-        print("NewDepositBalance:", NewDepositBalance)
+    NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
+    assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
+    print("NewDepositBalance:", NewDepositBalance)
 
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-        time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    time.sleep(3)
+    print("END>>opDepositDbiling")
 
 
 def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
     global ChangeReturn
-    print(">>>opDepositDbilingTenderCashReturn>>Start")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(testname)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        itemAprice = danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value")
-        SubTotal = itemAprice
-        DepositBalance = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]").text
+    print("START>>opDepositDbilingTenderCashReturn")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(testname)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    itemAprice = danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value")
+    SubTotal = itemAprice
+    DepositBalance = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]").text
+    print("DepositBalance", DepositBalance)
+    print("Deposit", deposit)
+    assert int(deposit) == int(DepositBalance)
+    BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
+    print("BalanceAmount", BalanceAmount)
+    assert int(deposit) == int(BalanceAmount)
+    TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
+    print("TotalAmount", TotalAmount)
+    assert TotalAmount == SubTotal
+    print("subtotal", SubTotal)
+    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
+    print("Tender before deposit deduction: ", Tender)
+    assert Tender == TotalAmount
+
+    danpheEMR.find_element(By.XPATH,
+        "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
+
+    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
+    print("Tender after deposit deduction: ", Tender)
+
+    DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
+    print("DepositDeduction", DepositDeduction)
+
+    if int(DepositBalance) < int(TotalAmount):
+        assert DepositDeduction == DepositBalance
+        assert int(Tender) == int(TotalAmount) - int(DepositBalance)
+
+    else:
+        assert DepositDeduction == TotalAmount
+        assert Tender == "0"
+
+    NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
+    assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
+    print("NewDepositBalance", NewDepositBalance)
+
+    # if 200 < int(Tender) < 500:
+    if int(Tender) % 100 > 0:
+        Tender = int(Tender) * 2
+        danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").clear()
+        danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").send_keys(Tender)
+
+    ChangeReturn = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Change/Return :')]/following-sibling::td").text
+    print("ChangeReturn", ChangeReturn)
+    ChangeReturn = ChangeReturn.partition("NRs.")[2]
+    print("Change Return:", ChangeReturn)
+    actualChangeReturn = int(ChangeReturn)
+    expectedChangeReturn = int(Tender) + int(DepositBalance) - int(TotalAmount)
+    assert actualChangeReturn == expectedChangeReturn
+
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(7)
+    # DepositDeductorReturn = danpheEMR.find_element(By.XPATH, "//div[10]/span").text
+    DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
+        "//span[contains(text(),' Deposit: [Deducted: ')]").text
+    print("DepositDeductorReturn:", DepositDeductorReturn)
+    DepositDeductorReturn = DepositDeductorReturn.partition("Deducted: ")[2]
+    print("DepositDeductorReturn", DepositDeductorReturn)
+    DepositDeductorReturn = DepositDeductorReturn.partition("/Balance")[0]
+    print("DepositDeductorReturn", DepositDeductorReturn)
+
+    assert DepositDeductorReturn == DepositDeduction
+    billTender = danpheEMR.find_element(By.XPATH,
+        "//span[contains(text(),'Tender: ')]").text  # Tender
+    billTender = billTender.partition("r: ")[2]
+    billTender = billTender.partition(".")[0]
+    print("billTender:", billTender)
+    # Tender = int(TotalAmount) - int(DepositDeduction)
+    print("Tender", Tender)
+    assert int(Tender) == int(billTender)
+
+    if actualChangeReturn >= 1:
+        eChangeReturn = danpheEMR.find_element(By.XPATH,
+            "//span[contains(text(),' Change/Return:')]").text  # Change/Return
+        print("eChangeReturn", eChangeReturn)
+        eChangeReturn = eChangeReturn.partition("n: ")[2]
+        print("eChangeReturn", eChangeReturn)
+        assert eChangeReturn == str(actualChangeReturn)
+        DepositBalance = danpheEMR.find_element(By.XPATH,
+            "//span[contains(text(),'Balance:')]").text  # Deposit Balance
         print("DepositBalance", DepositBalance)
-        print("Deposit", deposit)
-        assert int(deposit) == int(DepositBalance)
-        BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
-        print("BalanceAmount", BalanceAmount)
-        assert int(deposit) == int(BalanceAmount)
-        TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
-        print("TotalAmount", TotalAmount)
-        assert TotalAmount == SubTotal
-        print("subtotal", SubTotal)
-        Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-        print("Tender before deposit deduction: ", Tender)
-        assert Tender == TotalAmount
-
-        danpheEMR.find_element(By.XPATH,
-            "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
-
-        Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-        print("Tender after deposit deduction: ", Tender)
-
-        DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
-        print("DepositDeduction", DepositDeduction)
-
-        if int(DepositBalance) < int(TotalAmount):
-            assert DepositDeduction == DepositBalance
-            assert int(Tender) == int(TotalAmount) - int(DepositBalance)
-
-        else:
-            assert DepositDeduction == TotalAmount
-            assert Tender == "0"
-
-        NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
-        assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
+        DepositBalance = DepositBalance.partition("Balance:")[2]
+        DepositBalance = DepositBalance.partition("]")[0]
+        print("DepositBalance", DepositBalance)
         print("NewDepositBalance", NewDepositBalance)
-
-        # if 200 < int(Tender) < 500:
-        if int(Tender) % 100 > 0:
-            Tender = int(Tender) * 2
-            danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").clear()
-            danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").send_keys(Tender)
-
-        ChangeReturn = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),'Change/Return :')]/following-sibling::td").text
-        print("ChangeReturn", ChangeReturn)
-        ChangeReturn = ChangeReturn.partition("NRs.")[2]
-        print("Change Return:", ChangeReturn)
-        actualChangeReturn = int(ChangeReturn)
-        expectedChangeReturn = int(Tender) + int(DepositBalance) - int(TotalAmount)
-        assert actualChangeReturn == expectedChangeReturn
-
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(7)
-        # DepositDeductorReturn = danpheEMR.find_element(By.XPATH, "//div[10]/span").text
-        DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
-            "//span[contains(text(),' Deposit: [Deducted: ')]").text
-        print("DepositDeductorReturn:", DepositDeductorReturn)
-        DepositDeductorReturn = DepositDeductorReturn.partition("Deducted: ")[2]
-        print("DepositDeductorReturn", DepositDeductorReturn)
-        DepositDeductorReturn = DepositDeductorReturn.partition("/Balance")[0]
-        print("DepositDeductorReturn", DepositDeductorReturn)
-
-        assert DepositDeductorReturn == DepositDeduction
-        billTender = danpheEMR.find_element(By.XPATH,
-            "//span[contains(text(),'Tender: ')]").text  # Tender
-        billTender = billTender.partition("r: ")[2]
-        billTender = billTender.partition(".")[0]
-        print("billTender:", billTender)
-        # Tender = int(TotalAmount) - int(DepositDeduction)
-        print("Tender", Tender)
-        assert int(Tender) == int(billTender)
-
-        if actualChangeReturn >= 1:
-            eChangeReturn = danpheEMR.find_element(By.XPATH,
-                "//span[contains(text(),' Change/Return:')]").text  # Change/Return
-            print("eChangeReturn", eChangeReturn)
-            eChangeReturn = eChangeReturn.partition("n: ")[2]
-            print("eChangeReturn", eChangeReturn)
-            assert eChangeReturn == str(actualChangeReturn)
-            DepositBalance = danpheEMR.find_element(By.XPATH,
-                "//span[contains(text(),'Balance:')]").text  # Deposit Balance
-            print("DepositBalance", DepositBalance)
-            DepositBalance = DepositBalance.partition("Balance:")[2]
-            DepositBalance = DepositBalance.partition("]")[0]
-            print("DepositBalance", DepositBalance)
-            print("NewDepositBalance", NewDepositBalance)
-            assert DepositBalance == NewDepositBalance
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-    print(">>>opDepositDbilingTenderCashReturn>>End")
+        assert DepositBalance == NewDepositBalance
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("END>>opDepositDbilingTenderCashReturn")
 
 
 def createUSGinvoice(danpheEMR, HospitalNo, USGtest):
-    print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(USGtest)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(2)
-        price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-        totalprice = int(price1)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-
-    print("Create OPD Invoice: USG Items: END<<")
+    print("START>>createUSGinvoice")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(USGtest)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(2)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    totalprice = int(price1)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("END>>createUSGinvoice")
 
 
 # Module:Billing_IP -----------------
@@ -721,6 +704,7 @@ def getIPbillingDetails(danpheEMR, HospitalNo, paymentmode):
 
 
 def preIPbillingDetails(paymentmode):
+    print("START>>preIPbillingDetails")
     global preBillingTotal
     global preNetTotal
     global preToBePaid
@@ -734,9 +718,11 @@ def preIPbillingDetails(paymentmode):
         preToBePaid = actualToBePaid
     preTender = actualTender
     preChangeReturn = actualChangeReturn
+    print("END>>preIPbillingDetails")
 
 
 def verifyIPbillingDetails(testrate, canceltest, paymentmode):
+    print("START>>verifyIPbillingDetails")
     expectedBillingTotal = float(preBillingTotal + testrate - canceltest)
     print("expectedBillingTotal", expectedBillingTotal)
     assert actualBillingTotal == expectedBillingTotal
@@ -750,9 +736,11 @@ def verifyIPbillingDetails(testrate, canceltest, paymentmode):
         assert actualTender == expectedTender
         expectedChangeReturn = preChangeReturn
         assert actualChangeReturn == expectedChangeReturn
+    print("END>>verifyIPbillingDetails")
 
 
 def modifyDischargeDate(danpheEMR, HospitalNo):
+    print(">>START:modifyDischargeDate")
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
@@ -761,85 +749,86 @@ def modifyDischargeDate(danpheEMR, HospitalNo):
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
     time.sleep(5)
+    print("END>>modifyDischargeDate")
 
 
 def verifyConfirmDischarge(danpheEMR, HospitalNo, paymentmode):
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    print("START>>verifyConfirmDischarge")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(3)
+    if paymentmode == "CREDIT":
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH,
+            "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+        paymentoptions.select_by_visible_text("CREDIT")
+        danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
+    time.sleep(3)
+    if paymentmode == "CREDIT":
+        assert danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
         time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(3)
-        if paymentmode == "CREDIT":
-            paymentoptions = Select(danpheEMR.find_element(By.XPATH,
-                "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-            paymentoptions.select_by_visible_text("CREDIT")
-            danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
-        time.sleep(3)
-        if paymentmode == "CREDIT":
-            assert danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
-            time.sleep(3)
-            danpheEMR.switch_to.alert.accept()
-            time.sleep(5)
-            # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-danger").click()
-            # time.sleep(2)
-        global tobepaid
-        tobepaid = danpheEMR.find_element(By.XPATH, "(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
-        print("tobepaid", tobepaid)
-        # print("ToBePaid", ToBePaid)
-        # assert int(ToBePaid) == int(tobepaid)
-        tender = danpheEMR.find_element(By.XPATH, "(//td[text()='Tender']/following-sibling::td)[1]").text
-        print("tender:", tender)
-        # assert int(Tender) == int(tender)
-        change = danpheEMR.find_element(By.XPATH, "(//td[text()='Change']/following-sibling::td)[1]").text
-        print("change:", change)
-        # assert int(ChangeReturn) == int(change)
-        danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@type='button' and text()=' Confirm Discharge ']").click()
-        time.sleep(7)
+        danpheEMR.switch_to.alert.accept()
+        time.sleep(5)
+        # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-danger").click()
+        # time.sleep(2)
+    global tobepaid
+    tobepaid = danpheEMR.find_element(By.XPATH, "(//td[text()='To Be Paid :']/following-sibling::td)[1]").text
+    print("tobepaid", tobepaid)
+    # print("ToBePaid", ToBePaid)
+    # assert int(ToBePaid) == int(tobepaid)
+    tender = danpheEMR.find_element(By.XPATH, "(//td[text()='Tender']/following-sibling::td)[1]").text
+    print("tender:", tender)
+    # assert int(Tender) == int(tender)
+    change = danpheEMR.find_element(By.XPATH, "(//td[text()='Change']/following-sibling::td)[1]").text
+    print("change:", change)
+    # assert int(ChangeReturn) == int(change)
+    danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@type='button' and text()=' Confirm Discharge ']").click()
+    time.sleep(7)
+    print("END>>verifyConfirmDischarge")
 
 
 def verifyDischargeInvoice(danpheEMR, paymentmode):
     time.sleep(3)
-    print("Start>>verifyDischargeInvoice")
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        AMOUNT = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Amount:')]//parent::div").text
-        print("AMOUNT", AMOUNT)
-        AMOUNT = AMOUNT.partition(": ")[2]
-        AMOUNT = AMOUNT.partition(".")[0]
-        AMOUNT = AMOUNT.replace(',', '')
-        AMOUNT = float(AMOUNT)
-        print("AMOUNT", AMOUNT)
-        GRANDTOTAL = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Grand Total:')]//parent::div").text
-        print("GRANDTOTAL", GRANDTOTAL)
-        GRANDTOTAL = GRANDTOTAL.partition(": ")[2]
-        GRANDTOTAL = GRANDTOTAL.partition(".")[0]
-        GrandTotal = GRANDTOTAL.replace(',', '')
-        GrandTotal = float(GrandTotal)
-        print("GRANDTOTAL:", GRANDTOTAL)
-        if paymentmode == "Cash":
-            TOBEPAID = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'To Be Paid:')]//parent::div").text
-            print("TOBEPAID:", TOBEPAID)
-            TOBEPAID = TOBEPAID.partition(": ")[2]
-            TOBEPAID = TOBEPAID.partition(".")[0]
-            TOBEPAID = TOBEPAID.replace(',', '')
-            print("TOBEPAID:", TOBEPAID)
-            ''' # commenting this due to removal of Tender/Change field in IP Invoice.
-            tender = danpheEMR.find_element(By.XPATH, 
-                "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
-            print("tender", tender)
-            tender = float(tender)
-            assert tender == actualTender
-            '''
+    print("START>>verifyDischargeInvoice")
+    AMOUNT = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Amount:')]//parent::div").text
+    print("AMOUNT", AMOUNT)
+    AMOUNT = AMOUNT.partition(": ")[2]
+    AMOUNT = AMOUNT.partition(".")[0]
+    AMOUNT = AMOUNT.replace(',', '')
+    AMOUNT = float(AMOUNT)
+    print("AMOUNT", AMOUNT)
+    GRANDTOTAL = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Grand Total:')]//parent::div").text
+    print("GRANDTOTAL", GRANDTOTAL)
+    GRANDTOTAL = GRANDTOTAL.partition(": ")[2]
+    GRANDTOTAL = GRANDTOTAL.partition(".")[0]
+    GrandTotal = GRANDTOTAL.replace(',', '')
+    GrandTotal = float(GrandTotal)
+    print("GRANDTOTAL:", GRANDTOTAL)
+    if paymentmode == "Cash":
+        TOBEPAID = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'To Be Paid:')]//parent::div").text
+        print("TOBEPAID:", TOBEPAID)
+        TOBEPAID = TOBEPAID.partition(": ")[2]
+        TOBEPAID = TOBEPAID.partition(".")[0]
+        TOBEPAID = TOBEPAID.replace(',', '')
+        print("TOBEPAID:", TOBEPAID)
+        ''' # commenting this due to removal of Tender/Change field in IP Invoice.
+        tender = danpheEMR.find_element(By.XPATH, 
+            "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
+        print("tender", tender)
+        tender = float(tender)
+        assert tender == actualTender
+        '''
 
-        element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
-        time.sleep(2)
-        danpheEMR.execute_script("arguments[0].click();", element)
+    element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
+    time.sleep(2)
+    danpheEMR.execute_script("arguments[0].click();", element)
     print("End>>verifyDischargeInvoice")
 
 
@@ -875,141 +864,138 @@ def creditSettlements(danpheEMR, HospitalNo, ProvisionalSlip, cashdiscount):
 
 
 def generateDischargeInvoice(danpheEMR, HospitalNo, paymentmode):
-    print("Start: generateDischargeInvoice")
+    print(">>START: generateDischargeInvoice")
     global InvoiceNo
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(7)
+    if paymentmode == "CREDIT":
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH,
+            "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+        paymentoptions.select_by_visible_text("CREDIT")
+        danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
+    if paymentmode == "CREDIT":
+        time.sleep(4)
+        assert danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
         time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(7)
-        if paymentmode == "CREDIT":
-            paymentoptions = Select(danpheEMR.find_element(By.XPATH,
-                "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-            paymentoptions.select_by_visible_text("CREDIT")
-            danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
-        if paymentmode == "CREDIT":
-            time.sleep(4)
-            assert danpheEMR.switch_to.alert.text == "Are you sure to discharge this patient on CREDIT?"
-            time.sleep(3)
-            danpheEMR.switch_to.alert.accept()
-            time.sleep(2)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+        danpheEMR.switch_to.alert.accept()
         time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@type='button' and text()=' Confirm Discharge ']").click()
-        time.sleep(7)
-        InvoiceNo = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'2078/2079-')]").text
-        InvoiceNo = InvoiceNo.partition("- ")[2]
-        print("InvoiceNo", InvoiceNo)
-        time.sleep(2)
-        element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
-        time.sleep(2)
-        danpheEMR.execute_script("arguments[0].click();", element)
-    print("End: generateDischargeInvoice")
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Remarks']").send_keys("Patient discharge")
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@type='button' and text()=' Confirm Discharge ']").click()
+    time.sleep(7)
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'2078/2079-')]").text
+    InvoiceNo = InvoiceNo.partition("- ")[2]
+    print("InvoiceNo", InvoiceNo)
+    time.sleep(2)
+    element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
+    time.sleep(2)
+    danpheEMR.execute_script("arguments[0].click();", element)
+    print("END>>: generateDischargeInvoice")
 
 
 def billingIP(danpheEMR, HospitalNo, admitCharge, deposit):
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    print("START>>billingIP:")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(9)
+    if deposit >= 1:
+        danpheEMR.find_element(By.XPATH, "//button[contains(.,' Add Deposit ')]").click()
+        danpheEMR.find_element(By.ID, "txtAmount").send_keys(deposit)
+        danpheEMR.find_element(By.ID, "btnAddDeposit").click()
         time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
-        time.sleep(9)
-        if deposit >= 1:
-            danpheEMR.find_element(By.XPATH, "//button[contains(.,' Add Deposit ')]").click()
-            danpheEMR.find_element(By.ID, "txtAmount").send_keys(deposit)
-            danpheEMR.find_element(By.ID, "btnAddDeposit").click()
-            time.sleep(2)
-            danpheEMR.find_element(By.ID, "btn_PrintReceipt").send_keys(Keys.ESCAPE)
-        time.sleep(2)
-        billingTotalExp = admitCharge
-        billingTotalAct = danpheEMR.find_element(By.XPATH, "//td[2]/label").text
-        print(billingTotalAct)
-        totalDiscountExp = 0  # discount is zero
-        totalDiscountAct = danpheEMR.find_element(By.XPATH,
-            "//td[contains(text(),' Discount Amt.')]/following-sibling::td").text
-        print("totalDiscountAct", totalDiscountAct)
-        print("totalDiscountExp", totalDiscountExp)
-        netTotalExp = int(billingTotalExp) - int(totalDiscountExp)
-        netTotalAct = danpheEMR.find_element(By.XPATH, "//tr[5]/td[2]/label").text
-        print(netTotalAct)
-        depositBalanceExp = int(deposit)
-        depositBalanceAct = danpheEMR.find_element(By.XPATH, "//tr[6]/td[2]/label").text
-        print("depositBalanceAct", depositBalanceAct)
-        depositBalanceAct = depositBalanceAct.replace(',', '')
-        print("depositBalanceAct", depositBalanceAct)
-        print("depositBalanceExp", depositBalanceExp)
-        assert depositBalanceExp == int(depositBalanceAct)
-        if depositBalanceExp > netTotalExp:
-            toBeRefundExp = depositBalanceExp - netTotalExp
-            toBeRefundAct = danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(7) label").text
-            print("To be refund:", toBeRefundAct)
-        elif depositBalanceExp < netTotalExp:
-            toBePaidExp = netTotalExp - depositBalanceExp
-            toBePaidAct = danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(7) label").text
-            print("To be paid:", toBePaidAct)
-        time.sleep(4)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
-        danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
-        time.sleep(10)
-        element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
-        time.sleep(2)
-        danpheEMR.execute_script("arguments[0].click();", element)
-        time.sleep(5)
+        danpheEMR.find_element(By.ID, "btn_PrintReceipt").send_keys(Keys.ESCAPE)
+    time.sleep(2)
+    billingTotalExp = admitCharge
+    billingTotalAct = danpheEMR.find_element(By.XPATH, "//td[2]/label").text
+    print(billingTotalAct)
+    totalDiscountExp = 0  # discount is zero
+    totalDiscountAct = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),' Discount Amt.')]/following-sibling::td").text
+    print("totalDiscountAct", totalDiscountAct)
+    print("totalDiscountExp", totalDiscountExp)
+    netTotalExp = int(billingTotalExp) - int(totalDiscountExp)
+    netTotalAct = danpheEMR.find_element(By.XPATH, "//tr[5]/td[2]/label").text
+    print(netTotalAct)
+    depositBalanceExp = int(deposit)
+    depositBalanceAct = danpheEMR.find_element(By.XPATH, "//tr[6]/td[2]/label").text
+    print("depositBalanceAct", depositBalanceAct)
+    depositBalanceAct = depositBalanceAct.replace(',', '')
+    print("depositBalanceAct", depositBalanceAct)
+    print("depositBalanceExp", depositBalanceExp)
+    assert depositBalanceExp == int(depositBalanceAct)
+    if depositBalanceExp > netTotalExp:
+        toBeRefundExp = depositBalanceExp - netTotalExp
+        toBeRefundAct = danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(7) label").text
+        print("To be refund:", toBeRefundAct)
+    elif depositBalanceExp < netTotalExp:
+        toBePaidExp = netTotalExp - depositBalanceExp
+        toBePaidAct = danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(7) label").text
+        print("To be paid:", toBePaidAct)
+    time.sleep(4)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
+    danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
+    time.sleep(10)
+    element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
+    time.sleep(2)
+    danpheEMR.execute_script("arguments[0].click();", element)
+    time.sleep(5)
+    print(">>END:billingIP")
 
 
 def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
-    print(">>Create OPD Invoice: 1 Lab Items: START")
-    print("Hospital Number:", HospitalNo)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "srch_PatientList").click()
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(5)
-        if AppName == 'LPH':
-            labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
-            labType.select_by_visible_text("OP-LAB")
-        time.sleep(4)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "txtQuantity_0").send_keys(1)
-        price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-        time.sleep(1)
-        totalprice = int(price1)
-        print("Total Price:", totalprice)
-        credit = Select(danpheEMR.find_element(By.ID, "pay_mode"))
-        credit.select_by_visible_text("CREDIT")
-        danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit Bill")
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-        time.sleep(9)
-        # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
-        InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-
-        print("InvoiceNoTemp", InvoiceNo)
-        InvoiceNo = InvoiceNo.partition("BL")[2]
-        print("InvoiceNo", InvoiceNo)
-    print("Create OPD Invoice: 1 Lab Items: END<<")
+    print(">>START::createCreditLabInvoice")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(5)
+    if AppName == 'LPH':
+        labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
+        labType.select_by_visible_text("OP-LAB")
+    time.sleep(4)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "txtQuantity_0").send_keys(1)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    time.sleep(1)
+    totalprice = int(price1)
+    print("Total Price:", totalprice)
+    credit = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+    credit.select_by_visible_text("CREDIT")
+    danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit Bill")
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(9)
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
+    print("END>>createCreditLabInvoice")
 
 
 def wait_for_window(danpheEMR, timeout=2):
