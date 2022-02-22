@@ -30,20 +30,33 @@ rate = GSV.drug1Rate
 amount = qty*rate
 totalamount = round(amount)
 remark = "This is test return."
+drug1Name = GSV.drug1BrandName
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
 LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
-HospitalNo = LPP.getRandomPatient()
-InvoiceNo = LP.createPharmacyInvoiceTC(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugname=drugname, paymentmode='Cash')
+HospitalNo = LPP.getRandomPatient(EMR)
+### Pharmacy Cash Sale
+InvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=1, drugName=drug1Name, paymentmode='Cash')
 LPR.preSystemPharmacyCashCollectionSummary()
 LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
 LPR.verifyPharmacyCashCollectionSummary(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
+### Pharmacy Cash Sale Return
 LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=qty, returnremark=remark)
 LPR.preSystemPharmacyCashCollectionSummary()
 LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
 LPR.verifyPharmacyCashCollectionSummary(cash=0, cashreturn=amount, credit=0, creditreturn=0, deposit=0, depositreturn=0, discount=0)
+### Pharmacy Credit Sale
+InvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=1, drugName=drug1Name, paymentmode='Credit')
+LPR.preSystemPharmacyCashCollectionSummary()
+LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
+LPR.verifyPharmacyCashCollectionSummary(cash=0, cashreturn=0, credit=totalamount, creditreturn=0, deposit=0, depositreturn=0, discount=0)
+### Pharmacy Credit Sale Return
+LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo1, qty=qty, returnremark=remark)
+LPR.preSystemPharmacyCashCollectionSummary()
+LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
+LPR.verifyPharmacyCashCollectionSummary(cash=0, cashreturn=0, credit=0, creditreturn=totalamount, deposit=0, depositreturn=0, discount=0)
 AC.logout()
 AC.closeBrowser()

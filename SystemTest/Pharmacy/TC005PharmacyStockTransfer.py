@@ -20,13 +20,14 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 drug = GSV.Testdrug
 qty = 10
 transferqty = 1
+transferStore2Dispensary = 'Yes'
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(EMR,dispensaryName=GSV.dispensaryName)
 LP.getStoreDetail(drugname=drug, danpheEMR=EMR)
 LP.getStockDetail(danpheEMR=EMR, drugname=drug)
-LP.transferStore2Dispensary(danpheEMR=EMR, drugname=drug, tqty=transferqty)
+LP.transferStore2Dispensary(danpheEMR=EMR, drugname=drug, tqty=transferqty, transferStore2Dispensary='Yes')
 LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
 LP.verifyStoreDetail(danpheEMR=EMR, drugname=drug)
 LP.transferDispensary2Store(danpheEMR=EMR, drugname=drug, tqty=transferqty)

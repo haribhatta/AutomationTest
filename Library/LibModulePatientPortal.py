@@ -90,6 +90,8 @@ def getRandomPatient(danpheEMR):
     time.sleep(5)
     global HospitalNo
     HospitalNo = danpheEMR.find_element(By.XPATH, "(//div[@col-id='PatientCode'])[2]").text
+    print("HospitalNo:", HospitalNo)
+    return HospitalNo
 
 
 def wait_for_window(danpheEMR, timeout = 2):

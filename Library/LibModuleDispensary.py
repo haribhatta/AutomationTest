@@ -59,6 +59,7 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     time.sleep(5)
     pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
+    print("pInvoiceNo:", pInvoiceNo)
     danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("Create Pharmacy OPD Invoice: END<<")
     return pInvoiceNo
