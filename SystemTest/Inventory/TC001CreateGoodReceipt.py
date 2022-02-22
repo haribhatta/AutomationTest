@@ -16,15 +16,15 @@ storeUserPwd = GSV.storeUserPwD
 itemname = GSV.stationaryItem1
 print("itemName:", itemname)
 qty = 1
+rate = 1
+storeName = GSV.SubStore1
 inventory1 = GSV.Inventory1
 
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 LI.selectInventory(danpheEMR=EMR, inventory=inventory1)
-grNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=1)
+grNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=rate, paymentMode='Credit')
 LI.editInventoryGoodsReceipt(danpheEMR=EMR, BillNo=grNo)
-print("There is existing bug: EMR-4850")
-LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=itemname, qty=qty, store=1, inventory=inventory1)
+## LI.cancelInveentoryGoodsReceipt()   -------------> Pending
 AC.logout()
 AC.closeBrowser()
-print("There is existing bug: EMR-4850")

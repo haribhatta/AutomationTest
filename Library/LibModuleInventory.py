@@ -56,8 +56,10 @@ def editInventoryGoodsReceipt(danpheEMR, BillNo):
     time.sleep(2)
     danpheEMR.find_element(By.XPATH,  "//button[contains(text(),' Edit Receipt ')]").click()
     time.sleep(2)
-    danpheEMR.find_element(By.ID, "qtyip0").clear()  # Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
-    danpheEMR.find_element(By.ID, "qtyip0").send_keys(2)
+    ## Edit on quantity feeature has been deprecated
+    #danpheEMR.find_element(By.ID, "qtyip0").clear()  # Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
+    #danpheEMR.find_element(By.ID, "qtyip0").send_keys(2)
+    ##
     danpheEMR.find_element(By.ID, "SaveGoodsReceiptbtn").click()
     print("END>>editInventoryGoodsReceipt")
 

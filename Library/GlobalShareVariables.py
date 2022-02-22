@@ -337,7 +337,7 @@ if appName == "RTM":
       itUserID = 'admin'
       itUserPwD = 'pass123'
       #pharmacy user
-      pharmacyUserID = 'Prekshya'
+      pharmacyUserID = 'admin'
       pharmacyUserPwD = 'pass123'
       #pharmacyUserName = 'Ms. Prekshya Adhikari'
       pharmacyUserName = 'Prekshya Adhikari' # Ms. is removed due to Rhythm 'User Collection Report' not having salutation field.
@@ -345,7 +345,7 @@ if appName == "RTM":
       labUserID = 'muna'
       labUserPwD = 'pass123'
       #Inventory user
-      storeUserID = 'sunita'
+      storeUserID = 'admin'
       storeUserPwD = 'pass123'
 ### Bill Items Name:
       opdRate = 500
@@ -383,13 +383,17 @@ if appName == "RTM":
       drug1NarcoticName = "LOZ 1 MG"
       drug1NarcoticRate ="2"
 ###Inventory/Store Items Name:
-      GeneralInventory = "General Inventory"
-      Dispensary1 = "General Inventory"
-      A4Paper = 'A4 PAPER'
+      Inventory1 = "General Inventory"
+      SubStoreName1 = "ADMINISTRATION"
+      Dispensary1 = "MainDispensary"
+      dispensaryName = "Main Dispensary"
+      A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
-      stationaryItem1 = "PENCIL"
-      File = "FILE"
+      storeItem1Name = "Tumb Pin"
+      storeItem1Rate = 10
+      # stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Sanitizer"
 ###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
