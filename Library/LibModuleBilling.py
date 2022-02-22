@@ -359,6 +359,8 @@ def verifyDuplicateBill(danpheEMR, HospitalNo):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints ')]").click()
     time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Load Invoices')]").click()
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(3)
     # danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
