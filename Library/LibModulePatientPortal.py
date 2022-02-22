@@ -39,7 +39,7 @@ def patientRegistration(danpheEMR):
     global HospitalNo
     HospitalNo = danpheEMR.find_element(By.XPATH, "//ag-grid-angular[@id='myGrid']"
                                                   "/div/div/div/div[3]/div[2]/div/div/div/div").text
-    print(HospitalNo)
+    print("HospitalNo:", HospitalNo)
     return HospitalNo
 
 
