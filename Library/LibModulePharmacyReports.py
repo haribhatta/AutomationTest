@@ -132,78 +132,108 @@ def verifyPharmacyDashboard(cash, cashreturn, credit, creditreturn, deposit, dep
 
 def getPharmacyCashCollectionSummary(danpheEMR, user):
     print(">>START: getPharmacyCashCollectionSummary")
-    global sysinvoiceamount
-    global sysinvoicereturned
-    global sysdeposit
-    global sysdepositreturn
-    global sysnetamount
-    global sysdiscountamount
-    if AppName == 'SNCH':
+    global actualInvoiceAmount
+    global actualInvocieReturned
+    global actualDiscountAmount
+    global actualDeposit
+    global actualDepositReturn
+    global actualNetAmount
+    if AppName != 'LPH':
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Report").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Cash Collection Summary')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(user)
-        time.sleep(2)
-        username = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
-        sysinvoiceamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[3]").text
-        print(sysinvoiceamount)
-        sysinvoicereturned = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]").text
-        print(sysinvoicereturned)
-        sysdeposit = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[5]").text
-        print(sysdeposit)
-        sysdepositreturn = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[6]").text
-        print(sysdepositreturn)
-        sysnetamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[7]").text
-        print(sysnetamount)
-        sysdiscountamount = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[8]").text
-        print(sysdiscountamount)
+    elif AppName != 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Cash Collection Summary')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(user)
+    time.sleep(2)
+    username = danpheEMR.find_element(By.XPATH, "(//div[@col-id='UserName'])[2]").text
+    actualInvoiceAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='TotalAmount'])[2]").text
+    actualInvoiceAmount = float(actualInvoiceAmount)
+    print("actualInvoiceAmount:", actualInvoiceAmount)
+    ##
+    actualInvocieReturned = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ReturnedAmount'])[2]").text
+    actualInvocieReturned = float(actualInvocieReturned)
+    print("actualInvocieReturned:", actualInvocieReturned)
+    ##
+    actualDiscountAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='DiscountAmount'])[2]").text
+    actualDiscountAmount = float(actualDiscountAmount)
+    print("actualDiscountAmount:", actualDiscountAmount)
+    ##
+    actualDeposit = danpheEMR.find_element(By.XPATH, "(//div[@col-id='DepositAmount'])[2]").text
+    actualDeposit = float(actualDeposit)
+    print("actualDeposit:", actualDeposit)
+    ##
+    actualDepositReturn = danpheEMR.find_element(By.XPATH, "(//div[@col-id='DepositReturn'])[2]").text
+    actualDepositReturn = float(actualDepositReturn)
+    print("actualDepositReturn:", actualDepositReturn)
+    ##
+    actualNetAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='NetAmount'])[2]").text
+    actualNetAmount = float(actualNetAmount)
+    print("actualNetAmount:", actualNetAmount)
+    ##
     print("<<END: getPharmacyCashCollectionSummary")
 
 
 def preSystemPharmacyCashCollectionSummary():
     print(">>START: preSystemPharmacyCashCollectionSummary")
-    global presysinvoiceamount
-    global presysinvoicereturned
-    global presysdeposit
-    global presysdepositreturn
-    global presysnetamount
-    global presysdiscountamount
-    presysinvoiceamount = int(sysinvoiceamount)
-    presysinvoicereturned = float(sysinvoicereturned)
-    presysdeposit = int(sysdeposit)
-    presysdepositreturn = int(sysdepositreturn)
-    presysnetamount = float(sysnetamount)
-    presysdiscountamount = int(sysdiscountamount)
+    global preInvoiceAmount
+    global preInvocieReturned
+    global preDiscountAmount
+    global preDeposit
+    global preDepositReturn
+    global preNetAmount
+    preInvoiceAmount = actualInvoiceAmount
+    preInvocieReturned = actualInvocieReturned
+    preDiscountAmount = actualDiscountAmount
+    preDeposit = actualDeposit
+    preDepositReturn = actualDepositReturn
+    preNetAmount = actualNetAmount
     print("<<END: preSystemPharmacyCashCollectionSummary")
 
 
 def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, deposit, depositreturn, discount):
     print(">>START: verifyPharmacyCashCollectionSummary")
-    print("presysinvoiceamount:", presysinvoiceamount)
-    print("sysinvoiceamount:", sysinvoiceamount)
+    global expectedInvoiceAmount
+    global expectedInvocieReturned
+    global expectedDiscountAmount
+    global expectedDeposit
+    global expectedDepositReturn
+    global expectedNetAmount
+    ##
     print("cash:", cash)
     print("credit:", credit)
-    print("presysinvoicereturned:", presysinvoicereturned)
-    print("sysinvoicereturned:", sysinvoicereturned)
     print("cashreturn:", cashreturn)
     print("creditreturn:", creditreturn)
-    assert int(sysinvoiceamount) == presysinvoiceamount + cash + credit
-    assert float(sysinvoicereturned) == float(presysinvoicereturned + cashreturn + creditreturn)
-    assert int(sysdeposit) == presysdeposit + deposit
-    assert int(sysdepositreturn) == presysdepositreturn + depositreturn
-    result = float(sysinvoiceamount) - float(sysinvoicereturned) - float(sysdeposit) - float(sysdepositreturn)
-    print("result:", result)
-    netamount = float(result)
-    print("netamount", netamount)
-    assert float(sysnetamount) == float(netamount)
-    assert int(sysdiscountamount) == presysdiscountamount + discount
+    ##
+    expectedInvoiceAmount = preInvoiceAmount + cash
+    assert expectedInvoiceAmount == actualInvoiceAmount
+    ##
+    expectedInvocieReturned = preInvocieReturned + cashreturn
+    print("expectedInvocieReturned:", expectedInvocieReturned)
+    assert expectedInvocieReturned == actualInvocieReturned
+    ##
+    expectedDiscountAmount = preDiscountAmount + discount
+    print("expectedDiscountAmount:", expectedDiscountAmount)
+    assert expectedDiscountAmount == preDiscountAmount
+    ##
+    expectedDeposit = preDeposit + deposit
+    print("expectedDeposit:", expectedDeposit)
+    assert expectedDeposit == actualDeposit
+    ##
+    expectedDepositReturn = preDepositReturn + depositreturn
+    print("expectedDepositReturn:", expectedDepositReturn)
+    assert expectedDepositReturn == actualDepositReturn
+    ##
+    expectedNetAmount = preNetAmount + cash - cashreturn + deposit - depositreturn - discount
+    print("expectedNetAmount:", expectedNetAmount)
+    assert expectedNetAmount == actualNetAmount
     print("<<END: verifyPharmacyCashCollectionSummary")
 
 
