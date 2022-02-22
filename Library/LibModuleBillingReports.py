@@ -743,109 +743,245 @@ def verifyDepositBalanceReport(danpheEMR, HospitalNo, deposit):
 
 # Module: Billing report: Department Summary Report**********
 def getDepartmentSummary(danpheEMR):
-    global sysgrosstotal
-    global sysdiscountamount
-    global sysreturnamount
-    global sysnetsales
-    global sysprovisionalamount
-    global syscancelamount
-    global syscreditamount
-    # if appPort == '81':
-    #    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-    #    time.sleep(2)
-    #    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
-    #    time.sleep(2)
-    #    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Department Summary')]").click()
-    #    time.sleep(3)
-    #    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").clear()
-    #    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys("OPD")
-    #    time.sleep(3)
-    #    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
-    #       Keys.ARROW_DOWN)
-    #    time.sleep(2)
-    #    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
-    #    time.sleep(3)
-    #    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
-    #       Keys.RETURN)
-    #    time.sleep(2)
-    #    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
-    #    time.sleep(9)
-    #    sysgrosstotal = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td").text
-    #    print(sysgrosstotal)
-    #    sysdiscountamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[2]").text
-    #    print(sysdiscountamount)
-    #    sysreturnamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[3]").text
-    #    print(sysreturnamount)
-    #    sysnetsales = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[4]").text
-    #    print(sysnetsales)
-    #    sysprovisionalamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td").text
-    #    print(sysprovisionalamount)
-    #    syscancelamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td[2]").text
-    #    print(syscancelamount)
-    #    syscreditamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td[3]").text
-    #    print(syscreditamount)
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Department Summary')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").clear()
-        danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
-            "Department OPD")
-        time.sleep(3)
-        # danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
-        #   Keys.ARROW_DOWN)
-        # time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
-            Keys.RETURN)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
-        time.sleep(9)
-        sysgrosstotal = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td").text
-        print(sysgrosstotal)
-        sysdiscountamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[2]").text
-        print(sysdiscountamount)
-        sysreturnamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[3]").text
-        print(sysreturnamount)
-        sysnetsales = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr/td[4]").text
-        print(sysnetsales)
-        sysprovisionalamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td").text
-        print(sysprovisionalamount)
-        syscancelamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td[2]").text
-        print(syscancelamount)
-        syscreditamount = danpheEMR.find_element(By.XPATH, "//table[2]/tbody/tr[2]/td[3]").text
-        print(syscreditamount)
+    print("START>>getDepartmentSummary:")
+    global actualTotalCashSales  # A
+    global actualTotalCreditSales  # B
+    global actualTotalSales  # C
+    global actualTotalDiscount  # D
+    global actualTotalSalesReturn  # E
+    global actualTotalReturnDiscount  # F
+    global actualNetSales  # G
+    global actualCashSalesDiscount  # H
+    global actualReturnCashSales  # I
+    global actualReturnCashDiscount  # J
+    global actualNetCashSales  # K
+    global actualDepositReceived  # L
+    global actualDepositDeducted  # M
+    global actualDepositRefunded  # N
+    global actualCollectionfromReceivables  # O
+    global actualCashSettlementDiscount  # p
+    global actualNetCashCollection  # Q
+
+    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Department Summary')]").click()
+    time.sleep(3)
+    #danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").clear()
+    #danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
+    #    "Department OPD")
+    #time.sleep(3)
+    # danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
+    #   Keys.ARROW_DOWN)
+    # time.sleep(2)
+    #danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(Keys.TAB)
+    #time.sleep(3)
+    #danpheEMR.find_element(By.XPATH, "//input[@placeholder='Enter Service Department Name']").send_keys(
+    #    Keys.RETURN)
+    #time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
+    time.sleep(9)
+    #A
+    actualTotalCashSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Total Cash Sales')]/following-sibling::td").text
+    actualTotalCashSales = float(actualTotalCashSales)
+    print("actualTotalCashSales:", actualTotalCashSales)
+    #B
+    actualTotalCreditSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Total Credit Sales')]/following-sibling::td").text
+    actualTotalCreditSales = float(actualTotalCreditSales)
+    print("actualTotalCreditSales:", actualTotalCreditSales)
+    #C
+    actualTotalSales = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'Total Sales')]/following-sibling::td)[1]").text
+    actualTotalSales = float(actualTotalSales)
+    print("actualTotalSales:", actualTotalSales)
+    #D
+    actualTotalDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Total Discount')]/following-sibling::td").text
+    actualTotalDiscount = float(actualTotalDiscount)
+    print("actualTotalDiscount:", actualTotalDiscount)
+    #E
+    actualTotalSalesReturn = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Total Sales Return')]/following-sibling::td").text
+    actualTotalSalesReturn = float(actualTotalSalesReturn)
+    print("actualTotalSalesReturn:", actualTotalSalesReturn)
+    #F
+    actualTotalReturnDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Total Return Discount')]/following-sibling::td").text
+    actualTotalReturnDiscount = float(actualTotalReturnDiscount)
+    print("actualTotalReturnDiscount:", actualTotalReturnDiscount)
+    #G
+    actualNetSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Net Sales')]/following-sibling::td").text
+    actualNetSales = float(actualNetSales)
+    print("actualNetSales:", actualNetSales)
+    #H
+    actualCashSalesDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Cash Sales Discount')]/following-sibling::td").text
+    actualCashSalesDiscount = float(actualCashSalesDiscount)
+    print("actualCashSalesDiscount:", actualCashSalesDiscount)
+    #I
+    actualReturnCashSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Return Cash Sales')]/following-sibling::td").text
+    actualReturnCashSales = float(actualReturnCashSales)
+    print("actualReturnCashSales:", actualReturnCashSales)
+    #J
+    actualReturnCashDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Return Cash Discount')]/following-sibling::td").text
+    actualReturnCashDiscount = float(actualReturnCashDiscount)
+    print("actualReturnCashDiscount:", actualReturnCashDiscount)
+    #K
+    actualNetCashSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Net Cash Sales')]/following-sibling::td").text
+    actualNetCashSales = float(actualNetCashSales)
+    print("actualNetCashSales:", actualNetCashSales)
+    #L
+    actualDepositReceived = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Deposit Received')]/following-sibling::td").text
+    actualDepositReceived = float(actualDepositReceived)
+    print("actualDepositReceived:", actualDepositReceived)
+    #M
+    actualDepositDeducted = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Deposit Deducted')]/following-sibling::td").text
+    actualDepositDeducted = float(actualDepositDeducted)
+    print("actualDepositDeducted:", actualDepositDeducted)
+    #N
+    actualDepositRefunded = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Deposit Refunded')]/following-sibling::td").text
+    actualDepositRefunded = float(actualDepositRefunded)
+    print("actualDepositRefunded:", actualDepositRefunded)
+    #O
+    actualCollectionfromReceivables = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Collection from Receivables')]/following-sibling::td").text
+    actualCollectionfromReceivables = float(actualCollectionfromReceivables)
+    print("actualCollectionfromReceivables:", actualCollectionfromReceivables)
+    #P
+    actualCashSettlementDiscount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Cash Settlement Discount')]/following-sibling::td").text
+    actualCashSettlementDiscount = float(actualCashSettlementDiscount)
+    print("actualCashSettlementDiscount:", actualCashSettlementDiscount)
+    #Q
+    actualNetCashCollection = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Net Cash Collection')]/following-sibling::td").text
+    actualNetCashCollection = float(actualNetCashCollection)
+    print("actualNetCashCollection:", actualNetCashCollection)
+    print("END>>getDepartmentSummary")
 
 
 def preSystemDepartmentSummary():
-    global presysgrosstotal
-    global presysdiscountamount
-    global presysreturnamount
-    global presysnetsales
-    global presysprovisionalamount
-    global presyscancelamount
-    global presyscreditamount
-    presysgrosstotal = int(sysgrosstotal)
-    presysdiscountamount = int(sysdiscountamount)
-    presysreturnamount = int(sysreturnamount)
-    presysnetsales = int(sysnetsales)
-    presysprovisionalamount = int(sysprovisionalamount)
-    presyscancelamount = int(syscancelamount)
-    presyscreditamount = int(syscreditamount)
+    print("START>>preSystemDepartmentSummary")
+    global preTotalCashSales  # A
+    global preTotalCreditSales  # B
+    global preTotalSales  # C
+    global preTotalDiscount  # D
+    global preTotalSalesReturn  # E
+    global preTotalReturnDiscount  # F
+    global preNetSales  # G
+    global preCashSalesDiscount  # H
+    global preReturnCashSales  # I
+    global preReturnCashDiscount  # J
+    global preNetCashSales  # K
+    global preDepositReceived  # L
+    global preDepositDeducted  # M
+    global preDepositRefunded  # N
+    global preCollectionfromReceivables  # O
+    global preCashSettlementDiscount  # p
+    global preNetCashCollection  # Q
+
+    preTotalCashSales = actualTotalCashSales
+    preTotalCreditSales = actualTotalCreditSales
+    preTotalSales = actualTotalSales
+    preTotalDiscount = actualTotalDiscount
+    preTotalSalesReturn = actualTotalSalesReturn
+    preTotalReturnDiscount = actualTotalReturnDiscount
+    preNetSales = actualNetSales
+    preCashSalesDiscount = actualCashSalesDiscount
+    preReturnCashSales = actualReturnCashSales
+    preReturnCashDiscount = actualReturnCashDiscount
+    preNetCashSales = actualNetCashSales
+    preDepositReceived = actualDepositReceived
+    preDepositDeducted = actualDepositDeducted
+    preDepositRefunded = actualDepositRefunded
+    preCollectionfromReceivables = actualCollectionfromReceivables
+    preCashSettlementDiscount = actualCashSettlementDiscount
+    preNetCashCollection = actualNetCashCollection
+    print("END>>preSystemDepartmentSummary")
 
 
-def verifyDepartmentSummary(cash, cashreturn, credit, creditreturn, discount, provisional, provisionalcancel):
-    assert int(sysgrosstotal) == presysgrosstotal + cash + credit
-    assert int(sysdiscountamount) == presysdiscountamount + discount
-    assert int(sysreturnamount) == presysreturnamount + cashreturn + creditreturn
-    assert int(sysnetsales) == presysnetsales - discount - cashreturn - creditreturn + cash + credit
-    assert int(sysprovisionalamount) == presysprovisionalamount + provisional
-    assert int(syscancelamount) == presyscancelamount + provisionalcancel
-    assert int(syscreditamount) == presyscreditamount + credit - creditreturn
+def verifyDepartmentSummary(cash, cashReturn, credit, creditReturn, discount, provisional, provisionalCancel):
+    print("START>>verifyDepartmentSummary")
+    global expectedTotalCashSales  # A
+    global expectedTotalCreditSales  # B
+    global expectedTotalSales  # C
+    global expectedTotalDiscount  # D
+    global expectedTotalSalesReturn  # E
+    global expectedTotalReturnDiscount  # F
+    global expectedNetSales  # G
+    global expectedCashSalesDiscount  # H
+    global expectedReturnCashSales  # I
+    global expectedReturnCashDiscount  # J
+    global expectedNetCashSales  # K
+    global expectedDepositReceived  # L
+    global expectedDepositDeducted  # M
+    global expectedDepositRefunded  # N
+    global expectedCollectionfromReceivables  # O
+    global expectedCashSettlementDiscount  # p
+    global expectedNetCashCollection  # Q
+    #A
+    expectedTotalCashSales = preTotalCashSales + cash
+    print("expectedTotalCashSales:", expectedTotalCashSales)
+    assert expectedTotalCashSales == actualTotalCashSales
+    #B
+    expectedTotalCreditSales = preTotalCreditSales + credit
+    print("expectedTotalCreditSales:", expectedTotalCreditSales)
+    assert expectedTotalCreditSales == actualTotalCreditSales
+    #C
+    expectedTotalSales = preTotalSales + cash + credit
+    print("expectedTotalSales:", expectedTotalSales)
+    assert expectedTotalSales == actualTotalSales
+    #D
+    expectedTotalDiscount = preTotalDiscount + discount
+    print("expectedTotalDiscount:", expectedTotalDiscount)
+    assert expectedTotalDiscount == actualTotalDiscount
+    #E
+    expectedTotalSalesReturn = preTotalSalesReturn + cashReturn + creditReturn
+    print("expectedTotalSalesReturn:", expectedTotalSalesReturn)
+    assert expectedTotalSalesReturn == actualTotalSalesReturn
+    #F
+    expectedTotalReturnDiscount = preTotalReturnDiscount + discount #### This may need enhancement
+    print("expectedTotalReturnDiscount:", expectedTotalReturnDiscount)
+    assert expectedTotalReturnDiscount == actualTotalReturnDiscount
+    #G
+    expectedNetSales = preNetSales + cash - cashReturn + credit - creditReturn - discount
+    print("expectedNetSales:", expectedNetSales)
+    assert expectedNetSales == actualNetSales
+    #H
+    expectedCashSalesDiscount = preCashSalesDiscount + discount #### This may need enhancement
+    print("expectedCashSalesDiscount:", expectedCashSalesDiscount)
+    assert expectedCashSalesDiscount == actualCashSalesDiscount
+    #I
+    expectedReturnCashSales = preReturnCashSales + cashReturn
+    print("expectedReturnCashSales:", expectedReturnCashSales)
+    assert expectedReturnCashSales == actualReturnCashSales
+    #J
+    expectedReturnCashDiscount = preReturnCashDiscount + discount #### This may need enhancement
+    print("expectedReturnCashDiscount:", expectedReturnCashDiscount)
+    assert expectedReturnCashDiscount == actualReturnCashDiscount
+    #K
+    expectedNetCashSales = preNetCashSales + cash - cashReturn
+    print("expectedNetCashSales:", expectedNetCashSales)
+    assert expectedNetCashSales == actualNetCashSales
+    #L
+    expectedDepositReceived = preDepositReceived
+    print("expectedDepositReceived:", expectedDepositReceived)
+    assert expectedDepositReceived == actualDepositReceived
+    #M
+    expectedDepositDeducted = preDepositDeducted #### This may need enhancement
+    print("expectedDepositDeducted:", expectedDepositDeducted)
+    assert expectedDepositDeducted == actualDepositDeducted
+    #N
+    expectedDepositRefunded = preDepositRefunded #### This may need enhancement
+    print("expectedDepositRefunded:", expectedDepositRefunded)
+    assert expectedDepositRefunded == actualDepositRefunded
+    #O
+    expectedCollectionfromReceivables = preCollectionfromReceivables
+    print("expectedCollectionfromReceivables:", expectedCollectionfromReceivables)
+    assert expectedCollectionfromReceivables == actualCollectionfromReceivables
+    #P
+    expectedCashSettlementDiscount = preCashSettlementDiscount #### This may need enhancement
+    print("expectedCashSettlementDiscount:", expectedCashSettlementDiscount)
+    assert expectedCashSettlementDiscount == actualCashSettlementDiscount
+    #Q
+    expectedNetCashCollection = preNetCashCollection + cash - cashReturn
+    print("expectedNetCashCollection:", expectedNetCashCollection)
+    assert expectedNetCashCollection == actualNetCashCollection
+    ##
+    print("END>>verifyDepartmentSummary")
 
 
 # Module:Billing_Report: User Collection Report***********
