@@ -13,7 +13,7 @@ deposit = 1000
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LPP.patientRegistration()
+HospitalNo = LPP.patientRegistration(EMR)
 LB.opDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, amount=deposit)
 LBR.verifyDepositBalanceReport(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=deposit)
 AC.logout()
