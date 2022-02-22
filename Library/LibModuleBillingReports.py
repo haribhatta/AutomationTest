@@ -280,83 +280,122 @@ def verifySalesDayBook(cash, credit, cashreturn, creditreturn):
 # Module:Report: PatientCensus***************
 def getPatientCensus(danpheEMR):
     print(">>START: getPatientCensus")
-    global sysnoofcount
-    global sysamount
-    global sysunconfirmedcount
-    global sysunconfirmedamount
-    global sysconfirmedcount
-    global sysconfirmedamount
-    global systotalcount
-    global systotalamount
+    global actualNoOfCount
+    global actualAmount
+    global actualUnconfirmedCount
+    global actualUnconfirmedAmount
+    global actualConfirmedCount
+    global actualConfirmedAmount
+    global actualTotalCount
+    global actualTotalAmount
     danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-    time.sleep(2)
+    time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Patient Census')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(9)
-    sysnoofcount = danpheEMR.find_element(By.XPATH,
+    ##
+    actualNoOfCount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[1]").text
-    print("sysnoofcount", sysnoofcount)
-    sysamount = danpheEMR.find_element(By.XPATH,
+    actualNoOfCount = int(actualNoOfCount)
+    print("actualNoOfCount", actualNoOfCount)
+    ##
+    actualAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[2]").text
-    print("sysamount", sysamount)
-    sysunconfirmedcount = danpheEMR.find_element(By.XPATH,
+    actualAmount = float(actualAmount)
+    print("actualAmount", actualAmount)
+    ##
+    actualUnconfirmedCount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[3]").text
-    print("sysunconfirmedcount", sysunconfirmedcount)
-    sysunconfirmedamount = danpheEMR.find_element(By.XPATH,
+    actualUnconfirmedCount = int(actualUnconfirmedCount)
+    print("actualUnconfirmedCount", actualUnconfirmedCount)
+    ##
+    actualUnconfirmedAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[4]").text
-    print("sysunconfirmedamount", sysunconfirmedamount)
-    sysconfirmedcount = danpheEMR.find_element(By.XPATH,
+    actualUnconfirmedAmount = float(actualUnconfirmedAmount)
+    print("actualUnconfirmedAmount", actualUnconfirmedAmount)
+    ##
+    actualConfirmedCount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[5]").text
-    print("sysconfirmedcount", sysconfirmedcount)
-    sysconfirmedamount = danpheEMR.find_element(By.XPATH,
+    actualConfirmedCount = int(actualConfirmedCount)
+    print("actualConfirmedCount", actualConfirmedCount)
+    ##
+    actualConfirmedAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[6]").text
-    print("sysconfirmedamount", sysconfirmedamount)
-    systotalcount = danpheEMR.find_element(By.XPATH,
+    actualConfirmedAmount = float(actualConfirmedAmount)
+    print("actualConfirmedAmount", actualConfirmedAmount)
+    ##
+    actualTotalCount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[7]").text
-    print("systotalcount", systotalcount)
-    systotalamount = danpheEMR.find_element(By.XPATH,
+    actualTotalCount = int(actualTotalCount)
+    print("actualTotalCount", actualTotalCount)
+    ##
+    actualTotalAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(), 'SUMMARY:')]/following-sibling::td[8]").text
-    print("systotalamount", systotalamount)
+    actualTotalAmount = float(actualTotalAmount)
+    print("actualTotalAmount", actualTotalAmount)
     print("<<END: getPatientCensus")
 
 
 def preSystemPatientCensus():
     print(">>START: preSystemPatientCensus")
-    global presysnoofcount
-    global presysamount
-    global presysunconfirmedcount
-    global presysunconfirmedamount
-    global presysconfirmedcount
-    global presysconfirmedamount
-    global presystotalcount
-    global presystotalamount
-    presysnoofcount = int(sysnoofcount)
-    presysamount = int(sysamount)
-    presysunconfirmedcount = int(sysunconfirmedcount)
-    presysunconfirmedamount = int(sysunconfirmedamount)
-    presysconfirmedcount = int(sysconfirmedcount)
-    presysconfirmedamount = int(sysconfirmedamount)
-    presystotalcount = int(systotalcount)
-    presystotalamount = int(systotalamount)
+    global preNoOfCount
+    global preAmount
+    global preUnconfirmedCount
+    global preUnconfirmedAmount
+    global preConfirmedCount
+    global preConfirmedAmount
+    global preTotalCount
+    global preTotalAmount
+    ##
+    preNoOfCount		= actualNoOfCount
+    preAmount           = actualAmount
+    preUnconfirmedCount = actualUnconfirmedCount
+    preUnconfirmedAmount= actualUnconfirmedAmount
+    preConfirmedCount   = actualConfirmedCount
+    preConfirmedAmount  = actualConfirmedAmount
+    preTotalCount       = actualTotalCount
+    preTotalAmount      = actualTotalAmount
     print("<<END: preSystemPatientCensus")
 
 
-def verifyPatientCensus(cash, cashreturn, credit, creditreturn, provisional):
+def verifyPatientCensus(cash, cashReturn, credit, creditReturn, provisional, provisionalCancel):
     print(">>START: verifyPatientCensus")
-    assert int(sysnoofcount) == presysnoofcount + cash / cash
-    print("presysamount", presysamount)
-    print("sysamount", sysamount)
-    print("cash", cash)
-    assert int(sysamount) == int(int(presysamount) + int(cash))
-    assert int(sysunconfirmedcount) == presysunconfirmedcount + provisional
-    assert int(sysunconfirmedamount) == presysunconfirmedamount + provisional
-    assert int(sysconfirmedcount) == presysconfirmedcount + credit
-    assert int(sysconfirmedamount) == presysconfirmedamount + credit
-    assert int(systotalcount) == presystotalcount + cash / cash + credit
-    assert int(systotalamount) == presystotalamount + cash + credit
+    global expectedNoOfCount
+    global expectedAmount
+    global expectedUnconfirmedCount
+    global expectedUnconfirmedAmount
+    global expectedConfirmedCount
+    global expectedConfirmedAmount
+    global expectedTotalCount
+    global expectedTotalAmount
+    ##
+    expectedNoOfCount = preNoOfCount + cash/cash - cashReturn/cashReturn + credit/credit - creditReturn/creditReturn
+    print("expectedNoOfCount:", expectedNoOfCount)
+    assert actualNoOfCount == expectedNoOfCount
+    expectedAmount = preAmount + cash - cashReturn + credit - creditReturn
+    print("expectedAmount:", expectedAmount)
+    assert actualAmount == expectedAmount
+    expectedUnconfirmedCount = preUnconfirmedCount + provisional/provisional - provisionalCancel/provisionalCancel
+    print("expectedUnconfirmedCount:", expectedUnconfirmedCount)
+    assert actualUnconfirmedCount == expectedUnconfirmedCount
+    expectedUnconfirmedAmount = preUnconfirmedAmount + provisional - provisionalCancel
+    print("expectedUnconfirmedAmount:", expectedUnconfirmedAmount)
+    assert actualUnconfirmedAmount == expectedUnconfirmedAmount
+    expectedConfirmedCount = preConfirmedCount + credit/credit - creditReturn/creditReturn
+    print("expectedConfirmedCount:", expectedConfirmedCount)
+    assert actualConfirmedCount == expectedConfirmedCount
+    expectedConfirmedAmount = preConfirmedAmount + credit - creditReturn
+    print("expectedConfirmedAmount:", expectedConfirmedAmount)
+    assert actualConfirmedAmount == expectedConfirmedAmount
+    expectedTotalCount = preTotalCount + cash/cash + credit/credit
+    print("expectedTotalCount:", expectedTotalCount)
+    assert actualTotalCount == expectedTotalCount
+    expectedTotalAmount = preTotalAmount + cash + credit
+    print("expectedTotalAmount:", expectedTotalAmount)
+    assert actualTotalAmount == expectedTotalAmount
     print("<<END: verifyPatientCensus")
 
 

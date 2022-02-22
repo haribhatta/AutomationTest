@@ -5,8 +5,8 @@ import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
 
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+foUserId = GSV.itUserID
+foUserPwd = GSV.itUserPwD
 opdRate = GSV.opdRate
 ########
 priceCategoryType = "Normal"

@@ -573,7 +573,7 @@ def preInventorySummaryReport():
     preConsumptionQty = ConsumptionQty
     preClosingValue = ClosingValue
     preClosingQty = ClosingQty
-    print(END>>preInventorySummaryReport)
+    print("END>>preInventorySummaryReport")
 
 
 def verifyInventorySummaryReport(purchaseqty, purchaseamount, consumeqty, consumeamount, manageinqty, manageinamount,

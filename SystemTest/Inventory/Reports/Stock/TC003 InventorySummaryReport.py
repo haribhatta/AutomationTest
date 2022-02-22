@@ -20,15 +20,18 @@ subStore2 = GSV.SubStore2
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 LI.selectInventory(danpheEMR=EMR, inventory="General Inventory")
-LI.getInventorySummaryReport(EMR)
+LI.getInventorySummaryReport(danpheEMR=EMR)
 LI.preInventorySummaryReport()
-LI.createInventoryGoodReceipt(EMR, qty, item, rate)
-LI.receiveGoodReceipt(EMR)
+### Create GR Credit entry
+LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=item, rate=rate, paymentMode='Credit')
+LI.receiveGoodReceipt(danpheEMR=EMR)
+### Create Inventory DD
 RequsitionNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory="General Inventory", store=subStore1)
-print(RequsitionNo)
-LSS.receiveInventoryDispatch(EMR, substore=subStore1, ssReqNo=RequsitionNo)
+### Receive Inventory dispatch
+LSS.receiveInventoryDispatch(danpheEMR=EMR, substore=subStore1, ssReqNo=RequsitionNo)
+###TestAction: Create SubStore Consumption
 LSS.createNewConsumption(danpheEMR=EMR, substore=subStore1, itemName=item)
-LI.getInventorySummaryReport(EMR)
+LI.getInventorySummaryReport(danpheEMR=EMR)
 LI.verifyInventorySummaryReport(purchaseqty=1, purchaseamount=costAmount, consumeqty=1, consumeamount=costAmount, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)
 AC.logout()
 AC.closeBrowser()
