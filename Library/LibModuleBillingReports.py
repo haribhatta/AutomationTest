@@ -1175,7 +1175,8 @@ def verifyTotalAdmittedPatients(danpheEMR, HospitalNo):
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(5)
-    hospitalno = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[3]").text
+    hospitalno = danpheEMR.find_element(By.XPATH, "(//div[@col-id='PatientCode'])[2]").text
+    print("hospitalno:", hospitalno)
     assert hospitalno == HospitalNo
 
 
