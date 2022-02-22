@@ -44,46 +44,46 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
 
 
 def editInventoryGoodsReceipt(danpheEMR, BillNo):
-    print(">>START: edit GoodReceipt")
+    print("START>>editInventoryGoodsReceipt")
     time.sleep(2)
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(BillNo)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(text(),' Edit Receipt ')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "qtyip0").clear()  # Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
-        danpheEMR.find_element(By.ID, "qtyip0").send_keys(2)
-        danpheEMR.find_element(By.ID, "SaveGoodsReceiptbtn").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(BillNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(text(),' Edit Receipt ')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "qtyip0").clear()  # Bugs:LPH-867, .. .Issue on: LPH_V1.9.0
+    danpheEMR.find_element(By.ID, "qtyip0").send_keys(2)
+    danpheEMR.find_element(By.ID, "SaveGoodsReceiptbtn").click()
+    print("END>>editInventoryGoodsReceipt")
 
 
 def consumptionStore(danpheEMR, itemName, qty, store):
-    time.sleep(5)
-    if AppName == 'SNCH' or AppName == 'LPH':
-        danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
-        time.sleep(9)
-        try:
-            danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'" + store + "')]").click()
-            # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'Billing Store')]").click()
-        except:
-            pass
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "Consumption").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "New Consumption").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "itemName0").clear()
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.TAB)
-        danpheEMR.find_element(By.XPATH,  "//input[@id='qtyip0']").clear()
-        danpheEMR.find_element(By.XPATH,  "//input[@id='qtyip0']").send_keys(qty)
-        danpheEMR.find_element(By.CSS_SELECTOR,   ".btn-success").click()
-        time.sleep(2)
+    print("START>>consumptionStore")
+    danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
+    time.sleep(9)
+    try:
+        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'" + store + "')]").click()
+        # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'Billing Store')]").click()
+    except:
+        pass
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Consumption").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "New Consumption").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "itemName0").clear()
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.XPATH,  "//input[@id='qtyip0']").clear()
+    danpheEMR.find_element(By.XPATH,  "//input[@id='qtyip0']").send_keys(qty)
+    danpheEMR.find_element(By.CSS_SELECTOR,   ".btn-success").click()
+    time.sleep(2)
+    print("END>>consumptionStore")
 
 
 def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inventory'):
@@ -99,50 +99,50 @@ def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inven
 
 
 def createInventoryDirectDispatch(danpheEMR, itemname, qty, inventory, store):
-    print(">>START: directDispatch")
+    print("START>>createInventoryDirectDispatch")
     global RequsitionNo
-    if AppName == 'SNCH' or AppName == 'LPH' or AppName == 'MPH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(9)
-        try:
-            danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'" + inventory + "')]").click()
-        except:
-            pass
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Direct Dispatch  ')]").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "store").send_keys(store)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "store").send_keys(Keys.ENTER)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(itemname)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "qtyip0").send_keys(qty)
-        danpheEMR.find_element(By.ID, "qtyip0").send_keys(Keys.ENTER)
-        time.sleep(5)
-        Quantity = danpheEMR.find_element(By.XPATH,  "//input[@name='availableQuantity']").get_attribute("value")
-        print("Available Quantity :", Quantity)
-        Quantity = int(Quantity)
-        print("Available Quantity :", Quantity)
-        # danpheEMR.find_element(By.ID, "qtyip0").send_keys(Keys.ENTER)
-        danpheEMR.find_element(By.ID, "remarks").send_keys("Direct dispatch test")
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "directDispatchButton").click()
-        time.sleep(5)
-        if AppName == 'LPH':
-            RequsitionNo = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'निकासा नं:')]").text
-            RequsitionNo = int(str(RequsitionNo).replace("निकासा नं:", ""))
-            print(RequsitionNo)
-        else:
-            RequsitionNo = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
-        print("Requisition Number is :", RequsitionNo)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Back to Requisition List')]").click()
-    print("<<END: directDispatch")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(9)
+    try:
+        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'" + inventory + "')]").click()
+    except:
+        pass
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Direct Dispatch  ')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "store").send_keys(store)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "store").send_keys(Keys.ENTER)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(itemname)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "qtyip0").send_keys(qty)
+    danpheEMR.find_element(By.ID, "qtyip0").send_keys(Keys.ENTER)
+    time.sleep(5)
+    Quantity = danpheEMR.find_element(By.XPATH,  "//input[@name='availableQuantity']").get_attribute("value")
+    print("Available Quantity :", Quantity)
+    Quantity = int(Quantity)
+    print("Available Quantity :", Quantity)
+    # danpheEMR.find_element(By.ID, "qtyip0").send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.ID, "remarks").send_keys("Direct dispatch test")
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "directDispatchButton").click()
+    time.sleep(5)
+    if AppName == 'LPH':
+        RequsitionNo = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'निकासा नं:')]").text
+        RequsitionNo = int(str(RequsitionNo).replace("निकासा नं:", ""))
+        print(RequsitionNo)
+    else:
+        RequsitionNo = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
+    print("Requisition Number is :", RequsitionNo)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Back to Requisition List')]").click()
+    return RequsitionNo
+    print("END>>createInventoryDirectDispatch")
     return RequsitionNo
 
 
@@ -180,102 +180,93 @@ def verifyStock(qty, preitemstock, itemstock):
 
 
 def verifyInventoryDirectDispatch(danpheEMR, RequisitionNo, itemname, qty, store):
-    print(">>Start: verifyInventoryDirectDispatch")
-    if AppName == 'SNCH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(2)
-        # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//label[2]/span").click()
-        time.sleep(3)
-        ReqNo = danpheEMR.find_element(By.XPATH,  "(//div[@col-id='RequisitionNo'])[2]").text
-        time.sleep(2)
-        assert ReqNo == RequisitionNo
-    print("<<End: verifyInventoryDirectDispatch")
+    print("START>>verifyInventoryDirectDispatch")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(2)
+    # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH,  "//label[2]/span").click()
+    time.sleep(3)
+    ReqNo = danpheEMR.find_element(By.XPATH,  "(//div[@col-id='RequisitionNo'])[2]").text
+    time.sleep(2)
+    assert ReqNo == RequisitionNo
+    print("END>>verifyInventoryDirectDispatch")
 
 
 def dispatchRequisition(danpheEMR, ssReqNo, GeneralInventory, itemname, qty):
-    print(">>START: DispatchRequisition")
-    if AppName == 'SNCH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(9)
-        # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH,  
-            "//a[contains(text(),'Dispatch Requisition')]").click()  # This step can get failed if "AllowSubstoreDispatchWithoutVerification" = false.
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "remarks").send_keys("dispatching req")
-        danpheEMR.find_element(By.ID, "DispatchBtn").click()
-        time.sleep(9)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Requisition List')]").click()
-    print("<<END: dispatchRequisition")
+    print("START>>DispatchRequisition")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(9)
+    # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH,
+        "//a[contains(text(),'Dispatch Requisition')]").click()  # This step can get failed if "AllowSubstoreDispatchWithoutVerification" = false.
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "remarks").send_keys("dispatching req")
+    danpheEMR.find_element(By.ID, "DispatchBtn").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Requisition List')]").click()
+    print("END>>dispatchRequisition")
 
 
 def verifyDispatchRequisition(danpheEMR, ssReqNo):
-    print(">>START: verifyDispatchRequisition")
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.XPATH,  "//label[2]/span").click()
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
-        time.sleep(4)
-        ssReqNo1 = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
-        print("ssReqNo1:", ssReqNo1)
-        print("ssReqNo:", ssReqNo)
-        assert ssReqNo1 == ssReqNo
-    print("<<END: verifyDispatchRequisition")
+    print("START>>verifyDispatchRequisition")
+    danpheEMR.find_element(By.XPATH,  "//label[2]/span").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
+    time.sleep(4)
+    ssReqNo1 = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
+    print("ssReqNo1:", ssReqNo1)
+    print("ssReqNo:", ssReqNo)
+    assert ssReqNo1 == ssReqNo
+    print("END>>verifyDispatchRequisition")
 
 
 def createPurchaseRequest(danpheEMR, ItemName, qty):
-    print(">>START: createPurchaseRequest")
-    if AppName == 'SNCH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(9)
-        # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Purchase Request").click()
-        time.sleep(2)
-        PRNo = int(danpheEMR.find_element(By.XPATH,  "(//div[@col-id='PRNumber'])[2]").text)
-        print("PRNo:", PRNo)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Create Purchase Request')]").click()
-        time.sleep(4)
-        danpheEMR.find_element(By.ID, "itemName0").send_keys(ItemName)
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
-        danpheEMR.find_element(By.ID, "RequestPORequisition").click()
-        PRNo = PRNo + 1
-        return PRNo
-    print("<<END: createPurchaseRequest")
+    print("START>>createPurchaseRequest")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(9)
+    # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Purchase Request").click()
+    time.sleep(2)
+    PRNo = int(danpheEMR.find_element(By.XPATH,  "(//div[@col-id='PRNumber'])[2]").text)
+    print("PRNo:", PRNo)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Create Purchase Request')]").click()
+    time.sleep(4)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(ItemName)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
+    danpheEMR.find_element(By.ID, "RequestPORequisition").click()
+    PRNo = PRNo + 1
+    return PRNo
+    print("END>>createPurchaseRequest")
 
 
 def verifyPurchaseRequest(danpheEMR, PRNo, ItemName, qty):
-    print(">>START: verifyPurchaseRequest")
-    if AppName == 'SNCH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(9)
-        # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Purchase Request").click()
-        time.sleep(3)
-        PRNo1 = int(danpheEMR.find_element(By.XPATH,  "(//div[@col-id='PRNumber'])[2]").text)
-        assert PRNo1 == PRNo
-    print(">>END: veriifyPurchaseRequest")
+    print("START>>verifyPurchaseRequest")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(9)
+    # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Purchase Request").click()
+    time.sleep(3)
+    PRNo1 = int(danpheEMR.find_element(By.XPATH,  "(//div[@col-id='PRNumber'])[2]").text)
+    assert PRNo1 == PRNo
+    print("END>>veriifyPurchaseRequest")
 
 
 def InventoryStockManage(danpheEMR, managetype, itemName):
@@ -469,24 +460,25 @@ def verifyInventoryStoreCurrentStockLevelReport(type, qty, unitprice):
 
 
 def selectInventory(danpheEMR, inventory):
+    print("START>>selectInventory")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
     time.sleep(5)
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-        time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    print("END>>selectInventory")
 
 
 def selectDispensary(danpheEMR, dispensary):
+    print("START>>selectDispensary")
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(5)
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'MainDispensary')]").click()
-        time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'MainDispensary')]").click()
+    time.sleep(3)
+    print("END>>selectDispensary")
 
 
 def getInventorySummaryReport(danpheEMR):
+    print("START>>getInventorySummaryReport")
     global OpeningValue
     global OpeningQty
     global PurchaseValue
@@ -500,61 +492,61 @@ def getInventorySummaryReport(danpheEMR):
     global ClosingValue
     global ClosingQty
     time.sleep(3)
-    if AppName == 'SNCH':
-        danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'Reports')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH,  "//i[contains(.,'Inventory Summary')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH,  "//button[contains(.,' Load')]").click()
-        time.sleep(7)
-        OpeningValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        OpeningValue = float(OpeningValue.replace(',', ''))
-        print("OpeningValue", OpeningValue)
-        OpeningQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("OpeningQty", OpeningQty)
-        PurchaseValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        PurchaseValue = float(PurchaseValue.replace(',', ''))
-        print("PurchaseValue", PurchaseValue)
-        PurchaseQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("PurchaseQty", PurchaseQty)
-        StockManageInValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        StockManageInValue = float(StockManageInValue.replace(',', ''))
-        print("StockManageInValue", StockManageInValue)
-        StockManageInQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("StockManageInQty", StockManageInQty)
-        StockManageOutValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        StockManageOutValue = float(StockManageOutValue.replace(',', ''))
-        print("StockManageOutValue", StockManageOutValue)
-        StockManageOutQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("StockManageOutQty", StockManageOutQty)
-        ConsumptionValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        ConsumptionValue = float(ConsumptionValue.replace(',', ''))
-        print("ConsumptionValue", ConsumptionValue)
-        ConsumptionQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("ConsumptionQty", ConsumptionQty)
-        ClosingValue = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        ClosingValue = float(ClosingValue.replace(',', ''))
-        print("ClosingValue", ClosingValue)
-        ClosingQty = danpheEMR.find_element(By.XPATH,  
-            "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
-        print("ClosingQty", ClosingQty)
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'Reports')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "//i[contains(.,'Inventory Summary')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(.,' Load')]").click()
+    time.sleep(7)
+    OpeningValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),' Opening Value ')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    OpeningValue = float(OpeningValue.replace(',', ''))
+    print("OpeningValue", OpeningValue)
+    OpeningQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Opening Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("OpeningQty", OpeningQty)
+    PurchaseValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),' Purchase Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    PurchaseValue = float(PurchaseValue.replace(',', ''))
+    print("PurchaseValue", PurchaseValue)
+    PurchaseQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Purchase Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("PurchaseQty", PurchaseQty)
+    StockManageInValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'StockManage In-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    StockManageInValue = float(StockManageInValue.replace(',', ''))
+    print("StockManageInValue", StockManageInValue)
+    StockManageInQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'StockManage In-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("StockManageInQty", StockManageInQty)
+    StockManageOutValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'StockManage OUT-Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    StockManageOutValue = float(StockManageOutValue.replace(',', ''))
+    print("StockManageOutValue", StockManageOutValue)
+    StockManageOutQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'StockManage OUT-Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("StockManageOutQty", StockManageOutQty)
+    ConsumptionValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Consumption Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    ConsumptionValue = float(ConsumptionValue.replace(',', ''))
+    print("ConsumptionValue", ConsumptionValue)
+    ConsumptionQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Consumption Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("ConsumptionQty", ConsumptionQty)
+    ClosingValue = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Closing Value')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    ClosingValue = float(ClosingValue.replace(',', ''))
+    print("ClosingValue", ClosingValue)
+    ClosingQty = danpheEMR.find_element(By.XPATH,
+        "(//b[contains(text(),'Closing Quantity')]/parent::span/parent::td/following-sibling::td/child::span)[1]").text
+    print("ClosingQty", ClosingQty)
+    print("END>>getInventorySummaryReport")
 
 
 def preInventorySummaryReport():
-
+    print("START>>preInventorySummaryReport")
     global preOpeningValue
     global preOpeningQty
     global prePurchaseValue
@@ -579,14 +571,12 @@ def preInventorySummaryReport():
     preConsumptionQty = ConsumptionQty
     preClosingValue = ClosingValue
     preClosingQty = ClosingQty
+    print(END>>preInventorySummaryReport)
 
 
 def verifyInventorySummaryReport(purchaseqty, purchaseamount, consumeqty, consumeamount, manageinqty, manageinamount,
                                  manageoutqty, manageoutamount):
-    print(">>Start : Verifying the Inventory Summary Report")
-    print("preOpeningValue", preOpeningValue)
-    print("OpeningValue", OpeningValue)
-    time.sleep(3)
+    print("START>>verifyInventorySummaryReport")
     assert OpeningValue == preOpeningValue
     assert OpeningQty == preOpeningQty
     x = PurchaseValue
@@ -629,7 +619,7 @@ def verifyInventorySummaryReport(purchaseqty, purchaseamount, consumeqty, consum
     print("tempclosingqty", tempclosingqty)
     print("ClosingQty", ClosingQty)
     assert float(ClosingQty) == float(tempclosingqty)
-    print("END>> Verifying Inventory Summary Report")
+    print("END>>verifyInventorySummaryReport")
 
 
 def receiveGoodReceipt(danpheEMR):
