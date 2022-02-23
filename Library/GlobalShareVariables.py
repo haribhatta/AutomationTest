@@ -31,9 +31,9 @@ if appName == "LPH":
       radioUserID = 'radiology'
       radioUserPwD = 'pass123'
       #pharmacy user
-      pharmacyUserID = 'debika'
+      pharmacyUserID = 'padam'
       pharmacyUserPwD = 'pass123'
-      pharmacyUserName = 'Debika'
+      pharmacyUserName = 'padam'
       #pharmacyUserName = 'Ms. Debika'
       #nurse user
       nurseUserID = 'admin'
@@ -96,6 +96,9 @@ if appName == "LPH":
       storeItem1Rate = 25
       #stationaryItem1 = "DOTPEN"
       stationaryItem1 = "USG PAPER"
+      ###Suppliers Name list
+      supplierShremad = "Shremad Tech."
+      supplierName2 = "ASHWANI PHARMACY"
 ###Sub Stores Name:
       SubStore1 = "ACCOUNT"
       SubStore2 = "ADMINISTRATION"

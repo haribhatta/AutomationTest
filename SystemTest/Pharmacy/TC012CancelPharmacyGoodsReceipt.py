@@ -16,13 +16,16 @@ pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 qty = 5
-drugname = GSV.drug1BrandName
+brandName = GSV.drug1BrandName
+genericName = GSV.drug1GenericName
 tqty = 2
 tqty1 = 1
 rate = GSV.drug1Rate
 costPrice = 20
 amount = qty * costPrice
 print("amount", amount)
+supplierName = GSV.supplierName2
+########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activatePharmacyCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
@@ -30,11 +33,11 @@ LD.activatePharmacyCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
 #cpgr.verifyPharmacyItem()
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.XgetPharmacyGoodsReceiptListAmount()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, qty=qty, DrugName=drugname, grPrice=costPrice)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, DrugName=drugname, grno=goodsReceiptNo)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=brandName, grPrice=costPrice)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.transferStore2DispensaryTC(danpheEMR=EMR, tqty=tqty, DrugName=drugname)
+LP.transferStore2DispensaryTC(danpheEMR=EMR, tqty=tqty, DrugName=brandName)
 LP.transferDispensary2StoreTC(danpheEMR=EMR,tqty=tqty1)
 LP.cancelPharmacyGoodsReceipt(EMR)
 LP.verifyStockDetailTC(EMR)

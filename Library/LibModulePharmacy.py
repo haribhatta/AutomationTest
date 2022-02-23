@@ -450,6 +450,8 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     gRNo = random.randint(1000, 999999)
     print("GR No:", gRNo)
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Invoice No']").send_keys(gRNo)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Invoice No']").send_keys(Keys.TAB)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "btn_AddNew").click()
     time.sleep(7)
     danpheEMR.find_element(By.ID, "txt_ItemName").send_keys(DrugName)
@@ -472,14 +474,17 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
         danpheEMR.switch_to.alert.accept()
         time.sleep(3)
     else:
-        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+        #danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE) ## not working @LPH
+        #danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE) ## working @LPH
+        danpheEMR.switch_to.alert.accept() ## to close alert msg box for similiar GR items already entered.
     time.sleep(2)
     #obj = danpheEMR.switch_to.alert
     #obj.accept()
     time.sleep(2)
     if AppName == 'LPH':
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
-        goodsReceiptNo = goodsReceiptNo.replace("-", "")
+        #goodsReceiptNo = goodsReceiptNo.replace("-", "")
+        goodsReceiptNo = goodsReceiptNo.partition(": ")[2]
         print("goodsReceiptNo:", goodsReceiptNo)
         danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     else:
@@ -489,7 +494,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
         danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
-    return goodsReceiptNo
+    return gRNo
 
 def cancelPharmacyGoodsReceipt(danpheEMR):
     print("START>>cancelPharmacyGoodsReceipt")
@@ -531,7 +536,10 @@ def getPharmacyGoodsReceiptListAmount(danpheEMR):
     global SubTotal
     global DiscountTotal
     global TotalAmount
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Order").click()
     time.sleep(2)
@@ -610,35 +618,30 @@ def createPharmacyOPDBilling(danpheEMR, qty, paymentmode):
     print("Create Pharmacy OPD Invoice: END<<")
 
 
-def verifyPharmacyGoodsReceipt(danpheEMR, DrugName, grno):
+def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
     time.sleep(3)
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "View").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
-        time.sleep(3)
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//div[@id='printpage']/div[2]/table/tbody/tr/td[3]").text
-        print("sysdrugname is :", sysdrugname)
-        assert DrugName == sysdrugname
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-    if AppName != "LPH":
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-        danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
-        time.sleep(2)
-        danpheEMR.find_element(By.LINK_TEXT, "View").click()
-        time.sleep(3)
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//td[2]/b").text
-        print("sysdrugname:", sysdrugname)
-        assert DrugName == sysdrugname
-        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
+    time.sleep(5)
+    #danpheEMR.find_element(By.LINK_TEXT, "View").click()  ## not working on LPH
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View").click()
+    time.sleep(3)
+    sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
+    print("sysdrugname is :", sysdrugname)
+    if AppName == 'LPH':
+        assert genericName == sysdrugname
+    else:
+        assert brandName == sysdrugname
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
 
 
 def closePopupApplication(danpheEMR):
