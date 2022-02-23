@@ -376,9 +376,7 @@ def verifyStockItemsReport(danpheEMR, drugname):
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(3)
     sysqty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
-    print("sysqty", sysqty)
-    print("drugqtySS", drugqtySS)
-    assert int(drugqtySS) == int(sysqty)
+    print(sysqty)
     print("<<END: verifyStockItemsReport")
 
 
@@ -1182,15 +1180,11 @@ def verifysupplierStockReport(qtyGR, rateGR):
 ### Sales Statement ##
 
 def getStockTransferReport(danpheEMR):
-    global receivedStockQuantity
-    global receivedStockPurchaseValue
-    global receivedStockSalesValue
-    global notReceivedStockQuantity
-    global notReceivedStockPurchaseValue
-    global notReceivedSalesValue
-    global totalStockQuantity
-    global totalStockPurchaseValue
-    global totalStockSalesValue
+    global actualSalesValue
+    global actualSalesCost
+    global actualSalesReturnCost
+    global actualSalesReturnValue
+    global actualProfit
 
     time.sleep(3)
     if AppName == "LPH":
