@@ -28,7 +28,6 @@ def patientRegistration(danpheEMR):
     danpheEMR.find_element(By.XPATH, "(//input[@value=''])[3]").send_keys("preg", sname)
     gender = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname='Gender']"))
     gender.select_by_visible_text("Female")
-    danpheEMR.find_element(By.ID, "txtPanNumber").send_keys(Keys.ENTER)
     time.sleep(5)
     danpheEMR.find_element(By.ID, "regPatientSubmitBtn").click()
     time.sleep(7)
