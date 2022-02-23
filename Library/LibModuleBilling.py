@@ -102,6 +102,31 @@ def returnBillingInvoicePartial(danpheEMR, InvoiceNo, returnmsg):
     danpheEMR.find_element(By.XPATH,
         "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
 
+def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
+    print("START>>verifyReturnBillingInvoice")
+    # global returnTotalAmount
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Returned Invoice')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(InvoiceNo)
+    time.sleep(5)
+    RefInvoiceNumber = danpheEMR.find_element(By.XPATH, "(//div[@col-id='RefInvoiceNum'])[2]").text
+    print("RefInvoiceNumber", RefInvoiceNumber)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
+    time.sleep(3)
+    returnAmount = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Total Amount')]/following-sibling::td").text
+    returnAmount = int(returnAmount.partition(".")[0])
+
+    print("returnAmount:", returnAmount)
+    print("ItemRate:", itemRate)
+    assert returnAmount == itemRate
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
+    time.sleep(2)
+    print("END>>verifyReturnBillingInvoice")
 
 def verifyCreditNoteDuplicateInvoice(danpheEMR):
     print("Verify partial return of bill invoice")

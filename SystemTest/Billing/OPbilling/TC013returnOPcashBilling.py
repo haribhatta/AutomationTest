@@ -13,13 +13,18 @@ import Library.LibModuleAppointment as LA
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
-
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 paymode = "Cash"
 itemrate = GSV.opdRate
-
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno).InvoiceNo
+InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LB.returnBillingInvoice(EMR, InvoiceNo, returnmsg="This is test return")
-LB.verifyReturnBillingInvoice() # this function need to add in LibModuleBilling library file.
+LB.verifyReturnBillingInvoice(EMR, InvoiceNo, itemrate) # this function need to add in LibModuleBilling library file.
+AC.logout()
+AC.closeBrowser()
