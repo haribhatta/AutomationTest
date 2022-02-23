@@ -441,7 +441,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(2)
+    time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
@@ -663,6 +663,30 @@ def viewPharmacyOrderList(danpheEMR, SupplierName, drugName):
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
     time.sleep(3)
     # SNo = danpheEMR.find_element(By.XPATH, "//*[@id="printpage"]/div/div/div[4]/table/tbody/tr[1]/td[1]").text
+
+
+def return_to_supplier(danpheEMR, grno, rqty):
+    print(">>START: Returning to Supplier")
+    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Return To Supplier").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/a[1]").click()
+    creditnote = random.randint(1, 1000)
+    print("Credit Note Of the Given Patient is ", creditnote)
+    time.sleep(3)
+    danpheEMR.find_element(By.NAME, "CreditNoteId").send_keys(creditnote)
+    danpheEMR.find_element(By.CSS_SELECTOR, "th > input").click()
+    danpheEMR.find_element(By.NAME, "returnquantity").send_keys(rqty)
+    time.sleep(2)
+    returnstatus = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname = 'ReturnStatus']"))
+    returnstatus.select_by_visible_text("Breakage")
+    danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
+    return creditnote
+    print("END>>Return to supplier")
 
 
 def wait_for_window(danpheEMR, timeout=2):

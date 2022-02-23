@@ -391,19 +391,22 @@ def getPurchaseSummaryReport(danpheEMR):
         danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(2)
+    time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Purchase Summary')]").click()
     time.sleep(5)
     purchase = danpheEMR.find_element(By.XPATH,
                                       "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div").text
+    purchase = int(purchase)
     print("Purchase value of a item is : ", purchase)
     purchaseReturn = danpheEMR.find_element(By.XPATH,
                                             "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[2]").text
+    purchaseReturn = int(purchaseReturn)
     print("Purchase Return of the Items :", purchaseReturn)
     balance = danpheEMR.find_element(By.XPATH,
                                      "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[3]").text
+    balance = int(balance)
     print("Balance of the Item is : ", balance)
 
 
@@ -413,22 +416,28 @@ def prePurchaseSummaryReport():
     global prebalance
 
     prePurchase = purchase
+    prePurchase = int(prePurchase)
     print("PrePurchase amount is :", prePurchase)
     prepurchaseReturn = purchaseReturn
+    prepurchaseReturn = int(prepurchaseReturn)
     print("Pre Purchase Return is :", prepurchaseReturn)
     prebalance = balance
+    prebalance = int(prebalance)
     print("Pre Balance is :", prebalance)
 
 
-def verifypurchasesummary():
-    print("START>>verifying the Purchase Summary ")
+def verifypurchasesummarybeforeReturn():
+    print("START>>verifying the Purchase Summary before Return ")
     assert prePurchase == purchase
     assert prepurchaseReturn == purchaseReturn
     assert prebalance == balance
-    print("END>> Verifying Purchase Summary Report")
+    print("END>> Verifying Purchase Summary Report before Return")
 
 
-# def verifyPurchaseSummaryReport():
+def verifypurchaseSummaryAfterReturn(retamt):
+    print("START>>verifying the Purchase Summary After Return ")
+    assert prepurchaseReturn == purchaseReturn - retamt
+    print("END>> Verifying Purchase Summary Report After Return")
 
 def getItemWisePurchaseReport(danpheEMR):
     print("get ItemWise Purchase Report")
