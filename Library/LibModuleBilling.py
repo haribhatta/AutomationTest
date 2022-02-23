@@ -104,7 +104,6 @@ def returnBillingInvoicePartial(danpheEMR, InvoiceNo, returnmsg):
 
 def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
     print("START>>verifyReturnBillingInvoice")
-    # global returnTotalAmount
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints')]").click()
@@ -120,7 +119,6 @@ def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
     returnAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Total Amount')]/following-sibling::td").text
     returnAmount = int(returnAmount.partition(".")[0])
-
     print("returnAmount:", returnAmount)
     print("ItemRate:", itemRate)
     assert returnAmount == itemRate
@@ -128,7 +126,7 @@ def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
     time.sleep(2)
     print("END>>verifyReturnBillingInvoice")
 
-def verifyCreditNoteDuplicateInvoice(danpheEMR):
+def verifyCreditNoteDuplicateInvoice(danpheEMR, InvoiceNo):
     print("Verify partial return of bill invoice")
     # global returnTotalAmount
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -139,6 +137,8 @@ def verifyCreditNoteDuplicateInvoice(danpheEMR):
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(InvoiceNo)
     time.sleep(5)
+    HospitalNo = danpheEMR.find_element(By.ID, "PatientCode").text
+    print("HospitalNo:", HospitalNo)
     RefInvoiceNumber = danpheEMR.find_element(By.XPATH, "(//div[@col-id='RefInvoiceNum'])[2]").text
     print("RefInvoiceNumber", RefInvoiceNumber)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
@@ -148,6 +148,7 @@ def verifyCreditNoteDuplicateInvoice(danpheEMR):
     print("ReturnAmount", ReturnAmount)
     danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
     time.sleep(2)
+    return HospitalNo
 
 
 def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
@@ -862,7 +863,6 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
 
 def creditSettlements(danpheEMR, HospitalNo, ProvisionalSlip, cashdiscount):
     print("Start: creditSettlements")
-    time.sleep(3)
     if ProvisionalSlip == "Yes":
         danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
         danpheEMR.find_element(By.LINK_TEXT, "Settlements").click()
@@ -870,25 +870,42 @@ def creditSettlements(danpheEMR, HospitalNo, ProvisionalSlip, cashdiscount):
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
         time.sleep(2)
-        # danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-times-circle']").click()
         danpheEMR.find_element(By.XPATH, "//i[@title= 'Click to Generate receipt of these items']").click()
-        time.sleep(2)
-        # danpheEMR.find_element(By.XPATH, "//input[@class = 'ng-valid ng-dirty ng-touched' and @type = 'number']").send_keys(discount)
-        time.sleep(2)
+        time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//input[@value = 'Print Invoice']").click()
         time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//a[@class = 'btn btn-danger del-btn']").click()
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'X') and @class='btn btn-danger del-btn']").click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
         danpheEMR.find_element(By.LINK_TEXT, "Settlements").click()
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(5)
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click() ## Jira has existing bug: EMR-4898
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//input[@type = 'number']").send_keys(cashdiscount)
         danpheEMR.find_element(By.XPATH, "//input[@value='Proceed']").click()
-
+    time.sleep(4)
     print("End: creditSettlements")
+
+
+def verifyCreditSettlement(danpheEMR, HospitalNo, itemRate):
+    print("START>>verifyCreditSettlement")
+    # global returnTotalAmount
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Duplicate Prints')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Settlement Receipts')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
+    time.sleep(3)
+    netAmount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Net Amount:')]/following-sibling::td").text
+    netAmount = int(netAmount)
+    print("netAmount:", netAmount)
+    assert netAmount == itemRate
+    print("END>>verifyCreditSettlement")
 
 
 def generateDischargeInvoice(danpheEMR, HospitalNo, paymentmode):

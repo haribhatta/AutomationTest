@@ -12,16 +12,17 @@ import Library.LibModuleAppointment as LA
 import Library.LibModuleBilling as LB
 
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
-
-paymode = "CREDIT"
+foUserId = GSV.adminUserID
+foUserPwd = GSV.adminUserPwD
+########
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+########
 itemrate = GSV.opdRate
-
+########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode="CREDIT", department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
-LB.verifyCreditNoteDuplicateInvoice(EMR)
-LB.creditSettlements(EMR, HospitalNo)
-LB.verifyCreditSettlement()  #This function need to add in LibModuleBilling library file.
+HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Credit", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
+LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip="No", cashdiscount=0)
+LB.verifyCreditSettlement(danpheEMR=EMR, HospitalNo=HospitalNo, itemRate=itemrate)

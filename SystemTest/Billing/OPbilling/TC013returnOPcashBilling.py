@@ -25,6 +25,6 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
 LB.returnBillingInvoice(EMR, InvoiceNo, returnmsg="This is test return")
-LB.verifyReturnBillingInvoice(EMR, InvoiceNo, itemrate) # this function need to add in LibModuleBilling library file.
+LB.verifyReturnBillingInvoice(EMR, InvoiceNo, itemrate)
 AC.logout()
 AC.closeBrowser()
