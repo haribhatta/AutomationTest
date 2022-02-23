@@ -9,23 +9,22 @@ import Library.LibModuleAppointment as LA
 import Library.LibModuleBilling as LB
 import Library.LibModuleADT as LADT
 import Library.LibModulePatientPortal as LPP
-
+import Library.LibModuleSettings as LS
 #front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
-
-
+adminUserId = GSV.adminUserID
+adminUserPwd = GSV.adminUserPwD
+###
 itemprice = GSV.admitRate
 doctor = GSV.doctorGyno
 department = GSV.departmentGyno
-
+########
 EMR = AC.openBrowser()
-AC.login(foUserId, foUserPwd)
+AC.login(adminUserId, adminUserPwd)
+isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 LB.counteractivation(EMR)
-HospitalNo = LPP.patientRegistration()
-LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo, admit=1, discharge=0, trasfer=0, deposit=0,doctor=0,department=0)
-paymode = "CREDIT"
-LB.generateDischargeInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode = paymode)
-LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo)
+HospitalNo = LPP.patientRegistration(EMR)
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
+LB.generateDischargeInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode = 'Credit')
+LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip='No', cashdiscount=0)
 AC.logout()
 AC.closeBrowser()
