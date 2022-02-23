@@ -1387,6 +1387,26 @@ def verifyStockSummaryReportAfterReceiving(qty):
     assert totalStockSalesValue == receivedStockSalesValue + notReceivedSalesValue
     print("END>> Verifying Stock Stock Summary Report After item Receiving")
 
+def getReturnToSupplierReport(danpheEMR, creditno):
+    print("START>> Return to supplier report")
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Return to Supplier')]").click()
+    danpheEMR.find_element(By.XPATH, "//span[contains(text(), 'Show Report')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, 'quickFilterInput').send_keys(creditno)
+    time.sleep(2)
+    suppliercredit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]").text
+    suppliercredit = int(suppliercredit)
+    print(suppliercredit)
+    assert creditno == suppliercredit
+    print("END>> Return to supplier report")
+
 
 def __str__():
     return
