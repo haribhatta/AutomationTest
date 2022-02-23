@@ -682,6 +682,7 @@ def return_to_supplier(danpheEMR, grno, rqty):
     returnstatus = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname = 'ReturnStatus']"))
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
+    return creditnote
     print("END>>Return to supplier")
 
 
