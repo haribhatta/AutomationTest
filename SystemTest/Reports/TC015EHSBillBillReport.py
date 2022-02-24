@@ -4,19 +4,30 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
+import Library.LibModuleSettings as LS
+#############
+# admin user login
+admUserId = GSV.adminUserID
+admUserPwd = GSV.adminUserPwD
 # front desk user login
-itUserId = GSV.itUserID
-itUserPwd = GSV.itUserPwD
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
+########
 user = GSV.foUserID
 departmentGynae = GSV.departmentGyno
 doctorGynaeEHS = GSV.doctorGynoEHS
 opdRate = GSV.opdRate
 ###
 priceCategoryType = "EHS"
-discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
-AC.login(itUserId, itUserPwd)
+AC.login(admUserId, admUserPwd)
+###
+a, b = LS.checkCoreCFGdiscountMembership(EMR)
+discountValue = a + b
+AC.logout()
+###
+AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
 LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType) # fulfilling pre-condition
@@ -48,7 +59,7 @@ LBR.verifyEHSBillReport()
 #Scenario-B1: EHS Discount Cash billing
 LBR.getEHSBillReport(EMR)
 LBR.preEHSBillReport()
-InvoiceNo3 = LA.patientquickentry(EMR, discountScheme=discountScheme, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
+InvoiceNo3 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
 print("InvoiceNo3", InvoiceNo3)
 LBR.getEHSBillReport(EMR)
 LBR.verifyEHSBillReport()
@@ -60,7 +71,7 @@ LBR.verifyEHSBillReport()
 #Scenario-B3: EHS Discount Credit billing
 LBR.getEHSBillReport(EMR)
 LBR.preEHSBillReport()
-InvoiceNo4 = LA.patientquickentry(EMR, discountScheme=discountScheme, paymentmode='Credit', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
+InvoiceNo4 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Credit', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).InvoiceNo
 print("InvoiceNo4", InvoiceNo4)
 LBR.getEHSBillReport(EMR)
 LBR.verifyEHSBillReport()
