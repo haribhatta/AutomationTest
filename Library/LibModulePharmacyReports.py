@@ -376,9 +376,7 @@ def verifyStockItemsReport(danpheEMR, drugname):
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(3)
     sysqty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
-    print("sysqty", sysqty)
-    print("drugqtySS", drugqtySS)
-    assert int(drugqtySS) == int(sysqty)
+    print(sysqty)
     print("<<END: verifyStockItemsReport")
 
 
@@ -1182,15 +1180,11 @@ def verifysupplierStockReport(qtyGR, rateGR):
 ### Sales Statement ##
 
 def getStockTransferReport(danpheEMR):
-    global receivedStockQuantity
-    global receivedStockPurchaseValue
-    global receivedStockSalesValue
-    global notReceivedStockQuantity
-    global notReceivedStockPurchaseValue
-    global notReceivedSalesValue
-    global totalStockQuantity
-    global totalStockPurchaseValue
-    global totalStockSalesValue
+    global actualSalesValue
+    global actualSalesCost
+    global actualSalesReturnCost
+    global actualSalesReturnValue
+    global actualProfit
 
     time.sleep(3)
     if AppName == "LPH":
@@ -1386,6 +1380,26 @@ def verifyStockSummaryReportAfterReceiving(qty):
     assert totalStockPurchaseValue == receivedStockPurchaseValue + notReceivedStockPurchaseValue
     assert totalStockSalesValue == receivedStockSalesValue + notReceivedSalesValue
     print("END>> Verifying Stock Stock Summary Report After item Receiving")
+
+def getReturnToSupplierReport(danpheEMR, creditno):
+    print("START>> Return to supplier report")
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Purchase')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Return to Supplier')]").click()
+    danpheEMR.find_element(By.XPATH, "//span[contains(text(), 'Show Report')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, 'quickFilterInput').send_keys(creditno)
+    time.sleep(2)
+    suppliercredit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]").text
+    suppliercredit = int(suppliercredit)
+    print(suppliercredit)
+    assert creditno == suppliercredit
+    print("END>> Return to supplier report")
 
 
 def __str__():
