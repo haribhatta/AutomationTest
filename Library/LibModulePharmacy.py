@@ -153,16 +153,17 @@ def verifyStockDetailTC(danpheEMR):
 
 def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
     print(">>Start:transferMainStore2MainDispensary")
-
     danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary Request").click()
+    time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[@class = 'btn btn-primary']").click()
     danpheEMR.find_element(By.ID, "dispensary").send_keys("MainDispensary")
-    time.sleep(1)
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "dispensary").send_keys(Keys.ENTER)
     time.sleep(2)
+    danpheEMR.find_element(By.ID, "itemName0")
     danpheEMR.find_element(By.ID, "itemName0").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "itemName0").send_keys(drugname)
