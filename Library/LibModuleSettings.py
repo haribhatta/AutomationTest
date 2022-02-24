@@ -91,6 +91,25 @@ def checkCoreLabReportVerify(danpheEMR):
     print("END>>checkCoreLabReportVerify")
     return labReportVerify
 
+
+def checkCoreCFGdiscountMembership(danpheEMR):
+    print("START>>checkCoreCFGdiscountMembership")
+    global admittingDoctorMandatory
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("MembershipTypeDiscount")
+    membershipTypeDiscountValue = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("membershipTypeDiscountValue:", membershipTypeDiscountValue)
+    danpheEMR.find_element(By.ID, "quickFilterInput").clear()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("MembershipSchemeSettings")
+    membershipSchemeSettingsValue = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("membershipSchemeSettingsValue:", membershipSchemeSettingsValue)
+    print("END>>checkCoreCFGdiscountMembership")
+    return membershipTypeDiscountValue, membershipSchemeSettingsValue
+
+
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles

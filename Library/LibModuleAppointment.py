@@ -75,22 +75,35 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     gender.select_by_visible_text("Female")
     phoneNo = random.randint(9111111111, 9999999999)
     danpheEMR.find_element(By.ID, "txtPhone").send_keys(phoneNo)
-    if discountScheme != 0 and AppName != "SNCH":
-        danpheEMR.find_element(By.ID, "Scheme").click()
-        dropdown1 = Select(danpheEMR.find_element(By.XPATH, "//select[@id='Scheme']"))
-        time.sleep(3)
-        dropdown1.select_by_visible_text(discountScheme)
-        dropdown = danpheEMR.find_element(By.ID, "Scheme")
-    elif discountScheme != 0 and AppName == "SNCH":
-        danpheEMR.find_element(By.ID, "Membership").click()
-        dropdown = Select(danpheEMR.find_element(By.XPATH, "//select[@id='Membership']"))
-        time.sleep(3)
-        dropdown.select_by_visible_text("Social Service Unit")
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "Scheme").click()
-        dropdown1 = Select(danpheEMR.find_element(By.XPATH, "//select[@id='Scheme']"))
-        time.sleep(3)
-        dropdown1.select_by_visible_text("Senior Citizen (10%)")
+    if  discountScheme != 0:
+        print("discountScheme:", discountScheme)
+        ### Community flag
+        communityTypeDiscountFlag = discountScheme.partition('ShowCommunity":')[2]
+        communityTypeDiscountFlag = communityTypeDiscountFlag.partition(',"IsMandatory')[0]
+        print("communityTypeDiscountFlag:",communityTypeDiscountFlag)
+        ### Scheme flag
+        schemeTypeDiscountFlag = discountScheme.partition("{")[0]
+        print("schemeTypeDiscountFlag:",schemeTypeDiscountFlag)
+        ### Label-Community
+        discountCommunityLabel = discountScheme.partition('CommunityLabel":"')[2]
+        discountCommunityLabel = discountCommunityLabel.partition('"')[0]
+        print("discountCommunityLabel:", discountCommunityLabel)
+        ### Label-Scheme
+        discountSchemeLabel = discountScheme.partition('SchemeLabel":"')[2]
+        discountSchemeLabel = discountSchemeLabel.partition('"')[0]
+        print("discountSchemeLabel:", discountSchemeLabel)
+        #
+        communityName = GSV.discountCommunityName
+        schemeName = GSV.discountSchemeName
+        #
+        if communityTypeDiscountFlag == "true":
+            dropdown = Select(danpheEMR.find_element(By.XPATH, "//span[contains(text(),'"+discountCommunityLabel+"')]/child::select"))
+            time.sleep(3)
+            dropdown.select_by_visible_text(communityName)
+        if schemeTypeDiscountFlag == "true":
+            dropdown1 = Select(danpheEMR.find_element(By.XPATH, "//span[contains(text(),'"+discountSchemeLabel+"')]/child::select"))
+            time.sleep(3)
+            dropdown1.select_by_visible_text(schemeName)
     if paymentmode == 'Credit':
         paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select[@id='pay_mode']"))
         paymentoptions.select_by_visible_text("CREDIT")
@@ -165,6 +178,7 @@ def oldPatientRegistration(danpheEMR, HospitalNo, DoctorName, Department):
         danpheEMR.find_element(By.ID, "doctorName").send_keys(DoctorName)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
+    time.sleep(5)
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     # verify = popup.danpheEMR.find_element(By.XPATH, "//b[contains(text(),' Please bring this invoice on your next visit. ')]").text
     print("InvoiceNo", InvoiceNo)

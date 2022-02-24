@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
-
+import math
 ########
 AppName = GSV.appName
 
@@ -19,10 +19,10 @@ def synchBilingIncentive(danpheEMR):
 
 
 def getIncentiveTransactionReport(danpheEMR, doctorName):
-    global quantity
-    global incentiveAmt
-    global tdsAmount
-    global netPayable
+    global actualQuantity
+    global actualIncentiveAmt
+    global actualTDSAmt
+    global actualNetPayable
     danpheEMR.find_element(By.LINK_TEXT, "Incentive").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Reports')]").click()
@@ -35,38 +35,67 @@ def getIncentiveTransactionReport(danpheEMR, doctorName):
     danpheEMR.find_element(By.XPATH, "//input[@onclick='this.select()']").send_keys(Keys.TAB)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(3)
-    quantity = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[3]").text
-    print("quantity", quantity)
-    incentiveAmt = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[4]").text
-    print("incentiveAmt", incentiveAmt)
-    tdsAmount = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[5]").text
-    print("tdsAmount", tdsAmount)
-    netPayable = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[6]").text
-    print("netPayable", netPayable)
+    #actualQuantity = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[3]").text
+    actualQuantity = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'CONSULTATION CHARGE')]/following-sibling::td)[1]").text
+    actualQuantity = int(actualQuantity)
+    print("actualQuantity", actualQuantity)
+    #actualIncentiveAmt = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[4]").text
+    actualIncentiveAmt = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'CONSULTATION CHARGE')]/following-sibling::td)[2]").text
+    actualIncentiveAmt = float(actualIncentiveAmt)
+    print("actualIncentiveAmt", actualIncentiveAmt)
+    #actualTDSAmt = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[5]").text
+    actualTDSAmt = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'CONSULTATION CHARGE')]/following-sibling::td)[3]").text
+    actualTDSAmt = float(actualTDSAmt)
+    print("actualTDSAmt", actualTDSAmt)
+    #actualNetPayable = danpheEMR.find_element(By.XPATH, "//div[@id='itmSummaryPrintPage']/table/tbody/tr[2]/td[6]").text
+    actualNetPayable = danpheEMR.find_element(By.XPATH, "(//td[contains(text(),'CONSULTATION CHARGE')]/following-sibling::td)[4]").text
+    actualNetPayable = float(actualNetPayable)
+    print("actualNetPayable", actualNetPayable)
 
 
 def preIncentiveTransactionReport():
-    global xquantity
-    global xincentiveAmt
-    global xtdsAmount
-    global xnetPayable
-    xquantity = int(quantity)
-    xincentiveAmt = float(incentiveAmt)
-    xtdsAmount = float(tdsAmount)
-    xnetPayable = float(netPayable)
+    global preQuantity
+    global preIncentiveAmt
+    global preTDSAmt
+    global preNetPayable
+    preQuantity = actualQuantity
+    preIncentiveAmt = actualIncentiveAmt
+    preTDSAmt = actualTDSAmt
+    preNetPayable = actualNetPayable
 
 
 def verifyIncentiveTransactionReport(cash, credit):
-    assert int(quantity) == int(xquantity) + 1
-    incentiveAmtCalc = cash * 0.6 + credit
-    print("incentiveAmtCalc", int(incentiveAmtCalc))
-    assert int(incentiveAmt) == int(incentiveAmtCalc) + int(xincentiveAmt)
+    global expectedQuantity
+    global expectedIncentiveAmt
+    global expectedTDSAmt
+    global expectedNetPayable
+    expectedQuantity = preQuantity + 1
+    print("expectedQuantity:", expectedQuantity)
+    assert expectedQuantity == actualQuantity
+    #
+    incentiveAmtCalc = cash * 0.421 + credit
+    expectedIncentiveAmt = preIncentiveAmt + incentiveAmtCalc
+    expectedIncentiveAmt = int(expectedIncentiveAmt)
+    #actualIncentiveAmt = int(actualIncentiveAmt)
+    print("actualIncentiveAmt:", actualIncentiveAmt)
+    print("expectedIncentiveAmt:", expectedIncentiveAmt)
+    assert expectedIncentiveAmt == actualIncentiveAmt
+    #
     tdsAmtCalc = incentiveAmtCalc * 0.15
-    print("tdsAmtCalc", int(tdsAmtCalc))
-    assert float(tdsAmount) == float(xtdsAmount) + tdsAmtCalc
+    expectedTDSAmt = preTDSAmt + tdsAmtCalc
+    expectedTDSAmt = int(expectedTDSAmt)
+    actualTDSAmt = int(actualTDSAmt)
+    print("actualTDSAmt:", actualTDSAmt)
+    print("expectedTDSAmt:", expectedTDSAmt)
+    assert expectedTDSAmt == actualTDSAmt
+    #
     netPayableCalc = incentiveAmtCalc - tdsAmtCalc
-    print("netPayableCalc", netPayableCalc)
-    assert float(netPayable) == float(xnetPayable) + netPayableCalc
+    expectedNetPayable = preNetPayable + netPayableCalc
+    expectedNetPayable = int(expectedNetPayable)
+    actualNetPayable = int(actualNetPayable)
+    print("actualNetPayable:", actualNetPayable)
+    print("expectedNetPayable:", expectedNetPayable)
+    assert expectedNetPayable == actualNetPayable
 
 
 def IncentivePayment(danpheEMR, doctorName):

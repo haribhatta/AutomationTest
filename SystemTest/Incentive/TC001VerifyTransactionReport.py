@@ -13,12 +13,10 @@ import Library.LibModuleAppointment as LA
 adminUserId = GSV.adminUserID
 adminUserPwd = GSV.adminUserPwD
 
-department=GSV.departmentGyno
-doctor = GSV.doctorGyno
+departmentGynae=GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
 ###
-paymode = "Cash"
 itemprice = GSV.opdRate
-priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 # incentive % = 60%
 
@@ -26,11 +24,11 @@ EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 LB.counteractivation(EMR)
 LI.synchBilingIncentive(EMR)
-LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=department, doctor=doctor, priceCategoryType=priceCategoryType)
-LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctor)
+HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal").HospitalNo
+LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctorGynae)
 LI.preIncentiveTransactionReport()
 LI.synchBilingIncentive(EMR)
-LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctor)
+LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctorGynae)
 LI.verifyIncentiveTransactionReport(cash=itemprice, credit=0)
 AC.logout()
 AC.closeBrowser()
