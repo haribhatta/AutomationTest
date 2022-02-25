@@ -116,7 +116,8 @@ if appName == "LPH":
       admitBed = "General Bed"
 
 ###Discount Scheme
-      discountSchemeType = "Helpless"
+      #discountSchemeType = "Helpless"
+      discountCommunityName = "SOCIAL SERVICE UNIT"
       discountSchemeName = "Helpless (50%)"
 
 ###Users Name:
@@ -216,8 +217,9 @@ if appName == "SNCH":
 ###Users Name:
       user = "admin"
 ###Discount Scheme
-      discountSchemeType = "SocialService"
-      discountSchemeName = "Social Service Unit"
+      #discountSchemeType = "SeniorCitizen"
+      discountCommunityName = "Social Service Unit"
+      discountSchemeName = "Senior Citizen (10%)"
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
@@ -315,9 +317,10 @@ if appName == "MPH":
 ###Users Name:
       UserBilling = 'Mr. Bhagawati Pandey'
 ###Discount Scheme
-      discountSchemeType = "StaffFamily"
+      #discountSchemeType = "SeniorCitizen"
+      discountCommunityName = "Hospital"
       discountSchemeName = "Staff Family (30%)"
-      ###Doctors/Departments List
+###Doctors/Departments List
       doctorNephro = "Dr. Eva Gauchan"
       departmentNephro = "Pediatrics "
       doctor2 = "Dr. Junu Shrestha"
@@ -418,7 +421,7 @@ if appName == "RTM":
 ###Users Name:
       user = "admin"
 ###Discount Scheme
-      discountSchemeType = "Staff"
+      discountCommunityName = ""
       discountSchemeName = "Staff (50%)"
 
    #def __str__():
