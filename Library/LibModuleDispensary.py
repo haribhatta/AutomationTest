@@ -159,7 +159,10 @@ def returnPharmacyInvoice(danpheEMR, pInvoiceNo, qty, returnremark):
 
 def verifyReturnPharmacyInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemark):
     print("<<Verify Return Pharmacy Invoice: START")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//span[contains(.,'Dispensary')]").click()
     time.sleep(3)
