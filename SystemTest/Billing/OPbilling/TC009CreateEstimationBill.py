@@ -17,6 +17,7 @@ USGName = GSV.USG
 USGRate = GSV.usgRate
 print("radioTestUSG", USGName)
 print("radioTestUSG", USGRate)
+priceCategoryType = 'Normal'
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
