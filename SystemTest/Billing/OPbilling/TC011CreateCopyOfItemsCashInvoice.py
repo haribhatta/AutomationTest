@@ -11,7 +11,7 @@ doctorGynae = GSV.doctorGyno
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae).InvoiceNo
+InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType='Normal').InvoiceNo
 LB.returnBillingInvoice(EMR, InvoiceNo, "This is cash return 1.")
 LB.createCopyItemInvoice(EMR, 'Cash')
 LB.returnBillingInvoice(EMR, InvoiceNo, "This is cash return 2.")
