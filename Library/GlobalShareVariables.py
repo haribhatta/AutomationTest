@@ -229,7 +229,7 @@ if appName == "MPH":
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #billing user
-      foUserID = 'bandana'
+      foUserID = 'admin' #bandana
       foUserPwD = 'pass123'
       foUserName = 'Ms. Bandana Harmel'
       #IT user
