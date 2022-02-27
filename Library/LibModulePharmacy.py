@@ -14,7 +14,10 @@ AppName = GSV.appName
 def addPharmacyItem(danpheEMR, genericName):  # incomplete
     print(">>START: addPharmacyItem")
     global DrugName
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Setting").click()
     time.sleep(3)
@@ -29,14 +32,16 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
     drugMGtemp = random.randint(10, 1000)
     drugMG = str(drugMGtemp)
     DrugName = ('Autodrug' + drugMG)
-    print(DrugName)
+    print("DrugName:", DrugName)
     danpheEMR.find_element(By.XPATH, "//input[@value='']").send_keys(DrugName)
     danpheEMR.find_element(By.XPATH, "//input[@value='']").send_keys(Keys.RETURN)
     time.sleep(3)
     # danpheEMR.find_element(By.CSS_SELECTOR, "//select").click()
-    danpheEMR.find_element(By.XPATH, "//div[4]/div/div/div/input").send_keys("HIMALAYAN")  # Company
+    drugCompany = GSV.drugCompany
+    danpheEMR.find_element(By.XPATH, "//div[4]/div/div/div/input").send_keys(drugCompany)  # Company
     danpheEMR.find_element(By.XPATH, "//div[4]/div/div/div/input").send_keys(Keys.RETURN)
-    danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(genericName)  # itemType
+    itemType = GSV.drugType
+    danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(itemType)  # itemType
     danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(Keys.RETURN)  # itemType
     # danpheEMR.find_element(By.CSS_SELECTOR, ".ng-touched:nth-child(1)").send_keys("ABGEL")
     danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys("Tablet")  # unit
@@ -52,7 +57,10 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
 def verifyPharmacyItem(danpheEMR):
     print(">>Start:verifyPharmacyItem")
     time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Setting").click()
     time.sleep(5)

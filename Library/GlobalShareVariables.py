@@ -83,7 +83,8 @@ if appName == "LPH":
       insurancedrug = "AMFAST 5MG TAB"
       drug1NarcoticName = "MORFIUM 10 MG TAB"
       drug1NarcoticRate ="4"
-
+      drugType = 'GASTRIC'
+      drugCompany = 'HIMALAYA'
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -188,6 +189,8 @@ if appName == "SNCH":
       supplier = "AAKAR ENTERPRISES"
       drug1NarcoticName = "MORFIUM 1ML ING"
       drug1NarcoticRate = 100
+      drugType = 'GASTRIC'
+      drugCompany = 'HIMALAYA'
 ###Inventory/Store Items Name:
       GeneralInventory = "General Inventory"
       Dispensary1 = "General Inventory"
@@ -289,6 +292,8 @@ if appName == "MPH":
       Testdrug = "testdrugreport"
       drugSinexName = 'SINEX'
       drugSinexRate = 3
+      drugType = 'GASTRIC'
+      drugCompany = 'HIMALAYA'
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
@@ -388,6 +393,8 @@ if appName == "RTM":
       supplier = "AARATI MEDITCHA PVT"
       drug1NarcoticName = "LOZ 1 MG"
       drug1NarcoticRate ="2"
+      drugType = 'GASTRIC'
+      drugCompany = 'HIMALAYA'
 ###Inventory/Store Items Name:
       Inventory1 = "General Inventory"
       SubStoreName1 = "ADMINISTRATION"
