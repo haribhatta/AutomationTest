@@ -25,8 +25,9 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success']").click()
     time.sleep(3)
+    salesCategory = GSV.salesCategoyType
     danpheEMR.find_element(By.XPATH, "//input[@onclick='this.setSelectionRange(0, this.value.length)']").send_keys(
-        "Pharmay Unit")
+        salesCategory)
     danpheEMR.find_element(By.XPATH, "//input[@onclick='this.setSelectionRange(0, this.value.length)']").send_keys(
         Keys.RETURN)
     drugMGtemp = random.randint(10, 1000)

@@ -10,7 +10,7 @@ appName = input("Please enter project/application name:\n"
 
 if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
-###Login Credentials:
+###TestAction>>LogIn:
       #admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
@@ -47,7 +47,7 @@ if appName == "LPH":
       #vaccination user
       vaccineUserID = 'surendra'
       vaccineUserPwD = 'pass123'
-###Billing Items Name:
+###TestAction>>BillingItems:
       opdRate = 30
       deposit = 100
       CBC = "CBC"
@@ -64,7 +64,9 @@ if appName == "LPH":
       LabType = "ER"
       #EHS Billing
       opdRateEHS = 400
-###Pharmacy/Dispensary Items Name:
+      discountCommunityName = "SOCIAL SERVICE UNIT"
+      discountSchemeName = "Helpless (50%)"
+###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1GenericName = 'PANTOPRAZOLE 40 MG TAB'
       drug1Rate = 5
       drug1BrandName = 'PETOR 40 MG'
@@ -79,17 +81,20 @@ if appName == "LPH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       Testdrug = "testdrugreport"
-      supplier = "A.G. HEALTHCARE"
       insurancedrug = "AMFAST 5MG TAB"
       drug1NarcoticName = "MORFIUM 10 MG TAB"
       drug1NarcoticRate ="4"
       drugType = 'GASTRIC'
       drugCompany = 'HIMALAYA'
-###Inventory/Store Items Name:
-      Inventory1 = "General Inventory"
-      SubStoreName1 = "ADMINISTRATION"
-      Dispensary1 = "MainDispensary"
-      dispensaryName = "MainDispensary"
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "ASHWANI PHARMACY"
+      salesCategoyType = "Pharmacy Unit"
+###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "ACCOUNT"
+      subStoreName2 = "ADMINISTRATION"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
@@ -98,36 +103,28 @@ if appName == "LPH":
       #stationaryItem1 = "DOTPEN"
       stationaryItem1 = "USG PAPER"
       ###Suppliers Name list
-      supplierShremad = "Shremad Tech."
-      supplierName2 = "ASHWANI PHARMACY"
-###Sub Stores Name:
-      SubStore1 = "ACCOUNT"
-      SubStore2 = "ADMINISTRATION"
-      store1 = "ADMINISTRATION"
-###Doctors/Departments Name:
+      inventorySupplierName1 = "Shremad Tech."
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "Labour Ward"
+      generalBedFeature = "General Bed"
+      admitWard = "Labour Ward"
+      admitBed = "General Bed"
+      generalWard = "Labour Ward"
+      generalBedFeature = "General Bed"
+###TestAction>>Settings:
+      UserBilling = 'Mr. Bhagawati Pandey'
       doctorGyno = "Dr. doctor doctor"
       departmentGyno = "GYNAE & OBS"
       doctorGynoEHS = "Dr. Anupa Thapa"
       doctor2 = "Mr. admin admin"
-###Wards
-      generalWard = "Labour Ward"
-      generalBedFeature = "General Bed"
-###ADT:
-      admitWard = "Labour Ward"
-      admitBed = "General Bed"
 
-###Discount Scheme
-      #discountSchemeType = "Helpless"
-      discountCommunityName = "SOCIAL SERVICE UNIT"
-      discountSchemeName = "Helpless (50%)"
-
-###Users Name:
-      UserBilling = 'Mr. Bhagawati Pandey'
 ###############################################################################
 ########Defining Variables for SNCH
 if appName == "SNCH":
       appURL = "http://202.51.74.168:168/"
-###Login Credentials:
+###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
@@ -154,7 +151,7 @@ if appName == "SNCH":
       #Medical Record user
       MRUserID = 'haris'
       MRUserPwD = 'pass123'
-### Bill Items Name:
+###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
       CBC = "CBC"
@@ -170,8 +167,9 @@ if appName == "SNCH":
       USG = "USG ABDOMIN AND PELVIS"
       usgRate = 1000
       admitRate = 1500
-###Pharmacy/Dispensary Items Name:
-      dispensaryName = "MainDispensary"
+      discountCommunityName = "Social Service Unit"
+      discountSchemeName = "Senior Citizen (10%)"
+###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "quinapril"
       drug1Rate = 3
@@ -186,48 +184,45 @@ if appName == "SNCH":
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
       Testdrug = "Testdrugreport"
-      supplier = "AAKAR ENTERPRISES"
       drug1NarcoticName = "MORFIUM 1ML ING"
       drug1NarcoticRate = 100
       drugType = 'GASTRIC'
       drugCompany = 'HIMALAYA'
-###Inventory/Store Items Name:
-      GeneralInventory = "General Inventory"
-      Dispensary1 = "General Inventory"
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "ACCOUNT"
+      subStoreName2 = "ADMINISTRATION"
       A4Paper = 'A4 PAPER'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
       File = "FILE"
-###Sub Stores Name:
       SubStore1 = "General"
       SubStore2 = "PostOps"
-###Doctors/Departments List
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy Unit"
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      bedFeature = "BED CHARGE General Ward"
+      admitWard = "Pediatric Ward"
+      admitBed = "Pediatric Bed Charge"
+###TestAction>>Settings:
+      user = "admin"
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
-###Suppliers Name list
-      supplierShremad = "Shremad Tech."
-      supplierName2 = "AAKAR ENTERPRISES"
-###Wards Name:
-      generalWard = "General Ward"
-      GeneralWard = "ICU"
-      #wardid = "General Ward"
-      bedFeature = "BED CHARGE General Ward"
-      ###ADT:
-      admitWard = "Pediatric Ward"
-      admitBed = "Pediatric Bed Charge"
-###Users Name:
-      user = "admin"
-###Discount Scheme
-      #discountSchemeType = "SeniorCitizen"
-      discountCommunityName = "Social Service Unit"
-      discountSchemeName = "Senior Citizen (10%)"
+
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
       appURL = "http://202.51.74.168:129/"
-###Login Credentials:
+###TestAction>>LogIn:
       #admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
@@ -256,7 +251,7 @@ if appName == "MPH":
       #store user
       storeUserID = 'radha'
       storeUserPwD = 'pass123'
-###Billing Items Name:
+###TestAction>>BillingItems:
       opdRate = 660
       deposit = 1000
       CBC = "COMPLETE BLOOD COUNT-CBC"
@@ -277,7 +272,9 @@ if appName == "MPH":
       btctRate = 200
       erTest = "TC, DC"
       LabType = "ER"
-###Pharmacy/Dispensary Items Name:
+      discountCommunityName = "Hospital"
+      discountSchemeName = "Staff Family (30%)"
+###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
       drug1Rate = 25
@@ -294,11 +291,16 @@ if appName == "MPH":
       drugSinexRate = 3
       drugType = 'GASTRIC'
       drugCompany = 'HIMALAYA'
-###Inventory/Store Items Name:
-      Inventory1 = "General Inventory"
-      SubStoreName1 = "ADMINISTRATION"
-      Dispensary1 = "MainDispensary"
-      dispensaryName = "Main Dispensary"
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "Arati Medical"
+      salesCategoyType = "Pharmacy Unit"
+###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "Administration Sub Store"
+      subStoreName2 = "PostOps"
+      inventorySupplierName1 = "Shremad Tech."
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
@@ -306,37 +308,27 @@ if appName == "MPH":
       storeItem1Rate = 10
       #stationaryItem1 = "DOTPEN"
       stationaryItem1 = "envelop print"
-###Sub Stores Name:
-      SubStore1 = "General"
-      SubStore2 = "PostOps"
-      store1 = "Administration Sub Store"
-###Doctors/Departments Name:
-      doctorGyno = "Dr. Anjali Subedi"
-      departmentGyno = "OBG Gynae"
-###Wards Name:
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
       generalWard = "General Non-Covid Ward"
       bedFeature = "General Non-Covid Ward"
-###ADT:
       admitWard = "General Non-Covid Ward"
       admitBed = "Pediatric Bed Charge"
-###Users Name:
+###TestAction>>Settings:
       UserBilling = 'Mr. Bhagawati Pandey'
-###Discount Scheme
-      #discountSchemeType = "SeniorCitizen"
-      discountCommunityName = "Hospital"
-      discountSchemeName = "Staff Family (30%)"
-###Doctors/Departments List
       doctorNephro = "Dr. Eva Gauchan"
       departmentNephro = "Pediatrics "
       doctor2 = "Dr. Junu Shrestha"
-
+      doctorGyno = "Dr. Anjali Subedi"
+      departmentGyno = "OBG Gynae"
 
 ###############################################################################
 ########Defining Variables for Rhythm
 ###############################################################################
 if appName == "RTM":
       appURL = "http://202.51.74.168:85/"
-###Login Credentials:
+###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
@@ -358,7 +350,7 @@ if appName == "RTM":
       #Inventory user
       storeUserID = 'admin'
       storeUserPwD = 'pass123'
-### Bill Items Name:
+###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
       CBC = "CBC(HB,TC,DC,PLT)"
@@ -374,8 +366,9 @@ if appName == "RTM":
       USG = "ULTRA SOUND"
       usgRate = 1000
       admitRate = 1200
-###Pharmacy/Dispensary Items Name:
-      dispensaryName = "MainDispensary"
+      discountCommunityName = ""
+      discountSchemeName = "Staff (50%)"
+###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SAMCOBA 1500 MG"
       drug1GenericName = "mecobalamin"
       drug1Rate = 20
@@ -393,13 +386,16 @@ if appName == "RTM":
       supplier = "AARATI MEDITCHA PVT"
       drug1NarcoticName = "LOZ 1 MG"
       drug1NarcoticRate ="2"
-      drugType = 'GASTRIC'
+      drugType = 'ABDOMINAL'
       drugCompany = 'HIMALAYA'
-###Inventory/Store Items Name:
-      Inventory1 = "General Inventory"
-      SubStoreName1 = "ADMINISTRATION"
-      Dispensary1 = "MainDispensary"
-      dispensaryName = "Main Dispensary"
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AARATI MEDITCHA PVT"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "General"
+      subStoreName2 = "PostOps"
       A4Paper = 'Paper A4'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
@@ -407,29 +403,21 @@ if appName == "RTM":
       storeItem1Rate = 10
       # stationaryItem1 = "DOTPEN"
       stationaryItem1 = "Sanitizer"
-###Sub Stores Name:
-      SubStore1 = "General"
-      SubStore2 = "PostOps"
-###Doctors/Departments List
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy"
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      bedFeature = "General"
+      admitWard = "General Ward"
+      admitBed = "Pediatric Bed Charge"
+###TestAction>>Settings:
+      user = "admin"
       doctorGyno = "Dr. Lata Gautam"
       departmentGyno = "PSYCHIATRIC"
       departmentNephro = "Nephro"
-###Suppliers Name list
-      supplierShremad = "Shremad Tech."
-      supplierName2 = "AARATI MEDITCHA PVT"
-###Wards Name:
-      generalWard = "General Ward"
-      GeneralWard = "ICU"
-      #wardid = "General Ward"
-      bedFeature = "General"
-      ###ADT:
-      admitWard = "General Ward"
-      admitBed = "Pediatric Bed Charge"
-###Users Name:
-      user = "admin"
-###Discount Scheme
-      discountCommunityName = ""
-      discountSchemeName = "Staff (50%)"
 
    #def __str__():
     #  return
