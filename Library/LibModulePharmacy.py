@@ -188,13 +188,13 @@ def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
 
 
 
-def transferStore2DispensaryTC(danpheEMR, tqty, DrugName):
+def transferStore2Dispensary(danpheEMR, tqty, drugName):
     print(">>Start:transferStore2DispensaryTC")
     danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").clear()
     time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugName)
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Transfer Item").click()
     danpheEMR.find_element(By.XPATH, "//input[@type='number']").send_keys(tqty)
@@ -228,11 +228,11 @@ def transferMainDispensary2MainStore(danpheEMR, drugname, qty):
     print("End>>transferMainDispensary2MainStore")
 
 
-def transferDispensary2StoreTC(danpheEMR, tqty):
+def transferDispensary2Store(danpheEMR, drugName, tqty):
     print(">>Start: transferDispensary2StoreTC")
     danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
     time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugName)
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Store Transfer").click()
     time.sleep(2)
@@ -410,7 +410,9 @@ def verifyPharmacyInvoice3(danpheEMR, drugname, qty, rate):
 
 
 def addPharmacyDeposit(danpheEMR, HospitalNo, deposit):
-    if AppName == 'SNCH':
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
@@ -426,7 +428,11 @@ def addPharmacyDeposit(danpheEMR, HospitalNo, deposit):
 
 
 def returnPharmacyDeposit(danpheEMR, HospitalNo, depositreturn):
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
     time.sleep(3)
