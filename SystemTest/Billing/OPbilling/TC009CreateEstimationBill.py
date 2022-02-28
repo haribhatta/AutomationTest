@@ -22,11 +22,6 @@ priceCategoryType = 'Normal'
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
-LBR.getBillingDashboard(EMR)
-LBR.preSystemDataBillingDashboard()
 LB.createProvisionalBill(EMR, HospitalNo, GSV.USG)  #provisional=usgprice
-LBR.getBillingDashboard(EMR)
-LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
-                            provisional= USGRate, provisionalcancel=0)
 AC.logout()
 AC.closeBrowser()
