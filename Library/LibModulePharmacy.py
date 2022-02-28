@@ -262,7 +262,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     return gRNo
 
 def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
-    time.sleep(3)
+    print("START>>verifyPharmacyGoodsReceipt")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     else:
@@ -277,14 +277,16 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "View").click()
     time.sleep(3)
-    sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
-    print("sysdrugname is :", sysdrugname)
-    if AppName == 'LPH':
-        assert genericName == sysdrugname
+    if AppName == "LPH":
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'"+genericName+"')]").text
+        print("sysdrugname:", sysdrugname)
+        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     else:
-        assert brandName == sysdrugname
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//b[contains(text(),'"+brandName+"')]").text
+        print("sysdrugname:", sysdrugname)
+        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+
+    print("END>>verifyPharmacyGoodsReceipt")
 
 def cancelPharmacyGoodsReceipt(danpheEMR):
     print("START>>cancelPharmacyGoodsReceipt")

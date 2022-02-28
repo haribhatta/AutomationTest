@@ -10,8 +10,8 @@ AppName = GSV.appName
 
 
 # Module:Dispensary ------------------
-def activatePharmacyCounter(danpheEMR, dispensaryName):
-    print(">>Start: Pharmacy Counter Activate: START")
+def activateDispensaryCounter(danpheEMR, dispensaryName):
+    print(">>Start:activateDispensaryCounter")
     time.sleep(7)
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(7)
@@ -21,7 +21,7 @@ def activatePharmacyCounter(danpheEMR, dispensaryName):
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//h5").click()
     time.sleep(2)
-    print("Pharmacy Counter Activate: END")
+    print("END>>activateDispensaryCounter")
 
 def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     print(">>Create Dispensary Sale to Hospital Patient: START")
