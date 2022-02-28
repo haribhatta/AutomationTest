@@ -33,7 +33,7 @@ LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, 
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.preItemWisePurchaseReport()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate)
-LP.verifyPharmacyGoodsReceipt(EMR, DrugName=GSV.drug1BrandName, grno=goodsReceiptNo)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1GenericName, grno=goodsReceiptNo)
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.verifyItemWisePurchaseReport(qty=2, purchaseValue=totalamount)
 AC.logout()

@@ -649,15 +649,19 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "View").click()
-    time.sleep(3)
-    sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
-    print("sysdrugname is :", sysdrugname)
-    if AppName == 'LPH':
-        assert genericName == sysdrugname
-    else:
-        assert brandName == sysdrugname
     time.sleep(5)
-    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    if AppName == "LPH":
+        sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
+        print("sysdrugname is :", sysdrugname)
+        assert genericName == sysdrugname
+        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    else:
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='print-good-reciept']/div/div/div[10]/table/tbody/tr/td[2]/b").text
+        print("sysdrugname is :", sysdrugname)
+        assert brandName == sysdrugname
+        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+
+
 
 
 def closePopupApplication(danpheEMR):
