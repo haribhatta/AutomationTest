@@ -16,23 +16,23 @@ import Library.LibModuleAppointment as LA
 # pharmacy desk user login
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
-
-drug = GSV.Testdrug
-qty = 10
+###
+drug = GSV.drug1BrandName
 transferqty = 1
 transferStore2Dispensary = 'Yes'
-
+dispensaryName = GSV.dispensaryName1
+###
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR,dispensaryName=GSV.dispensaryName)
-LP.getStoreDetail(drugname=drug, danpheEMR=EMR)
-LP.getStockDetail(danpheEMR=EMR, drugname=drug)
-LP.transferStore2Dispensary(danpheEMR=EMR, drugName=drug, tqty=transferqty)
-LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
-LP.verifyStoreDetail(danpheEMR=EMR, drugname=drug)
-LP.transferDispensary2Store(danpheEMR=EMR, drugName=drug, tqty=transferqty)
-LP.verifyStoreDetail(danpheEMR=EMR, drugname=drug)
-LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
+LD.activatePharmacyCounter(EMR,dispensaryName=dispensaryName)
+#LP.getStoreDetail(drugname=drug, danpheEMR=EMR)
+#LP.getStockDetail(danpheEMR=EMR, drugname=drug)
+LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=drug, qty=transferqty)
+#LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
+#LP.verifyStoreDetail(danpheEMR=EMR, drugname=drug)
+LD.transferMainDispensary2MainStore(danpheEMR=EMR, drugname=drug, qty=transferqty)
+#LP.verifyStoreDetail(danpheEMR=EMR, drugname=drug)
+#LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
 
 AC.logout()
 AC.closeBrowser()

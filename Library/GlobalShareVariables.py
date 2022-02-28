@@ -80,7 +80,6 @@ if appName == "LPH":
       drug5BrandRate = 4.86
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
-      Testdrug = "testdrugreport"
       insurancedrug = "AMFAST 5MG TAB"
       drug1NarcoticName = "MORFIUM 10 MG TAB"
       drug1NarcoticRate ="4"
@@ -183,7 +182,6 @@ if appName == "SNCH":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
-      Testdrug = "Testdrugreport"
       drug1NarcoticName = "MORFIUM 1ML ING"
       drug1NarcoticRate = 100
       drugType = 'GASTRIC'
@@ -286,7 +284,6 @@ if appName == "MPH":
       drug4BrandRate = 6.49
       drug5BrandName = 'MONOTRATE-20MG TAB'
       drug5BrandRate = 4.86
-      Testdrug = "testdrugreport"
       drugSinexName = 'SINEX'
       drugSinexRate = 3
       drugType = 'GASTRIC'
@@ -382,7 +379,6 @@ if appName == "RTM":
       drugSinexName = 'SINEX TAB'
       drugSinexRate = 3
       drugAasma = 'AASMA 150 XR TAB'
-      Testdrug = "Testdrugreport"
       supplier = "AARATI MEDITCHA PVT"
       drug1NarcoticName = "LOZ 1 MG"
       drug1NarcoticRate ="2"

@@ -54,7 +54,6 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
     time.sleep(9)
     print("End>>addPharmacyItem")
 
-
 def verifyPharmacyItem(danpheEMR):
     print(">>Start:verifyPharmacyItem")
     time.sleep(2)
@@ -70,9 +69,8 @@ def verifyPharmacyItem(danpheEMR):
     assert DrugName == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div").text
     print("End>>verifyPharmacyItem")
 
-
-def getStoreDetail(danpheEMR, drugname):
-    print(">>Start: getStoreDetail")
+def getPharmacyStockDetail(danpheEMR, drugname):
+    print(">>Start: getPharmacyStockDetail")
     global drugqtyMS
     if AppName == 'SNCH':
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
@@ -88,29 +86,9 @@ def getStoreDetail(danpheEMR, drugname):
         sysdrugqty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
         drugqtyMS = int(sysdrugqty)
         print("drugqtyMS:", drugqtyMS)
-    print("End>>getStoreDetail")
+    print("End>>getPharmacyStockDetail")
 
-
-def getStockDetail(danpheEMR, drugname):
-    print(">>Start: getStockDetail")
-    global drugqtySS
-    if AppName == 'SNCH':
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
-        time.sleep(3)
-        drugnameSS = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ItemName'])[2]").text
-        print("drugnameSS:", drugnameSS)
-        sysdrugqty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
-        drugqtySS = int(sysdrugqty)
-        print("drugqtySS:", drugqtySS)
-    print("End>>getStockDetail")
-
-
-def verifyStoreDetail(danpheEMR, drugname):
+def verifyPharmacyStockDetail(danpheEMR, drugname):
     print(">>Start:verifyStoreDetail")
     danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     time.sleep(3)
@@ -129,42 +107,16 @@ def verifyStoreDetail(danpheEMR, drugname):
     assert int(drugqtyMScalc) == int(sysdrugqty)
     print("End>>verifyStoreDetail")
 
-
-def verifyStockDetail(danpheEMR, drugname):
-    print(">>Start: verifyStockDetail")
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
-    time.sleep(2)
-    sysdrugname = danpheEMR.find_element(By.XPATH,
-                                         "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div").text
-    print("sysdrugname", sysdrugname)
-    assert drugname == sysdrugname
-    sysdrugqty = danpheEMR.find_element(By.XPATH,
-                                        "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
-    print("drugqtySS:", drugqtySS)
-    print("sysdrugqty", sysdrugqty)
-    assert int(drugqtySS) == int(sysdrugqty)
-    print("End>>: verifyStockDetail")
-
-
-def verifyStockDetailTC(danpheEMR):
-    print(">>Start: verifyStockDetailTC")
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName)
-    time.sleep(2)
-    sysdrugqty = danpheEMR.find_element(By.XPATH,
-                                        "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
-    assert sysdrugqty == '0'
-    print("End>>verifyStockDetailTC")
-
-
 def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
     print(">>Start:transferMainStore2MainDispensary")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(5)
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    #danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Store' and contains(text(),'Store')]").click()
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary Request").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[@class = 'btn btn-primary']").click()
@@ -185,152 +137,6 @@ def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
     time.sleep(2)
     requisitionView = danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Requisition View')]")
     requisitionView.is_displayed()
-
-
-
-
-def transferStore2Dispensary(danpheEMR, tqty, drugName):
-    print(">>Start:transferStore2DispensaryTC")
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").clear()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugName)
-    time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Transfer Item").click()
-    danpheEMR.find_element(By.XPATH, "//input[@type='number']").send_keys(tqty)
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "(//input[@onclick='this.select();'])[2]").send_keys("MainDispensary")
-    time.sleep(1)
-    danpheEMR.find_element(By.XPATH, "(//input[@onclick='this.select();'])[2]").send_keys(Keys.TAB)
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Transfer')]").click()
-    time.sleep(2)
-    print("End>>transferStore2DispensaryTC")
-
-
-def transferMainDispensary2MainStore(danpheEMR, drugname, qty):
-    print(">>Start: transferMainDispensary2MainStore")
-    global drugqtySS
-    global drugqtyMS
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Transfer").click()
-    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'New Transfer')]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "selectedStore").send_keys("Main Store")
-    danpheEMR.find_element(By.ID, "selectedStore").send_keys(Keys.ENTER)
-    danpheEMR.find_element(By.ID, "itemName0").send_keys(drugname)
-    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
-    time.sleep(1)
-    danpheEMR.find_element(By.ID, "qtyip0").send_keys(qty)
-    danpheEMR.find_element(By.ID, "remarks").send_keys("Transfer Quantity is 1 ")
-    danpheEMR.find_element(By.ID, "stockTransfer").click()
-    print("End>>transferMainDispensary2MainStore")
-
-
-def transferDispensary2Store(danpheEMR, drugName, tqty):
-    print(">>Start: transferDispensary2StoreTC")
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugName)
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Store Transfer").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.ID, "transfertoStoreQty").send_keys(tqty)
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Transfer')]").click()
-    time.sleep(2)
-    print("End>>transferDispensary2StoreTC")
-
-
-def manageStoreStock(danpheEMR, drugname, type, qty):
-    print(">>START: Manage Store Stock")
-    global drugqtyMScalc
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Manage Item").click()
-    time.sleep(2)
-    if type == "In":
-        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(1) > span").click()
-        drugqtyMScalc = int(drugqtyMS) + qty
-    elif type == "Out":
-        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(2) > span").click()
-        drugqtyMScalc = int(drugqtyMS) - qty
-    danpheEMR.find_element(By.XPATH, "//input[@name='UpdatedQty']").send_keys(qty)
-    danpheEMR.find_element(By.XPATH, "//textarea[@name='Remark']").send_keys("Stock adjusted")
-    danpheEMR.find_element(By.XPATH, "//input[@value='Update Stock']").click()
-    time.sleep(2)
-
-
-def createPharmacyInvoice(danpheEMR, HospitalNo, qty, paymentmode):
-    print(">>Create Pharmacy OPD Invoice: START")
-    global pInvoiceNo
-    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
-    danpheEMR.find_element(By.ID, "patient-search").click()
-    danpheEMR.find_element(By.ID, "patient-search").send_keys(HospitalNo)
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.TAB)
-    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.RETURN)
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "item-box0").click()
-    danpheEMR.find_element(By.ID, "item-box0").clear()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "item-box0").send_keys()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
-    time.sleep(5)
-    drugavlqty = danpheEMR.find_element(By.XPATH, "(//input[@value=''])[6]").get_attribute("Value")
-    print("Drug Available qty:", drugavlqty)
-    drugavlqty = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(8) > .form-control").text
-    print("Drug Available qty:", drugavlqty)
-    danpheEMR.find_element(By.ID, "qty-box0").click()
-    danpheEMR.find_element(By.ID, "qty-box0").clear()
-    danpheEMR.find_element(By.ID, "qty-box0").send_keys(qty)
-    drugremainingqty = int(drugqtySS) - qty
-    print("Remaining qty:", drugremainingqty)
-    newdrugqtySS = drugremainingqty
-    time.sleep(3)
-    if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-        paymentoptions.select_by_visible_text("CREDIT")
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
-
-    danpheEMR.find_element(By.XPATH, "//input[@value='Print Invoice']").click()
-    time.sleep(5)
-    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
-    pInvoiceNo = pInvoiceNo.partition("PH")[2]
-
-    print("Create Pharmacy OPD Invoice: END<<")
-
-
-def createPharmacyInvoiceAnonymous(danpheEMR, drugname, qty, paymentmode):
-    print(">>Create Pharmacy OPD Invoice: START")
-    global pInvoiceNo
-    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Anonymous Patient')]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "item-box0").click()
-    danpheEMR.find_element(By.ID, "item-box0").clear()
-    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugname)
-    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
-    time.sleep(5)
-    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
-    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").click()
-    danpheEMR.find_element(By.XPATH, "// input[ @ formcontrolname = 'Quantity']").send_keys(qty)
-    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
-    time.sleep(5)
-    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
-    print("pInvoiceNo", pInvoiceNo)
-    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger history-del-btn']").click()
-    pInvoiceNo = pInvoiceNo.partition("PH")[2]
-    print("END>>: Create Pharmacy OPD Invoice.", pInvoiceNo)
-
 
 def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>Start: Create purchase order in pharmacy")
@@ -363,7 +169,6 @@ def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     danpheEMR.find_element(By.CSS_SELECTOR, ".text-right > .btn-success").click()
     time.sleep(5)
 
-
 def verifyCreatePharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>START: verifyCreatePharmacyPurchaseOrder")
     danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
@@ -383,7 +188,6 @@ def verifyCreatePharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print("app Item name:", appItemName)
     assert drugName == appItemName
 
-
 def addPharmacyGRfromPO(danpheEMR):
     print(">>Start: Create GR from purchase order in pharmacy")
     danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
@@ -393,61 +197,6 @@ def addPharmacyGRfromPO(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Add Goods Receipt").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//input[@value='Receipt']").click()
-
-
-def verifyPharmacyInvoice(danpheEMR, qty):
-    print(">>Verify Pharmacy Invoice: START")
-    assert str(qty) == danpheEMR.find_element(By.XPATH, "//tr[2]/td[3]").text
-    totalamount = danpheEMR.find_element(By.XPATH, "//table[@id='pharma-bill-sum']/tbody/tr[3]/td[2]").text
-    totalamount = totalamount.partition("Rs. ")[2]
-    totalamount = totalamount.partition(".00")[0]
-    print("Verify Pharmacy Invoice: END<<", "Pharmacy Invoice No: ", pInvoiceNo)
-
-
-def verifyPharmacyInvoice3(danpheEMR, drugname, qty, rate):
-    time.sleep(7)
-    print(">>Verify Pharmacy Invoice: START")
-    danpheEMR.find_element(By.XPATH, "//i[@class='fa fa-close']").click()
-
-
-def addPharmacyDeposit(danpheEMR, HospitalNo, deposit):
-    if AppName == 'LPH':
-        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    else:
-        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Deposit").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//input[@name='DepositAmount']").send_keys(deposit)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//input[@value='Add Deposit']").click()
-        time.sleep(3)
-
-
-def returnPharmacyDeposit(danpheEMR, HospitalNo, depositreturn):
-    if AppName == 'LPH':
-        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    else:
-        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Deposit").click()
-    time.sleep(5)
-    deposittype = Select(danpheEMR.find_element(By.XPATH, "//select"))
-    deposittype.select_by_visible_text("Return Deposit")
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//input[@name='DepositAmount']").send_keys(depositreturn)
-    danpheEMR.find_element(By.XPATH, "//input[@value='Return Deposit']").click()
-    time.sleep(3)
-
 
 def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     print("START>>createPharmacyGoodsReceipt")
@@ -512,6 +261,31 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     print("END>>createPharmacyGoodsReceipt")
     return gRNo
 
+def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
+    time.sleep(3)
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
+    time.sleep(5)
+    #danpheEMR.find_element(By.LINK_TEXT, "View").click()  ## not working on LPH
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View").click()
+    time.sleep(3)
+    sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
+    print("sysdrugname is :", sysdrugname)
+    if AppName == 'LPH':
+        assert genericName == sysdrugname
+    else:
+        assert brandName == sysdrugname
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+
 def cancelPharmacyGoodsReceipt(danpheEMR):
     print("START>>cancelPharmacyGoodsReceipt")
     time.sleep(2)
@@ -546,7 +320,6 @@ def cancelPharmacyGoodsReceipt(danpheEMR):
         danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
     print("END>>cancelPharmacyGoodsReceipt")
 
-
 def getPharmacyGoodsReceiptListAmount(danpheEMR):
     print("START>>getPharmacyGoodsReceiptListAmount")
     global SubTotal
@@ -572,7 +345,6 @@ def getPharmacyGoodsReceiptListAmount(danpheEMR):
     print("TotalAmount", TotalAmount)
     print("END>>getPharmacyGoodsReceiptListAmount")
 
-
 def XgetPharmacyGoodsReceiptListAmount():
     global xSubTotal
     global xDiscountTotal
@@ -580,7 +352,6 @@ def XgetPharmacyGoodsReceiptListAmount():
     xSubTotal = SubTotal
     xDiscountTotal = DiscountTotal
     xTotalAmount = TotalAmount
-
 
 def verifygetPharmacyGoodsReceiptListAmount(amount, discount):
     x = float(xSubTotal) + amount
@@ -592,98 +363,10 @@ def verifygetPharmacyGoodsReceiptListAmount(amount, discount):
     assert float(DiscountTotal) == float(xDiscountTotal) + discount
     assert float(TotalAmount) == float(xTotalAmount) + amount - discount
 
-
-def verifyDispensaryStock(danpheEMR, qty):
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName)
-    time.sleep(5)
-    drugnameTemp = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div").text
-    assert drugnameTemp == DrugName
-    drugqtyTemp = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[5]").text
-    assert drugqtyTemp == str(qty)
-
-
-def createPharmacyOPDBilling(danpheEMR, qty, paymentmode):
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//button[contains(.,'Anonymous Patient')]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "item-box0").click()
-    danpheEMR.find_element(By.ID, "item-box0").clear()
-    danpheEMR.find_element(By.ID, "item-box0").send_keys(DrugName)
-    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "qty-box0").click()
-    danpheEMR.find_element(By.ID, "qty-box0").clear()
-    danpheEMR.find_element(By.ID, "qty-box0").send_keys(qty)
-    time.sleep(3)
-    if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-        paymentoptions.select_by_visible_text(paymentmode)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
-    danpheEMR.find_element(By.XPATH, "//input[@value='Print Invoice']").click()
-    time.sleep(5)
-    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
-    pInvoiceNo = pInvoiceNo.partition("PH")[2]
-    print("Create Pharmacy OPD Invoice: END<<")
-
-
-def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
-    time.sleep(3)
-    if AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    else:
-        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-    danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
-    time.sleep(5)
-    #danpheEMR.find_element(By.LINK_TEXT, "View").click()  ## not working on LPH
-    time.sleep(2)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "View").click()
-    time.sleep(5)
-    if AppName == "LPH":
-        sysdrugname = danpheEMR.find_element(By.XPATH, "(//div[@id='printpage']/div[2]/table/tbody/tr/td[3])[1]").text
-        print("sysdrugname is :", sysdrugname)
-        assert genericName == sysdrugname
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-    else:
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='print-good-reciept']/div/div/div[10]/table/tbody/tr/td[2]/b").text
-        print("sysdrugname is :", sysdrugname)
-        assert brandName == sysdrugname
-        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
-
-
-
-
 def closePopupApplication(danpheEMR):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger history-del-btn']").click()
     time.sleep(2)
-
-
-def viewPharmacyOrderList(danpheEMR, SupplierName, drugName):
-    print(">>START: viewPharmacyOrderList")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Order List").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(SupplierName)
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
-    time.sleep(3)
-    # SNo = danpheEMR.find_element(By.XPATH, "//*[@id="printpage"]/div/div/div[4]/table/tbody/tr[1]/td[1]").text
-
 
 def return_to_supplier(danpheEMR, grno, rqty):
     print(">>START: Returning to Supplier")
@@ -707,6 +390,68 @@ def return_to_supplier(danpheEMR, grno, rqty):
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
     return creditnote
     print("END>>Return to supplier")
+
+
+### Below Test Actions are currently deprecated
+def manageStoreStock(danpheEMR, drugname, type, qty):
+    print(">>START: Manage Store Stock")
+    global drugqtyMScalc
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Manage Item").click()
+    time.sleep(2)
+    if type == "In":
+        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(1) > span").click()
+        drugqtyMScalc = int(drugqtyMS) + qty
+    elif type == "Out":
+        danpheEMR.find_element(By.CSS_SELECTOR, ".mt-checkbox:nth-child(2) > span").click()
+        drugqtyMScalc = int(drugqtyMS) - qty
+    danpheEMR.find_element(By.XPATH, "//input[@name='UpdatedQty']").send_keys(qty)
+    danpheEMR.find_element(By.XPATH, "//textarea[@name='Remark']").send_keys("Stock adjusted")
+    danpheEMR.find_element(By.XPATH, "//input[@value='Update Stock']").click()
+    time.sleep(2)
+def addPharmacyDeposit(danpheEMR, HospitalNo, deposit):
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+        time.sleep(3)
+        danpheEMR.find_element(By.LINK_TEXT, "Deposit").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//input[@name='DepositAmount']").send_keys(deposit)
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//input[@value='Add Deposit']").click()
+        time.sleep(3)
+def returnPharmacyDeposit(danpheEMR, HospitalNo, depositreturn):
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Patient')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Deposit").click()
+    time.sleep(5)
+    deposittype = Select(danpheEMR.find_element(By.XPATH, "//select"))
+    deposittype.select_by_visible_text("Return Deposit")
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//input[@name='DepositAmount']").send_keys(depositreturn)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Return Deposit']").click()
+    time.sleep(3)
 
 
 def wait_for_window(danpheEMR, timeout=2):

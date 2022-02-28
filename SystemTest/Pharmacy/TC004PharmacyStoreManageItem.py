@@ -24,13 +24,14 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 drug = GSV.Testdrug
 drugGenericName = GSV.drug1GenericName
 drugPrice = GSV.drug1Rate
-supplierName = GSV.supplier
+supplierName = GSV.pharmacySupplierName1
+dispensaryName = GSV.dispensaryName1
 
 qty = 10
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activatePharmacyCounter(EMR, dispensaryName)
 LP.addPharmacyItem(EMR, drugGenericName)
 LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drug, grPrice=drugPrice)
 LP.getStoreDetail(danpheEMR=EMR, drugname=drug)
