@@ -90,7 +90,12 @@ def getPharmacyStockDetail(danpheEMR, drugname):
 
 def verifyPharmacyStockDetail(danpheEMR, drugname):
     print(">>Start:verifyStoreDetail")
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Store' and contains(text(),'Store')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").clear()
     time.sleep(3)
