@@ -17,10 +17,12 @@ departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 labTestTFT = GSV.TFT
 radioTestUSG = GSV.USG
+priceCategoryType = "Normal"
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+print(HospitalNo)
 LB.opDeposit(EMR, HospitalNo=HospitalNo, amount=GSV.deposit)
 LB.opDepositDbiling(EMR, HospitalNo=HospitalNo, deposit=GSV.deposit, testname=GSV.USG)
 #LB.verifyopdinvoice(deposit=GSV.deposit, billamt=GSV.usgRate)
