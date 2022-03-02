@@ -18,7 +18,7 @@ priceCategoryType = 'Normal'
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
 LB.opDeposit(EMR, HospitalNo, GSV.deposit)
 LB.opDepositDbilingTenderCashReturn(EMR, HospitalNo, GSV.deposit, GSV.TFT)
 AC.logout()
