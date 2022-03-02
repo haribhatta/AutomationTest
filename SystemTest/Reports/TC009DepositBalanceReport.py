@@ -5,8 +5,8 @@ import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
 import Library.LibModulePatientPortal as LPP
 # front desk user login
-foUserId = GSV.foUserID
-foUserPwd = GSV.foUserPwD
+foUserId = GSV.adminUserID
+foUserPwd = GSV.adminUserPwD
 
 deposit = 1000
 

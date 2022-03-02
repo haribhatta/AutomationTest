@@ -3,19 +3,28 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
-
+import Library.LibModuleSettings as LS
+#############
+# admin user login
+admUserId = GSV.adminUserID
+admUserPwd = GSV.adminUserPwD
 # front desk user login
-itUserId = GSV.itUserID
-itUserPwd = GSV.itUserPwD
-opdRate = GSV.opdRate
+foUserId = GSV.foUserID
+foUserPwd = GSV.foUserPwD
 ########
+departmentGynae = GSV.departmentGyno
+doctorGynae = GSV.doctorGyno
 priceCategoryType = "Normal"
-discountScheme = GSV.discountSchemeName
-########
+#discountScheme = GSV.discountSchemeName
+#############
 EMR = AC.openBrowser()
-AC.login(itUserId, itUserPwd)
+AC.login(admUserId, admUserPwd)
+a, b = LS.checkCoreCFGdiscountMembership(EMR)  #membershipTypeDiscountValue, membershipSchemeSettingsValue
+discountValue = a + b
+opdRate = GSV.opdRate
+###
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
-LBR.verifyDiscountReport(danpheEMR=EMR, HospitalNo=HospitalNo, cash=opdRate, discountpc=discountScheme)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountValue, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+LBR.verifyDiscountReport(danpheEMR=EMR, HospitalNo=HospitalNo, cash=opdRate, discountpc=discountPercentage)
 AC.logout()
 AC.closeBrowser()

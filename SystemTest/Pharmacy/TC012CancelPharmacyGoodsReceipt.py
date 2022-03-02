@@ -2,6 +2,8 @@
 Objective:
 To test below check points:
 1. Create pharmacy goods receipt
+2. Transfer GR Items from Pharmacy/Store >> Dispensary
+3. Return back GR Items from Dispensary >> Pharmacy/Store (Note: with out consuming)
 2. Cancel pharmacy goods receipt
 3. Verify cancelled pharmacy goods receipt.
 '''

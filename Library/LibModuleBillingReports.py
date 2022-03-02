@@ -679,11 +679,13 @@ def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
     print("systemDiscount:", systemDiscount)
     systemDiscount = int(systemDiscount)
     ###
+    '''
     print("discountpc:", discountpc)
     discountpc = discountpc.partition("%)")[0]
     discountpc = discountpc.partition("(")[2]
     discountpc = int(discountpc)
     print("discountpc:", discountpc)
+    '''
     ###
     expectedDiscount = (discountpc * cash / 100)
     print("expectedDiscount:", expectedDiscount)
@@ -703,41 +705,21 @@ def verifyDiscountReport(danpheEMR, HospitalNo, cash, discountpc):
 # Module:Billing report: Deposit Report*********************
 def verifyDepositBalanceReport(danpheEMR, HospitalNo, deposit):
     print(">>START: verifyDepositBalanceReport")
-    # if appPort == '81':
-    #    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-    #    time.sleep(3)
-    #    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
-    #    time.sleep(2)
-    #    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Deposit Balance')]").click()
-    #    time.sleep(3)
-    #    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-    #    time.sleep(3)
-    #    hospitalno = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
-    #    #assert HospitalNo == hospitalno
-    #    depositamt = danpheEMR.find_element(By.XPATH, "//div[2]/div/div/div/div[4]").text
-    #    x = int(depositamt)
-    #    y = int(deposit)
-    #    print("x", x)
-    #    print("y", y)
-    #    assert x == y
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-        danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//i[contains(.,'Deposit Balance')]").click()
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
-        time.sleep(3)
-        hospitalno = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
-        # assert HospitalNo == hospitalno
-        time.sleep(4)
-        depositamt = danpheEMR.find_element(By.XPATH, "(//div[@col-id='DepositBalance'])[2]").text
-        x = int(depositamt)
-        y = int(deposit)
-        print("x", x)
-        print("y", y)
-        assert x == y
+    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Deposit Balance')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    hospitalno = danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div[2]").text
+    depositamt = danpheEMR.find_element(By.XPATH, "(//div[@col-id='Balance'])[2]").text
+    x = int(depositamt)
+    y = int(deposit)
+    print("x", x)
+    print("y", y)
+    assert x == y
     print("<<END: BalanceReport")
 
 

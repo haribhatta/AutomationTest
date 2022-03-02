@@ -22,6 +22,7 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     global contactno
     global HospitalNo
     global FullName
+    global discountPercentage
     print("AppName", AppName)
     time.sleep(5)
     if AppName == "LPH":
@@ -75,6 +76,8 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     gender.select_by_visible_text("Female")
     phoneNo = random.randint(9111111111, 9999999999)
     danpheEMR.find_element(By.ID, "txtPhone").send_keys(phoneNo)
+    if discountScheme == 0:
+        discountPercentage = 0
     if  discountScheme != 0:
         print("discountScheme:", discountScheme)
         ### Community flag
@@ -104,11 +107,15 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
             dropdown1 = Select(danpheEMR.find_element(By.XPATH, "//span[contains(text(),'"+discountSchemeLabel+"')]/child::select"))
             time.sleep(3)
             dropdown1.select_by_visible_text(schemeName)
+        discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute("value")
+        print("discountPercentage:", discountPercentage)
+        discountPercentage = int(discountPercentage)
+        print("discountPercentage:", discountPercentage)
     if paymentmode == 'Credit':
         paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select[@id='pay_mode']"))
         paymentoptions.select_by_visible_text("CREDIT")
         danpheEMR.find_element(By.XPATH, "//div[2]/div[2]/input").send_keys("Credit in request of chairman")
-    time.sleep(5)
+    time.sleep(9)
     # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-success").click()
     danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
     time.sleep(9)
@@ -119,14 +126,11 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     HospitalNo = danpheEMR.find_element(By.XPATH,
                                         "//strong[contains(text(), 'Hospital No:')]/parent::p/child::span/child::strong").text
     print("HospitalNo:", HospitalNo)
-    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
-    time.sleep(2)
     danpheEMR.find_element(By.ID, "btnPrintOpdSticker").send_keys(Keys.ESCAPE)
     time.sleep(3)
-    print(" Verify OPD Invoice Details: END<<", "HospitalNo", HospitalNo, "InvoiceNo", InvoiceNo)
-    return type('', (object,), {"InvoiceNo": InvoiceNo, "HospitalNo": HospitalNo})()
     print("END>>patientquickentry")
-
+    return HospitalNo, InvoiceNo, discountPercentage
+    #return type('', (object,), {"InvoiceNo": InvoiceNo, "HospitalNo": HospitalNo})()
 
 def followUpAppointment(danpheEMR):
     print("START>>followUpAppointment")
