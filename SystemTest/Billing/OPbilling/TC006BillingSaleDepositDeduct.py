@@ -17,6 +17,7 @@ departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 labTestTFT = GSV.TFT
 radioTestUSG = GSV.USG
+priceCategoryType = "Normal"
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)

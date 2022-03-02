@@ -453,9 +453,11 @@ def opDepositDbiling(danpheEMR, HospitalNo, deposit, testname):
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
     time.sleep(2)
-    labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
-    labType.select_by_visible_text("OP-LAB")
-    time.sleep(3)
+    if AppName == "LPH":
+        labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
+        labType.select_by_visible_text("OP-LAB")
+    else:
+        time.sleep(1)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(testname)
     time.sleep(2)
