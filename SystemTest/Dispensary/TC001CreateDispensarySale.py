@@ -27,7 +27,7 @@ HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', dep
 AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode=paymentMode)
 LD.returnPharmacyInvoice(EMR, pInvoiceNo, qty=1, returnremark="Wrong entry")
 AC.logout()

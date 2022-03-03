@@ -31,7 +31,7 @@ drugName = GSV.drugAasma
 #AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LP.createPharmacyPurchaseOrder(EMR, supplierName, drugName)
 LP.verifyCreatePharmacyPurchaseOrder(EMR, supplierName, drugName)
 AC.logout()

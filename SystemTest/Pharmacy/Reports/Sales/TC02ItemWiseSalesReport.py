@@ -44,7 +44,7 @@ HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='
 AC.logout()
 #Start Item Wise Sales Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
 LMPR.preSystemPharmacyItemWiseSalesReport()
 ######## Create pharmacy cash sale

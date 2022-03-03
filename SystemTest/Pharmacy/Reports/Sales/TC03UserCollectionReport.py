@@ -45,7 +45,7 @@ HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='
 AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 
 ######## Create anonymous pharmacy sale
 LP.createPharmacyInvoiceAnonymous(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode='Cash')

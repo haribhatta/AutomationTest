@@ -42,7 +42,7 @@ HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='
 AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LPR.getPharmacyExpiryReport()
 LPR.verifyPharmacyExpiryReport()
 

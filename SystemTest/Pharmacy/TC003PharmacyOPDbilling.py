@@ -8,10 +8,7 @@ To test below check points:
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
-import Library.LibModulePharmacy as LP
-import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleAppointment as LA
-#import Library.LibModuleBilling as LB
 import Library.LibModuleBilling as LB
 
 # front desk user login
@@ -34,11 +31,11 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, dispensaryName=GSV.dispensaryName1)
 
 #  Create PO
 #phaoB.createPharmacyPurchaseOrder()
@@ -47,6 +44,6 @@ LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
 # Received GR from above PO
 #phaoB.addPharmacyGRfromPO()
 
-LD.createDispensarySale(danpheEMR=EMR,HospitalNo=HospitalNo, drugName=drugname, qty=quantity, paymentmode=mode)
+LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugname, qty=quantity, paymentmode=mode)
 AC.logout()
 AC.closeBrowser()

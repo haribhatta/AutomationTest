@@ -24,7 +24,7 @@ drug = GSV.drug1BrandName
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LPR.getPharmacyOpeningEndingStockSummaryReport(danpheEMR=EMR, drugname=drug)
 LPR.preSystemPharmacyOpeningEndingStockSummaryReport()
 HospitalNo = LPP.getRandomPatient(EMR)

@@ -35,7 +35,7 @@ amount = rate*qty
 print("Amount", amount)
 AC.logout()
 AC.login(phUserId, phUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LPR.getPharmacyOpeningEndingStockSummaryReport(danpheEMR=EMR, drugname=drug)
 LPR.preSystemPharmacyOpeningEndingStockSummaryReport()
 pInvoiceNo = LP.createPharmacyInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, paymentmode='Cash')

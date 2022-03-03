@@ -37,7 +37,7 @@ supplier = GSV.supplier
 EMR = AC.openBrowser()
 # Start of Narcotic Stock Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugName, grPrice=5)
 LPR.verifynarcoticstockreport(danpheEMR=EMR, qty=2, DrugName=drugName, grPrice=5)
 AC.logout()

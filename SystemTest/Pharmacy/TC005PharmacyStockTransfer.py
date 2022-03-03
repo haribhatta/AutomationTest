@@ -24,7 +24,7 @@ dispensaryName = GSV.dispensaryName1
 ###
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR,dispensaryName=dispensaryName)
+LD.activateDispensaryCounter(EMR,dispensaryName=dispensaryName)
 #LP.getStoreDetail(drugname=drug, danpheEMR=EMR)
 #LP.getStockDetail(danpheEMR=EMR, drugname=drug)
 LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=drug, qty=transferqty)

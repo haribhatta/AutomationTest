@@ -40,7 +40,7 @@ AC.logout()
 
 # 1. To Create INSPharmacy Billing. #
 AC.login(foUserId1, foUserPwd1)
-LD.activatePharmacyCounter(EMR, dispensaryName='InsuranceDispensary')
+LD.activateDispensaryCounter(EMR, dispensaryName='InsuranceDispensary')
 PreInvoice = LI.insuranceDispensarySell(danpheEMR=EMR, NSHINO=NSHINO , genericname=drug1GenericName, drugname=drug1BrandName)
 AC.logout()
 

@@ -23,6 +23,6 @@ Drug1Price = GSV.drug1Rate
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
+LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
 print("Test script failling with LPH-1095")
 LP.createPharmacyGoodsReceipt(danpheEMR=EMR, qty=Qty1, DrugName=Drug1, grPrice=Drug1Price)

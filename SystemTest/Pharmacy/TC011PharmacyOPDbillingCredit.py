@@ -35,7 +35,7 @@ LB.verifyopdinvoice(danpheEMR=EMR, deposit=0, billamt=500)
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LD.createDispensarySale(EMR, HospitalNo=HospitalNo, drugName=drugname, qty=quantity, paymentmode=mode)
 LP.verifyPharmacyInvoice3(EMR, drugname, quantity, rate)
 AC.logout()

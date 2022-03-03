@@ -31,7 +31,7 @@ qty = 10
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(EMR, dispensaryName)
+LD.activateDispensaryCounter(EMR, dispensaryName)
 LP.addPharmacyItem(EMR, drugGenericName)
 LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drug, grPrice=drugPrice)
 LP.getStoreDetail(danpheEMR=EMR, drugname=drug)

@@ -22,7 +22,7 @@ dispensaryName = GSV.dispensaryName1
 ########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activatePharmacyCounter(danpheEMR=EMR, dispensaryName=dispensaryName)
+LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=dispensaryName)
 LP.addPharmacyItem(danpheEMR=EMR, genericName=drugGeneric)
 LP.verifyPharmacyItem(danpheEMR=EMR)
 AC.logout()
