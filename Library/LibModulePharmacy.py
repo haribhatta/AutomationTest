@@ -89,7 +89,7 @@ def getPharmacyStockDetail(danpheEMR, drugname):
     print("End>>getPharmacyStockDetail")
 
 def verifyPharmacyStockDetail(danpheEMR, drugname):
-    print(">>Start:verifyStoreDetail")
+    print(">>Start:verifyDispensaryStockDetail")
     if AppName == 'LPH':
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     else:
@@ -110,7 +110,7 @@ def verifyPharmacyStockDetail(danpheEMR, drugname):
     print("sysdrugqty", sysdrugqty)
     print("newdrugqtyMS", drugqtyMScalc)
     assert int(drugqtyMScalc) == int(sysdrugqty)
-    print("End>>verifyStoreDetail")
+    print("End>>verifyDispensaryStockDetail")
 
 def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
     print(">>Start:transferMainStore2MainDispensary")

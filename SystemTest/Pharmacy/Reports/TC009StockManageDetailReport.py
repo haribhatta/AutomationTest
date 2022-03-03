@@ -24,7 +24,7 @@ testqty = 7
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
-LP.getStoreDetail(danpheEMR=EMR, drugname=drug)
+LP.getDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
 LP.manageStoreStock(danpheEMR=EMR, drugname=drug, type='In', qty=setupqty)
 LPR.getPharmacyStockManageDetailReport(danpheEMR=EMR, drugname=drug)
 LPR.preSystemPharmacyStockManageDetailReport()

@@ -188,6 +188,7 @@ if appName == "SNCH":
       drugCompany = 'HIMALAYA'
       dispensaryName1 = "MainDispensary"
       dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AAKAR ENTERPRISES"
       ###TestAction>>Inventory+Procurement+SubStore:
       inventoryName1 = "General Inventory"
       inventoryName2 = "Medical Inventory"
