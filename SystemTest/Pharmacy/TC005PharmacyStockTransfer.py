@@ -1,5 +1,6 @@
 '''
 Objective:
+Happy Path Testing
 To test below check points:
 1. Count pharmacy stock.
 2. Transfer pharmacy stock.
@@ -13,8 +14,8 @@ import Library.LibModulePharmacy as LP
 import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleAppointment as LA
 #import Library.LibModuleBilling as LB
-# pharmacy desk user login
-pharmacyUserId = GSV.pharmacyUserID
+# pharmacy desk user login as transfer is not access to user so change to admin user
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 ###
 drug = GSV.drug1BrandName
@@ -25,14 +26,7 @@ dispensaryName = GSV.dispensaryName1
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR,dispensaryName=dispensaryName)
-#LP.getDispensaryStockDetail(drugname=drug, danpheEMR=EMR)
-#LP.getStockDetail(danpheEMR=EMR, drugname=drug)
 LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=drug, qty=transferqty)
-#LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
-#LP.verifyDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
 LD.transferMainDispensary2MainStore(danpheEMR=EMR, drugname=drug, qty=transferqty)
-#LP.verifyDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
-#LP.verifyStockDetail(danpheEMR=EMR, drugname=drug)
-
 AC.logout()
 AC.closeBrowser()
