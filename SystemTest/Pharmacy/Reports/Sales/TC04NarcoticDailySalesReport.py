@@ -48,7 +48,7 @@ LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 pInvoiceNo = LD.createNarcoticDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
 ######## Return pharmacy cash sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount) ### Open bug in Jira: EMR-4776
 
 ######## Create pharmacy credit sale
@@ -56,7 +56,7 @@ pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
 
 ######## Return pharmacy credit sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
 
 AC.logout()

@@ -51,7 +51,7 @@ LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=tota
 
 ######## Return pharmacy cash sale
 LPR.prePatientWiseSalesDetails()
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
 LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
 LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, cashreturn=totalAmount, credit=0, creditreturn=0)
 
@@ -63,7 +63,7 @@ LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, c
 
 ######## Return pharmacy credit sale
 LPR.prePatientWiseSalesDetails()
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
 LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
 LPR.VerifyPatientWiseSalesDetail(danpheEMR=EMR, HospitalNo=HospitalNo, cash=0, cashreturn=0, credit=0, creditreturn=totalAmount)
 

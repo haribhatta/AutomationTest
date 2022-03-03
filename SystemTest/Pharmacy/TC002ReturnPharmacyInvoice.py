@@ -33,15 +33,15 @@ EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 paymentmode = "CREDIT"
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 InvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=quantity, drugName=drugname, paymentmode=paymentmode)
 #RPI.verifyPharmacyInvoice3(drugname, quantity, rate)
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=quantity, returnremark=returnremark)
-LD.verifyReturnPharmacyInvoice(danpheEMR=EMR, paymentmode=paymentmode, returnRemark=returnremark, InvoiceNo=InvoiceNo)
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=quantity, returnremark=returnremark)
+LD.verifyReturnDispensaryInvoice(danpheEMR=EMR, paymentmode=paymentmode, returnRemark=returnremark, InvoiceNo=InvoiceNo)
 AC.logout()
 AC.closeBrowser()
 # This has open bug: EMR-2630

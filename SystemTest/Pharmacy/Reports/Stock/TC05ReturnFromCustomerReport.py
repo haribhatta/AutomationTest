@@ -46,14 +46,14 @@ pInvoiceNo = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name,
 LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo)
 LPR.prePharmacyReturnFromCustomerReport()
 ### Pharmacy Cash Return
-LD.returnPharmacyInvoice(EMR, pInvoiceNo, qty=1, returnremark="Wrong entry")
+LD.returnDispensaryInvoice(EMR, pInvoiceNo, qty=1, returnremark="Wrong entry")
 LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo)
 LPR.verifyPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cashReturn=totalAmount, creditReturn=0)
 ### Pharmacy Credit Sale
 pInvoiceNo1 = LD.createDispensarySale(EMR, HospitalNo, qty=1, drugName=drug1Name, paymentmode='Credit')
 LPR.prePharmacyReturnFromCustomerReport()
 ### Pharmacy Credit Sale Return
-LD.returnPharmacyInvoice(EMR, pInvoiceNo1, qty=1, returnremark="Wrong entry")
+LD.returnDispensaryInvoice(EMR, pInvoiceNo1, qty=1, returnremark="Wrong entry")
 LPR.getPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1)
 LPR.verifyPharmacyReturnFromCustomerReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1, cashReturn=0, creditReturn=totalAmount)
 AC.logout()

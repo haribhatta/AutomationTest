@@ -58,7 +58,7 @@ LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
 LPR.verifySystemPharmacyUserCollectionReport(cash=totalamount, cashreturn=0, credit=0, creditreturn=0, creditsettlement=0,
                                              discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
 ######## Return pharmacy case sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
 LPR.preSystemPharmacyUserCollectionReport()
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
 LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=totalamount, credit=0, creditreturn=0, creditsettlement=0,
@@ -70,7 +70,7 @@ LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
 LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
                                              discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
 ######## Return pharmacy credit sale
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
 LPR.preSystemPharmacyUserCollectionReport()
 LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
 LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=amount, creditsettlement=0,

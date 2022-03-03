@@ -50,7 +50,7 @@ LPR.getSystemPharmacyBillWiseSalesReport(danpheEMR=EMR)
 LPR.verifySystemPharmacyBillWiseSalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cash=totalAmount, cashReturn=0, credit=0, creditReturn=0, totalAmount=totalAmount, discountAmount=0)
 ######## Return pharmacy cash sale
 LPR.preSystemPharmacyBillWiseSalesReport()
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
 LPR.getSystemPharmacyBillWiseSalesReport(danpheEMR=EMR)
 LPR.verifySystemPharmacyBillWiseSalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cash=0, cashReturn=totalAmount, credit=0, creditReturn=0, totalAmount=totalAmount, discountAmount=0) ### Open bug in Jira: EMR-4776
 ######## Create pharmacy credit sale
@@ -60,7 +60,7 @@ LPR.getSystemPharmacyBillWiseSalesReport(danpheEMR=EMR)
 LPR.verifySystemPharmacyBillWiseSalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cash=0, cashReturn=0, credit=totalAmount, creditReturn=0, totalAmount=totalAmount, discountAmount=0)
 ######## Return pharmacy credit sale
 LPR.preSystemPharmacyBillWiseSalesReport()
-LD.returnPharmacyInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
 LPR.getSystemPharmacyBillWiseSalesReport(danpheEMR=EMR)
 LPR.verifySystemPharmacyBillWiseSalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, cash=0, cashReturn=0, credit=0, creditReturn=totalAmount, totalAmount=totalAmount, discountAmount=0)
 
