@@ -170,7 +170,7 @@ if appName == "SNCH":
       discountSchemeName = "Senior Citizen (10%)"
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"
-      drug1GenericName = "quinapril"
+      drug1GenericName = "PARACETAMOL"
       drug1Rate = 3
       drug2BrandName = 'ASTHALIN 2 MG TAB'
       drug2BrandRate = 1.14
@@ -184,8 +184,8 @@ if appName == "SNCH":
       drugAasma = 'AASMA 150 XR TAB'
       drug1NarcoticName = "MORFIUM 1ML ING"
       drug1NarcoticRate = 100
-      drugType = 'GASTRIC'
-      drugCompany = 'HIMALAYA'
+      drugType = 'SURGICALS'
+      drugCompany = 'HIMALAYANS'
       dispensaryName1 = "MainDispensary"
       dispensaryName2 = "Insurance Dispensary"
       pharmacySupplierName1 = "AAKAR ENTERPRISES"

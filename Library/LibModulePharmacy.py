@@ -45,7 +45,7 @@ def addPharmacyItem(danpheEMR, genericName):  # incomplete
     danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(itemType)  # itemType
     danpheEMR.find_element(By.XPATH, "//div[5]/div/div/div/input").send_keys(Keys.RETURN)  # itemType
     # danpheEMR.find_element(By.CSS_SELECTOR, ".ng-touched:nth-child(1)").send_keys("ABGEL")
-    danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys("Tablet")  # unit
+    danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys("TAB")  # unit
     danpheEMR.find_element(By.XPATH, "//div[6]/div/div/div/input").send_keys(Keys.RETURN)  # unit
     danpheEMR.find_element(By.XPATH, "//div[7]/div/div/div/input").send_keys(genericName)  # genericName
     danpheEMR.find_element(By.XPATH, "//div[7]/div/div/div/input").send_keys(Keys.RETURN)  # genericName
