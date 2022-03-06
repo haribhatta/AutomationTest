@@ -7,7 +7,6 @@ To test below check points:
 import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleInventory as LI
-import Library.LibModuleSubStore as LS
 
 # front desk user login
 storeUserId = GSV.storeUserID
@@ -18,7 +17,7 @@ print("itemName:", itemname)
 qty = 1
 rate = 1
 storeName = GSV.SubStore1
-inventory1 = GSV.Inventory1
+inventory1 = GSV.inventoryName1
 
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
