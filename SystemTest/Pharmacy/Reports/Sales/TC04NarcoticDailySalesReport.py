@@ -39,11 +39,11 @@ EMR = AC.openBrowser()
 # To get random patient information
 AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createNarcoticDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
@@ -52,12 +52,12 @@ LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, return
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount) ### Open bug in Jira: EMR-4776
 
 ######## Create pharmacy credit sale
-pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugName, paymentmode='Credit')
-LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
+pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugName=drugName, paymentmode='Credit')
+LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1, totalAmount=totalAmount)
 
 ######## Return pharmacy credit sale
 LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
-LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount)
+LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1, totalAmount=totalAmount)
 
 AC.logout()
 AC.closeBrowser()
