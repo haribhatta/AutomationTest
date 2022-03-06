@@ -36,7 +36,7 @@ EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
 LPR.getPharmacyCashCollectionSummary(EMR, pharmacyUserId)
-LP.getStockDetail(danpheEMR=EMR, drugname=drugname)
+LP.getPharmacyStockDetail(danpheEMR=EMR, drugname=drugname)
 HospitalNo = LPP.getRandomPatient(EMR)
 ### Pharmacy Cash Sale
 InvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=1, drugName=drug1Name, paymentmode='Cash')

@@ -14,7 +14,7 @@ import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacy as LP
 
 # front desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 qty = 5
@@ -31,20 +31,16 @@ dispensaryName = GSV.dispensaryName1
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=dispensaryName)
-#cpgr.addPharmacyItem(drugname)
-#cpgr.verifyPharmacyItem()
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.XgetPharmacyGoodsReceiptListAmount()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=brandName, grPrice=costPrice)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=brandName, qty=tqty)
-LD.transferMainDispensary2MainStore(danpheEMR=EMR, drugname=brandName, qty=tqty)
+LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=brandName, qty=1)
+LD.transferMainDispensary2MainStore(danpheEMR=EMR, drugname=brandName, qty=1)
 LP.cancelPharmacyGoodsReceipt(EMR)
-LP.verifyPharmacyStockDetail(danpheEMR=EMR, drugname=brandName)
-#LP.verifyDispensaryStockDetaill()
+LP.verifyCancelledGoodReceipt(EMR, grno=goodsReceiptNo)
 AC.logout()
 AC.closeBrowser()
 
-# Test script is failing with bug: EMR-2801

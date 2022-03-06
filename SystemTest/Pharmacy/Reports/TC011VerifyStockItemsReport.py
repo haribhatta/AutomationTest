@@ -24,7 +24,7 @@ drug = GSV.drug1BrandName
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.selectDispensary(dispensary=Dispensary1)
-LP.getStockDetail(danpheEMR=EMR, drugname=drug)
+LP.getPharmacyStockDetail(danpheEMR=EMR, drugname=drug)
 LP.getDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
 LPR.verifyStockItemsReport(danpheEMR=EMR, drugname=drug)
 
