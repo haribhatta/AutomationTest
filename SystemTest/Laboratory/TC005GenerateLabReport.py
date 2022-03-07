@@ -45,8 +45,6 @@ HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, 0, 'Cash',
 print("hospitalNo", HospitalNo)
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
 LB.createLabInvoice(EMR, HospitalNo, labTestTFT)
-#oblx.verifylabxrayinvoice()
-#############
 AC.logout()
 AC.login(labUserId, labUserPwd)
 LL.collectLabSample(EMR, HospitalNo, labTestTFT)
