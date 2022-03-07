@@ -10,7 +10,7 @@ import Library.LibModuleBilling as LB
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
 # front desk user login
-foUserId = GSV.foUserID
+foUserId = GSV.adminUserID
 foUserPwd = GSV.foUserPwD
 
 doctorname = GSV.doctorGyno
@@ -24,14 +24,14 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 LBR.getDoctorSummary(danpheEMR=EMR, doctor=doctorname)
 LBR.preSystemDoctorSummary()
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.getDoctorSummary(danpheEMR=EMR, doctor=doctorname)
 LBR.verifyDoctorSummary(cash=opdCharge, cashreturn=0, credit=0, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="this is bill return 1")
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
 LBR.verifyDoctorSummary(cash=0, cashreturn=opdCharge, credit=0, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo1, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
 LBR.verifyDoctorSummary(cash=0, cashreturn=0, credit=opdCharge, creditreturn=0, discount=0, provisional=0, provisionalcancel=0)
@@ -39,7 +39,7 @@ LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is 
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
 LBR.verifyDoctorSummary(cash=0, cashreturn=0, credit=0, creditreturn=opdCharge, discount=0, provisional=0, provisionalcancel=0)
-InvoiceNo3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo3, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.preSystemDoctorSummary()
 LBR.getDoctorSummary(EMR, doctorname)
 discount = discountScheme.partition("(")[2]
