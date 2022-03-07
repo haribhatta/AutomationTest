@@ -41,7 +41,7 @@ AC.logout()
 AC.login(foUserId, foUserPwd)
 ############
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(EMR, 0, 'Cash',department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, 0, 'Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
 print("hospitalNo", HospitalNo)
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
 LB.createLabInvoice(EMR, HospitalNo, labTestTFT)
