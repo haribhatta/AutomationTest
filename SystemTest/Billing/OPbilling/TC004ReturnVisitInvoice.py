@@ -22,7 +22,7 @@ priceCategoryType = "Normal"
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-InvoiceNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
 print("Status:Passed - > TC001 CreateAppointmentNew")
 # 2. Create an appointment for old patient.
 #LB.getBillingDashboard()
