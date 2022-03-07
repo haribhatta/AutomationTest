@@ -16,7 +16,7 @@ import Library.LibModuleAppointment as LA
 import Library.LibModulePatientPortal as LPP
 
 # front desk user login
-foUserId = GSV.foUserID
+foUserId = GSV.adminUserID
 foUserPwd = GSV.foUserPwD
 # pharmacy desk user login
 pharmacyUserId = GSV.pharmacyUserID
@@ -27,7 +27,7 @@ AC.login(foUserId, foUserPwd)
 HospitalNo = LPP.patientRegistration(EMR)
 AC.logout()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 LP.addPharmacyDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, deposit=1000)
 LPR.verifyPharmacyDashboard(cash=0, cashreturn=0, credit=0, creditreturn=0, deposit=1000, depositreturn=0, provisional=0, provisionacancel=0)
 LP.returnPharmacyDeposit(danpheEMR=EMR, HospitalNo=HospitalNo, depositreturn=1000)
