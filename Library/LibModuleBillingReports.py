@@ -557,7 +557,7 @@ def verifyIncomeSegregation(cash, cashReturn, credit, creditReturn, discount, pr
 
 
 ######## Patient Credit Summary Report
-def getPatientCreditSummary(danpheEMR):
+def getPatientCreditSummary(danpheEMR, invoiceNo):
     print(">>START: getPatientCreditSummary")
     danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
     time.sleep(2)
@@ -566,7 +566,12 @@ def getPatientCreditSummary(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Patient Credit Summary')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
-    time.sleep(9)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
+    time.sleep(3)
+    sysinvoice = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]").text
+    print("Invoice in System is :", sysinvoice)
+    assert sysinvoice == invoiceNo
     print("<<END: getPatientCreditSummary")
 
 

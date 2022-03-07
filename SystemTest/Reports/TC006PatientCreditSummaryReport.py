@@ -18,7 +18,7 @@ import Library.LibModuleBilling as LB
 import Library.LibModuleBillingReports as LBR
 import Library.LibModuleAppointment as LA
 # front desk user login
-foUserId = GSV.foUserID
+foUserId = GSV.adminUserID
 foUserPwd = GSV.foUserPwD
 ########
 priceCategoryType = "Normal"
@@ -27,7 +27,9 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
-LBR.getPatientCreditSummary(EMR)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+InvoiceNo = LB.createCreditLabInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=GSV.USG)
+print(InvoiceNo)
+LBR.getPatientCreditSummary(EMR, invoiceNo=InvoiceNo)
 #pcsr.logout()
 #pcsr.closeBrowser()

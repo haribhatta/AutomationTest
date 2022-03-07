@@ -1052,6 +1052,46 @@ def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     print("END>>createCreditLabInvoice")
 
 
+def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
+    print("START>>createLabInvoice")
+    print("Hospital Number:", HospitalNo)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(5)
+    if AppName == 'LPH':
+        labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
+        labType.select_by_visible_text("OP-LAB")
+    time.sleep(4)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "txtQuantity_0").send_keys(1)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    time.sleep(1)
+    totalprice = int(price1)
+    print("Total Price:", totalprice)
+    time.sleep(3)
+    paymode = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+    paymode.select_by_visible_text("CREDIT")
+    danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit bill on demand of CEO")
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(9)
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    print(InvoiceNo)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    return InvoiceNo
+
+
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
