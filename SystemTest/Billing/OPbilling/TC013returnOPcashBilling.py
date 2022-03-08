@@ -23,7 +23,7 @@ itemrate = GSV.opdRate
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo, discountPercentage= LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LB.returnBillingInvoice(EMR, InvoiceNo, returnmsg="This is test return")
 LB.verifyReturnBillingInvoice(EMR, InvoiceNo, itemrate)
 AC.logout()
