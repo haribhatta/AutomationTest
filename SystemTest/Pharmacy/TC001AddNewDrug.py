@@ -16,7 +16,6 @@ import Library.LibModuleBilling as LB
 pharmacyUserId = GSV.pharmacyUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 ###
-drugname = GSV.Testdrug
 drugGeneric = GSV.drug1GenericName
 dispensaryName = GSV.dispensaryName1
 ########
