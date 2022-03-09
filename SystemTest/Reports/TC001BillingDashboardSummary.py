@@ -47,7 +47,7 @@ LB.counteractivation(EMR)
 # 1. Cash Invoice
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo  # cash = opdticket
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)  # cash = opdticket
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -64,7 +64,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit
 # 3. Cash Discount Invoice
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=50, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo1, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=50, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -81,7 +81,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamou
 print("##### Credit Invoice #####")
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-InvoiceNo3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
+HospitalNo, InvoiceNo3, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).InvoiceNo
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -97,7 +97,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditR
 # 7. Credit Payment
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo #credit=opdticket
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType) #credit=opdticket
 LBR.getBillingDashboard(EMR)
 LB.creditPayment(danpheEMR=EMR, HospitalNo=HospitalNo)     #settlement=credit
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
