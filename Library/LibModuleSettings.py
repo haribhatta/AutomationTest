@@ -3,10 +3,8 @@ from selenium.webdriver.common.by import By
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
 import random
-
 ########
 AppName = GSV.appName
-
 ########
 def Setting_add_employee(danpheEMR):
     global randomnum
@@ -25,7 +23,6 @@ def Setting_add_employee(danpheEMR):
     # danpheEMR.find_element(By.ID, "isApptApplicable").click()
     danpheEMR.find_element(By.ID, "Add").click()
 
-
 def Setting_Adding_User(danpheEMR):
     global randomnum
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
@@ -42,7 +39,6 @@ def Setting_Adding_User(danpheEMR):
     Email.send_keys("ankit", randomnum, "@gmail.com")
     password = danpheEMR.find_element(By.ID, "Password").send_keys("pass123")
     danpheEMR.find_element(By.ID, "Addbtn").click()
-
 
 def checkAutoAddItems(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
@@ -73,7 +69,6 @@ def checkCoreCFGadmitDocMandatory(danpheEMR):
     print("checkCoreCFGadmitDocMandatory:", admittingDoctorMandatory)
     return admittingDoctorMandatory
 
-
 def checkCoreLabReportVerify(danpheEMR):
     print("START>>checkCoreLabReportVerify")
     global labReportVerify
@@ -90,7 +85,6 @@ def checkCoreLabReportVerify(danpheEMR):
     print("labReportVerify:", labReportVerify)
     print("END>>checkCoreLabReportVerify")
     return labReportVerify
-
 
 def checkCoreCFGdiscountMembership(danpheEMR):
     print("START>>checkCoreCFGdiscountMembership")
@@ -109,6 +103,18 @@ def checkCoreCFGdiscountMembership(danpheEMR):
     print("END>>checkCoreCFGdiscountMembership")
     return membershipTypeDiscountValue, membershipSchemeSettingsValue
 
+def EnableReceiveItemsInDispensary(danpheEMR):
+    print("START:EnableReceiveItemsInDispensary")
+    global EnableReceiveItemsInDispensary
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("EnableReceiveItemsInDispensary")
+    EnableReceiveItemsInDispensary = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("EnableReceiveItemsInDispensary:", EnableReceiveItemsInDispensary)
+    print("END:EnableReceiveItemsInDispensary")
+    return EnableReceiveItemsInDispensary
 
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
@@ -116,7 +122,6 @@ def wait_for_window(danpheEMR, timeout = 2):
     wh_then = vars("window_handles")
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
-
 
 def __str__():
     return

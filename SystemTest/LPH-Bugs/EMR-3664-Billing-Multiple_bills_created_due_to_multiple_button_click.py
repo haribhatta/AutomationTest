@@ -1,10 +1,9 @@
-import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
+import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 
-AC.applicationSelection()
-AC.openBrowser()
+EMR = AC.openBrowser()
 #############
 # front desk user login
 foUserId = GSV.foUserID
@@ -15,11 +14,11 @@ labTestTFT = GSV.TFT
 radioTestUSG = GSV.USG
 #############
 AC.login(foUserId, foUserPwd)
-LB.counteractivation()
-hospitalNo = LA.patientquickentry(0, 'Cash',department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
-print("hospitalNo", hospitalNo)
-InvoiceNo=LB.multiplebillingclick(hospitalNo,labTestTFT, radioTestUSG)
-LB.verifymultipleclickbilling(InvoiceNo)
+LB.counteractivation(EMR)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
+print("hospitalNo", HospitalNo)
+InvoiceNo1 = LB.multiplebillingclick(EMR, HospitalNo,labTestTFT, radioTestUSG)
+LB.verifymultipleclickbilling(EMR, InvoiceNo1)
 AC.logout()
 AC.closeBrowser()
 

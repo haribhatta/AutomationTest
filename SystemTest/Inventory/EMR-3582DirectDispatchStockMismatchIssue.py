@@ -24,7 +24,7 @@ rate = 10
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LI.activateInventory(EMR, inventory='General Inventory')
-BillNo = LI.createInventoryGoodReceipt(EMR, qty, itemname, rate=rate)
+BillNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=rate, paymentMode="Credit")
 LI.receiveGoodReceipt(EMR)
 itemstock = LI.countStock(EMR, itemname=itemname)
 preitemstock = LI.preCountStock(itemstock)

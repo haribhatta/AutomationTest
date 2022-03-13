@@ -50,7 +50,7 @@ LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="this is b
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=rateOPD, credit=0, creditReturn=0, discount=0, provision=0)
 #####Scenario: Credit Invoice with no Discount
-HospitalNo, InvoiceNo1, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.preSystemIncomeSegregation()
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=rateOPD, creditReturn=0, discount=0, provision=0)
@@ -60,10 +60,10 @@ LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is 
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=rateOPD, discount=0, provision=0)
 #####Scenario: Cash Invoice with Discount
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0, deposit=0, HospitalNo=HospitalNo, doctor=doctor, department=department, admittingDoctorMandatory=isDoctorMandatory)
 LBR.getIncomeSegregation(EMR)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, test=usgtest)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo2, test=usgtest)
 LBR.preSystemIncomeSegregation()
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=0, discount=0, provision=usgprice)

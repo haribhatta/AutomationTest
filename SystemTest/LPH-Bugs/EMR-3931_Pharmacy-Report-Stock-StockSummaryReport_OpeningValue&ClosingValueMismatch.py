@@ -26,7 +26,7 @@ phUserPwd = GSV.pharmacyUserPwD
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
 #can.verifyopdinvoice(deposit=0, billamt=500)
 drug = GSV.drug1BrandName
 rate = GSV.drug1Rate
@@ -35,10 +35,10 @@ amount = rate*qty
 print("Amount", amount)
 AC.logout()
 AC.login(phUserId, phUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 LPR.getPharmacyOpeningEndingStockSummaryReport(danpheEMR=EMR, drugname=drug)
 LPR.preSystemPharmacyOpeningEndingStockSummaryReport()
-pInvoiceNo = LP.createPharmacyInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, paymentmode='Cash')
+pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugName=drug, paymentmode='Cash')
 LPR.getPharmacyOpeningEndingStockSummaryReport(danpheEMR=EMR, drugname=drug)
 LPR.verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR=EMR, qty=qty)
 AC.logout()

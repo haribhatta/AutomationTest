@@ -985,7 +985,7 @@ def getUserCollectionReport(danpheEMR, user):
     global actualLessDepositRefund
     global actualAddCollectionFromReceivables
     global actualLessCashDiscount
-    global actualOtherPaymentsGiven
+    global actualMaternityPayment
     global actualTotalCollection
     danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
     time.sleep(3)
@@ -1060,11 +1060,11 @@ def getUserCollectionReport(danpheEMR, user):
     print("actualLessCashDiscount:", actualLessCashDiscount)
     actualLessCashDiscount = float(actualLessCashDiscount)
     print("actualLessCashDiscount:", actualLessCashDiscount)
-    actualOtherPaymentsGiven = danpheEMR.find_element(By.XPATH,
-        "//td[contains(text(),'Other Payments Given')]//following-sibling::td").text
-    print("actualOtherPaymentsGiven:", actualOtherPaymentsGiven)
-    actualOtherPaymentsGiven = float(actualOtherPaymentsGiven)
-    print("actualOtherPaymentsGiven:", actualOtherPaymentsGiven)
+    actualMaternityPayment = danpheEMR.find_element(By.XPATH,
+        "//td[contains(text(),'Maternity Payment')]//following-sibling::td").text
+    print("actualMaternityPayment:", actualMaternityPayment)
+    actualMaternityPayment = float(actualMaternityPayment)
+    print("actualMaternityPayment:", actualMaternityPayment)
     actualTotalCollection = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),' Total Collection ')]//following-sibling::td").text
     print("actualTotalCollection:", actualTotalCollection)
@@ -1085,7 +1085,7 @@ def preSystemUserCollectionReport():
     global presyslessdepositrefund
     global presysaddcollectionfromreceivables
     global presyslesscashdiscount
-    global preOtherPaymentsGiven
+    global preMaternityPayment
     global presystotalcollection
     presysnetcashcollection = actualNetCashCollection
     presysgrosstotalsales = actualGrossTotalSales
@@ -1099,7 +1099,7 @@ def preSystemUserCollectionReport():
     presyslessdepositrefund = actualLessDepositRefund
     presysaddcollectionfromreceivables = actualAddCollectionFromReceivables
     presyslesscashdiscount = actualLessCashDiscount
-    preOtherPaymentsGiven = actualOtherPaymentsGiven
+    preMaternityPayment = actualMaternityPayment
     presystotalcollection = actualTotalCollection
 
 
@@ -1141,9 +1141,9 @@ def verifyUserCollectionReport(cash, cashreturn, credit, creditreturn, tradeDisc
     expectedLessCashDiscount = presyslesscashdiscount + cashDiscount
     print("expectedLessCashDiscount:", expectedLessCashDiscount)
     assert expectedLessCashDiscount == actualLessCashDiscount
-    expectedOtherPayments = preOtherPaymentsGiven
-    print("expectedOtherPayments:", expectedOtherPayments)
-    assert expectedOtherPayments == actualOtherPaymentsGiven
+    expectedMaternityPayment = preMaternityPayment
+    print("expectedMaternityPayment:", expectedMaternityPayment)
+    assert expectedMaternityPayment == actualMaternityPayment
     expectedTotalCollection = presystotalcollection + cash - cashreturn + deposit - depositreturn + creditsettlement - tradeDiscount - cashDiscount
     print("expectedTotalCollection:", expectedTotalCollection)
     print("actualTotalCollection:", actualTotalCollection)

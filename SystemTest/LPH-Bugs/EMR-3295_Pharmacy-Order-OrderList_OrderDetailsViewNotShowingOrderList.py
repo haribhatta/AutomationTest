@@ -22,16 +22,16 @@ phuserid = GSV.pharmacyUserID
 phuserpwd = GSV.pharmacyUserPwD
 drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
-supplierName = GSV.supplierShremad
+supplierName = GSV.supplier
 drugName = GSV.drugAasma
 #############
 #AC.login(foUserId, foUserPwd)
 #LB.counteractivation()
-#HospitalNo = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
+#HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(discountpc=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae)
 #AC.logout()
 #############
 AC.login(phuserid, phuserpwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 LP.createPharmacyPurchaseOrder(EMR, supplierName, drugName)
 LP.verifyCreatePharmacyPurchaseOrder(EMR, supplierName, drugName)
 AC.logout()

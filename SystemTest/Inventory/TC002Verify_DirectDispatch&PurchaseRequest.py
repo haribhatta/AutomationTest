@@ -17,28 +17,28 @@ storeUserid = GSV.storeUserID
 storeUserPwd = GSV.storeUserPwD
 drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
-itemname = GSV.File
+itemname = GSV.storeItem1Name
 StoreName = GSV.SubStore1
-GeneralInventory = GSV.GeneralInventory
+inventoryName = GSV.inventoryName1
 qty = 2
 #############
 AC.login(storeUserid, storeUserPwd)
-AC.verifyLogIn()
+AC.verifyLogIn(EMR)
 ######## Inventory>Internal>Requisition: Direct Dispatch
-RequisitionNo = LI.createInventoryDirectDispatch(itemname, qty=qty, store=StoreName)
-LI.verifyInventoryDirectDispatch(RequisitionNo, itemname, qty, StoreName)
+RequisitionNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=itemname, qty=qty, inventory=inventoryName, store=StoreName)
+LI.verifyInventoryDirectDispatch(danpheEMR=EMR, RequisitionNo=RequisitionNo, itemname=itemname, qty=qty, store=StoreName)
 ######## Inventory>Internal>Purchase: Purchase Request
-PRNo = LI.createPurchaseRequest(itemname, qty)
+PRNo = LI.createPurchaseRequest(danpheEMR=EMR, ItemName= itemname, qty=qty)
 print("Purchase Request No:", PRNo)
-LI.verifyPurchaseRequest(PRNo, itemname, qty)
+LI.verifyPurchaseRequest(danpheEMR=EMR, PRNo=PRNo, ItemName=itemname, qty=qty)
 ########SubStore>Inventory>Inventory Requisition: Create SubStore Requisition
 #LSS.selectSubStore(substore=StoreName)
-ssReqNo = LSS.createSubStoreRequisition(InventoryName=GeneralInventory, ItemName=itemname, Qty=qty)
+ssReqNo = LSS.createSubStoreRequisition(danpheEMR=EMR, InventoryName=inventoryName, ItemName=itemname, Qty=qty)
 print("Sub Store Requisition No:", ssReqNo)
-LSS.verifySubStoreRequisition(ssReqNo, StoreName, itemname, qty)
+LSS.verifySubStoreRequisition(danpheEMR=EMR, ssReqNo=ssReqNo, InventoryName=inventoryName, ItemName=itemname, Qty=qty)
 ######## Dispatch Requisition
-LI.dispatchRequisition(ssReqNo, GeneralInventory, itemname, qty)
-LI.verifyDispatchRequisition(ssReqNo)
+LI.dispatchRequisition(danpheEMR=EMR, ssReqNo=ssReqNo, GeneralInventory=inventoryName, itemname=itemname, qty=qty)
+LI.verifyDispatchRequisition(EMR, ssReqNo)
 ######## DispatchReceived
-LSS.receiveInventoryDispatch(ssReqNo)
-LSS.verifyReceivedInventoryDispatch(ssReqNo)
+LSS.receiveInventoryDispatch(EMR, substore=StoreName, ssReqNo=ssReqNo)
+LSS.verifyReceivedInventoryDispatch(EMR, ssReqNo)

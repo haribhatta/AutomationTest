@@ -22,7 +22,7 @@ discountScheme = GSV.discountSchemeName
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
-HospitalNo = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynaeEHS, priceCategoryType=priceCategoryType)
 print("Status:Passed - > TC001 CreateAppointmentNew")
 # 2. Create an appointment for old patient.
 LA.oldPatientRegistration(EMR, HospitalNo, doctorGynaeEHS, departmentGynae)

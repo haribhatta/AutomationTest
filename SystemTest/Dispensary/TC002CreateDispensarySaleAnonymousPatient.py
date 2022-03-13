@@ -14,7 +14,7 @@ drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
 #############
 AC.login(phuserid, phuserpwd)
-LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName)
+LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName1)
 LD.createDispensarySaleRandomPatient(danpheEMR=EMR, qty=1, drugname=drugSinex, paymentmode=paymentMode)
 AC.logout()
 AC.closeBrowser()

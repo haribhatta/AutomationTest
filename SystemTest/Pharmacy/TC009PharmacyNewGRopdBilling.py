@@ -18,6 +18,6 @@ paymentmode = "Cash"
 qty = 50
 EMR = GSV.appName
 exec(open("TC008PharmacyNewGRStore2StockTransfer.py").read())
-LP.createPharmacyOPDBilling(EMR, qty, paymentmode)
+LD.createDispensaryOPDBilling(EMR, qty, paymentmode)
 AC.logout()
 AC.closeBrowser()

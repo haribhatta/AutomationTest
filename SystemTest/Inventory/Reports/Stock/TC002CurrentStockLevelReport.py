@@ -29,8 +29,8 @@ print("Item:", item)
 qty = 1
 rate = GSV.storeItem1Rate
 print("Rate:", rate)
-store1 = GSV.store1
-Inventory1 = GSV.Inventory1
+store1 = GSV.subStoreName1
+Inventory1 = GSV.inventoryName1
 ########
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)

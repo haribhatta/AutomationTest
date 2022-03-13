@@ -21,9 +21,9 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 time.sleep(2)
 paymode = "Credit"
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal").HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal")
 LB.createProvisionalBill(EMR, HospitalNo, usgtest=GSV.USG)
 time.sleep(2)
-LB.creditSettlements(EMR, HospitalNo=HospitalNo, ProvisionalSlip="Yes", discount=0)
+LB.creditSettlements(EMR, HospitalNo=HospitalNo, ProvisionalSlip="Yes", cashdiscount=0)
 AC.logout()
 AC.closeBrowser()

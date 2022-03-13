@@ -7,5 +7,5 @@ adminpswd = GSV.adminUserPwD
 
 EMR = AC.openBrowser()
 AC.login(adminuser, adminpswd)
-LS.Setting_add_employee()
+LS.Setting_add_employee(EMR)
 AC.logout()

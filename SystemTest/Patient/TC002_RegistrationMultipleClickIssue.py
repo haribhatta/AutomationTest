@@ -11,8 +11,8 @@ foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
 #############
 AC.login(foUserId, foUserPwd)
-ContactNo = LPP.patientRegistrationMultipleClick()
-LPP.verifyMultipleRegistration(ContactNo)
+ContactNo = LPP.patientRegistrationMultipleClick(EMR)
+LPP.verifyMultipleRegistration(EMR, ContactNo)
 #LPP.patientRegistrationMultipleClick()
 AC.logout()
 #pr.logout()

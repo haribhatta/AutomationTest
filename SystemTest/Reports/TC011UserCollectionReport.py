@@ -34,13 +34,13 @@ LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=opdRate, credit=0, creditreturn=0, cashDiscount=0, tradeDiscount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
 #####Scenario: Credit Invoice with no Discount
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=opdRate, creditreturn=0, cashDiscount=0, tradeDiscount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
 #####Scenario: Return Credit Invoice with no Discount
-LB.returnBillingInvoice(EMR, InvoiceNo, returnmsg="This is credit return.")
+LB.returnBillingInvoice(EMR, InvoiceNo1, returnmsg="This is credit return.")
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=opdRate, cashDiscount=0, tradeDiscount=0, deposit=0,

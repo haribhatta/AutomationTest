@@ -241,8 +241,8 @@ def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
     print("InvoiceNo", InvoiceNo)
-    return InvoiceNo
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+    return InvoiceNo
 
 
 def verifymultipleclickbilling(danpheEMR, InvoiceNo):

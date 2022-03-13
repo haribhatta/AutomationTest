@@ -38,10 +38,10 @@ AC.logout()
 
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-InvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=quantity, drugName=drugname, paymentmode=paymentmode)
+InvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=quantity, drugName=drugname, paymentmode=paymentmode)
 #RPI.verifyPharmacyInvoice3(drugname, quantity, rate)
-LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo, qty=quantity, returnremark=returnremark)
-LD.verifyReturnDispensaryInvoice(danpheEMR=EMR, paymentmode=paymentmode, returnRemark=returnremark, InvoiceNo=InvoiceNo)
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=InvoiceNo1, qty=quantity, returnremark=returnremark)
+LD.verifyReturnDispensaryInvoice(danpheEMR=EMR, paymentmode=paymentmode, returnRemark=returnremark, InvoiceNo=InvoiceNo1)
 AC.logout()
 AC.closeBrowser()
 # This has open bug: EMR-2630

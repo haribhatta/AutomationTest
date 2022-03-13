@@ -69,7 +69,6 @@ def insurancePatientRegistration(danpheEMR):
       familyhead = Select(danpheEMR.find_element(By.ID, "IsFamilyHead"))
       familyhead.select_by_visible_text("Yes")
       danpheEMR.find_element(By.ID, "register").click()
-
       return NSHI
 
 

@@ -37,10 +37,10 @@ usgtest1 = GSV.USG
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno).HospitalNo
-InvoiceNo = LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labtest1, imagingtest= usgtest1)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal")
+InvoiceNo1 = LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labtest1, imagingtest= usgtest1)
 LB.returnBillingInvoicePartial(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg='Cash P Return') # Scenario: 1
-LB.verifyCreditNoteDuplicateInvoice(danpheEMR=EMR)    # Scenario: 2
+LB.verifyCreditNoteDuplicateInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1)    # Scenario: 2
 
 
 

@@ -17,7 +17,7 @@ store2 = "Accounting Store"
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 LI.activateInventory(EMR, 'General Inventory')
-BillNo = LI.createInventoryGoodReceipt(EMR, qty, item, rate)
+BillNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=item, rate=rate, paymentMode="Credit")
 print("Bill Number of Given Good Receipt is :", BillNo)
 LP.cancelInventoryGoodsReceipt(EMR, BillNo=BillNo)
 pono = LP.createPurchaseOrder(EMR, itemName1=item, qty=qty, rate=rate, itemName2=item2)
