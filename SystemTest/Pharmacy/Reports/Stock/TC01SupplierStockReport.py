@@ -10,6 +10,7 @@ pharmacyUserPwd = GSV.pharmacyUserPwD
 pharmacyUserName = GSV.pharmacyUserName
 
 drugname = GSV.drug1BrandName
+genericName = GSV.drug1GenericName
 qty = 1
 rate = GSV.drug1Rate
 totalamount = qty*rate
@@ -24,7 +25,7 @@ LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=qty, DrugName=drugname
 LMPR.getSupplierStockReport(EMR, supplier=GSV.supplier)
 LMPR.preSupplierStockReport()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=qty, DrugName=drugname, grPrice=rate)
-LP.verifyPharmacyGoodsReceipt(EMR, DrugName=GSV.drug1BrandName, grno=goodsReceiptNo)
+LP.verifyPharmacyGoodsReceipt(EMR, brandName=GSV.drug1BrandName, genericName=genericName, grno=goodsReceiptNo)
 LP.cancelPharmacyGoodsReceipt(EMR)
 LMPR.getSupplierStockReport(EMR, supplier=GSV.supplier)
 LMPR.verifysupplierStockReport(qtyGR=qty, rateGR=rate)

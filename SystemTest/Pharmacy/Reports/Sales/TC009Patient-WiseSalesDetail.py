@@ -37,11 +37,11 @@ EMR = AC.openBrowser()
 # To get random patient information
 AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType).HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 AC.logout()
 # Start of Patient Wise Sales Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 LPR.getPatientWiseSalesDetails(danpheEMR=EMR, HospitalNo=HospitalNo)
 LPR.prePatientWiseSalesDetails()
 ######## Create pharmacy cash sale
