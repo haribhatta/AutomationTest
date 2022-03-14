@@ -84,6 +84,8 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//pat-ip-bill-summary/div/div[2]/div/div/div/div/a").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+
     elif trasfer == 1:
         danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
         time.sleep(3)
