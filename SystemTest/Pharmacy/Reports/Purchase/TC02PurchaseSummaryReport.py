@@ -29,6 +29,7 @@ pharmacyUserName = GSV.pharmacyUserName
 billingId = GSV.foUserID
 billingPwd = GSV.foUserPwD
 drugname = GSV.drug1BrandName
+genericName = GSV.drug1GenericName
 qty = 1
 rate = GSV.drug1Rate
 amount = qty*rate
@@ -36,7 +37,7 @@ totalamount = amount
 remark = "This is test return."
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
-supplier = GSV.supplier
+supplier = GSV.pharmacySupplierName1
 ########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
@@ -44,7 +45,7 @@ LMPR.getPurchaseSummaryReport(EMR)
 LMPR.prePurchaseSummaryReport()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5)
 print(goodsReceiptNo)
-LP.verifyPharmacyGoodsReceipt(EMR, DrugName=GSV.drug1BrandName, grno=goodsReceiptNo)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugname, genericName=genericName, grno=goodsReceiptNo)
 LP.cancelPharmacyGoodsReceipt(EMR)
 LMPR.getPurchaseSummaryReport(EMR)
 LMPR.verifypurchasesummarybeforeReturn()
