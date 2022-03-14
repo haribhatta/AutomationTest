@@ -4,6 +4,7 @@ import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
 import Library.LibModuleBillingReports as LBR
+import Library.LibModuleSettings as LS
 # front desk user login
 foUserId = GSV.foUserID
 foUserPwd = GSV.foUserPwD
@@ -15,6 +16,9 @@ priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 ########
 EMR = AC.openBrowser()
+AC.login(GSV.adminUserID, GSV.adminUserPwD)
+LS.ChangePaymentLabelSettingstoMaternityPayment(EMR)
+AC.logout()
 AC.login(foUserId, foUserPwd)
 AC.verifyLogIn(EMR)
 LB.counteractivation(EMR)
