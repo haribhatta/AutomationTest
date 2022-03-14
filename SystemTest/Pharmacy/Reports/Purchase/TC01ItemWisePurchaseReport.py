@@ -22,7 +22,7 @@ rate = GSV.drug1Rate
 amount = qty*rate
 amount = int(amount)
 totalamount = amount
-supplier = GSV.supplier
+supplier = GSV.pharmacySupplierName1
 print("Total amount i.e rate * grprice ", totalamount)
 
 ########
