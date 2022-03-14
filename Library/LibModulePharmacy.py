@@ -81,7 +81,10 @@ def getPharmacyStockDetail(danpheEMR, drugname):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Store' and contains(text(),'Store')]").click()
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "(//input[@id='quickFilterInput'])[2]").send_keys(drugname)
+    try:
+        danpheEMR.find_element(By.XPATH, "(//input[@id='quickFilterInput'])[1]").send_keys(drugname)
+    except:
+        danpheEMR.find_element(By.XPATH, "(//input[@id='quickFilterInput'])[2]").send_keys(drugname)
     time.sleep(5)
     drugnameMS = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[20]/div[2]").text
     print("drugnameMS:", drugnameMS)
