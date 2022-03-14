@@ -116,6 +116,38 @@ def EnableReceiveItemsInDispensary(danpheEMR):
     print("END:EnableReceiveItemsInDispensary")
     return EnableReceiveItemsInDispensary
 
+def ChangePaymentLabelSettingstoMaternityPayment(danpheEMR):
+    print("START: changing UserCollectionPaymentLabelSetting to  Maternity Payment (Net)")
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("UserCollectionOtherPaymentsLabelSettings")
+    danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[7]/a").click()
+    time.sleep(4)
+    danpheEMR.find_element(By.XPATH, "//input[@class = 'form-control ng-untouched ng-pristine ng-valid']").clear()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//input[@class = 'form-control ng-pristine ng-valid ng-touched']").click()
+    danpheEMR.find_element(By.XPATH, "//input[@class = 'form-control ng-pristine ng-valid ng-touched']").send_keys("Maternity Payment (Net)")
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Update')]").click()
+
+
+# def CheckCreditOrganizationMandatory(danpheEMR):  This Features is being Changing so this script is onHold
+#     print("START: Checking credit Organization Mandatory")
+#     global CreditOrganizationMandatory
+#     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+#     time.sleep(5)
+#     danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+#     time.sleep(5)
+#     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("CreditOrganizationMandatory")
+#     time.sleep(5)
+#     CreditOrganizationMandatory = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
+#     time.sleep(2)
+#     print("Parameter Value for Credit Organization is :", CreditOrganizationMandatory)
+#     assert CreditOrganizationMandatory == "true"
+#     print("END: Credit Organization Non Mandatory")
+
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
