@@ -32,14 +32,14 @@ totalAmount = qty*drugRate
 remark = "This is test return."
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
-supplier = GSV.supplier
+supplier = GSV.pharmacySupplierName1
 ########
 EMR = AC.openBrowser()
 # Start of Narcotic Stock Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugName, grPrice=5)
-LPR.verifynarcoticstockreport(danpheEMR=EMR, qty=2, DrugName=drugName, grPrice=5)
+grNO = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugName, grPrice=5)
+LPR.verifynarcoticstockreport(danpheEMR=EMR, qty=2, DrugName=drugName, grNo=grNO)
 AC.logout()
 AC.closeBrowser()
 

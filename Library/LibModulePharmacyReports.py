@@ -1239,7 +1239,7 @@ def presalesstatementreport():
 
 ### Narcotic Stock Report ###
 
-def verifynarcoticstockreport(danpheEMR, qty, DrugName, grPrice):
+def verifynarcoticstockreport(danpheEMR, qty, DrugName, grNo):
     print("START >>> Verifying Narcotic Stock Report>>")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
@@ -1251,9 +1251,14 @@ def verifynarcoticstockreport(danpheEMR, qty, DrugName, grPrice):
     danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
     time.sleep(4)
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Narcotics Stock')]").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName, qty, grPrice)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName, " ", qty, " ", grNo)
     time.sleep(9)
+    print("Good Receipt Number / Batch Number: ", grNo)
+    batchNo = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]").text
+    batchNo = int(batchNo)
+    print("Batch number of Given medicine is :", batchNo)
+    assert batchNo == grNo
 
 
 def getStockTransferReport(danpheEMR):
