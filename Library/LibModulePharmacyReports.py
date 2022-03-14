@@ -1306,7 +1306,7 @@ def getStockTransferReport(danpheEMR):
 
     notReceivedSalesValue = danpheEMR.find_element(By.XPATH,
                                                    "//*[@id='print_summary']/table/tbody/tr[3]/td[4]/span").text
-    notReceivedSalesValue = int(str(notReceivedSalesValue).replace(",", ""))
+    notReceivedSalesValue = float(str(notReceivedSalesValue).replace(",", ""))
     print("In-Transition Stocks (Not Received Stocks) Sales value is :  ", notReceivedSalesValue)
 
     totalStockQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[4]/td[2]/span").text

@@ -17,17 +17,17 @@ totalamount = qty*rate
 remark = "This is test return."
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
-supplier = GSV.supplier
+supplier = GSV.pharmacySupplierName1
 ########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=qty, DrugName=drugname, grPrice=rate)
-LMPR.getSupplierStockReport(EMR, supplier=GSV.supplier)
+LMPR.getSupplierStockReport(EMR, supplier=supplier)
 LMPR.preSupplierStockReport()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=qty, DrugName=drugname, grPrice=rate)
 LP.verifyPharmacyGoodsReceipt(EMR, brandName=GSV.drug1BrandName, genericName=genericName, grno=goodsReceiptNo)
 LP.cancelPharmacyGoodsReceipt(EMR)
-LMPR.getSupplierStockReport(EMR, supplier=GSV.supplier)
+LMPR.getSupplierStockReport(EMR, supplier=supplier)
 LMPR.verifysupplierStockReport(qtyGR=qty, rateGR=rate)
 AC.logout()
 AC.closeBrowser()

@@ -302,7 +302,7 @@ def receiveItem(danpheEMR,qty):
     danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]/span/a[2]").click()
-    time.sleep(3)
+    time.sleep(5)
     requestedQty = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div[2]/div/div[2]/table/tbody/tr/td[2]").text
     requestedQty = int(requestedQty)
     print("Requested Quantity is : ", requestedQty)
