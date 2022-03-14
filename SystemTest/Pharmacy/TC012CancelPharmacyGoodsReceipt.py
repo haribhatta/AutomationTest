@@ -20,7 +20,7 @@ pharmacyUserPwd = GSV.adminUserPwD
 qty = 5
 brandName = GSV.drug1BrandName
 genericName = GSV.drug1GenericName
-tqty = 2
+tqty = 1
 rate = GSV.drug1Rate
 costPrice = 20
 amount = qty * costPrice
@@ -40,11 +40,7 @@ goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierN
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=brandName, qty=tqty)
-LD.transferMainDispensary2MainStore(danpheEMR=EMR, drugname=brandName, qty=tqty)
 LP.cancelPharmacyGoodsReceipt(EMR)
-LP.verifyPharmacyStockDetail(danpheEMR=EMR, drugname=brandName)
-#LP.verifyDispensaryStockDetaill()
 AC.logout()
 AC.closeBrowser()
 
