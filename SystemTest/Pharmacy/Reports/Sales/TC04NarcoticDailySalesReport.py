@@ -52,7 +52,7 @@ LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, return
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo, totalAmount=totalAmount) ### Open bug in Jira: EMR-4776
 
 ######## Create pharmacy credit sale
-pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugName=drugName, paymentmode='Credit')
+pInvoiceNo1 = LD.createNarcoticDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty, drugName=drugName, paymentmode='Credit')
 LPR.verifySystemPharmacyNarcoticDailySalesReport(danpheEMR=EMR, invoiceNo=pInvoiceNo1, totalAmount=totalAmount)
 
 ######## Return pharmacy credit sale
