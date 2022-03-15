@@ -103,6 +103,7 @@ def checkCoreCFGdiscountMembership(danpheEMR):
     print("END>>checkCoreCFGdiscountMembership")
     return membershipTypeDiscountValue, membershipSchemeSettingsValue
 
+###Dispensary
 def EnableReceiveItemsInDispensary(danpheEMR):
     print("START:EnableReceiveItemsInDispensary")
     global EnableReceiveItemsInDispensary
@@ -116,6 +117,7 @@ def EnableReceiveItemsInDispensary(danpheEMR):
     print("END:EnableReceiveItemsInDispensary")
     return EnableReceiveItemsInDispensary
 
+###Laboratory
 def ChangePaymentLabelSettingstoMaternityPayment(danpheEMR):
     print("START: changing UserCollectionPaymentLabelSetting to  Maternity Payment (Net)")
     time.sleep(2)
@@ -132,7 +134,19 @@ def ChangePaymentLabelSettingstoMaternityPayment(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//input[@class = 'form-control ng-pristine ng-valid ng-touched']").send_keys("Maternity Payment (Net)")
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Update')]").click()
 
-
+###Inventory
+def EnableReceivedItemInSubstore(danpheEMR):
+    print("START:EnableReceivedItemInSubstore")
+    global EnableReceiveItemsInDispensary
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("EnableReceivedItemInSubstore")
+    EnableReceivedItemInSubstore = danpheEMR.find_element(By.XPATH, "(//div[@col-id='ParameterValue'])[2]").text
+    print("EnableReceivedItemInSubstore:", EnableReceivedItemInSubstore)
+    print("END:EnableReceivedItemInSubstore")
+    return EnableReceiveItemsInDispensary
 # def CheckCreditOrganizationMandatory(danpheEMR):  This Features is being Changing so this script is onHold
 #     print("START: Checking credit Organization Mandatory")
 #     global CreditOrganizationMandatory

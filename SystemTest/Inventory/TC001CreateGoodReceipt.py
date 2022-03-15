@@ -16,7 +16,7 @@ itemname = GSV.stationaryItem1
 print("itemName:", itemname)
 qty = 1
 rate = 1
-storeName = GSV.SubStore1
+storeName = GSV.subStoreName1
 inventory1 = GSV.inventoryName1
 
 EMR = AC.openBrowser()

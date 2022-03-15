@@ -114,7 +114,7 @@ if appName == "LPH":
       generalBedFeature = "General Bed"
 ###TestAction>>Settings:
       UserBilling = 'Mr. Bhagawati Pandey'
-      doctorGyno = "Dr. doctor doctor"
+      doctorGyno = "dr subash pokhrel"
       departmentGyno = "GYNAE & OBS"
       doctorGynoEHS = "Dr. Anupa Thapa"
       doctor2 = "Mr. admin admin"

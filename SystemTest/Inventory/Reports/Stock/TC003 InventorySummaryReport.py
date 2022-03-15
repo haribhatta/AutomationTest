@@ -4,6 +4,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleInventory as LI
 import Library.LibModuleSubStore as LSS
+import Library.LibModuleSettings as LS
 
 # front desk user login
 storeUserId = GSV.adminUserID
@@ -14,11 +15,13 @@ rate = 5
 qty = 1
 costAmount = rate * qty
 
-subStore1 = GSV.SubStore1
-subStore2 = GSV.SubStore2
+subStore1 = GSV.subStoreName1
+subStore2 = GSV.subStoreName2
 ########
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
+flagReceivedItemInSubstore = LS.EnableReceivedItemInSubstore(EMR)
+print("flagReceivedItemInSubstore:", flagReceivedItemInSubstore)
 LI.selectInventory(danpheEMR=EMR, inventory="General Inventory")
 LI.getInventorySummaryReport(danpheEMR=EMR)
 LI.preInventorySummaryReport()
@@ -28,7 +31,8 @@ LI.receiveGoodReceipt(danpheEMR=EMR)
 ### Create Inventory DD
 RequsitionNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory="General Inventory", store=subStore1)
 ### Receive Inventory dispatch
-LSS.receiveInventoryDispatch(danpheEMR=EMR, substore=subStore1, ssReqNo=RequsitionNo)
+if flagReceivedItemInSubstore == "true":
+    LSS.receiveInventoryDispatch(danpheEMR=EMR, substore=subStore1, ssReqNo=RequsitionNo)
 ###TestAction: Create SubStore Consumption
 LSS.createNewConsumption(danpheEMR=EMR, substore=subStore1, itemName=item)
 LI.getInventorySummaryReport(danpheEMR=EMR)

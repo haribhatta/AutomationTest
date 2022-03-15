@@ -70,7 +70,10 @@ def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
     time.sleep(6)
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(5)
-    # danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory')]").click()
     # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'Administration Store')]").click()
     # time.sleep(5)
@@ -144,10 +147,13 @@ def createNewConsumption(danpheEMR, substore, itemName):
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(2)
     # since store is choosen no need to choose this
-    # danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
     time.sleep(1)
-    # danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-    danpheEMR.find_element(By.XPATH, "//div[2]/ul/li[2]/a").click()
+    #danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    #danpheEMR.find_element(By.XPATH, "//div[2]/ul/li[2]/a").click()
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/WardSupply/Inventory/Consumption')]").click()
     danpheEMR.find_element(By.XPATH, " //a[contains(text(),'New Consumption')]").click()
     time.sleep(2)
