@@ -20,9 +20,11 @@ def getPharmacyDashboard(danpheEMR):
     global DepositReturned
     global ProvisionalItems
     global UnpaidInvoices
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(5)
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(9)
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Dashboard')]").click()
     time.sleep(3)
     TotalSale = danpheEMR.find_element(By.XPATH, "//h4[contains(text(),'Total Sale')]/following-sibling::b").text
@@ -240,7 +242,10 @@ def verifyPharmacyCashCollectionSummary(cash, cashreturn, credit, creditreturn, 
 def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
     print(">>START: getPharmacyDepositBalanceReport")
     global sysdepositamt
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
@@ -255,8 +260,11 @@ def getPharmacyDepositBalanceReport(danpheEMR, HospitalNo):
 
 def verifyPharmacyDepositBalanceReport(danpheEMR, HospitalNo, deposit, depositreturn):
     print(">>START: verifyPharmacyDepositBalanceReport")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(3)
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
+    time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Deposit Balance Report ')]").click()
@@ -276,7 +284,10 @@ def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
     global sysendingstock
     global sysdrugbatch
     global sysdrugexpiry
-    danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click()
@@ -312,7 +323,10 @@ def preSystemPharmacyOpeningEndingStockSummaryReport():
 
 def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
     print(">>START: verifyPharmacyOpeningEndingStockSummaryReport")
-    danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click()
@@ -333,7 +347,10 @@ def verifyPharmacyOpeningEndingStockSummaryReport(danpheEMR, qty):
 def getPharmacyStockManageDetailReport(danpheEMR, drugname):
     print(">>START: getPharmacyStockManageDetailReport")
     global ManageQuantity
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
@@ -362,7 +379,10 @@ def verifyPharmacyStockManageDetailReport(In, Out):
 
 def verifyStockItemsReport(danpheEMR, drugname):
     print(">>START: verifyStockItemsReport")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Report").click()
     time.sleep(2)
