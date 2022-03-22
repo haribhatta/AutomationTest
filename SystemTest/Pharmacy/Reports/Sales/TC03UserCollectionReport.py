@@ -46,7 +46,8 @@ AC.logout()
 # Start of User collection report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-
+AppName = GSV.appName
+print("AppName", AppName)
 ######## Create anonymous pharmacy sale
 LD.createDispensarySaleRandomPatient(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode='Cash')
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
@@ -64,30 +65,31 @@ LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
 LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=totalamount, credit=0, creditreturn=0, creditsettlement=0,
                                              discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
 ######## Create pharmacy credit sale
-pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugname, paymentmode='Credit')
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Return pharmacy credit sale
-LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=amount, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Create pharmacy credit sale
-pInvoiceNo2 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugname, paymentmode='Credit')
-print("pInvoiceNo2:", pInvoiceNo2)
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
-######## Pharmacy Credit Sale Settlement
-LD.settleDispensaryCreditInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, InvoiceNo=pInvoiceNo2)
-LPR.preSystemPharmacyUserCollectionReport()
-LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
-LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=0, creditsettlement=amount,
-                                             discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
+if AppName != 'LPH': # Credit sale is not applicable in LPH ( they only use insurance credit without need of settlement)
+    pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugname, paymentmode='Credit')
+    LPR.preSystemPharmacyUserCollectionReport()
+    LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
+    LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
+                                                 discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
+    ######## Return pharmacy credit sale
+    LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
+    LPR.preSystemPharmacyUserCollectionReport()
+    LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
+    LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=amount, creditsettlement=0,
+                                                 discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
+    ######## Create pharmacy credit sale
+    pInvoiceNo2 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugname, paymentmode='Credit')
+    print("pInvoiceNo2:", pInvoiceNo2)
+    LPR.preSystemPharmacyUserCollectionReport()
+    LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
+    LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=amount, creditreturn=0, creditsettlement=0,
+                                                 discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
+    ######## Pharmacy Credit Sale Settlement
+    LD.settleDispensaryCreditInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, InvoiceNo=pInvoiceNo2)
+    LPR.preSystemPharmacyUserCollectionReport()
+    LPR.getPharmacyUserCollectionReport(EMR, pharmacyUserName)
+    LPR.verifySystemPharmacyUserCollectionReport(cash=0, cashreturn=0, credit=0, creditreturn=0, creditsettlement=amount,
+                                                 discount=0, deposit=0, depositreturn=0, provisional=0, provisionalcancel=0)
 
 AC.logout()
 AC.closeBrowser()
