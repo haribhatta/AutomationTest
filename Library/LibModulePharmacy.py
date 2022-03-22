@@ -310,7 +310,7 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
     print("END>>verifyPharmacyGoodsReceipt")
 
 
-def cancelPharmacyGoodsReceipt(danpheEMR):
+def cancelPharmacyGoodsReceipt(danpheEMR, grNo):
     print("START>>cancelPharmacyGoodsReceipt")
     time.sleep(2)
     if AppName == "LPH":
@@ -321,7 +321,9 @@ def cancelPharmacyGoodsReceipt(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Order").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
-    time.sleep(3)
+    time.sleep(5)
+    print("goodsReceiptNo:", grNo)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grNo)
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(), 'View')])[1]").click()
     time.sleep(3)
     if AppName == 'LPH':
@@ -422,10 +424,14 @@ def closePopupApplication(danpheEMR):
 
 def return_to_supplier(danpheEMR, grno, rqty):
     print(">>START: Returning to Supplier")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    time.sleep(2)
-    danpheEMR.find_element(By.LINK_TEXT, "Return To Supplier").click()
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+        danpheEMR.find_element(By.XPATH, '//a[@href="#/Pharmacy/Store" and contains(text(),"Store")]').click()
+        danpheEMR.find_element(By.XPATH, '//a[contains(text(),"New Return Order")]').click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+        danpheEMR.find_element(By.XPATH, '//a[@href="#/Pharmacy/Store" and contains(text(),"Store")]').click()
+        danpheEMR.find_element(By.LINK_TEXT, "Return To Supplier").click()
     time.sleep(5)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
     time.sleep(2)
