@@ -1,5 +1,5 @@
 '''
-System is accepting more discount that that of subtotal
+Amount History is Saved in the Finalized Invoice altough the return quantity is not updated.
 '''
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
@@ -19,6 +19,7 @@ LB.counteractivation(EMR)
 paymode = "CREDIT"
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LD.activateDispensaryCounter(EMR, dispensaryName='MainDispensary')
-LD.createDispensarySaleWithDiscount(danpheEMR=EMR, HospitalNo=HospitalNo, qty=1, discountpercentage=101, drugName=GSV.drug1BrandName, paymentmode=paymode)
+LD.createDispensaryProvisionalSlip(EMR, HospitalNo=HospitalNo, drugName=GSV.drug1BrandName, qty=2)
+LD.checkProvisionalFinalizeInvoice(EMR, HospitalNo=HospitalNo)
 AC.logout()
 AC.closeBrowser()

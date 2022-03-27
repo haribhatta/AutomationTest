@@ -366,6 +366,59 @@ def createDispensarySaleWithDiscount(danpheEMR, HospitalNo, qty, discountpercent
         print("Create Pharmacy OPD Invoice: END<<")
         return pInvoiceNo
 
+
+def createDispensaryProvisionalSlip(danpheEMR, HospitalNo, drugName, qty):
+    print(">>Create Dispensary Sale to Hospital Patient: START")
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "patient-search").click()
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "patient-search").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").click()
+    danpheEMR.find_element(By.ID, "item-box0").clear()
+    time.sleep(3)
+    print("drugName:", drugName)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugName)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "qty0").click()
+    danpheEMR.find_element(By.ID, "qty0").clear()
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
+    danpheEMR.find_element(By.XPATH, "//button [contains(text(), 'Provisional Slip')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[@title = 'Cancel']").click()
+
+
+def checkProvisionalFinalizeInvoice(danpheEMR, HospitalNo):
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Provisional Bills").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
+    time.sleep(2)
+    subtotal = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(9)").text
+    print("Subtotal of the provisional bill before any Update is :", subtotal)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//label[contains(text(), 'Update Invoice')]").click()
+    danpheEMR.find_element(By.ID, "ReturnQty0").send_keys(1)
+#     this is to check the EMR-4634 so the return quantity is given and there will be no update and navigate back to 
+#      Finilize Invoice to see Update
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//label[contains(text(), 'Finalize Invoice')]").click()
+    SubTotal = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(9)").text
+    print("Subtotal of the Provisional to check without update of update invoice after giving return quantity", SubTotal)
+    assert subtotal == SubTotal
+    print("END : Provisional Final Invoice Check")
+
 def wait_for_window(danpheEMR,timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
