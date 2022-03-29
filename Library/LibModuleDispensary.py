@@ -50,9 +50,12 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
     time.sleep(3)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        time.sleep(2)
+        paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
         paymentoptions.select_by_visible_text("credit")
         time.sleep(2)
+        creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
+        creditOrganization.select_by_index(0)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(5)

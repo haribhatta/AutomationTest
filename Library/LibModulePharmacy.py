@@ -449,6 +449,23 @@ def return_to_supplier(danpheEMR, grno, rqty):
     return creditnote
     print("END>>Return to supplier")
 
+def addPharmacyCreditOrganization(danpheEMR):
+    print("START: Adding Pharmacy Credit Organization")
+    time.sleep(1)
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Setting')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Credit Organizations").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Add Organization')]").click()
+    number = random.randint(0, 100)
+    print(number)
+    danpheEMR.find_element(By.ID, "OrganizationName").send_keys("Hospital Ward", + number)
+    danpheEMR.find_element(By.ID, "save").click()
+
 
 ### Below Test Actions are currently deprecated
 def manageStoreStock(danpheEMR, drugname, type, qty):
