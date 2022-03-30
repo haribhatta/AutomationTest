@@ -248,6 +248,8 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     grPrice = int(grPrice)
     danpheEMR.find_element(By.ID, "GRItemPrice").send_keys(grPrice)
     danpheEMR.find_element(By.ID, "Margin").send_keys(14)
+    danpheEMR.find_element(By.ID, "VATPercentage").send_keys(13)
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
@@ -443,11 +445,21 @@ def return_to_supplier(danpheEMR, grno, rqty):
     danpheEMR.find_element(By.CSS_SELECTOR, "th > input").click()
     danpheEMR.find_element(By.NAME, "returnquantity").send_keys(rqty)
     time.sleep(2)
+    vatamount = danpheEMR.find_element(By.XPATH, "//*[@name = 'VATAmount']").text
+    print("Vat amount of returned items is :", vatamount)
     returnstatus = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname = 'ReturnStatus']"))
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
+    vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
+    print(vatamount)
+    vatamount = float(vatamount)
+    assert vatamount > 0
+    danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
     return creditnote
     print("END>>Return to supplier")
+
 
 def addPharmacyCreditOrganization(danpheEMR):
     print("START: Adding Pharmacy Credit Organization")
