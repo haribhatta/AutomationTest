@@ -214,9 +214,11 @@ def verifyReturnDispensaryInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemar
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Print").click()
     time.sleep(3)
-    syspaymentmode = danpheEMR.find_element(By.XPATH, "//*[@id='pharma-pat-info']/p[2]/span").text
+    syspaymentmode = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Method of payment: ')]").text
     print("syspaymentmode:", syspaymentmode)
-    assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
+    syspaymentmode = syspaymentmode.partition("t: ")[2]
+    # print("syspaymentmode1:", syspaymentmode)
+    # assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
     ReturnremarkTemp = danpheEMR.find_element(By.XPATH, "//div[@id='pharma-pat-info']/div[12]").text
     print("ReturnremarkTemp", ReturnremarkTemp)
     ReturnremarkTemp = ReturnremarkTemp.partition("s : ")[2]
