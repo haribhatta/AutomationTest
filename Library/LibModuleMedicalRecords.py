@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
 import time
-
+from selenium.webdriver.common.action_chains import ActionChains
 AppName = GSV.appName
 HospitalNo = None
 # Module:Appointment --------------------
@@ -46,8 +46,9 @@ def addBirthCertificate(danpheEMR, HospitalNo):
 
 def verifyaddbirthCertificate(danpheEMR , certNo):
    print("Verifying Certificate Start")
+   time.sleep(2)
    danpheEMR.find_element(By.LINK_TEXT, "MedicalRecords").click()
-   time.sleep(5)
+   time.sleep(3)
    danpheEMR.find_element(By.LINK_TEXT, "Birth List").click()
    time.sleep(3)
    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(certNo)
@@ -86,12 +87,18 @@ def addMRwithDischargeTypeDeath(danpheEMR, HospitalNo):
       time.sleep(1)
       deathPeriod.select_by_visible_text("<48")
       danpheEMR.find_element(By.ID, "icd10code").send_keys("A00 | Cholera")
-      number = str(random.randint(1, 9999))
-      danpheEMR.find_element(By.ID, "certNum").send_keys(number)
-      print(number)
-      danpheEMR.find_element(By.ID, "Submit").click()
+      # number = str(random.randint(1, 9999))
+      # danpheEMR.find_element(By.ID, "certNum").send_keys(number)
+      # print(number)
+      # danpheEMR.find_element(By.ID, "Submit").click()
+      element = danpheEMR.find_element(By.ID, "Submit")
+      action = ActionChains(danpheEMR)
+      action.double_click(element).perform()
+      time.sleep(10)
       # danpheEMR.find_element(By.ID, "certNum").send_keys()
-      danpheEMR.find_element(By.CSS_SELECTOR, ".all-buttons > .green").click()
+      addrecords = danpheEMR.find_element(By.CSS_SELECTOR, ".all-buttons > .green")
+      record = ActionChains(danpheEMR)
+      record.double_click(addrecords).perform()
       time.sleep(3)
    print(">>End: addMRwithDischargeTypeDeath")
 
