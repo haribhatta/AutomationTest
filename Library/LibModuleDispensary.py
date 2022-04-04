@@ -138,7 +138,67 @@ def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
 
-def createDispensaryOPDBilling(danpheEMR, qty, paymentmode):
+# This is to check the Multiple sales and to return all the items by choosing check box
+def createDispensarySaleMultipleItems(danpheEMR, drugname, drugname1, qty1, qty2, paymentmode):
+    print("<<START: Create Dispensary sales to random customer.")
+    global pInvoiceNo
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    # danpheEMR.find_element(By.ID, "patient-search").send_keys(hospitalnumber)
+    # time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugname)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.ENTER)
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "qty0").send_keys(Keys.CLEAR)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty1)
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-plus btn btn-success']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box1").send_keys(drugname1)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box1").send_keys(Keys.ENTER)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "qty1").send_keys(Keys.CLEAR)
+    danpheEMR.find_element(By.ID, "qty1").send_keys(qty2)
+    if paymentmode == 'Credit':
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        paymentoptions.select_by_visible_text("credit")
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    time.sleep(5)
+    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
+    pInvoiceNo = pInvoiceNo.partition("PH")[2]
+    danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
+    print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
+    return pInvoiceNo
+
+
+# this is to return all invoice by clicking select all button
+def returnallInvoice(danpheEMR, pInvoiceNo):
+    danpheEMR.find_element(By.XPATH, "//span[contains(.,'Dispensary')]").click()
+    time.sleep(3)
+    # danpheEMR.find_element(By.XPATH, "//i[contains(.,'MainDispensary')]").click()
+    # time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Return From Customer").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(pInvoiceNo)
+    print("pInvoiceNo is getting returned", pInvoiceNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(Keys.ENTER)
+    time.sleep(2)
+    danpheEMR.find_element(By.NAME, "allItem").click()
+    danpheEMR.find_element(By.ID, "Remark").send_keys("This is to check all the item returning at once")
+    danpheEMR.find_element(By.ID, "return").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger']").click()
+    time.sleep(5)
+
+
+def createDispensaryOPDBilling(danpheEMR, qty, DrugName, paymentmode):
     danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
