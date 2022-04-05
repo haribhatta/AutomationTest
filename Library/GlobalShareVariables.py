@@ -6,6 +6,7 @@ appName = input("Please enter project/application name:\n"
                 "LPH\n"
                 "MPH\n"
                 "RTM\n"
+                "RCH\n"
                 "Core\n")
 
 if appName == "LPH":
@@ -119,6 +120,8 @@ if appName == "LPH":
       doctorGynoEHS = "Dr. Anupa Thapa"
       doctor2 = "Mr. admin admin"
 
+# Dispensary Credit Organization
+      creditOrganization = "Arogin Care Home"
 ###############################################################################
 ########Defining Variables for SNCH
 if appName == "SNCH":
@@ -216,7 +219,8 @@ if appName == "SNCH":
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
-
+# Dispensary Credit Organization
+      creditOrganization = "SCH Staff Account"
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":
@@ -415,6 +419,103 @@ if appName == "RTM":
       doctorGyno = "Dr. Lata Gautam"
       departmentGyno = "PSYCHIATRIC"
       departmentNephro = "Nephro"
+
+###############################################################################
+########Defining Variables for Radian Skin Care
+###############################################################################
+if appName == "RSC":
+      appURL = "http://172.16.2.34:89/"
+###TestAction>>LogIn:
+      # admin user
+      adminUserID = 'admin'
+      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'admin'
+      foUserPwD = 'pass123'
+      foUserName = 'Admin admin'
+      #IT user
+      itUserID = 'admin'
+      itUserPwD = 'pass123'
+      #pharmacy user
+      pharmacyUserID = 'admin'
+      pharmacyUserPwD = 'pass123'
+      #pharmacyUserName = 'Ms. Prekshya Adhikari'
+      pharmacyUserName = 'Admin admin'
+      #laboratory user
+      labUserID = 'admin'
+      labUserPwD = 'pass123'
+      #Inventory user
+      storeUserID = 'admin'
+      storeUserPwD = 'pass123'
+###TestAction>>BillingItems:
+      opdRate = 500
+      deposit = 200
+      CBC = "CBC(HB,TC,DC,PLT)"
+      TFT = "TFT(T3,T4,TSH)"   #TFT(FT3,FT4,TSH) CLLEA
+      T3 = "T3"
+      T4 = "T4"
+      TSH = "TSH"
+      TFTRate = 1050
+      LDH = "LACTIC DEHYDROGENASE(LDH)"
+      UrineRE = "URINE RE/ME" # this gets changed on V1.49.3
+      BTCT = "BT/CT"
+      btctRate = 350
+      USG = "ULTRA SOUND"
+      usgRate = 1000
+      admitRate = 1200
+      discountCommunityName = ""
+      discountSchemeName = "Staff (50%)"
+###TestAction>>Pharmacy/Store+DispensaryItems:
+      drug1BrandName = "SAMCOBA 1500 MG"
+      drug1GenericName = "mecobalamin"
+      drug1Rate = 20
+      drug2BrandName = 'ASTHALIN 2 MG TAB'
+      drug2BrandRate = 1.14
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      drugSinexName = 'tafco 250 mg'
+      drugSinexRate = 10.34
+      drugAasma = 'AASMA 150 XR TAB'
+      supplier = "AARATI MEDITCHA PVT"
+      drug1NarcoticName = "LOZ 1 MG"
+      drug1NarcoticRate ="2"
+      drugType = 'ABDOMINAL'
+      drugCompany = 'HIMALAYA'
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AARATI MEDITCHA PVT"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "General"
+      subStoreName2 = "PostOps"
+      A4Paper = 'Paper A4'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      storeItem1Name = "Tumb Pin"
+      storeItem1Rate = 10
+      # stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Sanitizer"
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy"
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      bedFeature = "General"
+      admitWard = "General Ward"
+      admitBed = "Pediatric Bed Charge"
+###TestAction>>Settings:
+      user = "admin"
+      doctorGyno = "Dr. Lata Gautam"
+      departmentGyno = "GYNAE & OBS"
+      departmentNephro = "Nephro"
+
+
 
    #def __str__():
     #  return
