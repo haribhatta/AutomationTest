@@ -106,6 +106,33 @@ def checkLabDuplicateRequisition(danpheEMR, HospitalNo, ItemName):
     assert x == "No Rows To Show"
     print("End>>checkLabDuplicateRequisition")
 
+def seeWorkListFIFO(danpheEMR):
+    print("START: seeWorklist")
+    global patientName
+    danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Work List')]").click()
+    time.sleep(3)
+    patientName = danpheEMR.find_element(By.XPATH, "//*[@id='labWorkBook']/table/tbody/tr[1]/td[3]/span").text
+    print("first Patient in the worklist is ", patientName)
+    danpheEMR.find_element(By.XPATH, "//button[@class = 'btn btn-danger']").click()
+    time.sleep(1)
+    return patientName
+
+def verifyFIFOInWorklist(danpheEMR, patientName):
+    global patientName1
+    danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Work List')]").click()
+    time.sleep(2)
+    patientName1 = danpheEMR.find_element(By.XPATH, "//*[@id='labWorkBook']/table/tbody/tr[1]/td[3]/span").text
+    print("first Patient in the worklist is ", patientName1)
+    assert patientName == patientName1
+    danpheEMR.find_element(By.XPATH, "//button[@class = 'btn btn-danger']").click()
+
 
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))

@@ -1,3 +1,4 @@
+import random
 import time
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
@@ -50,9 +51,12 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
     time.sleep(3)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        time.sleep(2)
+        paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
         paymentoptions.select_by_visible_text("credit")
         time.sleep(2)
+        creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
+        creditOrganization.select_by_index(0)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(5)
@@ -134,7 +138,67 @@ def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
 
-def createDispensaryOPDBilling(danpheEMR, qty, paymentmode):
+# This is to check the Multiple sales and to return all the items by choosing check box
+def createDispensarySaleMultipleItems(danpheEMR, drugname, drugname1, qty1, qty2, paymentmode):
+    print("<<START: Create Dispensary sales to random customer.")
+    global pInvoiceNo
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    # danpheEMR.find_element(By.ID, "patient-search").send_keys(hospitalnumber)
+    # time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugname)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.ENTER)
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "qty0").send_keys(Keys.CLEAR)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty1)
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-plus btn btn-success']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box1").send_keys(drugname1)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "item-box1").send_keys(Keys.ENTER)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "qty1").send_keys(Keys.CLEAR)
+    danpheEMR.find_element(By.ID, "qty1").send_keys(qty2)
+    if paymentmode == 'Credit':
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        paymentoptions.select_by_visible_text("credit")
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    time.sleep(5)
+    pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
+    pInvoiceNo = pInvoiceNo.partition("PH")[2]
+    danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
+    print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
+    return pInvoiceNo
+
+
+# this is to return all invoice by clicking select all button
+def returnallInvoice(danpheEMR, pInvoiceNo):
+    danpheEMR.find_element(By.XPATH, "//span[contains(.,'Dispensary')]").click()
+    time.sleep(3)
+    # danpheEMR.find_element(By.XPATH, "//i[contains(.,'MainDispensary')]").click()
+    # time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Return From Customer").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(pInvoiceNo)
+    print("pInvoiceNo is getting returned", pInvoiceNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "invoiceId").send_keys(Keys.ENTER)
+    time.sleep(2)
+    danpheEMR.find_element(By.NAME, "allItem").click()
+    danpheEMR.find_element(By.ID, "Remark").send_keys("This is to check all the item returning at once")
+    danpheEMR.find_element(By.ID, "return").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger']").click()
+    time.sleep(5)
+
+
+def createDispensaryOPDBilling(danpheEMR, qty, DrugName, paymentmode):
     danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
@@ -213,9 +277,7 @@ def verifyReturnDispensaryInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemar
     time.sleep(3)
     syspaymentmode = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Method of payment: ')]").text
     print("syspaymentmode:", syspaymentmode)
-    syspaymentmode = syspaymentmode.partition("t: ")[2]
-    # print("syspaymentmode1:", syspaymentmode)
-    # assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
+    assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
     ReturnremarkTemp = danpheEMR.find_element(By.XPATH, "//div[@id='pharma-pat-info']/div[12]").text
     print("ReturnremarkTemp", ReturnremarkTemp)
     ReturnremarkTemp = ReturnremarkTemp.partition("s : ")[2]
@@ -418,6 +480,69 @@ def checkProvisionalFinalizeInvoice(danpheEMR, HospitalNo):
     print("Subtotal of the Provisional to check without update of update invoice after giving return quantity", SubTotal)
     assert subtotal == SubTotal
     print("END : Provisional Final Invoice Check")
+
+
+    ## Register Outdoor Patient and update information
+def createDispensarySaleRegisterOutdoorPatient(danpheEMR, HospitalNo, qty, drugName, paymentmode):
+        print(">>Create Dispensary Sale to Hospital Patient: START")
+        danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "newPatFirstName").click()
+        fullName = 'Namuna' + str(random.randint(0, 100))
+        print("full name is :", fullName)
+        danpheEMR.find_element(By.ID, "newPatFirstName").send_keys(fullName)
+        danpheEMR.find_element(By.ID, "newPatLastName").click()
+        lastname = "Basnet"
+        print("lastname:", lastname)
+        danpheEMR.find_element(By.ID, "newPatLastName").send_keys(lastname)
+        gender = Select(danpheEMR.find_element(By.ID,"newPatGender"))
+        gender.select_by_visible_text("Female")
+        danpheEMR.find_element(By.ID, "Age").click()
+        age = random.randint(1,99)
+        danpheEMR.find_element(By.ID, "Age").send_keys(age)
+        danpheEMR.find_element(By.ID, "registerPatient").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "item-box0").click()
+        danpheEMR.find_element(By.ID, "item-box0").clear()
+        time.sleep(3)
+        print("drugName:", drugName)
+        danpheEMR.find_element(By.ID, "item-box0").send_keys(drugName)
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
+        time.sleep(5)
+        drugavlqty = danpheEMR.find_element(By.XPATH, "(//input[@value=''])[6]").get_attribute("Value")
+        print("Drug Available qty:", drugavlqty)
+        danpheEMR.find_element(By.ID, "qty0").click()
+        danpheEMR.find_element(By.ID, "qty0").clear()
+        danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
+        time.sleep(3)
+        if paymentmode == 'Credit':
+            time.sleep(2)
+            paymentoptions = Select(
+                danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
+            paymentoptions.select_by_visible_text("credit")
+            time.sleep(2)
+            creditOrganization = Select(
+                danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
+            creditOrganization.select_by_index(0)
+            danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
+        danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+        time.sleep(5)
+        pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
+        pInvoiceNo = pInvoiceNo.partition("PH")[2]
+        print("pInvoiceNo:", pInvoiceNo)
+        time.sleep(8)
+        verify = danpheEMR.find_element(By.XPATH, "//*[@id='pat-name']/div[2]/strong").text
+        print("verify", verify)
+        assert verify == fullName +" " + lastname
+        danpheEMR.find_element(By.ID, "btnPrintPhrmInvoice").send_keys(Keys.ESCAPE)
+        print("Create Pharmacy OPD Invoice: END<<")
+        return pInvoiceNo
+
 
 def wait_for_window(danpheEMR,timeout=2):
     time.sleep(round(timeout / 1000))
