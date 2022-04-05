@@ -2,15 +2,10 @@ from selenium import webdriver
 import time
 import random
 import Library.GlobalShareVariables as GSV
-import Library.ApplicationConfiguration as AC
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 
-# danpheEMR = AC.danpheEMR
-# print("DanpheEMR", danpheEMR)
 AppName = GSV.appName
 
 
@@ -78,15 +73,15 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     danpheEMR.find_element(By.ID, "txtPhone").send_keys(phoneNo)
     if discountScheme == 0:
         discountPercentage = 0
-    if  discountScheme != 0:
+    if discountScheme != 0:
         print("discountScheme:", discountScheme)
         ### Community flag
         communityTypeDiscountFlag = discountScheme.partition('ShowCommunity":')[2]
         communityTypeDiscountFlag = communityTypeDiscountFlag.partition(',"IsMandatory')[0]
-        print("communityTypeDiscountFlag:",communityTypeDiscountFlag)
+        print("communityTypeDiscountFlag:", communityTypeDiscountFlag)
         ### Scheme flag
         schemeTypeDiscountFlag = discountScheme.partition("{")[0]
-        print("schemeTypeDiscountFlag:",schemeTypeDiscountFlag)
+        print("schemeTypeDiscountFlag:", schemeTypeDiscountFlag)
         ### Label-Community
         discountCommunityLabel = discountScheme.partition('CommunityLabel":"')[2]
         discountCommunityLabel = discountCommunityLabel.partition('"')[0]
@@ -100,20 +95,26 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         schemeName = GSV.discountSchemeName
         #
         if communityTypeDiscountFlag == "true":
-            dropdown = Select(danpheEMR.find_element(By.XPATH, "//span[contains(text(),'"+discountCommunityLabel+"')]/child::select"))
+            dropdown = Select(danpheEMR.find_element(By.XPATH,
+                                                     "//span[contains(text(),'" + discountCommunityLabel + "')]/child::select"))
             time.sleep(3)
             dropdown.select_by_visible_text(communityName)
         if schemeTypeDiscountFlag == "true":
-            dropdown1 = Select(danpheEMR.find_element(By.XPATH, "//span[contains(text(),'"+discountSchemeLabel+"')]/child::select"))
+            dropdown1 = Select(danpheEMR.find_element(By.XPATH,
+                                                      "//span[contains(text(),'" + discountSchemeLabel + "')]/child::select"))
             time.sleep(3)
             dropdown1.select_by_visible_text(schemeName)
-        discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute("value")
+        discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute(
+            "value")
         print("discountPercentage:", discountPercentage)
         discountPercentage = int(discountPercentage)
         print("discountPercentage:", discountPercentage)
     if paymentmode == 'Credit':
         paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select[@id='pay_mode']"))
-        paymentoptions.select_by_visible_text("CREDIT")
+        paymentoptions.select_by_visible_text("Credit")
+        creditorg = Select(danpheEMR.find_element(By.XPATH, "//tr[2]/td[2]/select"))
+        time.sleep(2)
+        creditorg.select_by_visible_text(GSV.creditOrganization)
         danpheEMR.find_element(By.XPATH, "//div[2]/div[2]/input").send_keys("Credit in request of chairman")
     time.sleep(9)
     # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-success").click()
@@ -130,7 +131,8 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     time.sleep(3)
     print("END>>patientquickentry")
     return HospitalNo, InvoiceNo, discountPercentage
-    #return type('', (object,), {"InvoiceNo": InvoiceNo, "HospitalNo": HospitalNo})()
+    # return type('', (object,), {"InvoiceNo": InvoiceNo, "HospitalNo": HospitalNo})()
+
 
 def followUpAppointment(danpheEMR):
     print("START>>followUpAppointment")
