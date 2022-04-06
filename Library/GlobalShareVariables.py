@@ -198,6 +198,7 @@ if appName == "SNCH":
       subStoreName1 = "ACCOUNT"
       subStoreName2 = "ADMINISTRATION"
       A4Paper = 'A4 PAPER'
+      storeItem1Name = 'A4 PAPER'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"

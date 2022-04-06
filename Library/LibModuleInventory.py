@@ -197,26 +197,42 @@ def verifyInventoryDirectDispatch(danpheEMR, RequisitionNo, itemname, qty, store
     print("END>>verifyInventoryDirectDispatch")
 
 
-def dispatchRequisition(danpheEMR, ssReqNo, GeneralInventory, itemname, qty):
+def dispatchRequisition(danpheEMR, ssReqNo, dispatchQuantity):
     print("START>>DispatchRequisition")
+    time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
-    time.sleep(9)
+    # time.sleep(5)
     # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-    time.sleep(3)
+    # time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH,
-        "//a[contains(text(),'Dispatch Requisition')]").click()  # This step can get failed if "AllowSubstoreDispatchWithoutVerification" = false.
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Dispatch Requisition')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "dispatchQty0").send_keys(dispatchQuantity)
     time.sleep(2)
     danpheEMR.find_element(By.ID, "remarks").send_keys("dispatching req")
     danpheEMR.find_element(By.ID, "DispatchBtn").click()
     time.sleep(9)
     danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Requisition List')]").click()
     print("END>>dispatchRequisition")
+
+
+def verifyInventorypartialStatusofPartialDispatch(danpheEMR, ssReqNo, status):
+    print("START: Verifying Partial Dispatch of Items requisition from substore")
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
+    time.sleep(2)
+    Status = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[4]").text
+    print("Status in the Requisition page is ", Status)
+    print("Expected status is ", status)
+    assert Status == status
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-sign-out']").click()
+    print("END : Verifying Partial Dispatch of items")
 
 
 def verifyDispatchRequisition(danpheEMR, ssReqNo):
@@ -226,9 +242,12 @@ def verifyDispatchRequisition(danpheEMR, ssReqNo):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
     time.sleep(4)
-    ssReqNo1 = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
-    print("ssReqNo1:", ssReqNo1)
-    print("ssReqNo:", ssReqNo)
+    ssReqNo1 = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[3]/div[2]/div[2]").text
+    ssReqNo1 = ssReqNo.replace('माग नं:', '')
+    print("Sub Store Requisition No", ssReqNo1)
+    # ssReqNo1 = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
+    # print("ssReqNo1:", ssReqNo1)
+    # print("ssReqNo:", ssReqNo)
     assert ssReqNo1 == ssReqNo
     print("END>>verifyDispatchRequisition")
 

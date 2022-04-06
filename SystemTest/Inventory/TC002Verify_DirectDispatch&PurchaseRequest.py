@@ -37,7 +37,7 @@ ssReqNo = LSS.createSubStoreRequisition(danpheEMR=EMR, InventoryName=inventoryNa
 print("Sub Store Requisition No:", ssReqNo)
 LSS.verifySubStoreRequisition(danpheEMR=EMR, ssReqNo=ssReqNo, InventoryName=inventoryName, ItemName=itemname, Qty=qty)
 ######## Dispatch Requisition
-LI.dispatchRequisition(danpheEMR=EMR, ssReqNo=ssReqNo, GeneralInventory=inventoryName, itemname=itemname, qty=qty)
+LI.dispatchRequisition(danpheEMR=EMR, ssReqNo=ssReqNo, dispatchQuantity=qty)
 LI.verifyDispatchRequisition(EMR, ssReqNo)
 ######## DispatchReceived
 LSS.receiveInventoryDispatch(EMR, substore=StoreName, ssReqNo=ssReqNo)

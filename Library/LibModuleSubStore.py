@@ -25,8 +25,12 @@ def createSubStoreRequisition(danpheEMR, InventoryName, ItemName, Qty):
     time.sleep(6)
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(5)
-    danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Administration Store')]").click()
-    time.sleep(5)
+    if AppName == "SNCH":
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Administration Store')]").click()
+        time.sleep(2)
+    elif AppName == "LPH":
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'ADMINISTRATION')]").click()
+        time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory Requisition')]").click()
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//input[@class='btn btn-primary']").click()
@@ -40,9 +44,14 @@ def createSubStoreRequisition(danpheEMR, InventoryName, ItemName, Qty):
     danpheEMR.find_element(By.ID, "qtyip0").send_keys(Qty)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "save_requisition").click()
-    time.sleep(5)
-    ssReqNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Requisition No:')]/child::b").text
-    print("Sub Store Requisition No", ssReqNo)
+    time.sleep(2)
+    if AppName == "SNCH":
+        ssReqNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[3]/div[2]/div[2]").text
+        ssReqNo = ssReqNo.replace('माग नं:', '')
+        print("Sub Store Requisition No", ssReqNo)
+    elif AppName == "LPH":
+        ssReqNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div/div[2]/p/b").text
+        print("Sub Store Requisition No", ssReqNo)
     danpheEMR.find_element(By.ID, "backToList").click()
     print("End<<createSubStoreRequisition")
     return ssReqNo
