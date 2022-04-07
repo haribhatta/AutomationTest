@@ -544,6 +544,32 @@ def createDispensarySaleRegisterOutdoorPatient(danpheEMR, HospitalNo, qty, drugN
         return pInvoiceNo
 
 
+def verifyGenericNameOrItemNameInInvoice(danpheEMR, genericname, drugName, qty):
+    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").click()
+    danpheEMR.find_element(By.ID, "item-box0").clear()
+    time.sleep(3)
+    print("drugName:", drugName)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(drugName)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "qty0").click()
+    danpheEMR.find_element(By.ID, "qty0").clear()
+    danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    time.sleep(4)
+    name = danpheEMR.find_element(By.XPATH, "//*[@id='phrm-bill-table']/tbody/tr[2]/td[2]").text
+    print("Name of the Medicine is ", name)
+    print("Generic Name of the given item is :", genericname)
+    if AppName != "LPH":
+        assert name == drugName
+    danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
+
+
 def wait_for_window(danpheEMR,timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
