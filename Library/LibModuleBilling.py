@@ -244,6 +244,60 @@ def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
     return InvoiceNo
 
+def verifyReferDoctorinInvoice(danpheEMR, imagingtest, labtest, ReferDoctor):
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys("Auto Test")
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.ENTER)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").send_keys(Keys.CLEAR)
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").send_keys(ReferDoctor)
+    consD ="Consulting Doctor: "
+    refer = consD + ReferDoctor
+    print(refer)
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").send_keys(Keys.ENTER)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(1)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    time.sleep(1)
+    danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
+    time.sleep(2)
+    price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
+    totalprice = int(price1) + int(price2)
+    print("Total Price:", totalprice)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    time.sleep(3)
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    time.sleep(2)
+    consultingDr = danpheEMR.find_element(By.XPATH, "//*[@id='divBilInvoicePrintPage']/div/div[8]/div").text
+    print(consultingDr)
+    assert refer == consultingDr
+    print("InvoiceNo", InvoiceNo)
+    print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+    return InvoiceNo
+
 
 def verifymultipleclickbilling(danpheEMR, InvoiceNo):
     print("START>>verifymultipleclickbilling")
