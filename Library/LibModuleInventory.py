@@ -43,6 +43,22 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
     return BillNo
 
 
+def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno):
+    print("Start Verifying the Goods Receipt Number in Grid and View Page")
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(billno)
+    time.sleep(1)
+    text = "दाखिला प्रतिवेदन नम्बरः"
+    grno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
+    grno = text + " " + grno
+    print("Good Receipt Number in Grid is :", grno)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
+    time.sleep(2)
+    goodreceiptnumber = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[2]/div[2]").text
+    print("good receipt number in view is :", goodreceiptnumber)
+    assert grno == goodreceiptnumber
+
+
 def editInventoryGoodsReceipt(danpheEMR, BillNo):
     print("START>>editInventoryGoodsReceipt")
     time.sleep(2)
