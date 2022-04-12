@@ -10,12 +10,9 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacy as LP
-import Library.LibModulePharmacyReports as LPR
-import Library.LibModuleAppointment as LA
-#import Library.LibModuleBilling as LB
-import Library.LibModuleBilling as LB
+import Library.LibModuleSettings as LS
 # front desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 Qty1 = 1
 Drug1 = GSV.drug1BrandName
@@ -24,5 +21,7 @@ Drug1Price = GSV.drug1Rate
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(danpheEMR=EMR, dispensaryName=GSV.dispensaryName1)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
 print("Test script failling with LPH-1095")
-LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.supplier, qty=Qty1, DrugName=Drug1, grPrice=Drug1Price)
+LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, qty=Qty1, DrugName=Drug1, grPrice=Drug1Price, NepaliReceipt=NepaliReceipt)

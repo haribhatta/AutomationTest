@@ -15,14 +15,12 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleAppointment as LA
 import Library.LibModulePharmacy as LP
-import Library.LibModuleDispensary as LD
-import Library.LibModulePharmacyReports as LPR
-import Library.LibModuleBilling as LB
+import Library.LibModuleSettings as LS
 import Library.LibModulePharmacyReports as LMPR
 
 
 # pharmacy desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 pharmacyUserName = GSV.pharmacyUserName
 # front desk user login
@@ -43,13 +41,15 @@ EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LMPR.getPurchaseSummaryReport(EMR)
 LMPR.prePurchaseSummaryReport()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5, NepaliReceipt=NepaliReceipt)
 print(goodsReceiptNo)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugname, genericName=genericName, grno=goodsReceiptNo)
-LP.cancelPharmacyGoodsReceipt(EMR)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugname, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
+LP.cancelPharmacyGoodsReceipt(EMR, grNo=goodsReceiptNo)
 LMPR.getPurchaseSummaryReport(EMR)
 LMPR.verifypurchasesummarybeforeReturn()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=5, NepaliReceipt=NepaliReceipt)
 print(goodsReceiptNo)
 LP.return_to_supplier(danpheEMR=EMR, grno=goodsReceiptNo, rqty=1)
 LMPR.getPurchaseSummaryReport(EMR)

@@ -487,12 +487,12 @@ def getItemWisePurchaseReport(danpheEMR):
     print("Total Purchase Value ExcludingVAT is : ", TotalPurchaseValueExcludingVAT)
 
     TotalVATAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
-    TotalVATAmount = int(TotalVATAmount)
+    TotalVATAmount = float(TotalVATAmount)
     print("Total VAT Amount is : ", TotalVATAmount)
 
     TotalPurchaseValue = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[4]/td[2]/span").text
     TotalPurchaseValue = TotalPurchaseValue.replace(",", "")
-    TotalPurchaseValue = int(TotalPurchaseValue)
+    TotalPurchaseValue = float(TotalPurchaseValue)
     print("Total Purchase Value is : ", TotalPurchaseValue)
 
 
@@ -515,7 +515,7 @@ def preItemWisePurchaseReport():
     print("PreTotal VAT Amount is :", preTotalVATAmount)
 
     preTotalPurchaseValue = TotalPurchaseValue
-    preTotalPurchaseValue = int(preTotalPurchaseValue)
+    preTotalPurchaseValue = float(preTotalPurchaseValue)
     print("PreTotal Purchase Value is :", preTotalPurchaseValue)
 
 

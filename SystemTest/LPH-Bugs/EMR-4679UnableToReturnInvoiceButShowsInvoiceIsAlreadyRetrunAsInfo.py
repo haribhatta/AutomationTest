@@ -9,6 +9,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModulePharmacy as LP
 import Library.LibModuleBilling as LB
+import Library.LibModuleSettings as LS
 
 # front desk user login
 foUserId = GSV.adminUserID
@@ -28,9 +29,11 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
 paymentmode = "CREDIT"
-gRNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, qty=5, DrugName=GSV.drug1BrandName, grPrice=rate)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1BrandName, grno=gRNo)
+gRNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, qty=5, DrugName=GSV.drug1BrandName, grPrice=rate, NepaliReceipt=NepaliReceipt)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1BrandName, grno=gRNo, NepaliReceipt=NepaliReceipt)
 LP.return_to_supplier(danpheEMR=EMR, grno=gRNo, rqty=2)
 AC.logout()
 AC.closeBrowser()

@@ -147,6 +147,19 @@ def EnableReceivedItemInSubstore(danpheEMR):
     print("EnableReceivedItemInSubstore:", EnableReceivedItemInSubstore)
     print("END:EnableReceivedItemInSubstore")
     return EnableReceiveItemsInDispensary
+
+def CheckNepaliReceiptValue(danpheEMR):
+    print("START:Checking that Nepali Receipt is Enable or Not")
+    global NepaliReceipt
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Core CFG Parameters").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("NepaliReceipt")
+    NepaliReceipt = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
+    print("Nepali Receipt is Enable :", NepaliReceipt)
+    return NepaliReceipt
+
 # def CheckCreditOrganizationMandatory(danpheEMR):  This Features is being Changing so this script is onHold
 #     print("START: Checking credit Organization Mandatory")
 #     global CreditOrganizationMandatory

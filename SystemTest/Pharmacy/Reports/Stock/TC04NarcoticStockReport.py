@@ -11,14 +11,14 @@ Precondition: Drug-Narcotic
 '''
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
-import Library.LibModuleAppointment as LA
+import Library.LibModuleSettings as LS
 import Library.LibModulePharmacy as LP
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacyReports as LPR
-import Library.LibModuleBilling as LB
+
 
 # pharmacy desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 pharmacyUserName = GSV.pharmacyUserName
 # front desk user login
@@ -38,7 +38,9 @@ EMR = AC.openBrowser()
 # Start of Narcotic Stock Report
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-grNO = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugName, grPrice=5)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+grNO = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugName, grPrice=5, NepaliReceipt=NepaliReceipt)
 LPR.verifynarcoticstockreport(danpheEMR=EMR, qty=2, DrugName=drugName, grNo=grNO)
 AC.logout()
 AC.closeBrowser()

@@ -12,21 +12,19 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacy as LP
-import Library.LibModulePharmacyReports as LPR
-import Library.LibModuleAppointment as LA
-#import Library.LibModuleBilling as LB
+import Library.LibModuleSettings as LS
 
 # pharmacy desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 drugName = GSV.drug1BrandName
-qty = 50
+qty = 1
 
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-LP.addPharmacyItem(EMR, GSV.drug1GenericName)
-LP.verifyPharmacyItem(EMR)
-LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.supplier, DrugName=drugName, grPrice=GSV.drug1Rate, qty=2)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, DrugName=drugName, grPrice=GSV.drug1Rate, qty=2, NepaliReceipt=NepaliReceipt)
 LP.transferMainStore2MainDispensary(danpheEMR=EMR, drugname=GSV.drug1BrandName, qty=qty)
 LD.verifyDispensaryStockDetail(danpheEMR=EMR, drugname=drugName)

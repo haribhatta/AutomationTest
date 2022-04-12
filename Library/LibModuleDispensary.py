@@ -353,7 +353,7 @@ def verifyDispensaryStockDetail(danpheEMR, drugname):
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugname)
     time.sleep(3)
     sysdrugname = danpheEMR.find_element(By.XPATH,
-                                         "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div").text
+                                         "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[2]").text
     print("sysdrugname", sysdrugname)
     assert drugname == sysdrugname
     sysdrugqty = danpheEMR.find_element(By.XPATH,

@@ -7,7 +7,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModulePharmacy as LP
 import Library.LibModulePharmacyReports as LMPR
-
+import Library.LibModuleSettings as LS
 
 # pharmacy desk user login
 pharmacyUserId = GSV.adminUserID
@@ -28,12 +28,14 @@ print("Total amount i.e rate * grprice ", totalamount)
 ########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
-LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate, NepaliReceipt=NepaliReceipt)
 # Item Wise Purchase Start
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.preItemWisePurchaseReport()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1GenericName, grno=goodsReceiptNo)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate, NepaliReceipt=NepaliReceipt)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1GenericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.verifyItemWisePurchaseReport(qty=2, purchaseValue=totalamount)
 AC.logout()

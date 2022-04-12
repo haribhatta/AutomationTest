@@ -9,9 +9,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacy as LP
-import Library.LibModulePharmacyReports as LPR
-import Library.LibModuleAppointment as LA
-#import Library.LibModuleBilling as LB
+import Library.LibModuleSettings as LS
 
 # pharmacy desk user login
 pharmacyUserId = GSV.pharmacyUserID
@@ -26,10 +24,10 @@ qty = 50
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, dispensaryName)
-LP.addPharmacyItem(EMR, genericName)
-LP.verifyPharmacyItem(EMR)
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drugName, grPrice=drugRate)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugName, genericName=genericName, grno=goodsReceiptNo)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drugName, grPrice=drugRate, NepaliReceipt=NepaliReceipt)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 AC.logout()
 AC.closeBrowser()
 #Blocked by bug EMR-2591

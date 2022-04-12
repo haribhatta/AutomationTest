@@ -218,7 +218,7 @@ def addPharmacyGRfromPO(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//input[@value='Receipt']").click()
 
 
-def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
+def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, NepaliReceipt):
     print("START>>createPharmacyGoodsReceipt")
     global goodsReceiptNo
     time.sleep(2)
@@ -268,7 +268,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     # obj = danpheEMR.switch_to.alert
     # obj.accept()
     time.sleep(2)
-    if AppName == 'LPH':
+    if NepaliReceipt == "true":
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
         # goodsReceiptNo = goodsReceiptNo.replace("-", "")
         goodsReceiptNo = goodsReceiptNo.partition(": ")[2]
@@ -284,7 +284,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice):
     return gRNo
 
 
-def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
+def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliReceipt):
     print("START>>verifyPharmacyGoodsReceipt")
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
@@ -300,12 +300,12 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno):
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "View").click()
     time.sleep(3)
-    if AppName == "LPH":
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'" + genericName + "')]").text
+    if NepaliReceipt == "true":
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[3]").text
         print("sysdrugname:", sysdrugname)
         danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     else:
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//b[contains(text(),'" + brandName + "')]").text
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[3]").text
         print("sysdrugname:", sysdrugname)
         danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
 

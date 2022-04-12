@@ -14,9 +14,10 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
 import Library.LibModulePharmacy as LP
+import Library.LibModuleSettings as LS
 
 # front desk user login
-pharmacyUserId = GSV.pharmacyUserID
+pharmacyUserId = GSV.adminUserID
 pharmacyUserPwd = GSV.pharmacyUserPwD
 
 drug = GSV.drug1BrandName
@@ -30,7 +31,9 @@ qty = 10
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, dispensaryName)
-LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drug, grPrice=drugPrice)
+NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
+print(NepaliReceipt)
+LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drug, grPrice=drugPrice, NepaliReceipt=NepaliReceipt)
 LD.getDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
 LP.manageStoreStock(danpheEMR=EMR, drugname=drug, type="In", qty=qty)
 LD.verifyDispensaryStockDetail(danpheEMR=EMR, drugname=drug)
