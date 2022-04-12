@@ -562,10 +562,17 @@ def verifyGenericNameOrItemNameInInvoice(danpheEMR, genericname, drugName, qty):
     danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(4)
-    name = danpheEMR.find_element(By.XPATH, "//*[@id='phrm-bill-table']/tbody/tr[2]/td[2]").text
-    print("Name of the Medicine is ", name)
-    print("Generic Name of the given item is :", genericname)
+    if AppName == "LPH":
+        name = danpheEMR.find_element(By.XPATH, "//*[@id='phrm-bill-table']/tbody/tr[2]/td[2]").text
+        print("Name of the Medicine is ", name)
+        print("Generic Name of the given item is :", genericname)
+        MedFullName = genericname + "(" + drugName + " )"
+        print(MedFullName)
+        assert name == MedFullName
     if AppName != "LPH":
+        name = danpheEMR.find_element(By.XPATH, "//*[@id='phrm-bill-table']/tbody/tr[2]/td[2]").text
+        print("Name of the Medicine is ", name)
+        print("Generic Name of the given item is :", genericname)
         assert name == drugName
     danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
 
