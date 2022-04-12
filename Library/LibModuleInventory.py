@@ -37,6 +37,10 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
         payMode.select_by_visible_text("Cash")
     danpheEMR.find_element(By.XPATH,  "//input[@value='Receipt']").click()
     time.sleep(3)
+    totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[8]").text
+    totalrate = int(totalrate)
+    print(totalrate)
+    assert rate == totalrate
     #danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Goods Receipt List')]").click()
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Cancel GR ')]").send_keys(Keys.ESCAPE)
     print("<<END: createGoodReceipt")
