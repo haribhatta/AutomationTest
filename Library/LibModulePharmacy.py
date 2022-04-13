@@ -284,6 +284,55 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
     return gRNo
 
 
+def createPharmacyGrwithSameInvoiceNumberAfterGrCancel(danpheEMR, invoiceNumber, supplier, qty, DrugName, grPrice, NepaliReceipt):
+    print("START>>Good Receipt after GR cancel with previously cancelled Invoice Number")
+    global goodsReceiptNo
+    time.sleep(2)
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(supplier)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Invoice No']").send_keys(invoiceNumber)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Invoice No']").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "btn_AddNew").click()
+    time.sleep(7)
+    danpheEMR.find_element(By.ID, "txt_ItemName").send_keys(DrugName)
+    danpheEMR.find_element(By.ID, "txt_ItemName").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "txt_BatchNo").send_keys(invoiceNumber)
+    danpheEMR.find_element(By.ID, "ItemQTy").send_keys(qty)
+    print("grPrice", grPrice)
+    grPrice = int(grPrice)
+    danpheEMR.find_element(By.ID, "GRItemPrice").send_keys(grPrice)
+    danpheEMR.find_element(By.ID, "Margin").send_keys(14)
+    danpheEMR.find_element(By.ID, "VATPercentage").send_keys(13)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "btn_Save").click()
+    danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
+    time.sleep(5)
+    danpheEMR.switch_to.alert.accept()
+    time.sleep(2)
+    if NepaliReceipt == "true":
+        goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
+        goodsReceiptNo = goodsReceiptNo.partition(": ")[2]
+        print("goodsReceiptNo:", goodsReceiptNo)
+        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    else:
+        goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[@id='print-good-reciept']/div/div/div[5]/p/b").text
+        goodsReceiptNo = goodsReceiptNo.replace("-", "")
+        print("goodsReceiptNo:", goodsReceiptNo)
+        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+    time.sleep(3)
+    print("END>>createPharmacyGoodsReceipt")
+    return invoiceNumber
+
 def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliReceipt):
     print("START>>verifyPharmacyGoodsReceipt")
     if AppName == "LPH":
@@ -305,14 +354,14 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliRe
         print("sysdrugname:", sysdrugname)
         danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     else:
-        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[3]").text
+        sysdrugname = danpheEMR.find_element(By.XPATH, "//*[@id='print-good-reciept']/div/div/div[10]/table/tbody/tr/td[2]/b").text
         print("sysdrugname:", sysdrugname)
         danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
 
     print("END>>verifyPharmacyGoodsReceipt")
 
 
-def cancelPharmacyGoodsReceipt(danpheEMR, grNo):
+def cancelPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
     print("START>>cancelPharmacyGoodsReceipt")
     time.sleep(2)
     if AppName == "LPH":
@@ -328,7 +377,7 @@ def cancelPharmacyGoodsReceipt(danpheEMR, grNo):
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grNo)
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(), 'View')])[1]").click()
     time.sleep(3)
-    if AppName == 'LPH':
+    if NepaliReceipt == 'true':
         sysGRno = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
         print("sysGRno", sysGRno)
     else:
@@ -336,16 +385,10 @@ def cancelPharmacyGoodsReceipt(danpheEMR, grNo):
         sysGRno = sysGRno.replace("-", "")
         print("sysGRno", sysGRno)
     danpheEMR.find_element(By.XPATH, "//button[@title='Cancel Goods Receipt']").send_keys(Keys.ENTER)
-    # danpheEMR.find_element(By.XPATH, "//button[@title='Cancel Goods Receipt']").click()
     danpheEMR.find_element(By.ID, "CancelRemarks").send_keys("Cancel to test")
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Proceed')]").click()
     time.sleep(2)
-    if AppName == 'LPH':
-        danpheEMR.find_element(By.ID, "btnPrintRecipt")
-        danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-    else:
-        danpheEMR.find_element(By.ID, "printButton")
-        danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
+    danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
     print("END>>cancelPharmacyGoodsReceipt")
 
 
@@ -426,6 +469,7 @@ def closePopupApplication(danpheEMR):
 
 def return_to_supplier(danpheEMR, grno, rqty):
     print(">>START: Returning to Supplier")
+    time.sleep(2)
     if AppName == 'LPH':
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
         danpheEMR.find_element(By.XPATH, '//a[@href="#/Pharmacy/Store" and contains(text(),"Store")]').click()
@@ -450,7 +494,7 @@ def return_to_supplier(danpheEMR, grno, rqty):
     returnstatus = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname = 'ReturnStatus']"))
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
-    time.sleep(3)
+    time.sleep(6)
     danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
     vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
     print(vatamount)
