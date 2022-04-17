@@ -11,6 +11,7 @@ import Library.ApplicationConfiguration as AC
 import Library.GlobalShareVariables as GSV
 import Library.LibModuleInventory as LI
 import Library.LibModuleSubStore as LS
+import Library.LibModuleSettings as LSS
 
 foUserId = GSV.adminUserID
 foUserPwd = GSV.foUserPwD
@@ -23,8 +24,9 @@ rate = 10
 
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
+NepaliReceipt = LSS.CheckNepaliReceiptValue(EMR)
 LI.activateInventory(EMR, inventory='General Inventory')
-BillNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=rate, paymentMode="Credit")
+BillNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=rate, paymentMode="Credit", NepaliReceipt=NepaliReceipt)
 LI.receiveGoodReceipt(EMR)
 itemstock = LI.countStock(EMR, itemname=itemname)
 preitemstock = LI.preCountStock(itemstock)

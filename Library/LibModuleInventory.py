@@ -9,7 +9,7 @@ AppName = GSV.appName
 
 
 # Module:Inventory---------------------------------------------------------
-def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
+def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode, NepaliReceipt):
     print(">>START: createGoodReceipt")
     global BillNo
     #if AppName == 'SNCH':
@@ -37,30 +37,52 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode):
         payMode.select_by_visible_text("Cash")
     danpheEMR.find_element(By.XPATH,  "//input[@value='Receipt']").click()
     time.sleep(3)
-    totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[8]").text
-    totalrate = int(totalrate)
-    print(totalrate)
-    assert rate == totalrate
+    if NepaliReceipt == 'false':
+        totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[9]/div/table/tbody/tr/td[12]").text
+        totalrate = float(totalrate)
+        print(totalrate)
+    else:
+        totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[11]").text
+        totalrate = float(totalrate)
+        print(totalrate)
+    assert float(rate) == totalrate
     #danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Goods Receipt List')]").click()
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Cancel GR ')]").send_keys(Keys.ESCAPE)
     print("<<END: createGoodReceipt")
     return BillNo
 
 
-def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno):
+def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno, NepaliReceipt):
     print("Start Verifying the Goods Receipt Number in Grid and View Page")
     time.sleep(1)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(billno)
     time.sleep(1)
-    text = "दाखिला प्रतिवेदन नम्बरः"
-    grno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
-    grno = text + " " + grno
-    print("Good Receipt Number in Grid is :", grno)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
-    time.sleep(2)
-    goodreceiptnumber = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[2]/div[2]").text
-    print("good receipt number in view is :", goodreceiptnumber)
-    assert grno == goodreceiptnumber
+    if NepaliReceipt == "true":
+        text = "दाखिला प्रतिवेदन नम्बरः"
+        grno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
+        grno = text + " " + grno
+        print("Good Receipt Number in Grid is :", grno)
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
+        time.sleep(2)
+        goodReceiptNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[2]/div[2]").text
+        print("Good Receipt Number is :", goodReceiptNo)
+        print(type(goodReceiptNo))
+        assert grno == goodReceiptNo
+    else:
+        text = "2078/2079-"
+        grno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
+        grno = text+grno
+        print("Good Receipt Number in Grid is :", grno)
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
+        time.sleep(2)
+        billNumber = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[4]/p[3]/b").text
+        billNumber = int(billNumber)
+        print("Bill number in view is :", billNumber)
+        goodReceiptNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[3]/p[1]/b").text
+        print("Good Receipt Number is :", goodReceiptNo)
+        print(type(goodReceiptNo))
+        assert billno == billNumber
+        assert grno == goodReceiptNo
 
 
 def editInventoryGoodsReceipt(danpheEMR, BillNo):

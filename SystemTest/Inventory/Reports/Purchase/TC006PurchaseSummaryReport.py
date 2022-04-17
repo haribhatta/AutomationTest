@@ -2,6 +2,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleInventory as LI
 import Library.LibModuleProcurement as LP
+import Library.LibModuleSettings as LS
 
 # front desk user login
 adminUserId = GSV.adminUserID
@@ -25,11 +26,12 @@ Inventory1 = GSV.inventoryName1
 ########
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
+NepaliReceipt = LS.CheckNepaliReceiptValue(EMR)
 LI.activateInventory(EMR, Inventory1)
 LI.getPurchaseSummaryReport(EMR)
 LI.prePurchaseSummaryReport()
 ########### Create Credit GR
-BillNo = LI.createInventoryGoodReceipt(EMR, qty, item, rate, paymentMode='Credit')
+BillNo = LI.createInventoryGoodReceipt(EMR, qty, item, rate, paymentMode='Credit', NepaliReceipt=NepaliReceipt)
 print("Bill Number of created Good Receipt is ", BillNo)
 LI.getPurchaseSummaryReport(EMR)
 LI.verifyPurchaseSummaryReportAfterGR(qty, rate, amountCashEntryGR=0, amountCashCancelGR=0, amountCreditEntryGR=totalAmount, amountCreditCancelGR=0)
@@ -39,7 +41,7 @@ LI.prePurchaseSummaryReport()
 LI.getPurchaseSummaryReport(EMR)
 LI.verifyPurchaseSummaryReportAfterGR(qty, rate, amountCashEntryGR=0, amountCashCancelGR=0, amountCreditEntryGR=0, amountCreditCancelGR=totalAmount)
 ########### Create Cash GR
-BillNo1 = LI.createInventoryGoodReceipt(EMR, qty, item, rate, paymentMode='Cash')
+BillNo1 = LI.createInventoryGoodReceipt(EMR, qty, item, rate, paymentMode='Cash', NepaliReceipt=NepaliReceipt)
 print("Bill Number of created Good Receipt is ", BillNo)
 LI.prePurchaseSummaryReport()
 LI.getPurchaseSummaryReport(EMR)
