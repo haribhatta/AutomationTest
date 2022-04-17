@@ -16,7 +16,7 @@ if appName == "LPH":
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #IT user
-      itUserID = 'bhuwan'
+      itUserID = 'admin' #'bhuwan'
       itUserPwD = 'pass123'
       #billing user
       foUserID = 'ashmita' #LPH user
@@ -43,7 +43,7 @@ if appName == "LPH":
       storeUserID = 'shreeram'
       storeUserPwD = 'pass123'
       #Medical Record user
-      MRUserID = 'mr'
+      MRUserID = 'admin'  #'mr'
       MRUserPwD = 'pass123'
       #vaccination user
       vaccineUserID = 'surendra'
@@ -131,11 +131,11 @@ if appName == "SNCH":
       adminUserID = 'admin'
       adminUserPwD = 'pass123'    # '28A7hi0jvH0='
       #billing user
-      foUserID = 'sabitri'
+      foUserID = 'admin' #'sabitri'
       foUserPwD = 'pass123'
-      foUserName = 'Ms. Sabitri Sharma Adhikari'
+      foUserName = 'Mr. admin admin' #'Ms. Sabitri Sharma Adhikari'
       #IT user
-      itUserID = 'rn'
+      itUserID = 'admin' #'rn'
       itUserPwD = 'pass123'
       #pharmacy user
       pharmacyUserID = 'shivraj'
@@ -151,7 +151,7 @@ if appName == "SNCH":
       storeUserID = 'admin'
       storeUserPwD = 'pass123'
       #Medical Record user
-      MRUserID = 'haris'
+      MRUserID = 'admin' #'haris'
       MRUserPwD = 'pass123'
 ###TestAction>>BillingItems:
       opdRate = 500
@@ -371,6 +371,7 @@ if appName == "RTM":
       admitRate = 1200
       discountCommunityName = ""
       discountSchemeName = "Staff (50%)"
+      creditOrganization = "Arogin Care Home"
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SAMCOBA 1500 MG"
       drug1GenericName = "mecobalamin"
