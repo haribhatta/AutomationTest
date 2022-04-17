@@ -22,7 +22,7 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
-LS.MakeCreditOrganizationNonMandatory(danpheEMR=EMR)
+#LS.MakeCreditOrganizationNonMandatory(danpheEMR=EMR)
 AC.logout()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)

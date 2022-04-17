@@ -687,7 +687,8 @@ def cancelIPprovisionalBill(danpheEMR, HospitalNo, canceltest):
     time.sleep(3)
     danpheEMR.switch_to.alert.accept()
     time.sleep(2)
-    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-times").click()
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger history-del-btn' and @title='Cancel']").click()
+    time.sleep(3)
     print("End of cancel IP Provisional Bill")
 
 
@@ -710,8 +711,9 @@ def getIPbillingDetails(danpheEMR, HospitalNo, paymentmode):
     time.sleep(5)
     if paymentmode == "CREDIT":
         paymentoptions = Select(
-            danpheEMR.find_element(By.XPATH, "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-        paymentoptions.select_by_visible_text("CREDIT")
+            #danpheEMR.find_element(By.XPATH, "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            danpheEMR.find_element(By.XPATH, "//select[@id='pay_mode']"))
+        paymentoptions.select_by_visible_text("Credit")
     actualBillingTotal = danpheEMR.find_element(By.XPATH,
         "//td[contains(.,' Sub Total ')]/following-sibling::td").text
     actualBillingTotal = actualBillingTotal.replace(',', '')
@@ -799,9 +801,14 @@ def verifyConfirmDischarge(danpheEMR, HospitalNo, paymentmode):
     time.sleep(3)
     if paymentmode == "CREDIT":
         paymentoptions = Select(danpheEMR.find_element(By.XPATH,
-            "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-        paymentoptions.select_by_visible_text("CREDIT")
-        danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
+            #"//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
+            "//select[@id='pay_mode']"))
+        paymentoptions.select_by_visible_text("Credit")
+        time.sleep(2)
+        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrganization.select_by_visible_text(GSV.creditOrganization)
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Billing Remarks')]/following-sibling::td/child::textarea").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
     time.sleep(3)
     if paymentmode == "CREDIT":
