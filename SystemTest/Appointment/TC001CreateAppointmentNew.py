@@ -43,8 +43,6 @@ print("Status:Passed || TestAction:NewAppointment||Credit||NoDiscount")
 #Scenario: Credit Payment with discount
 HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
 print("Status:Passed || TestAction:NewAppointment||Credit||Discount")
-# 2. Create an appointment for old patient.
-LA.oldPatientRegistration(EMR, HospitalNo, doctorGynae, departmentGynae)
 AC.logout()
 AC.closeBrowser()
 print("Status:Passed - > TC001 oldPatientAppointment")
