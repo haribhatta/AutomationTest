@@ -5,10 +5,11 @@ from selenium.webdriver.common.by import By
 
 AppName = gSV.appName
 
-
-def createPurchaseOrder(danpheEMR, itemName1, qty, rate, itemName2):
-    time.sleep(2)
+# Since System Use the default value 1 the Quantity is Removed
+def createPurchaseOrder(danpheEMR, itemName1, rate, itemName2, NepaliReceipt):
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//a[@href = '#/ProcurementMain/PurchaseOrder']").click()
     danpheEMR.find_element(By.XPATH, "//input[@value = 'Create Purchase Order']").click()
     danpheEMR.find_element(By.ID, "VendorName").click()
@@ -16,20 +17,42 @@ def createPurchaseOrder(danpheEMR, itemName1, qty, rate, itemName2):
     danpheEMR.find_element(By.ID, "poItemName0").send_keys(itemName1)
     time.sleep(1)
     danpheEMR.find_element(By.ID, "poItemName0").send_keys(Keys.ENTER)
-    danpheEMR.find_element(By.ID, "ipqty0").send_keys(qty)
+    # danpheEMR.find_element(By.ID, "ipqty0").send_keys(Keys.CLEAR)
+    # danpheEMR.find_element(By.ID, "ipqty0").send_keys(qty)
     danpheEMR.find_element(By.ID, "ipstdrate0").send_keys(rate)
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Add New Row')]").click()
     danpheEMR.find_element(By.ID, "poItemName1").send_keys(itemName2)
     time.sleep(1)
     danpheEMR.find_element(By.ID, "poItemName1").send_keys(Keys.ENTER)
-    danpheEMR.find_element(By.ID, "ipqty1").send_keys(qty)
+    # danpheEMR.find_element(By.ID, "ipqty1").send_keys(Keys.CLEAR)
+    # danpheEMR.find_element(By.ID, "ipqty1").send_keys(qty)
     danpheEMR.find_element(By.ID, "ipstdrate1").send_keys(rate)
     danpheEMR.find_element(By.ID, "PurchaseOrderbtn").click()
     time.sleep(3)
-    pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[2]/tbody/tr[1]/td[3]").text
-    pono = int(str(pono.replace("PO No.:", "")))
+    if NepaliReceipt == 'false':
+        pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[2]/tbody/tr[1]/td[3]").text
+        pono = int(str(pono.replace("PO No.:", "")))
+    else:
+        pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div[1]/div[2]/div[3]/div[1]").text
+        pono = int(str(pono.replace("खरिद आदेश नं : ", "")))
     print("Purchase Order Number is :", pono)
     return pono
+
+
+def verifyPOVerifyer(danpheEMR, pono, NepaliReceipt):
+    print("START:Verifying the Purchase Verifyer  ")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    danpheEMR.find_element(By.XPATH, "//a[@href = '#/ProcurementMain/PurchaseOrder']").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(pono)
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//a[@class ='grid-action' = 'view']").click()
+    if NepaliReceipt == 'false':
+        verifyer = "Mr. admin admin"
+        verifiedby = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[4]/tbody/tr[3]/td[2]/div/div[1]").text
+        print(verifiedby)
+        assert verifyer == verifiedby
 
 
 def cancelPurchaseOrder(danpheEMR, pono):
@@ -44,6 +67,7 @@ def cancelPurchaseOrder(danpheEMR, pono):
     time.sleep(1)
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Yes')]").click()
     time.sleep(1)
+
 
 def cancelInventoryGoodsReceipt(danpheEMR, BillNo):
     print("START>> Canceling Inventory Good Receipt")
