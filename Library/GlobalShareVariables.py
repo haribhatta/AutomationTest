@@ -175,7 +175,7 @@ if appName == "SNCH":
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "PARACETAMOL"
       drug1Rate = 3
-      drug2BrandName = 'ASTHALIN 2 MG TAB'
+      drug2BrandName = 'ASTHALIN 2.5ml'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
