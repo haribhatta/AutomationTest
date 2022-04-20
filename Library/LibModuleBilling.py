@@ -1019,47 +1019,6 @@ def billingIP(danpheEMR, HospitalNo, admitCharge, deposit):
 
 
 def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
-    print(">>START::createCreditLabInvoice")
-    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.ID, "srch_PatientList").click()
-    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
-    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
-    time.sleep(3)
-    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-    time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-    time.sleep(5)
-    if AppName == 'LPH':
-        labType = Select(danpheEMR.find_element(By.ID, "lab_type"))
-        labType.select_by_visible_text("OP-LAB")
-    time.sleep(4)
-    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(labtest)
-    time.sleep(1)
-    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-    time.sleep(1)
-    danpheEMR.find_element(By.ID, "txtQuantity_0").send_keys(1)
-    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
-    time.sleep(1)
-    totalprice = int(price1)
-    print("Total Price:", totalprice)
-    credit = Select(danpheEMR.find_element(By.ID, "pay_mode"))
-    credit.select_by_visible_text("CREDIT")
-    danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit Bill")
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-    time.sleep(9)
-    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
-    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-    print("InvoiceNoTemp", InvoiceNo)
-    InvoiceNo = InvoiceNo.partition("BL")[2]
-    print("InvoiceNo", InvoiceNo)
-    print("END>>createCreditLabInvoice")
-
-
-def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     print("START>>createLabInvoice")
     print("Hospital Number:", HospitalNo)
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -1088,7 +1047,11 @@ def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     print("Total Price:", totalprice)
     time.sleep(3)
     paymode = Select(danpheEMR.find_element(By.ID, "pay_mode"))
-    paymode.select_by_visible_text("CREDIT")
+    paymode.select_by_visible_text("Credit")
+    time.sleep(2)
+    creditorganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class = 'form-control mb-8']"))
+    creditorganization.select_by_visible_text(GSV.creditOrganization)
+    time.sleep(1)
     danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit bill on demand of CEO")
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
     time.sleep(9)

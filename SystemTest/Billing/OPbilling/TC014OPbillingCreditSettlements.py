@@ -18,12 +18,14 @@ foUserPwd = GSV.adminUserPwD
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 ########
-itemrate = GSV.opdRate
+itemrate = GSV.usgRate
 ########
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Credit", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
 LB.createCreditLabInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=GSV.USG)
 LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip="No", cashdiscount=0)
 LB.verifyCreditSettlement(danpheEMR=EMR, HospitalNo=HospitalNo, itemRate=itemrate)
+AC.logout()
+AC.closeBrowser()
