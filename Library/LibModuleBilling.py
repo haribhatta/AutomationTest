@@ -1057,6 +1057,7 @@ def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     time.sleep(9)
     # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    InvoiceNo = InvoiceNo.replace("Invoice No: 2078/2079-BL", "")
     print(InvoiceNo)
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     return InvoiceNo
