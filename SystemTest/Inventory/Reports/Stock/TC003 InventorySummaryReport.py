@@ -22,11 +22,12 @@ EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 flagReceivedItemInSubstore = LS.EnableReceivedItemInSubstore(EMR)
 print("flagReceivedItemInSubstore:", flagReceivedItemInSubstore)
+NepaliReceipt = LS.CheckNepaliReceiptValue(EMR)
 LI.selectInventory(danpheEMR=EMR, inventory="General Inventory")
 LI.getInventorySummaryReport(danpheEMR=EMR)
 LI.preInventorySummaryReport()
 ### Create GR Credit entry
-LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=item, rate=rate, paymentMode='Credit')
+LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=item, rate=rate, paymentMode='Credit', NepaliReceipt=NepaliReceipt)
 LI.receiveGoodReceipt(danpheEMR=EMR)
 ### Create Inventory DD
 RequsitionNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qty=qty, inventory="General Inventory", store=subStore1)

@@ -100,7 +100,7 @@ if appName == "LPH":
       photocopypaperRate = 2300
       storeItem1Name = "PLANE SCISSOR 6"
       storeItem1Rate = 25
-      #stationaryItem1 = "DOTPEN"
+      stationaryItem2 = "DIAMOND PENCIL "
       stationaryItem1 = "USG PAPER"
       ###Suppliers Name list
       inventorySupplierName1 = "Shremad Tech."
@@ -175,7 +175,7 @@ if appName == "SNCH":
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "PARACETAMOL"
       drug1Rate = 3
-      drug2BrandName = 'ASTHALIN 2 MG TAB'
+      drug2BrandName = 'ASTHALIN 2.5ml'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
       drug4BrandName = "10 ML DIS.SYRINGE"
@@ -202,6 +202,7 @@ if appName == "SNCH":
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
+      stationaryItem2 = "DOTPEN"
       File = "FILE"
       SubStore1 = "General"
       SubStore2 = "PostOps"

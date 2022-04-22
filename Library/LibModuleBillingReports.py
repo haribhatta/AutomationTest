@@ -569,7 +569,7 @@ def getPatientCreditSummary(danpheEMR, invoiceNo):
     time.sleep(2)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
     time.sleep(3)
-    sysinvoice = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]").text
+    sysinvoice = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]").text
     print("Invoice in System is :", sysinvoice)
     assert sysinvoice == invoiceNo
     print("<<END: getPatientCreditSummary")

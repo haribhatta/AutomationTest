@@ -29,3 +29,28 @@ def substoreRequisitionVerification(danpheEMR, reqno, itemname, qty):
     assert quantity == qty
     danpheEMR.find_element(By.NAME, "VerificationRemarks").send_keys("This requisition is Verified please proceed further process")
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Approve')]").click()
+
+
+def verifyInventoryPurchaseOrder(danpheEMR,  NepaliReceipt, purchaseOrderNo, itemname, quantity):
+    print("START: Verifying Purchase Order")
+    if NepaliReceipt == 'true' or 'false':
+        danpheEMR.find_element(By.LINK_TEXT, "Verification").click()
+        time.sleep(2)
+        danpheEMR.find_element(By.LINK_TEXT, "Purchase Order").click()
+        time.sleep(1)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(purchaseOrderNo)
+        danpheEMR.find_element(By.XPATH, "//a[@class = 'grid-action'= 'verify']").click()
+        time.sleep(1)
+        name = danpheEMR.find_element(By.XPATH, "//*[@id='itemRow']/td[4]").text
+        print("Itemname of Given item is :", name)
+        orderQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='itemRow']/td[5]").text
+        print("Order Quantity is :", orderQuantity)
+        orderQuantity = int(orderQuantity)
+        assert itemname == name
+        assert quantity == orderQuantity
+        danpheEMR.find_element(By.NAME, "VerificationRemarks").send_keys(
+            "This Purchase Ordeer is Verified so, please proceed ")
+        danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Approve')]").click()
+    print("END: Verifying purchase Order")
+
+
