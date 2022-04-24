@@ -388,7 +388,8 @@ def cancelPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
     danpheEMR.find_element(By.ID, "CancelRemarks").send_keys("Cancel to test")
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Proceed')]").click()
     time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    # danpheEMR.find_element(By.XPATH, "//*[contains(text(),'Print Receipt')]").send_keys(Keys.ESCAPE)
     print("END>>cancelPharmacyGoodsReceipt")
 
 
@@ -496,9 +497,9 @@ def return_to_supplier(danpheEMR, grno, rqty):
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
     time.sleep(6)
     danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
+    time.sleep(2)
     vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
     print(vatamount)
-    vatamount = float(vatamount)
     assert vatamount > 0
     danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
     return creditnote

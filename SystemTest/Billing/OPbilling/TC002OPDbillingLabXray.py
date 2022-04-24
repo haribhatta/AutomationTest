@@ -23,7 +23,7 @@ HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountSc
 #can.verifyopdinvoice(deposit=0, billamt=500)
 print("Status:Passed - > TC001 CreateAppointmentNew")
 #oblx.verifyopdinvoice(deposit=0, billamt=500)
-LB.createlabxrayinvoice(EMR, HospitalNo, GSV.TFT, GSV.USG)
+LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=GSV.TFT, imagingtest=GSV.USG)
 #oblx.verifylabxrayinvoice()
 AC.logout()
 AC.closeBrowser()
