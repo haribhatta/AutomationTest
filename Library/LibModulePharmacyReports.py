@@ -487,6 +487,7 @@ def getItemWisePurchaseReport(danpheEMR):
     print("Total Purchase Value ExcludingVAT is : ", TotalPurchaseValueExcludingVAT)
 
     TotalVATAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
+    TotalVATAmount = TotalVATAmount.replace(",", "")
     TotalVATAmount = float(TotalVATAmount)
     print("Total VAT Amount is : ", TotalVATAmount)
 
@@ -519,12 +520,12 @@ def preItemWisePurchaseReport():
     print("PreTotal Purchase Value is :", preTotalPurchaseValue)
 
 
-def verifyItemWisePurchaseReport(qty, purchaseValue):
+def verifyItemWisePurchaseReport(qty, purchaseValue, VatAmount):
     print("START>>verifying the Item Wise Purchase Report ")
     assert TotalPurchaseQuantity == preTotalPurchaseQuantity + qty
     assert TotalPurchaseValueExcludingVAT == preTotalPurchaseValueExcludingVAT + purchaseValue
-    assert preTotalVATAmount == TotalVATAmount
-    assert TotalPurchaseValue == preTotalPurchaseValue + purchaseValue
+    assert preTotalVATAmount == TotalVATAmount - VatAmount
+    assert TotalPurchaseValue == preTotalPurchaseValue + purchaseValue + VatAmount
     print("END>> Verifying Item Wise Purchase Report")
 
 
