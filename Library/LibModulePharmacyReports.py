@@ -1070,7 +1070,7 @@ def preSystemPharmacySalesSummaryReport():
     print("End: getSystemPharmacySalesSummaryReport:")
 
 
-def verifySystemPharmacySalesSummaryReport(danpheEMR, cash, cashReturn, credit, creditReturn):
+def verifySystemPharmacySalesSummaryReport(cash, cashReturn, credit, creditReturn):
     print("Start: getSystemPharmacySalesSummaryReport:")
     expectedCashSales = preCashSales + cash
     assert actualCashSales == expectedCashSales

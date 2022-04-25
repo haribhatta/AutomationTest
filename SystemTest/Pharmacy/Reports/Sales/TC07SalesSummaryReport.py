@@ -47,22 +47,22 @@ LPR.preSystemPharmacySalesSummaryReport()
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
 LPR.getSystemPharmacySalesSummaryReport(danpheEMR=EMR)
-LPR.verifySystemPharmacySalesSummaryReport(danpheEMR=EMR, cash=totalAmount, cashReturn=0, credit=0, creditReturn=0)
+LPR.verifySystemPharmacySalesSummaryReport(cash=totalAmount, cashReturn=0, credit=0, creditReturn=0)
 ######## Return pharmacy cash sale
 LPR.preSystemPharmacySalesSummaryReport()
 LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark="Test")
 LPR.getSystemPharmacySalesSummaryReport(danpheEMR=EMR)
-LPR.verifySystemPharmacySalesSummaryReport(danpheEMR=EMR, cash=0, cashReturn=totalAmount, credit=0, creditReturn=0)
+LPR.verifySystemPharmacySalesSummaryReport(cash=0, cashReturn=totalAmount, credit=0, creditReturn=0)
 ######## Create pharmacy credit sale
 LPR.preSystemPharmacySalesSummaryReport()
 pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugName, paymentmode='Credit')
 LPR.getSystemPharmacySalesSummaryReport(danpheEMR=EMR)
-LPR.verifySystemPharmacySalesSummaryReport(danpheEMR=EMR, cash=0, cashReturn=0, credit=totalAmount, creditReturn=0)
+LPR.verifySystemPharmacySalesSummaryReport(cash=0, cashReturn=0, credit=totalAmount, creditReturn=0)
 ######## Return pharmacy credit sale
 LPR.preSystemPharmacySalesSummaryReport()
 LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo1, qty=qty, returnremark="Test")
 LPR.getSystemPharmacySalesSummaryReport(danpheEMR=EMR)
-LPR.verifySystemPharmacySalesSummaryReport(danpheEMR=EMR, cash=0, cashReturn=0, credit=0, creditReturn=totalAmount)
+LPR.verifySystemPharmacySalesSummaryReport(cash=0, cashReturn=0, credit=0, creditReturn=totalAmount)
 
 AC.logout()
 AC.closeBrowser()
