@@ -989,7 +989,7 @@ def preSystemPharmacyItemWiseSalesReport():
     preNet = Net
 
 
-def VerifySystemPharmacyItemWiseSalesReport(danpheEMR, drugName, cash, credit, qty):
+def VerifySystemPharmacyItemWiseSalesReport(cash, credit, qty):
     print(">>START: Verifying System Pharmacy ItemWiseSalesReport")
     expectedTotalSalesQuantity = preTotalSalesQuantity + qty
     assert TotalSalesQuantity == expectedTotalSalesQuantity
