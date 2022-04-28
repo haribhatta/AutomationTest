@@ -1022,30 +1022,38 @@ def getSystemPharmacySalesSummaryReport(danpheEMR):
     time.sleep(3)
     actualCashSales = danpheEMR.find_element(By.XPATH,
                                              "(//td[contains(text(),'Cash Sales')])[1]/following-sibling::td").text
+    actualCashSales = actualCashSales.replace(",", "")
     actualCashSales = float(actualCashSales)
+
     print("actualCashSales", actualCashSales)
     actualCashSalesRefund = danpheEMR.find_element(By.XPATH,
                                                    "(//td[contains(text(),'Cash Sales Refund')])[1]/following-sibling::td").text
+    actualCashSalesRefund = actualCashSalesRefund.replace(",", "")
     actualCashSalesRefund = float(actualCashSalesRefund)
     print("actualCashSalesRefund", actualCashSalesRefund)
     actualNetCashSales = danpheEMR.find_element(By.XPATH,
                                                 "(//td[contains(text(),'Net Cash Sales')])[1]/following-sibling::td").text
+    actualNetCashSales = actualNetCashSales.replace(",", "")
     actualNetCashSales = float(actualNetCashSales)
     print("actualNetCashSales", actualNetCashSales)
     actualCreditSales = danpheEMR.find_element(By.XPATH,
                                                "(//td[contains(text(),'Credit Sales')])[1]/following-sibling::td").text
+    actualCreditSales = actualCreditSales.replace(",", "")
     actualCreditSales = float(actualCreditSales)
     print("actualCreditSales", actualCreditSales)
     actualCreditSalesRefund = danpheEMR.find_element(By.XPATH,
                                                      "(//td[contains(text(),'Credit Sales Refund')])[1]/following-sibling::td").text
+    actualCreditSalesRefund = actualCreditSalesRefund.replace(",", "")
     actualCreditSalesRefund = float(actualCreditSalesRefund)
     print("actualCreditSalesRefund", actualCreditSalesRefund)
     actualNetCreditSales = danpheEMR.find_element(By.XPATH,
                                                   "(//td[contains(text(),'Net Credit Sales')])[1]/following-sibling::td").text
+    actualNetCreditSales = actualNetCreditSales.replace(",", "")
     actualNetCreditSales = float(actualNetCreditSales)
     print("actualNetCreditSales", actualNetCreditSales)
     actualTotalSales = danpheEMR.find_element(By.XPATH,
                                               "(//td[contains(text(),'Total Sales')])[1]/following-sibling::td").text
+    actualTotalSales = actualTotalSales.replace(",", "")
     actualTotalSales = float(actualTotalSales)
     print("actualTotalSales", actualTotalSales)
     print("End: getSystemPharmacySalesSummaryReport:")
