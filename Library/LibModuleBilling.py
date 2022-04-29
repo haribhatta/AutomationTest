@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.select import Select
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.by import By
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -474,32 +475,28 @@ def opDepositDbiling(danpheEMR, HospitalNo, deposit, testname):
     Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
     print("Tender before deposit deduction: ", Tender)
     assert Tender == TotalAmount
-    danpheEMR.find_element(By.XPATH,
-        "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
-    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-    print("Tender after deposit deduction: ", Tender)
-
+    time.sleep(2)
+    paymentMode = Select(danpheEMR.find_element(By.NAME, "pay_mode"))
+    paymentMode.select_by_visible_text("Others")
+    time.sleep(3)
+    # Need to maintain the Display sequence from Setting > Payment Mode Settings make Pos m
     if int(DepositBalance) >= int(TotalAmount):
-        assert Tender == "0"
-
+        dep = danpheEMR.find_element(By.ID, "mode_8")
+    # Use Java script executioner click instead of click method.
+        danpheEMR.execute_script("arguments[0].click();", dep)
+        time.sleep(2)
     else:
-        assert int(Tender) == int(TotalAmount) - int(DepositBalance)
-
-    DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
-    print("DepositDeduction:", DepositDeduction)
-
-    if int(DepositBalance) < int(TotalAmount):
-        assert DepositDeduction == DepositBalance
-
-    else:
-        assert DepositDeduction == TotalAmount
-
-    NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
-    assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
-    print("NewDepositBalance:", NewDepositBalance)
-
+        remaining = int(TotalAmount) - int(DepositBalance)
+        print("Remaining amount after deducting deposite is :", remaining)
+        dep = danpheEMR.find_element(By.ID, "mode_8")
+        # Use Java script executioner click instead of click method.
+        danpheEMR.execute_script("arguments[0].click();", dep)
+        danpheEMR.find_element(By.ID, "input_amount0").send_keys(remaining)
+        time.sleep(2)
+    danpheEMR.find_element(By.ID, "Add").click()
+    danpheEMR.find_element(By.NAME, "Remarks").send_keys("Deducted full from deposite")
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-    time.sleep(9)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>opDepositDbiling")
@@ -542,81 +539,103 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
     Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
     print("Tender before deposit deduction: ", Tender)
     assert Tender == TotalAmount
-
-    danpheEMR.find_element(By.XPATH,
-        "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
-
-    Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
-    print("Tender after deposit deduction: ", Tender)
-
-    DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
-    print("DepositDeduction", DepositDeduction)
-
-    if int(DepositBalance) < int(TotalAmount):
-        assert DepositDeduction == DepositBalance
-        assert int(Tender) == int(TotalAmount) - int(DepositBalance)
-
+    time.sleep(2)
+    paymentMode = Select(danpheEMR.find_element(By.NAME, "pay_mode"))
+    paymentMode.select_by_visible_text("Others")
+    time.sleep(3)
+    # Need to maintain the Display sequence from Setting > Payment Mode Settings make Pos m
+    if int(DepositBalance) >= int(TotalAmount):
+        dep = danpheEMR.find_element(By.ID, "mode_8")
+        # Use Java script executioner click instead of click method.
+        danpheEMR.execute_script("arguments[0].click();", dep)
+        time.sleep(2)
     else:
-        assert DepositDeduction == TotalAmount
-        assert Tender == "0"
-
-    NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
-    assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
-    print("NewDepositBalance", NewDepositBalance)
-
-    # if 200 < int(Tender) < 500:
-    if int(Tender) % 100 > 0:
-        Tender = int(Tender) * 2
-        danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").clear()
-        danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").send_keys(Tender)
-
-    ChangeReturn = danpheEMR.find_element(By.XPATH,
-        "//td[contains(text(),'Change/Return :')]/following-sibling::td").text
-    print("ChangeReturn", ChangeReturn)
-    ChangeReturn = ChangeReturn.partition("NRs.")[2]
-    print("Change Return:", ChangeReturn)
-    actualChangeReturn = int(ChangeReturn)
-    expectedChangeReturn = int(Tender) + int(DepositBalance) - int(TotalAmount)
-    assert actualChangeReturn == expectedChangeReturn
-
+        remaining = int(TotalAmount) - int(DepositBalance)
+        print("Remaining amount after deducting deposite is :", remaining)
+        dep = danpheEMR.find_element(By.ID, "mode_8")
+        # Use Java script executioner click instead of click method.
+        danpheEMR.execute_script("arguments[0].click();", dep)
+        danpheEMR.find_element(By.ID, "input_amount0").send_keys(remaining)
+        time.sleep(2)
+    danpheEMR.find_element(By.ID, "Add").click()
+    danpheEMR.find_element(By.NAME, "Remarks").send_keys("Deducted full from deposite")
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
-    time.sleep(7)
-    # DepositDeductorReturn = danpheEMR.find_element(By.XPATH, "//div[10]/span").text
-    DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
-        "//span[contains(text(),' Deposit: [Deducted: ')]").text
-    print("DepositDeductorReturn:", DepositDeductorReturn)
-    DepositDeductorReturn = DepositDeductorReturn.partition("Deducted: ")[2]
-    print("DepositDeductorReturn", DepositDeductorReturn)
-    DepositDeductorReturn = DepositDeductorReturn.partition("/Balance")[0]
-    print("DepositDeductorReturn", DepositDeductorReturn)
-
-    assert DepositDeductorReturn == DepositDeduction
-    billTender = danpheEMR.find_element(By.XPATH,
-        "//span[contains(text(),'Tender: ')]").text  # Tender
-    billTender = billTender.partition("r: ")[2]
-    billTender = billTender.partition(".")[0]
-    print("billTender:", billTender)
-    # Tender = int(TotalAmount) - int(DepositDeduction)
-    print("Tender", Tender)
-    assert int(Tender) == int(billTender)
-
-    if actualChangeReturn >= 1:
-        eChangeReturn = danpheEMR.find_element(By.XPATH,
-            "//span[contains(text(),' Change/Return:')]").text  # Change/Return
-        print("eChangeReturn", eChangeReturn)
-        eChangeReturn = eChangeReturn.partition("n: ")[2]
-        print("eChangeReturn", eChangeReturn)
-        assert eChangeReturn == str(actualChangeReturn)
-        DepositBalance = danpheEMR.find_element(By.XPATH,
-            "//span[contains(text(),'Balance:')]").text  # Deposit Balance
-        print("DepositBalance", DepositBalance)
-        DepositBalance = DepositBalance.partition("Balance:")[2]
-        DepositBalance = DepositBalance.partition("]")[0]
-        print("DepositBalance", DepositBalance)
-        print("NewDepositBalance", NewDepositBalance)
-        assert DepositBalance == NewDepositBalance
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     print("END>>opDepositDbilingTenderCashReturn")
+    # danpheEMR.find_element(By.XPATH, "//input[@ng-checked='deductDeposit']").click()  # Click on Deduct from Deposit
+
+    # Tender = danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").get_attribute("value")
+    # print("Tender after deposit deduction: ", Tender)
+    #
+    # DepositDeduction = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[2]/td[2]").text
+    # print("DepositDeduction", DepositDeduction)
+    #
+    # if int(DepositBalance) < int(TotalAmount):
+    #     assert DepositDeduction == DepositBalance
+    #     assert int(Tender) == int(TotalAmount) - int(DepositBalance)
+    #
+    # else:
+    #     assert DepositDeduction == TotalAmount
+    #     assert Tender == "0"
+    #
+    # NewDepositBalance = danpheEMR.find_element(By.XPATH, "//td/table/tbody/tr[3]/td[2]").text
+    # assert NewDepositBalance == str(int(DepositBalance) - int(DepositDeduction))
+    # print("NewDepositBalance", NewDepositBalance)
+    #
+    # # if 200 < int(Tender) < 500:
+    # if int(Tender) % 100 > 0:
+    #     Tender = int(Tender) * 2
+    #     danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").clear()
+    #     danpheEMR.find_element(By.XPATH, "//input[@name='Tender']").send_keys(Tender)
+    #
+    # ChangeReturn = danpheEMR.find_element(By.XPATH,
+    #     "//td[contains(text(),'Change/Return :')]/following-sibling::td").text
+    # print("ChangeReturn", ChangeReturn)
+    # ChangeReturn = ChangeReturn.partition("NRs.")[2]
+    # print("Change Return:", ChangeReturn)
+    # actualChangeReturn = int(ChangeReturn)
+    # expectedChangeReturn = int(Tender) + int(DepositBalance) - int(TotalAmount)
+    # assert actualChangeReturn == expectedChangeReturn
+    #
+    # danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    # time.sleep(7)
+    # # DepositDeductorReturn = danpheEMR.find_element(By.XPATH, "//div[10]/span").text
+    # DepositDeductorReturn = danpheEMR.find_element(By.XPATH,
+    #     "//span[contains(text(),' Deposit: [Deducted: ')]").text
+    # print("DepositDeductorReturn:", DepositDeductorReturn)
+    # DepositDeductorReturn = DepositDeductorReturn.partition("Deducted: ")[2]
+    # print("DepositDeductorReturn", DepositDeductorReturn)
+    # DepositDeductorReturn = DepositDeductorReturn.partition("/Balance")[0]
+    # print("DepositDeductorReturn", DepositDeductorReturn)
+    #
+    # assert DepositDeductorReturn == DepositDeduction
+    # billTender = danpheEMR.find_element(By.XPATH,
+    #     "//span[contains(text(),'Tender: ')]").text  # Tender
+    # billTender = billTender.partition("r: ")[2]
+    # billTender = billTender.partition(".")[0]
+    # print("billTender:", billTender)
+    # # Tender = int(TotalAmount) - int(DepositDeduction)
+    # print("Tender", Tender)
+    # assert int(Tender) == int(billTender)
+    #
+    # if actualChangeReturn >= 1:
+    #     eChangeReturn = danpheEMR.find_element(By.XPATH,
+    #         "//span[contains(text(),' Change/Return:')]").text  # Change/Return
+    #     print("eChangeReturn", eChangeReturn)
+    #     eChangeReturn = eChangeReturn.partition("n: ")[2]
+    #     print("eChangeReturn", eChangeReturn)
+    #     assert eChangeReturn == str(actualChangeReturn)
+    #     DepositBalance = danpheEMR.find_element(By.XPATH,
+    #         "//span[contains(text(),'Balance:')]").text  # Deposit Balance
+    #     print("DepositBalance", DepositBalance)
+    #     DepositBalance = DepositBalance.partition("Balance:")[2]
+    #     DepositBalance = DepositBalance.partition("]")[0]
+    #     print("DepositBalance", DepositBalance)
+    #     print("NewDepositBalance", NewDepositBalance)
+    #     assert DepositBalance == NewDepositBalance
+    # danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+
 
 
 def createUSGinvoice(danpheEMR, HospitalNo, USGtest):

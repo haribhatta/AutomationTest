@@ -50,12 +50,12 @@ LMPR.preSystemPharmacyItemWiseSalesReport()
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
 LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=totalAmount, credit=0, qty=qty)
+LMPR.VerifySystemPharmacyItemWiseSalesReport(cash=totalAmount, credit=0, qty=qty)
 ######## Create pharmacy credit sale
 LMPR.preSystemPharmacyItemWiseSalesReport()
 pInvoiceNo1 = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, qty=qty,drugName=drugName, paymentmode='Credit')
 LMPR.getSystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName)
-LMPR.VerifySystemPharmacyItemWiseSalesReport(danpheEMR=EMR, drugName=drugName, cash=0, credit=totalAmount, qty=qty)
+LMPR.VerifySystemPharmacyItemWiseSalesReport(cash=0, credit=totalAmount, qty=qty)
 AC.logout()
 AC.closeBrowser()
 

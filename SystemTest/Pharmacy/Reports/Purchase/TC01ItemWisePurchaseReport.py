@@ -24,6 +24,8 @@ amount = int(amount)
 totalamount = amount
 supplier = GSV.pharmacySupplierName1
 print("Total amount i.e rate * grprice ", totalamount)
+VatAmount = totalamount * 0.13
+print("Vat Amount of the Given Item is ", VatAmount)
 
 ########
 EMR = AC.openBrowser()
@@ -37,7 +39,7 @@ LMPR.preItemWisePurchaseReport()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(EMR, supplier=supplier, qty=2, DrugName=drugname, grPrice=rate, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1GenericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LMPR.getItemWisePurchaseReport(EMR)
-LMPR.verifyItemWisePurchaseReport(qty=2, purchaseValue=totalamount)
+LMPR.verifyItemWisePurchaseReport(qty=2, purchaseValue=totalamount, VatAmount=VatAmount)
 AC.logout()
 AC.closeBrowser()
 
