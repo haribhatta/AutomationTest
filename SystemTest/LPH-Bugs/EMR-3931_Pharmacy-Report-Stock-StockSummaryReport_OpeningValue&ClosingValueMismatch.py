@@ -1,5 +1,15 @@
 '''
-Objective:
+Scripted by: Hari P. Bhatta
+Headline:
+Store>Report>Stock>Stock summary report: Opening value and closing value mismatch.
+Description:
+1. Login to the application.2. Navigate to the Store>Report>Stock>Stock summary report.3. Then go to select store and select MainDispensary and click on show report.
+
+Issue:
+
+Opening value and closing value mismatch on MainDispensary.
+
+Pharmacy Stock Summary Report (Closing Quantity) is not matching with Dispensary quantity.
 To test jira story EMR-3931
 '''
 
@@ -26,7 +36,7 @@ phUserPwd = GSV.pharmacyUserPwD
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal", case='+ve')
 #can.verifyopdinvoice(deposit=0, billamt=500)
 drug = GSV.drug1BrandName
 rate = GSV.drug1Rate
