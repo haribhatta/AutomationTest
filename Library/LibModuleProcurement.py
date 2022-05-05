@@ -30,7 +30,7 @@ def createPurchaseOrder(danpheEMR, itemName1, rate, itemName2, NepaliReceipt):
     danpheEMR.find_element(By.ID, "PurchaseOrderbtn").click()
     time.sleep(3)
     if NepaliReceipt == 'false':
-        pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[2]/tbody/tr[1]/td[3]").text
+        pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[2]/tbody/tr[1]/td[2]").text
         pono = int(str(pono.replace("PO No.:", "")))
     else:
         pono = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div[1]/div[2]/div[3]/div[1]").text
@@ -48,7 +48,9 @@ def verifyPOVerifyer(danpheEMR, pono, NepaliReceipt):
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(pono)
     time.sleep(1)
     danpheEMR.find_element(By.XPATH, "//a[@class ='grid-action' = 'view']").click()
+    time.sleep(1)
     if NepaliReceipt == 'false':
+        time.sleep(2)
         verifyer = "Mr. admin admin"
         verifiedby = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/table[4]/tbody/tr[3]/td[2]/div/div[1]").text
         print(verifiedby)
