@@ -27,7 +27,7 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 InvoiceNo1 = LB.createCreditLabInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=GSV.USG)
 print(InvoiceNo1)
 LBR.getPatientCreditSummary(EMR, invoiceNo=InvoiceNo1)

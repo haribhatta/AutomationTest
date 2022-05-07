@@ -32,7 +32,7 @@ isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 AC.logout()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 #can.verifyopdinvoice(deposit=0, billamt=500)
 
 # LB.createlabxrayinvoice(HospitalNo=HospitalNo, labtest=labitem, imagingtest = imagingitem)

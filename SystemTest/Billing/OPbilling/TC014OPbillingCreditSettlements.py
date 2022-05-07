@@ -23,7 +23,7 @@ itemrate = GSV.usgRate
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LB.createCreditLabInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=GSV.USG)
 LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip="No", cashdiscount=0)
 LB.verifyCreditSettlement(danpheEMR=EMR, HospitalNo=HospitalNo, itemRate=itemrate)

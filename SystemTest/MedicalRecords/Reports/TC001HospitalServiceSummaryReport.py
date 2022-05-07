@@ -35,7 +35,7 @@ AC.login(mrUserId, mrUserPwd)
 ### Check for 'Total Laboratory Service Provided'
 LB.counteractivation(EMR)
 LMRR.getHospitalServiceSummaryReport(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LB.createLabInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=TFT)
 LMRR.preHospitalServiceSummaryReport(EMR)
 LMRR.getHospitalServiceSummaryReport(EMR)

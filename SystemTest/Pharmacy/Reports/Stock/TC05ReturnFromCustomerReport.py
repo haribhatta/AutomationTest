@@ -37,7 +37,7 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(userid=billingId, pwd=billingPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 AC.logout()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)

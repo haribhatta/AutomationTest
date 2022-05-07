@@ -26,7 +26,7 @@ time.sleep(2)
 #####Scenario: Cash Invoice with no Discount
 LBR.getUserCollectionReport(EMR, userName)
 LBR.preSystemUserCollectionReport()
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=opdRate, cashreturn=0, credit=0, creditreturn=0, cashDiscount=0, tradeDiscount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
@@ -38,7 +38,7 @@ LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=opdRate, credit=0, creditreturn=0, cashDiscount=0, tradeDiscount=0, deposit=0,
                               depositreturn=0, creditsettlement=0, provisional=0, provisionalcancel=0)
 #####Scenario: Credit Invoice with no Discount
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.preSystemUserCollectionReport()
 LBR.getUserCollectionReport(EMR, userName)
 LBR.verifyUserCollectionReport(cash=0, cashreturn=0, credit=opdRate, creditreturn=0, cashDiscount=0, tradeDiscount=0, deposit=0,

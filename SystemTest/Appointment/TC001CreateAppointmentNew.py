@@ -32,16 +32,16 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
 #Scenario: Cash Payment
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("Status:Passed || TestAction:NewAppointment||Cash||NoDiscount")
 #Scenario: Cash Payment with discount
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("Status:Passed || TestAction:NewAppointment||Cash||Discount")
 #Scenario: Credit Payment
-HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("Status:Passed || TestAction:NewAppointment||Credit||NoDiscount")
 #Scenario: Credit Payment with discount
-HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("Status:Passed || TestAction:NewAppointment||Credit||Discount")
 AC.logout()
 AC.closeBrowser()

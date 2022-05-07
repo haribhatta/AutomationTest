@@ -23,7 +23,7 @@ departmentGyno = GSV.departmentGyno
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGyno, doctor=doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGyno, doctor=doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LI.getIncentivePaymentReport(EMR, doctorGyno)
 LI.preIncentivePaymentReport()
 #ip.createLedgerIncentivePayment()

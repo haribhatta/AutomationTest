@@ -53,7 +53,7 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         time.sleep(2)
         danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
         time.sleep(2)
-        danpheEMR.find_element(By.ID, "SaveAdmission").click()
+        #danpheEMR.find_element(By.ID, "SaveAdmission").click()
         time.sleep(2)
         if AppName == "LPH":
             time.sleep(5)

@@ -17,7 +17,7 @@ EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 paymode = "CREDIT"
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LD.activateDispensaryCounter(EMR, dispensaryName='MainDispensary')
 LD.createDispensaryProvisionalSlip(EMR, HospitalNo=HospitalNo, drugName=GSV.drug1BrandName, qty=2)
 LD.checkProvisionalFinalizeInvoice(EMR, HospitalNo=HospitalNo)

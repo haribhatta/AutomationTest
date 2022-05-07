@@ -26,7 +26,7 @@ AC.logout()
 AC.login(MRUserId, MRUserPwd)
 ########
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 ADT.admitDisTrans(EMR, 1, 0, 0, HospitalNo, 0, doctorGynae, departmentGynae, isDoctorMandatory)
 certNo = LMR.addBirthCertificate(danpheEMR=EMR, HospitalNo=HospitalNo)
 LMR.verifyaddbirthCertificate(EMR, certNo)

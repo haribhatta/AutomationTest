@@ -391,10 +391,15 @@ def verifyDuplicateBill(danpheEMR, HospitalNo):
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(3)
+    #sysHospitalNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'" + HospitalNo + "')]").text
+    sysHospitalNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'" + HospitalNo + "')]").text
+
+    assert HospitalNo == sysHospitalNo  # to check double click issue on invoice creation.
     # danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
     time.sleep(2)
-    danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+    #danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>verifyDuplicateBill")
 

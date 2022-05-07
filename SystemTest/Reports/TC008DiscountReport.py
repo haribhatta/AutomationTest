@@ -24,7 +24,7 @@ discountValue = a + b
 opdRate = GSV.opdRate
 ###
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountValue, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountValue, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.verifyDiscountReport(danpheEMR=EMR, HospitalNo=HospitalNo, cash=opdRate, discountpc=discountPercentage)
 AC.logout()
 AC.closeBrowser()

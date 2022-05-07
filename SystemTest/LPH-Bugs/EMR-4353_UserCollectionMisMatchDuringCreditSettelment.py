@@ -18,7 +18,7 @@ EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 paymode = "CREDIT"
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.getUserCollectionReport(EMR, user=GSV.foUserID)
 LBR.preSystemUserCollectionReport()
 LB.createCreditLabInvoice(EMR, HospitalNo=HospitalNo, labtest=GSV.USG)

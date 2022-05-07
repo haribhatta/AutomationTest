@@ -40,7 +40,7 @@ LB.counteractivation(EMR)
 
 # 1. Cash Invoice
 LBR.getBillingDashboard(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=department, doctor=doctor, priceCategoryType=priceCategoryType)  # cash = opdticket
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=department, doctor=doctor, priceCategoryType=priceCategoryType, case='+ve')  # cash = opdticket
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,

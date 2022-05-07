@@ -19,7 +19,7 @@ discountScheme = GSV.discountSchemeName
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, 0, 'Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, 0, 'Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("hospitalNo", HospitalNo)
 #LP.patientRegistration()
 LB.createUSGinvoice(EMR, HospitalNo=HospitalNo, USGtest=radioTestUSG)

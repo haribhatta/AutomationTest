@@ -1,11 +1,12 @@
 import time
-import Library.ApplicationConfiguration as AC
+import random
+from selenium.webdriver.common.keys import Keys
+import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 
 ########
-danpheEMR = AC.danpheEMR
-AppName = AC.appName
+AppName = GSV.appName
 
 
 ########
@@ -14,7 +15,7 @@ def verifyAcMasterMapping():
     print(" ##Start of ACC_MST_Hospital table mapping with AccPrimaryHospitalShortName core cfg parameter value ##")
 
 
-def createManualVoucher():
+def createManualVoucher(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Transaction").click()
@@ -45,8 +46,44 @@ def createManualVoucher():
     danpheEMR.find_element(By.CSS_SELECTOR, ".fa-plus").click()
     danpheEMR.find_element(By.ID, "DrCr_2").click()
 
+def createLedgerGroup(danpheEMR):
+    danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Transaction").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Voucher Entry").click()
+    dropdown = danpheEMR.find_element(By.ID, "voucher")
+    dropdown.find_element(By.XPATH, "//option[. = 'Purchase Voucher']").click()
+    assert danpheEMR.switch_to.alert.text == "Are you sure you want to change the Voucher Type?"
+    danpheEMR.switch_to.alert.accept()
+    danpheEMR.find_element(By.CSS_SELECTOR, ".fa-question").click()
+    assert danpheEMR.switch_to.alert.text == "Do you want to create new Ledger?"
+    danpheEMR.switch_to.alert.accept()
+    time.sleep(4)
+    danpheEMR.find_element(By.ID, "primarygroup").click()
+    time.sleep(3)
+    dropdown = danpheEMR.find_element(By.ID, "primarygroup")
+    time.sleep(4)
+    #dropdown.find_element(By.XPATH, "//option[. = 'Assets']").click()
+    primaryGroup = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname='PrimaryGroup']"))
+    primaryGroup.select_by_visible_text("Assets")
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Ledger GroupName']").send_keys("Inventory")
+    time.sleep(2)
+    ledgerNumber = str(random.randint(15, 60))
+    generatedLedgerName = "LedgerName" + ledgerNumber
+    print("generatedLedgerName:", generatedLedgerName)
+    danpheEMR.find_element(By.XPATH, "//input[@formcontrolname='LedgerName']").send_keys(generatedLedgerName)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Add Ledger']").click()
+    time.sleep(3)
+    sysLedgerName = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Ledger Name']").send_keys(Keys.RETURN)
+    time.sleep(3)
+    sysLedgerName = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Ledger Name']").get_attribute("value")
+    print("sysLedgerName:", sysLedgerName)
+    assert sysLedgerName == generatedLedgerName
 
-def PosttoAccounting():
+
+def PosttoAccounting(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Post to Accounting").click()

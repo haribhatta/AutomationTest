@@ -21,7 +21,7 @@ NSHI = LI.insurancePatientRegistration(EMR)
 # Insurance patient new visit
 LI.insuranceNewVisit(EMR, NSHI)
 # 1. Create an appointment for new patient.
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 # 2. Create Insurance Patient for Existing patient
 LI.ExistingPatientNewVisit(EMR, HospitalNo, departmentGynae)
 AC.logout()

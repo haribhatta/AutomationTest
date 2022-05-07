@@ -11,7 +11,7 @@ AppName = GSV.appName
 
 # HospitalNo = None
 # Module:Appointment --------------------
-def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor, priceCategoryType):
+def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor, priceCategoryType, case):
     print("START>>patientquickentry")
     global InvoiceNo
     global contactno
@@ -118,7 +118,15 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         danpheEMR.find_element(By.XPATH, "//div[2]/div[2]/input").send_keys("Credit in request of chairman")
     time.sleep(9)
     # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-success").click()
-    danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
+    if case == '-ve':
+        danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
+        print("first click for duplicate check")
+        danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
+        print("second click for duplicate check")
+        danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
+        print("third click for duplicate check")
+    else:
+        danpheEMR.find_element(By.ID, "btnPrintInvoice").click()
     time.sleep(9)
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     print("InvoiceNoTemp", InvoiceNo)

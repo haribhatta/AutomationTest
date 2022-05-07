@@ -21,7 +21,7 @@ LB.counteractivation(EMR)
 time.sleep(2)
 LBR.getReturnBillReport(EMR)
 LBR.preReturnBillReprot()
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal")
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal", case='+ve')
 #Cash Bill Return
 LB.returnBillingInvoice(EMR, InvoiceNo, "TestReturn")
 LBR.getReturnBillReport(EMR)

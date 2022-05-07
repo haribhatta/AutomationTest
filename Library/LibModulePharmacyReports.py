@@ -290,7 +290,7 @@ def getPharmacyOpeningEndingStockSummaryReport(danpheEMR, drugname):
         danpheEMR.find_element(By.LINK_TEXT, 'Pharmacy').click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
-    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Opening and Ending Stock Summary')]").click() #This report is no more available.
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(9)
