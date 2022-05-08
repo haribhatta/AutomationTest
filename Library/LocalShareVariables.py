@@ -13,3 +13,4 @@ class LSV:
     # local paths
     ChromeDriverPath = 'D:/AutomationNew/AutomationTest/drivers/chromedriver.exe'
     SystemTestPath = 'D:/AutomationNew/AutomationTest/SystemTest'
+    BugsPath = 'D:/AutomationNew/AutomationTest/SystemTest/HighPriorityBug'
