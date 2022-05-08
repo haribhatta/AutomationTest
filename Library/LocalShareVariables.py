@@ -10,7 +10,7 @@ import string
 import winsound
 class LSV:
 
-    # local paths
+    # local paths Bug path is added for excelpath so change in local accordingly
     ChromeDriverPath = 'D:/AutomationNew/AutomationTest/drivers/chromedriver.exe'
     SystemTestPath = 'D:/AutomationNew/AutomationTest/SystemTest'
     BugsPath = 'D:/AutomationNew/AutomationTest/SystemTest/HighPriorityBug'
