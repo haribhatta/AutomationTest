@@ -19,20 +19,20 @@ if appName == "LPH":
       itUserID = 'admin' #'bhuwan'
       itUserPwD = 'pass123'
       #billing user
-      foUserID = 'ashmita' #LPH user
+      foUserID = 'admin' #'ashmita' #LPH user
       foUserPwD = 'pass123'
-      foUserName = 'Ms. Ashmita Karki'
+      foUserName = 'Mr. admin admin' #'Ms. Ashmita Karki'
       #Lab user
-      labUserID = 'karuna'
+      labUserID = 'admin' #'karuna'
       labUserPwD = 'pass123'
       #ER Lab user
-      ERlabUserID = 'erlab'
+      ERlabUserID = 'admin' #'erlab'
       ERlabUserPwD = 'pass123'
       #radiologist user
-      radioUserID = 'radiology'
+      radioUserID = 'admin' #'radiology'
       radioUserPwD = 'pass123'
       #pharmacy user
-      pharmacyUserID = 'padam'
+      pharmacyUserID = 'admin' #'padam'
       pharmacyUserPwD = 'pass123'
       pharmacyUserName = 'padam'
       #pharmacyUserName = 'Ms. Debika'
@@ -40,13 +40,13 @@ if appName == "LPH":
       nurseUserID = 'admin'
       nurseUserPwD = 'pass123'
       #store user
-      storeUserID = 'shreeram'
+      storeUserID = 'admin' #'shreeram'
       storeUserPwD = 'pass123'
       #Medical Record user
       MRUserID = 'admin'  #'mr'
       MRUserPwD = 'pass123'
       #vaccination user
-      vaccineUserID = 'surendra'
+      vaccineUserID = 'admin' #'surendra'
       vaccineUserPwD = 'pass123'
 ###TestAction>>BillingItems:
       opdRate = 30
