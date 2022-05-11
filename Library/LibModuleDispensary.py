@@ -52,7 +52,8 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     time.sleep(3)
     if paymentmode == 'Credit':
         time.sleep(2)
-        paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
+#        paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
+        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
         paymentoptions.select_by_visible_text("credit")
         time.sleep(2)
         creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
@@ -298,7 +299,9 @@ def verifyReturnDispensaryInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemar
     danpheEMR.find_element(By.LINK_TEXT, "Print").click()
     time.sleep(3)
     syspaymentmode = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Method of payment: ')]").text
+    syspaymentmode = syspaymentmode.partition(": ")[2]
     print("syspaymentmode:", syspaymentmode)
+    print("paymentmode:", paymentmode)
     assert syspaymentmode == paymentmode  # as per the comment on bug:EMR-2699 payment mode need to be cash on credit note.
     ReturnremarkTemp = danpheEMR.find_element(By.XPATH, "//div[@id='pharma-pat-info']/div[12]").text
     print("ReturnremarkTemp", ReturnremarkTemp)
