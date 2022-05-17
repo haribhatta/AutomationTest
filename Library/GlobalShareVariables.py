@@ -90,6 +90,7 @@ if appName == "LPH":
       dispensaryName2 = "Insurance Dispensary"
       pharmacySupplierName1 = "ASHWANI PHARMACY"
       salesCategoyType = "Pharmacy Unit"
+      supplier = "AAHANA PHARMA"
 ###TestAction>>Inventory+Procurement+SubStore:
       inventoryName1 = "General Inventory"
       inventoryName2 = "Medical Inventory"

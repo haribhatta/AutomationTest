@@ -23,7 +23,7 @@ phuserpwd = GSV.pharmacyUserPwD
 drugSinex = GSV.drugSinexName
 paymentMode = 'Cash'
 supplierName = GSV.supplier
-drugName = GSV.drugAasma
+drugName = GSV.drug1BrandName
 #############
 #AC.login(foUserId, foUserPwd)
 #LB.counteractivation()

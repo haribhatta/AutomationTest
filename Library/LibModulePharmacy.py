@@ -157,9 +157,13 @@ def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
 
 def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>Start: Create purchase order in pharmacy")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    time.sleep(5)
+
     if AppName == "LPH":
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
 
     elif AppName == "SNCH":
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Purchase')]").click()
@@ -174,9 +178,11 @@ def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     # time.sleep(3)
     # dropdown.find_element(By.XPATH, "//option[. = 'Shremad Tech.']").click()
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(supplierName)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(Keys.TAB)
     danpheEMR.find_element(By.ID, "ItemName0").send_keys(drugName)
     time.sleep(3)
+    danpheEMR.find_element(By.ID, "ItemName0").send_keys(Keys.TAB)
     danpheEMR.find_element(By.NAME, "quantity").click()
     time.sleep(3)
     danpheEMR.find_element(By.NAME, "quantity").send_keys("100")
@@ -189,7 +195,7 @@ def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
 
 def verifyCreatePharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>START: verifyCreatePharmacyPurchaseOrder")
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Order").click()
     time.sleep(3)
@@ -205,7 +211,8 @@ def verifyCreatePharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     appItemName = danpheEMR.find_element(By.XPATH, "//td[2]/b").text
     print("app Item name:", appItemName)
     assert drugName == appItemName
-
+    danpheEMR.find_element(By.XPATH, "//a[@title='Cancel' and @class='btn btn-danger history-del-btn']").click()
+    time.sleep(3)
 
 def addPharmacyGRfromPO(danpheEMR):
     print(">>Start: Create GR from purchase order in pharmacy")
