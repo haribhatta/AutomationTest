@@ -255,7 +255,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
     grPrice = int(grPrice)
     danpheEMR.find_element(By.ID, "GRItemPrice").send_keys(grPrice)
     danpheEMR.find_element(By.ID, "Margin").send_keys(14)
-    danpheEMR.find_element(By.ID, "VATPercentage").send_keys(13)
+    #danpheEMR.find_element(By.ID, "VATPercentage").send_keys(13): removing VAT amount fr drug sale.
     time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
@@ -435,7 +435,8 @@ def getPharmacyGoodsReceiptListAmount(danpheEMR):
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(5)
-    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    #danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
     time.sleep(2)
@@ -468,7 +469,9 @@ def verifygetPharmacyGoodsReceiptListAmount(amount, discount):
     print("SubTotal", SubTotal)
     assert float(SubTotal) == float(x)
     assert float(DiscountTotal) == float(xDiscountTotal) + discount
-    assert float(TotalAmount) == float(xTotalAmount) + amount - discount
+    calTotalAmount = float(xTotalAmount) + amount - discount
+    print("calculation Total Amount", calTotalAmount)
+    assert float(TotalAmount) == calTotalAmount
 
 
 def closePopupApplication(danpheEMR):

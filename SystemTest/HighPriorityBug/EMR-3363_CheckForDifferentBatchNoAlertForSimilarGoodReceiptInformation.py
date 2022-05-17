@@ -44,7 +44,6 @@ goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierN
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.editPharmacyGoodsReceipt(EMR, grNo=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 AC.logout()
 AC.closeBrowser()
 
