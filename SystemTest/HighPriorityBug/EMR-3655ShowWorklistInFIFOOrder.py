@@ -1,10 +1,9 @@
 '''
-import Library.ApplicationConfiguration as AC
-import Library.GlobalShareVariables as GSV
-import Library.LibModuleBilling as LB
-import Library.LibModuleAppointment as LA
-import Library.LibModuleLaboratory as LL
+Scipted by: Puskar
+Objective:
+work list order is altered. must be in Order of FIFO.
 '''
+
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
@@ -38,7 +37,7 @@ print("hospitalNo", HospitalNo)
 LB.createLabInvoice(EMR, HospitalNo, labTestTFT)
 LL.collectLabSample(EMR, HospitalNo, labTestTFT)
 patientName = LL.seeWorkListFIFO(EMR)
-HospitalNo1, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, 0, 'Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, 0, 'Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LB.createLabInvoice(EMR, HospitalNo1, labTestTFT)
 LL.collectLabSample(EMR, HospitalNo1, labTestTFT)
 LL.verifyFIFOInWorklist(EMR, patientName=patientName)

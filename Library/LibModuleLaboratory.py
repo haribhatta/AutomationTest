@@ -114,7 +114,7 @@ def seeWorkListFIFO(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Work List')]").click()
-    time.sleep(3)
+    time.sleep(9)
     patientName = danpheEMR.find_element(By.XPATH, "//*[@id='labWorkBook']/table/tbody/tr[1]/td[3]/span").text
     print("first Patient in the worklist is ", patientName)
     danpheEMR.find_element(By.XPATH, "//button[@class = 'btn btn-danger']").click()
@@ -127,7 +127,7 @@ def verifyFIFOInWorklist(danpheEMR, patientName):
     time.sleep(1)
     danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Work List')]").click()
-    time.sleep(2)
+    time.sleep(9)
     patientName1 = danpheEMR.find_element(By.XPATH, "//*[@id='labWorkBook']/table/tbody/tr[1]/td[3]/span").text
     print("first Patient in the worklist is ", patientName1)
     assert patientName == patientName1

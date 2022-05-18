@@ -3,7 +3,12 @@ Scripted by: Hari P. Bhatta
 Headline:
 Pharmacy -> Order: Existing record is not populated when item edit.
 Description:
-Steps to Reproduce:1. Navigate to Pharmacy -> Order2. Add Purchase order and Print 3. Proceed to Add the Good Receipt from Order List4. In the Good Receipt Page Pending Order quantity is as per the Purchase Order5. Edit the item and see the record in the pending qty as '0'.
+Steps to Reproduce:
+1. Navigate to Pharmacy -> Order
+2. Add Purchase order and Print
+3. Proceed to Add the Good Receipt from Order List
+4. In the Good Receipt Page Pending Order quantity is as per the Purchase Order
+5. Edit the item and see the record in the pending qty as '0'.
 
 Issue: Pending quantity is not displaying correct value.
 
@@ -43,7 +48,8 @@ goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierN
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.editPharmacyGoodsReceipt(EMR, grNo=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
+LP.editPharmacyGoodsReceipt(danpheEMR=EMR, grNo=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
+
 AC.logout()
 AC.closeBrowser()
 
