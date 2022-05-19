@@ -15,7 +15,7 @@ radioTestUSG = GSV.USG
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal", case="+ve")
 print("hospitalNo", HospitalNo)
 InvoiceNo1 = LB.multiplebillingclick(EMR, HospitalNo,labTestTFT, radioTestUSG)
 LB.verifymultipleclickbilling(EMR, InvoiceNo1)
