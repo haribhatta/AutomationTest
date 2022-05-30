@@ -57,7 +57,10 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         time.sleep(2)
         if AppName == "LPH":
             time.sleep(5)
+            danpheEMR.find_element(By.ID, "SaveAdmission").click()
+            time.sleep(5)
             danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+
         elif AppName == "MPH":
             danpheEMR.find_element(By.ID, "btnAdtSticker").click()
         else:
