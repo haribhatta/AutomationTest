@@ -66,7 +66,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit
 # 5. Credit Invoice
 print("##### Credit Invoice #####")
 LBR.getBillingDashboard(EMR)
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
