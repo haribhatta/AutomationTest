@@ -1,16 +1,15 @@
 from selenium import webdriver
 import time
+import random
+import Library.GlobalShareVariables as GSV
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support.select import Select
 from selenium.webdriver.common.by import By
-import Library.ApplicationConfiguration as AC
 
-danpheEMR = AC.danpheEMR
-print("DanpheEMR", danpheEMR)
-AppName = AC.appName
-HospitalNo = None
-
+AppName = GSV.appName
 
 ########
-def EmergencyRegistration():
+def EmergencyRegistration(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Emergency").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'New patient')]").click()
