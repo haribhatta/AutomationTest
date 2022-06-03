@@ -13,10 +13,12 @@ doctorGynae = GSV.doctorGyno
 labTestTFT = GSV.TFT
 radioTestUSG = GSV.USG
 referDoctor = GSV.ReferredBy
+priceCategoryType = "Normal"
 #############
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-LB.verifyReferDoctorinInvoice(danpheEMR=EMR, imagingtest=labTestTFT, labtest=radioTestUSG, ReferDoctor=referDoctor)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+LB.verifyReferDoctorinInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, imagingtest=labTestTFT, labtest=radioTestUSG, ReferDoctor=referDoctor)
 AC.logout()
 AC.closeBrowser()
 # This testcase fails due to EMR-5019

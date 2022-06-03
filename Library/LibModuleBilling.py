@@ -1087,6 +1087,65 @@ def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     return InvoiceNo
 
 
+def verifyReferDoctorinInvoice(danpheEMR, HospitalNo, imagingtest, labtest, ReferDoctor):
+    print(">>Start Verifying Refer Doctor in Invoice")
+    print("Hospital Number:", HospitalNo)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.implicitly_wait(10)
+    danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.ENTER)
+    element = WebDriverWait(danpheEMR, 10)
+    element.until(
+        EC.element_to_be_clickable((By.ID, "btn_billRequest"))
+    ).click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").clear()
+    danpheEMR.find_element(By.ID, "currentRequestedByDoctor").send_keys(ReferDoctor)
+
+    # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    wait = WebDriverWait(danpheEMR, 20)
+    wait.until(
+        EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
+    ).click()
+
+    # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
+    danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(Keys.RETURN)
+    price = WebDriverWait(danpheEMR, 10)
+    price.until(
+        EC.visibility_of_element_located((By.XPATH, "(//input[@name='total'])[2]"))
+    )
+    price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
+    totalprice = int(price1) + int(price2)
+    print("Total Price:", totalprice)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
+    InNo = WebDriverWait(danpheEMR, 10)
+    InNo.until(
+        EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]"))
+    )
+    # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
+    Refer = danpheEMR.find_element(By.XPATH, "//div[@id='divBilInvoicePrintPage']/div/div[10]/div").text
+    Refer = str(Refer)
+    print(Refer)
+    refer = str('Referred By:' + " " + ReferDoctor)
+    print(refer)
+    assert Refer == refer
+    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
+    print("END: Refered By Doctor Passed")
+
+
+
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
