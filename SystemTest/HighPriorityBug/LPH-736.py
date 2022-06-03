@@ -15,5 +15,7 @@ EmergencyPwd = GSV.adminUserPwD
 
 EMR = AC.openBrowser()
 AC.login(EmergencyId, EmergencyPwd)
-LE.EmergencyRegistration()
+LE.EmergencyRegistration(EMR)
+AC.logout()
+AC.closeBrowser()
 print("The Emergency Patient Registered.")
