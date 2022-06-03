@@ -54,3 +54,5 @@ LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
+AC.logout()
+AC.closeBrowser()
