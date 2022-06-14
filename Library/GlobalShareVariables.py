@@ -14,40 +14,40 @@ if appName == "LPH":
 ###TestAction>>LogIn:
       #admin user
       adminUserID = 'admin'
-      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
       #IT user
       itUserID = 'admin' #'bhuwan'
-      itUserPwD = 'pass123'
+      itUserPwD = 'DanpheEMR@123'
       #billing user
       foUserID = 'admin' #'ashmita' #LPH user
-      foUserPwD = 'pass123'
+      foUserPwD = 'DanpheEMR@123'
       foUserName = 'Mr. admin admin' #'Ms. Ashmita Karki'
       #Lab user
       labUserID = 'admin' #'karuna'
-      labUserPwD = 'pass123'
+      labUserPwD = 'DanpheEMR@123'
       #ER Lab user
       ERlabUserID = 'admin' #'erlab'
-      ERlabUserPwD = 'pass123'
+      ERlabUserPwD = 'DanpheEMR@123'
       #radiologist user
       radioUserID = 'admin' #'radiology'
-      radioUserPwD = 'pass123'
+      radioUserPwD = 'DanpheEMR@123'
       #pharmacy user
       pharmacyUserID = 'admin' #'padam'
-      pharmacyUserPwD = 'pass123'
+      pharmacyUserPwD = 'DanpheEMR@123'
       pharmacyUserName = 'padam'
       #pharmacyUserName = 'Ms. Debika'
       #nurse user
       nurseUserID = 'admin'
-      nurseUserPwD = 'pass123'
+      nurseUserPwD = 'DanpheEMR@123'
       #store user
       storeUserID = 'admin' #'shreeram'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'DanpheEMR@123'
       #Medical Record user
       MRUserID = 'admin'  #'mr'
-      MRUserPwD = 'pass123'
+      MRUserPwD = 'DanpheEMR@123'
       #vaccination user
       vaccineUserID = 'admin' #'surendra'
-      vaccineUserPwD = 'pass123'
+      vaccineUserPwD = 'DanpheEMR@123'
 ###TestAction>>BillingItems:
       opdRate = 30
       deposit = 100
@@ -130,30 +130,30 @@ if appName == "SNCH":
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
-      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'admin' #'sabitri'
-      foUserPwD = 'pass123'
+      foUserPwD = 'DanpheEMR@123'
       foUserName = 'Mr. admin admin' #'Ms. Sabitri Sharma Adhikari'
       #IT user
       itUserID = 'admin' #'rn'
-      itUserPwD = 'pass123'
+      itUserPwD = 'DanpheEMR@123'
       #pharmacy user
       pharmacyUserID = 'shivraj'
-      pharmacyUserPwD = 'pass123'
+      pharmacyUserPwD = 'DanpheEMR@123'
       pharmacyUserName = 'shiv raj'
       #laboratory user
       labUserID = 'gayatri'
-      labUserPwD = 'pass123'
+      labUserPwD = 'DanpheEMR@123'
       # Radiology user
       radioUserID = 'bharat'
-      radioUserPwD = 'pass123'
+      radioUserPwD = 'DanpheEMR@123'
       #Inventory user
       storeUserID = 'admin'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'DanpheEMR@123'
       #Medical Record user
       MRUserID = 'admin' #'haris'
-      MRUserPwD = 'pass123'
+      MRUserPwD = 'DanpheEMR@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
@@ -232,32 +232,32 @@ if appName == "MPH":
 ###TestAction>>LogIn:
       #admin user
       adminUserID = 'admin'
-      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'admin' #bandana
-      foUserPwD = 'pass123'
+      foUserPwD = 'DanpheEMR@123'
       foUserName = 'Ms. Bandana Harmel'
       #IT user
       itUserID = 'alina'
-      itUserPwD = 'pass123'
+      itUserPwD = 'DanpheEMR@123'
       #Lab user
       labUserID = 'supriya'
-      labUserPwD = 'pass123'
+      labUserPwD = 'DanpheEMR@123'
       #ER Lab user
       ERlabUserID = 'erlab'
-      ERlabUserPwD = 'pass123'
+      ERlabUserPwD = 'DanpheEMR@123'
       #radiologist user
       radioUserID = 'basudev'
-      radioUserPwD = 'pass123'
+      radioUserPwD = 'DanpheEMR@123'
       #pharmacy user
       pharmacyUserID = 'kishor'
-      pharmacyUserPwD = 'pass123'
+      pharmacyUserPwD = 'DanpheEMR@123'
       #nurse user
       nurseUserID = 'admin'
-      nurseUserPwD = 'pass123'
+      nurseUserPwD = 'DanpheEMR@123'
       #store user
       storeUserID = 'radha'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'DanpheEMR@123'
 ###TestAction>>BillingItems:
       opdRate = 660
       deposit = 1000
@@ -337,25 +337,25 @@ if appName == "RTM":
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
-      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'mamata'
-      foUserPwD = 'pass123'
+      foUserPwD = 'DanpheEMR@123'
       foUserName = 'Ms. Mamata Gartaula'
       #IT user
       itUserID = 'admin'
-      itUserPwD = 'pass123'
+      itUserPwD = 'DanpheEMR@123'
       #pharmacy user
       pharmacyUserID = 'admin'
-      pharmacyUserPwD = 'pass123'
+      pharmacyUserPwD = 'DanpheEMR@123'
       #pharmacyUserName = 'Ms. Prekshya Adhikari'
       pharmacyUserName = 'Prekshya Adhikari' # Ms. is removed due to Rhythm 'User Collection Report' not having salutation field.
       #laboratory user
       labUserID = 'muna'
-      labUserPwD = 'pass123'
+      labUserPwD = 'DanpheEMR@123'
       #Inventory user
       storeUserID = 'admin'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'DanpheEMR@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
@@ -433,25 +433,25 @@ if appName == "RSC":
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
-      adminUserPwD = 'pass123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'admin'
-      foUserPwD = 'pass123'
+      foUserPwD = 'DanpheEMR@123'
       foUserName = 'Admin admin'
       #IT user
       itUserID = 'admin'
-      itUserPwD = 'pass123'
+      itUserPwD = 'DanpheEMR@123'
       #pharmacy user
       pharmacyUserID = 'admin'
-      pharmacyUserPwD = 'pass123'
+      pharmacyUserPwD = 'DanpheEMR@123'
       #pharmacyUserName = 'Ms. Prekshya Adhikari'
       pharmacyUserName = 'Admin admin'
       #laboratory user
       labUserID = 'admin'
-      labUserPwD = 'pass123'
+      labUserPwD = 'DanpheEMR@123'
       #Inventory user
       storeUserID = 'admin'
-      storeUserPwD = 'pass123'
+      storeUserPwD = 'DanpheEMR@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
