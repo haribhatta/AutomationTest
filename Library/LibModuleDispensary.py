@@ -587,13 +587,16 @@ def createDispensarySaleRegisterOutdoorPatient(danpheEMR, HospitalNo, qty, drugN
         time.sleep(3)
         if paymentmode == 'Credit':
             time.sleep(2)
-            paymentoptions = Select(
-                danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
-            paymentoptions.select_by_visible_text("credit")
+            #paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
+            paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+            #paymentoptions.select_by_visible_text("credit")
+            paymentoptions.select_by_visible_text("Credit")
             time.sleep(2)
-            creditOrganization = Select(
-                danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
-            creditOrganization.select_by_index(0)
+            #creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
+            #creditOrganization.select_by_index(0)
+            creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+            creditOrganization.select_by_visible_text("SCH Staff Account")
+            time.sleep(3)
             danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
         danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
         time.sleep(5)
