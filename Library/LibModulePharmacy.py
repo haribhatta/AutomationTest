@@ -157,16 +157,21 @@ def transferMainStore2MainDispensary(danpheEMR, drugname, qty):
 
 def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     print(">>Start: Create purchase order in pharmacy")
-    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
-    time.sleep(5)
-
     if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+        time.sleep(5)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
 
     elif AppName == "SNCH":
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Purchase')]").click()
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+        time.sleep(5)
+        danpheEMR.find_element(By.XPATH, "(//a[@href='#/Pharmacy/Order'])[2]").click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
+        time.sleep(3)
+        #danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Purchase')]").click()
     # time.sleep(3)
     # danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div/ul/li[1]/a").click()
     # time.sleep(3)
@@ -205,9 +210,13 @@ def verifyCreatePharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
     time.sleep(3)
-    appSupplierName = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Supplier Name :')]/child::b").text
+    if AppName == "LPH":
+        appSupplierName = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'श्री')]").text
+        appSupplierName = appSupplierName.partition("श्री ")[2]
+    else:
+        appSupplierName = danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Supplier Name :')]/child::b").text
     print("SupplierName:", appSupplierName)
-    assert supplierName == danpheEMR.find_element(By.XPATH, "//p[contains(text(),'Supplier Name :')]/child::b").text
+    assert supplierName == appSupplierName
     appItemName = danpheEMR.find_element(By.XPATH, "//td[2]/b").text
     print("app Item name:", appItemName)
     assert drugName == appItemName

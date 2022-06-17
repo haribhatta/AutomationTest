@@ -16,8 +16,11 @@ def activateDispensaryCounter(danpheEMR, dispensaryName):
     time.sleep(7)
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(7)
-    #danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + dispensaryName + "')]").click()
-    time.sleep(3)
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + dispensaryName + "')]").click()
+        time.sleep(3)
+    except:
+        pass
     danpheEMR.find_element(By.LINK_TEXT, "Counter").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//h5").click()

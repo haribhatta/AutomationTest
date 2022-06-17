@@ -139,9 +139,9 @@ if appName == "SNCH":
       itUserID = 'admin' #'rn'
       itUserPwD = 'DanpheEMR@123'
       #pharmacy user
-      pharmacyUserID = 'shivraj'
+      pharmacyUserID = 'admin' #'shivraj'
       pharmacyUserPwD = 'DanpheEMR@123'
-      pharmacyUserName = 'shiv raj'
+      pharmacyUserName = 'admin admin' #'shiv raj'
       #laboratory user
       labUserID = 'gayatri'
       labUserPwD = 'DanpheEMR@123'
@@ -194,6 +194,7 @@ if appName == "SNCH":
       dispensaryName1 = "MainDispensary"
       dispensaryName2 = "Insurance Dispensary"
       pharmacySupplierName1 = "AAKAR ENTERPRISES"
+      supplier = "JOSHI TRADE CONCERN"
       ###TestAction>>Inventory+Procurement+SubStore:
       inventoryName1 = "General Inventory"
       inventoryName2 = "Medical Inventory"
