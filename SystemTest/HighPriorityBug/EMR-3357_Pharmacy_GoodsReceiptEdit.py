@@ -28,7 +28,7 @@ qty = 100
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 goodsReceiptNo = LP.editPharmacyGoodsReceiptContent(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drugName, grPrice=drugRate)
-LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugName, genericName=genericName, grno=goodsReceiptNo)
+LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt="false")
 AC.logout()
 AC.closeBrowser()
 
