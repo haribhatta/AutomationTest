@@ -180,7 +180,7 @@ def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1
     print("Tender amount to verify the total amount", tender)
     if paymentmode == 'Credit':
         paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-        paymentoptions.select_by_visible_text("credit")
+        paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
