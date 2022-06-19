@@ -284,8 +284,14 @@ def verifyDispatchRequisition(danpheEMR, ssReqNo):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'View')]").click()
     time.sleep(4)
-    ssReqNo1 = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[3]/div[2]/div[2]").text
-    ssReqNo1 = ssReqNo.replace('माग नं:', '')
+    if AppName == 'LPH':
+        ssReqNo1 = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div[3]/div[2]/div[2]").text
+        print("Sub Store Requisition No", ssReqNo1)
+        ssReqNo1 = ssReqNo.replace('माग नं:', '')
+    else:
+        ssReqNo1 = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'Requisition No:')]").text
+        print("Sub Store Requisition No", ssReqNo1)
+        ssReqNo1 = ssReqNo.replace('Requisition No:', '')
     print("Sub Store Requisition No", ssReqNo1)
     # ssReqNo1 = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
     # print("ssReqNo1:", ssReqNo1)
