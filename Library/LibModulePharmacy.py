@@ -528,13 +528,13 @@ def return_to_supplier(danpheEMR, grno, rqty):
     time.sleep(5)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grno)
     time.sleep(2)
-    danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]/a[1]").click()
+    danpheEMR.find_element(By.XPATH, "//a[@danphe-grid-action='return']").click()
     creditnote = random.randint(1, 1000)
     print("Credit Note Of the Given Patient is ", creditnote)
     time.sleep(3)
     danpheEMR.find_element(By.NAME, "CreditNoteId").send_keys(creditnote)
     danpheEMR.find_element(By.CSS_SELECTOR, "th > input").click()
-    danpheEMR.find_element(By.NAME, "returnquantity").send_keys(rqty)
+    danpheEMR.find_element(By.ID, "Quantity0").send_keys(rqty)
     time.sleep(2)
     vatamount = danpheEMR.find_element(By.XPATH, "//*[@name = 'VATAmount']").text
     print("Vat amount of returned items is :", vatamount)
@@ -542,17 +542,21 @@ def return_to_supplier(danpheEMR, grno, rqty):
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
     time.sleep(6)
-    danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
+    #danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
+    danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success']").click()
+
     time.sleep(2)
-    vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
+    #vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
+    vatamount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='VATAmount'])[2]").text
+
     vatamount = vatamount.replace(".", "")
     vatamount = int(vatamount)
     vatamount = float(vatamount * 0.01)
     print("Vat Amount removing dot is ", vatamount)
     assert vatamount > 0
     danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
-    return creditnote
     print("END>>Return to supplier")
+    return creditnote
 
 
 def addPharmacyCreditOrganization(danpheEMR):
