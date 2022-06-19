@@ -299,6 +299,31 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
     print("END>>createPharmacyGoodsReceipt")
     return gRNo
 
+def editPharmacyGoodsReceipt(danpheEMR, grNo, qty):
+    print("START>>editPharmacyGoodsReceipt")
+    global goodsReceiptNo
+    time.sleep(2)
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(grNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "editGR").click()
+    time.sleep(5)
+    sysQuantity = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(6)").text
+    print("sysQuantity:", sysQuantity)
+    print("qty:", qty)
+    qty = str(qty)
+    assert sysQuantity == qty
+    print("END>>editPharmacyGoodsReceipt")
 
 def createPharmacyGrwithSameInvoiceNumberAfterGrCancel(danpheEMR, invoiceNumber, supplier, qty, DrugName, grPrice, NepaliReceipt):
     print("START>>Good Receipt after GR cancel with previously cancelled Invoice Number")
