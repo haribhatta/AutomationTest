@@ -183,7 +183,11 @@ def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
-    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+        danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys(Keys.TAB)
+
+    time.sleep(4)
+    #danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip' and @title='ALT+N']").click()
     time.sleep(5)
     pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
     pInvoiceNo = pInvoiceNo.partition("PH")[2]

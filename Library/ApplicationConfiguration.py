@@ -46,7 +46,7 @@ def logout():
     print("START>>logout")
     time.sleep(3)
     danpheEMR.find_element(By.CSS_SELECTOR, ".dropdown-toggle:nth-child(1) > .fa").click()
-    time.sleep(1)
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Log Out").click()
     print("END>>logout")
 

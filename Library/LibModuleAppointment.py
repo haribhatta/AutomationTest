@@ -116,6 +116,8 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         time.sleep(2)
         creditorg.select_by_visible_text(GSV.creditOrganization)
         danpheEMR.find_element(By.XPATH, "//div[2]/div[2]/input").send_keys("Credit in request of chairman")
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//input[@placeholder='Remarks']").send_keys("This is remark")
     time.sleep(9)
     # danpheEMR.find_element(By.CSS_SELECTOR, ".btn-success").click()
     if case == '-ve':

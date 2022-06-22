@@ -41,6 +41,7 @@ def addBirthCertificate(danpheEMR, HospitalNo):
       time.sleep(5)
       danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Submit')]").click()
       # return number for the verifying the certificate number
+
       return number
    print("<<END: addBirthCertificate")
 

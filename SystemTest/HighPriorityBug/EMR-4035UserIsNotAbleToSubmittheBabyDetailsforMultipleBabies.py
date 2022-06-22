@@ -1,3 +1,11 @@
+'''
+Scripted by:
+Headline:
+Medical Record | Birth List | User is not able to submit the Baby details ( for multiple babies )
+Objective:
+
+'''
+
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
