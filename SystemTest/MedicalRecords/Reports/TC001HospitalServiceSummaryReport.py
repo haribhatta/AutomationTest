@@ -44,7 +44,7 @@ LMRR.verifyHospitalServiceSummaryReport(danpheEMR=EMR, labBill=1, admit=0)
 LMRR.preHospitalServiceSummaryReport(EMR)
 ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=0, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 LMRR.getHospitalServiceSummaryReport(EMR)
-LMRR.verifyHospitalServiceSummaryReport(danpheEMR=EMR, labBill=0, admit=1) ## TestAction: Failed: EMR-4817
+LMRR.verifyHospitalServiceSummaryReport(danpheEMR=EMR, labBill=0, admit=1)
 time.sleep(2)
 AC.logout()
 AC.closeBrowser()

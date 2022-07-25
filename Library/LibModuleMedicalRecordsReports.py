@@ -51,9 +51,9 @@ def verifyHospitalServiceSummaryReport(danpheEMR, labBill, admit):
     expectedTotalPatientsAdmitted = preTotalPatientsAdmitted + admit
     print("expectedTotalPatientsAdmitted:", expectedTotalPatientsAdmitted)
     assert expectedTotalPatientsAdmitted == actualTotalPatientsAdmitted
-    expectedTotalLabSeriveProvided = preTotalLabSeriveProvided + labBill
-    print("expectedTotalLabSeriveProvided:", expectedTotalLabSeriveProvided)
-    assert expectedTotalLabSeriveProvided == actualTotalLabSeriveProvided
+    expectedTotalLabServiceProvided = preTotalLabSeriveProvided + labBill
+    print("expectedTotalLabServiceProvided:", expectedTotalLabServiceProvided)
+    assert expectedTotalLabServiceProvided == actualTotalLabSeriveProvided
     print("End >> verifyHospitalServiceSummaryReport")
 
 
