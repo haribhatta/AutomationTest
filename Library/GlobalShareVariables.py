@@ -13,41 +13,41 @@ if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
 ###TestAction>>LogIn:
       #admin user
-      adminUserID = 'admin'
-      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
+      adminUserID = 'Admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
       #IT user
-      itUserID = 'admin' #'bhuwan'
-      itUserPwD = 'DanpheEMR@123'
+      itUserID = 'Admin' #'bhuwan'
+      itUserPwD = 'DanpheHIMS@123'
       #billing user
-      foUserID = 'admin' #'ashmita' #LPH user
-      foUserPwD = 'DanpheEMR@123'
+      foUserID = 'Admin' #'ashmita' #LPH user
+      foUserPwD = 'DanpheHIMS@123'
       foUserName = 'Mr. admin admin' #'Ms. Ashmita Karki'
       #Lab user
-      labUserID = 'admin' #'karuna'
-      labUserPwD = 'DanpheEMR@123'
+      labUserID = 'Admin' #'karuna'
+      labUserPwD = 'DanpheHIMS@123'
       #ER Lab user
-      ERlabUserID = 'admin' #'erlab'
-      ERlabUserPwD = 'DanpheEMR@123'
+      ERlabUserID = 'Admin' #'erlab'
+      ERlabUserPwD = 'DanpheHIMS@123'
       #radiologist user
-      radioUserID = 'admin' #'radiology'
-      radioUserPwD = 'DanpheEMR@123'
+      radioUserID = 'Admin' #'radiology'
+      radioUserPwD = 'DanpheHIMS@123'
       #pharmacy user
-      pharmacyUserID = 'admin' #'padam'
-      pharmacyUserPwD = 'DanpheEMR@123'
+      pharmacyUserID = 'Admin' #'padam'
+      pharmacyUserPwD = 'DanpheHIMS@123'
       pharmacyUserName = 'padam'
       #pharmacyUserName = 'Ms. Debika'
       #nurse user
-      nurseUserID = 'admin'
-      nurseUserPwD = 'DanpheEMR@123'
+      nurseUserID = 'Admin'
+      nurseUserPwD = 'DanpheHIMS@123'
       #store user
-      storeUserID = 'admin' #'shreeram'
-      storeUserPwD = 'DanpheEMR@123'
+      storeUserID = 'Admin' #'shreeram'
+      storeUserPwD = 'DanpheHIMS@123'
       #Medical Record user
-      MRUserID = 'admin'  #'mr'
-      MRUserPwD = 'DanpheEMR@123'
+      MRUserID = 'Admin'  #'mr'
+      MRUserPwD = 'DanpheHIMS@123'
       #vaccination user
-      vaccineUserID = 'admin' #'surendra'
-      vaccineUserPwD = 'DanpheEMR@123'
+      vaccineUserID = 'Admin' #'surendra'
+      vaccineUserPwD = 'DanpheHIMS@123'
 ###TestAction>>BillingItems:
       opdRate = 30
       deposit = 100
@@ -129,31 +129,31 @@ if appName == "SNCH":
       appURL = "http://202.51.74.168:168/"
 ###TestAction>>LogIn:
       # admin user
-      adminUserID = 'admin'
-      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
+      adminUserID = 'Admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
       #billing user
-      foUserID = 'admin' #'sabitri'
-      foUserPwD = 'DanpheEMR@123'
+      foUserID = 'Admin' #'sabitri'
+      foUserPwD = 'DanpheHIMS@123'
       foUserName = 'Mr. admin admin' #'Ms. Sabitri Sharma Adhikari'
       #IT user
-      itUserID = 'admin' #'rn'
-      itUserPwD = 'DanpheEMR@123'
+      itUserID = 'Admin' #'rn'
+      itUserPwD = 'DanpheHIMS@123'
       #pharmacy user
-      pharmacyUserID = 'admin' #'shivraj'
-      pharmacyUserPwD = 'DanpheEMR@123'
+      pharmacyUserID = 'Admin' #'shivraj'
+      pharmacyUserPwD = 'DanpheHIMS@123'
       pharmacyUserName = 'admin admin' #'shiv raj'
       #laboratory user
-      labUserID = 'gayatri'
-      labUserPwD = 'DanpheEMR@123'
+      labUserID = 'Admin'
+      labUserPwD = 'DanpheHIMS@123'
       # Radiology user
-      radioUserID = 'bharat'
-      radioUserPwD = 'DanpheEMR@123'
+      radioUserID = 'Admin'
+      radioUserPwD = 'DanpheHIMS@123'
       #Inventory user
-      storeUserID = 'admin'
-      storeUserPwD = 'DanpheEMR@123'
+      storeUserID = 'Admin'
+      storeUserPwD = 'DanpheHIMS@123'
       #Medical Record user
-      MRUserID = 'admin' #'haris'
-      MRUserPwD = 'DanpheEMR@123'
+      MRUserID = 'Admin' #'haris'
+      MRUserPwD = 'DanpheHIMS@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
@@ -170,8 +170,8 @@ if appName == "SNCH":
       USG = "USG ABDOMIN AND PELVIS"
       usgRate = 1000
       admitRate = 1500
-      discountCommunityName = "Social Service Unit"
-      discountSchemeName = "Senior Citizen (10%)"
+      discountCommunityName = "Hospital"
+      discountSchemeName = "Referal (10%)"
       ReferredBy = "Dr. Amit Chaturbedi"
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"

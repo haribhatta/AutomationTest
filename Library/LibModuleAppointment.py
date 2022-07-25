@@ -100,8 +100,7 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
             time.sleep(3)
             dropdown.select_by_visible_text(communityName)
         if schemeTypeDiscountFlag == "true":
-            dropdown1 = Select(danpheEMR.find_element(By.XPATH,
-                                                      "//span[contains(text(),'" + discountSchemeLabel + "')]/child::select"))
+            dropdown1 = Select(danpheEMR.find_element(By.ID, "Scheme"))
             time.sleep(3)
             dropdown1.select_by_visible_text(schemeName)
         discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute(
