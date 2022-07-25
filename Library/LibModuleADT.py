@@ -55,18 +55,16 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         time.sleep(2)
         #danpheEMR.find_element(By.ID, "SaveAdmission").click()
         time.sleep(2)
-        if AppName == "LPH":
-            time.sleep(5)
-            danpheEMR.find_element(By.ID, "SaveAdmission").click()
-            time.sleep(5)
-            danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+        danpheEMR.find_element(By.ID, "SaveAdmission").click()
+        time.sleep(5)
+        danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
 
-        elif AppName == "MPH":
-            danpheEMR.find_element(By.ID, "btnAdtSticker").click()
-        else:
-            danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
-        print("Patient successfully admitted.")
-        time.sleep(2)
+        # elif AppName == "MPH":
+        #     danpheEMR.find_element(By.ID, "btnAdtSticker").click()
+        # else:
+        #     danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-danger' and contains(text(),'X')]").click()
+        # print("Patient successfully admitted.")
+        # time.sleep(2)
 
     elif discharge == 1:
         time.sleep(5)
