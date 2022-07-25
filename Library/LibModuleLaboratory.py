@@ -53,6 +53,7 @@ def addLabResult(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Proceed')]").click()  # proceed for abnormal result
     time.sleep(3)
     danpheEMR.find_element(By.CSS_SELECTOR, ".c-btn > .fa").click()
+    danpheEMR.find_element(By.CSS_SELECTOR, " li:nth-child(1) > label ").click()
     danpheEMR.find_element(By.ID, "btnUpdateSignatories").click()
     time.sleep(2)
 
