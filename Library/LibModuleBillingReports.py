@@ -1000,73 +1000,87 @@ def getUserCollectionReport(danpheEMR, user):
     danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
     time.sleep(9)
     # actualNetCashCollection = danpheEMR.find_element(By.CSS_SELECTOR, ".blinkAmount").text
-    actualNetCashCollection = danpheEMR.find_element(By.XPATH, "//h4[contains(text(),'Net Cash Collection')]").text
+    actualNetCashCollection = danpheEMR.find_element(By.XPATH, "//*[@id='print_netCashCollection']/div/div/table/tbody/tr[13]/td[2]").text
     print("actualNetCashCollection:", actualNetCashCollection)
-    actualNetCashCollection = actualNetCashCollection.partition("( ")[2]
-    actualNetCashCollection = actualNetCashCollection.partition(")")[0]
+    # actualNetCashCollection = actualNetCashCollection.partition("( ")[2]
+    # actualNetCashCollection = actualNetCashCollection.partition(")")[0]
+    # actualNetCashCollection = actualNetCashCollection.replace(",", "")
     actualNetCashCollection = float(actualNetCashCollection)
     print("actualNetCashCollection:", actualNetCashCollection)
     actualGrossTotalSales = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Gross Total Sales')]//following-sibling::td").text
     print("actualGrossTotalSales:", actualGrossTotalSales)
+    # actualGrossTotalSales = actualGrossTotalSales.replace(",", "")
     actualGrossTotalSales = float(actualGrossTotalSales)
     print("actualGrossTotalSales:", actualGrossTotalSales)
     actualDiscount = danpheEMR.find_element(By.XPATH,
         "(//td[contains(text(),'Discount')])[1]//following-sibling::td").text
     print("actualDiscount:", actualDiscount)
+    # actualDiscount = actualDiscount.replace(",", "")
     actualDiscount = float(actualDiscount)
     print("actualDiscount:", actualDiscount)
     actualReturnSubTotal = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Return SubTotal')]//following-sibling::td").text
     print("actualReturnSubTotal:", actualReturnSubTotal)
+    # actualReturnSubTotal = actualReturnSubTotal.replace(",", "")
     actualReturnSubTotal = float(actualReturnSubTotal)
     print("actualReturnSubTotal:", actualReturnSubTotal)
     actualReturnDiscount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Return Discount')]//following-sibling::td").text
     print("actualReturnDiscount:", actualReturnDiscount)
+    # actualReturnDiscount = actualReturnDiscount.replace(",", "")
     actualReturnDiscount = float(actualReturnDiscount)
     print("actualReturnDiscount:", actualReturnDiscount)
     actualReturnAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Return Amount')]//following-sibling::td").text
+    # actualReturnDiscount = actualReturnDiscount.replace(",", "")
     print("actualReturnAmount:", actualReturnAmount)
     actualReturnAmount = float(actualReturnAmount)
     print("actualReturnAmount:", actualReturnAmount)
     actualNetSales = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Net Sales')]//following-sibling::td").text
+    # actualNetSales = actualNetSales.replace(",", "")
     print("actualNetSales:", actualNetSales)
     actualNetSales = float(actualNetSales)
     print("actualNetSales:", actualNetSales)
     actualLessCreditAmount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Less Credit Amount')]//following-sibling::td").text
+    # actualLessCreditAmount = actualLessCreditAmount.replace(",", "")
     print("actualLessCreditAmount:", actualLessCreditAmount)
     actualLessCreditAmount = float(actualLessCreditAmount)
     print("actualLessCreditAmount:", actualLessCreditAmount)
     actualAddDepositReceived = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Add Deposit Received')]//following-sibling::td").text
+    # actualAddDepositReceived = actualAddDepositReceived.replace(",", "")
     print("actualAddDepositReceived:", actualAddDepositReceived)
     actualAddDepositReceived = float(actualAddDepositReceived)
     print("actualAddDepositReceived:", actualAddDepositReceived)
     actualLessDepositRefund = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Less Deposit Refund')]//following-sibling::td").text
+    # actualLessDepositRefund = actualLessDepositRefund.replace(",", "")
     print("actualLessDepositRefund:", actualLessDepositRefund)
     actualLessDepositRefund = float(actualLessDepositRefund)
     print("actualLessDepositRefund:", actualLessDepositRefund)
     actualAddCollectionFromReceivables = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Add Collection From Receivables')]//following-sibling::td").text
+    # actualAddCollectionFromReceivables = actualAddCollectionFromReceivables.replace(",", "")
     print("actualAddCollectionFromReceivables:", actualAddCollectionFromReceivables)
     actualAddCollectionFromReceivables = float(actualAddCollectionFromReceivables)
     print("actualAddCollectionFromReceivables:", actualAddCollectionFromReceivables)
     actualLessCashDiscount = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Less Cash Discount')]//following-sibling::td").text
+    # actualLessCashDiscount = actualLessCashDiscount.replace(",", "")
     print("actualLessCashDiscount:", actualLessCashDiscount)
     actualLessCashDiscount = float(actualLessCashDiscount)
     print("actualLessCashDiscount:", actualLessCashDiscount)
     actualMaternityPayment = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),'Maternity Payment')]//following-sibling::td").text
+    # actualMaternityPayment = actualMaternityPayment.replace(",", "")
     print("actualMaternityPayment:", actualMaternityPayment)
     actualMaternityPayment = float(actualMaternityPayment)
     print("actualMaternityPayment:", actualMaternityPayment)
     actualTotalCollection = danpheEMR.find_element(By.XPATH,
         "//td[contains(text(),' Total Collection ')]//following-sibling::td").text
+    # actualTotalCollection = actualTotalCollection.replace(",", "")
     print("actualTotalCollection:", actualTotalCollection)
     actualTotalCollection = float(actualTotalCollection)
     print("actualTotalCollection:", actualTotalCollection)
