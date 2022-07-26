@@ -59,6 +59,8 @@ def verifyHospitalServiceSummaryReport(danpheEMR, labBill, admit):
 
 def getInpatientMorbidityReport(danpheEMR):
     print(">>START: getInpatientMorbidityReport")
+    global femaleDeath
+    global maleDeath
     if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
         time.sleep(2)
         danpheEMR.find_element(By.LINK_TEXT, "MedicalRecords").click()
@@ -69,18 +71,31 @@ def getInpatientMorbidityReport(danpheEMR):
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Show Report ')]").click()
         time.sleep(4)
+        femaleDeath = danpheEMR.find_element(By.XPATH, "//*[@id='dvPrintPage_IpMorbidityRpt']/div/table/tbody/tr[4]/td[23]").text
+        femaleDeath = int(femaleDeath)
+        print("Total Female Death is :", femaleDeath)
+        maleDeath = danpheEMR.find_element(By.XPATH, "//*[@id='dvPrintPage_IpMorbidityRpt']/div/table/tbody/tr[4]/td[24]").text
+        maleDeath = int(maleDeath)
+        print("Total Male Death is :", maleDeath)
     print("<<END: getInpatientMorbidityReport")
 
 
 def storeInpatientMorbidityReport(danpheEMR):
     print("Start >> assignInpatientMorbidityReport")
-    ######## Code goes here
+    global premaleDeath
+    global prefemaleDeath
+    prefemaleDeath = femaleDeath
+    prefemaleDeath = int(prefemaleDeath)
+    print("Current Female Death Number is :", prefemaleDeath)
+    premaleDeath = maleDeath
+    premaleDeath = int(premaleDeath)
+    print("Current Male Death is :", premaleDeath)
     print("End >> assignInpatientMorbidityReport")
 
 
 def verifyInpatientMorbidityReport(danpheEMR):
     print("Start >> verifyInpatientMorbidityReport")
-    ######## Code goes here
+    assert femaleDeath == prefemaleDeath + 1  # need to change later in male and female Death after total is shown
     print("End >> verifyInpatientMorbidityReport")
 
 
