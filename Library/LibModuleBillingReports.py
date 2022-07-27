@@ -1722,6 +1722,36 @@ def RefundCheckOfDepositBalanceReport(danpheEMR):
             print(" Actual Refunded : ", Refunded)
 
 
+def getPaymentWiseReport(danpheEMR):
+    global grandTotal
+    print("Start getting Payment Wise Report")
+    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'PaymentMode Wise Report')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
+    time.sleep(2)
+    # danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
+    grandTotal = danpheEMR.find_element(By.XPATH, "//*[@id='id_digital_payment_report_summary']/div/div/table/tbody/tr[6]/td[9]").text
+    grandTotal = int(grandTotal)
+    print("Grand Total of the item is :", grandTotal)
+
+def storePaymentWiseReport():
+    global pregrandTotal
+    print("Starting store Total Value of payment wise report")
+    pregrandTotal = grandTotal
+    print("Stored Total of Payment wise report is :", pregrandTotal)
+    print("Stored total value")
+
+
+def verifyPaymentWiseReport(totalPrice):
+    print("Verifying Payment wise report according to Total amount")
+    assert grandTotal == pregrandTotal + totalPrice
+    print("Verified Payment Wise Report")
+
+
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
