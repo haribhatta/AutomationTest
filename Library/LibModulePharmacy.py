@@ -527,7 +527,7 @@ def closePopupApplication(danpheEMR):
     time.sleep(2)
 
 
-def return_to_supplier(danpheEMR, grno, rqty):
+def return_to_supplier(danpheEMR, grno, returnqty, returnRate, returnDiscount, returnVat, returnCcCharge):
     print(">>START: Returning to Supplier")
     time.sleep(2)
     if AppName == 'LPH':
@@ -547,25 +547,17 @@ def return_to_supplier(danpheEMR, grno, rqty):
     time.sleep(3)
     danpheEMR.find_element(By.NAME, "CreditNoteId").send_keys(creditnote)
     danpheEMR.find_element(By.CSS_SELECTOR, "th > input").click()
-    danpheEMR.find_element(By.ID, "Quantity0").send_keys(rqty)
+    danpheEMR.find_element(By.ID, "Quantity0").send_keys(returnqty)
     time.sleep(2)
-    vatamount = danpheEMR.find_element(By.XPATH, "//*[@name = 'VATAmount']").text
-    print("Vat amount of returned items is :", vatamount)
+    danpheEMR.find_element(By.ID, "ReturnRate0").send_keys(returnRate)
+    danpheEMR.find_element(By.ID, "DiscountedAmount0").send_keys(returnDiscount)
+    danpheEMR.find_element(By.ID, "VATAmount0").send_keys(returnVat)
+    danpheEMR.find_element(By.ID, "CCAmount0").send_keys(returnCcCharge)
     returnstatus = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname = 'ReturnStatus']"))
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
     time.sleep(6)
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success']").click()
-    time.sleep(2)
-    #vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
-    vatamount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='VATAmount'])[2]").text
-
-    vatamount = vatamount.replace(".", "")
-    vatamount = int(vatamount)
-    vatamount = float(vatamount * 0.01)
-    print("Vat Amount removing dot is ", vatamount)
-    assert vatamount > 0
-    danpheEMR.find_element(By.XPATH, "//a[@title = 'Cancel']").click()
     print("END>>Return to supplier")
     return creditnote
 

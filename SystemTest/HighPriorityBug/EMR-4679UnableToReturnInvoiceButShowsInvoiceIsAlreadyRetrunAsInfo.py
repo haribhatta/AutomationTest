@@ -22,6 +22,8 @@ drugname = GSV.drug1BrandName
 quantity = 2
 rate = GSV.drug1Rate
 returnremark = "This is auto return"
+returnQuantity = 1
+returnRate = 2
 ########
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
@@ -34,6 +36,6 @@ print(NepaliReceipt)
 paymentmode = "CREDIT"
 gRNo =LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, DrugName=drugname, itemQty=quantity, freeQty=0, grPrice=rate, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1BrandName, grno=gRNo, NepaliReceipt=NepaliReceipt)
-LP.return_to_supplier(danpheEMR=EMR, grno=gRNo, rqty=2)
+LP.return_to_supplier(danpheEMR=EMR, grno=gRNo, returnqty=returnQuantity, returnRate=returnRate, returnDiscount=0, returnVat=0, returnCcCharge=0)
 AC.logout()
 AC.closeBrowser()

@@ -32,10 +32,12 @@ qty = 2
 rate = GSV.drug1Rate
 amount = qty*rate
 totalamount = amount
+returnRate = 1
 remark = "This is test return."
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
 supplier = GSV.pharmacySupplierName1
+returnAmount = qty * returnRate
 ########
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
@@ -51,10 +53,10 @@ LMPR.getPurchaseSummaryReport(EMR)
 LMPR.verifypurchasesummarybeforeReturn()
 goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplier, DrugName=drugname, itemQty=qty, freeQty=0, grPrice=rate, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
 print(goodsReceiptNo)
-LP.return_to_supplier(danpheEMR=EMR, grno=goodsReceiptNo, rqty=1)
+LP.return_to_supplier(danpheEMR=EMR, grno=goodsReceiptNo, returnqty=qty, returnRate=returnRate, returnDiscount=0, returnVat=0, returnCcCharge=0)
 LMPR.getPurchaseSummaryReport(EMR)
 # retamt == grPrice ie goodreceipt amount while doing Good receipt
-LMPR.verifypurchaseSummaryAfterReturn(retamt=5)
+LMPR.verifypurchaseSummaryAfterReturn(retamt=returnAmount)
 AC.logout()
 AC.closeBrowser()
 
