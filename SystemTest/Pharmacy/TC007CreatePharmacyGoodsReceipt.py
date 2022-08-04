@@ -20,13 +20,17 @@ drugRate = GSV.drug1Rate
 supplierName = GSV.pharmacySupplierName1
 dispensaryName = GSV.dispensaryName1
 qty = 50
-
+freeQuantity = 0
+margin = 0
+ccCharge = 0
+discount = 0
+vat = 0
 EMR = AC.openBrowser()
 AC.login(pharmacyUserId, pharmacyUserPwd)
 LD.activateDispensaryCounter(EMR, dispensaryName)
 NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
 print(NepaliReceipt)
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=drugName, grPrice=drugRate, NepaliReceipt=NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, DrugName=drugName, itemQty=qty, freeQty=freeQuantity, grPrice=drugRate, Margin=margin, cc=ccCharge, discountPer=discount, vatPer=vat, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=drugName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 AC.logout()
 AC.closeBrowser()

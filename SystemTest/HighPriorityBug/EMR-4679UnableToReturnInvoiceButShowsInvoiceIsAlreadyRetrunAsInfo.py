@@ -32,7 +32,7 @@ LB.counteractivation(EMR)
 NepaliReceipt = LS.CheckNepaliReceiptValue(danpheEMR=EMR)
 print(NepaliReceipt)
 paymentmode = "CREDIT"
-gRNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, qty=5, DrugName=GSV.drug1BrandName, grPrice=rate, NepaliReceipt=NepaliReceipt)
+gRNo =LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=GSV.pharmacySupplierName1, DrugName=drugname, itemQty=quantity, freeQty=0, grPrice=rate, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1BrandName, grno=gRNo, NepaliReceipt=NepaliReceipt)
 LP.return_to_supplier(danpheEMR=EMR, grno=gRNo, rqty=2)
 AC.logout()

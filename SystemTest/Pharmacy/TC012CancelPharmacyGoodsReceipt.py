@@ -22,8 +22,7 @@ brandName = GSV.drug1BrandName
 genericName = GSV.drug1GenericName
 tqty = 1
 rate = GSV.drug1Rate
-costPrice = 20
-amount = qty * costPrice
+amount = qty * rate
 print("amount", amount)
 supplierName = GSV.pharmacySupplierName1
 dispensaryName = GSV.dispensaryName1
@@ -38,7 +37,7 @@ print(NepaliReceipt)
 #cpgr.verifyPharmacyItem()
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.XgetPharmacyGoodsReceiptListAmount()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, qty=qty, DrugName=brandName, grPrice=costPrice, NepaliReceipt=NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, DrugName=brandName, itemQty=qty, freeQty=0, grPrice=rate, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)

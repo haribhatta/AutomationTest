@@ -416,16 +416,19 @@ def getPurchaseSummaryReport(danpheEMR):
     time.sleep(5)
     purchase = danpheEMR.find_element(By.XPATH,
                                       "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div").text
-    purchase = int(purchase)
+    print("Purchase value is :", purchase)
+    purchase = float(purchase)
     print("Purchase value of a item is : ", purchase)
     purchaseReturn = danpheEMR.find_element(By.XPATH,
                                             "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[2]").text
-    purchaseReturn = int(purchaseReturn)
     print("Purchase Return of the Items :", purchaseReturn)
+    purchaseReturn = float(purchaseReturn)
+    print(purchaseReturn)
     balance = danpheEMR.find_element(By.XPATH,
                                      "//ag-grid-angular[@id='myGrid']/div/div/div/div[3]/div[2]/div/div/div/div[3]").text
-    balance = int(balance)
     print("Balance of the Item is : ", balance)
+    balance = float(balance)
+    print(balance)
 
 
 def prePurchaseSummaryReport():
@@ -433,14 +436,13 @@ def prePurchaseSummaryReport():
     global prepurchaseReturn
     global prebalance
 
-    prePurchase = purchase
-    prePurchase = int(prePurchase)
+    prePurchase = float(purchase)
     print("PrePurchase amount is :", prePurchase)
-    prepurchaseReturn = purchaseReturn
-    prepurchaseReturn = int(prepurchaseReturn)
+
+    prepurchaseReturn = float(purchaseReturn)
     print("Pre Purchase Return is :", prepurchaseReturn)
-    prebalance = balance
-    prebalance = int(prebalance)
+
+    prebalance = float(balance)
     print("Pre Balance is :", prebalance)
 
 
@@ -483,7 +485,7 @@ def getItemWisePurchaseReport(danpheEMR):
 
     TotalPurchaseValueExcludingVAT = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
     TotalPurchaseValueExcludingVAT = TotalPurchaseValueExcludingVAT.replace(",", "")
-    TotalPurchaseValueExcludingVAT = int(TotalPurchaseValueExcludingVAT)
+    TotalPurchaseValueExcludingVAT = float(TotalPurchaseValueExcludingVAT)
     print("Total Purchase Value ExcludingVAT is : ", TotalPurchaseValueExcludingVAT)
 
     TotalVATAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
@@ -505,12 +507,12 @@ def preItemWisePurchaseReport():
     global preTotalPurchaseValue
 
     preTotalPurchaseQuantity = TotalPurchaseQuantity
-    preTotalPurchaseQuantity = int(preTotalPurchaseQuantity)
     print("PreTotal Purchase Quantity amount is :", preTotalPurchaseQuantity)
+    preTotalPurchaseQuantity = float(preTotalPurchaseQuantity)
 
     preTotalPurchaseValueExcludingVAT = TotalPurchaseValueExcludingVAT
-    preTotalPurchaseValueExcludingVAT = int(preTotalPurchaseValueExcludingVAT)
     print("PreTotal Purchase Value Excluding VAT is :", preTotalPurchaseValueExcludingVAT)
+    preTotalPurchaseValueExcludingVAT = float(preTotalPurchaseValueExcludingVAT)
 
     preTotalVATAmount = TotalVATAmount
     print("PreTotal VAT Amount is :", preTotalVATAmount)
@@ -1438,6 +1440,244 @@ def getReturnToSupplierReport(danpheEMR, creditno):
     print(suppliercredit)
     assert creditno == suppliercredit
     print("END>> Return to supplier report")
+
+
+def getReturnOnInvestmentReport(danpheEMR, gRNo):
+    global supplierName
+    global itemName
+    global batchNumber
+    global itemRate
+    global rateAfterDiscount
+    global invoiceQty
+    global freeQty
+    global totalQty
+    global totalTax
+    global otherCharge
+    global disAmt
+    global totalAmount
+    global cpPerUnit
+    global stockValue
+    global salesValue
+    global profit
+    global profitPer
+    global roiPer
+
+    if AppName == "LPH":
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(9)
+    danpheEMR.find_element(By.LINK_TEXT, "Report").click()
+    time.sleep(4)
+    danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
+    time.sleep(4)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Return On Investment')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//span[contains(text(), 'Show Report')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(gRNo)
+    time.sleep(2)
+    supplierName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
+    print("The Supplier of the Given Item is :", supplierName)
+
+    itemName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[4]").text
+    print("Item Name of the given Good-Receipt is :", itemName)
+
+    batchNumber = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
+    print("Batch Number of the given item is : ", batchNumber)
+
+    itemRate = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]").text
+    print("Item Rate of the given item is :", itemRate)
+
+    rateAfterDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[7]").text
+    print("The after Discount is :", rateAfterDiscount)
+
+    invoiceQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[8]").text
+    print("The Request or Item Quantity is :", invoiceQty)
+
+    freeQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[9]").text
+    print("Free Quantity received during good receipt is :", freeQty)
+    freeQty = float(freeQty)
+
+    totalQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[10]").text
+    print("Total Quantity free and requested quantity is :", totalQty)
+
+    totalTax = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]").text
+    print("Total tax of given item is :", totalTax)
+
+    otherCharge = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[12]").text
+    print("Other charge taken is :", otherCharge)
+
+    disAmt = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[13]").text
+    print("Discount Amount is :", disAmt)
+
+    totalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[14]").text
+    print("Total Amount of item is :", totalAmount)
+
+    cpPerUnit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[15]").text
+    print("Cost Price Per Unit is :", cpPerUnit)
+
+    stockValue = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[16]").text
+    print("Stock Value of the item is :", stockValue)
+
+    salesValue = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[17]").text
+    print("Sales Value of the received item is :", salesValue)
+
+    profit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[18]").text
+    print("Profit from the received item is :", profit)
+
+    profitPer = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[19]").text
+    print("Profit Percentage (%) of the Given item is :", profitPer)
+
+    roiPer = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[20]").text
+    print("Return on Investment Percentage (%) is :", roiPer)
+
+
+def verifyROIReport(supplier, itemRate, DrugName, itemQty, freeItemQty, grPrice, Margin, cc, discountPer, vatPer):
+    print("Start verifying ROI Report before return")
+
+    reportSupplierName = supplierName
+    print("Report Supplier name is :", reportSupplierName)
+    assert reportSupplierName == supplier
+
+    reportItemName = itemName
+    print("Item name of the item is :", reportItemName)
+
+    reportItemRate = itemRate
+    print("Report Item Rate is :", reportItemRate)
+    reportItemRate = float(reportItemRate)
+    print(reportItemRate)
+
+    reportRateAfterDiscount = rateAfterDiscount
+    print("Report rate After Discount is :", reportRateAfterDiscount)
+    reportRateAfterDiscount = float(reportRateAfterDiscount)
+    print(reportRateAfterDiscount)
+
+    reportInvoiceQty = invoiceQty
+    print("Report Requested Quantity is :", reportInvoiceQty)
+    reportInvoiceQty = float(reportInvoiceQty)
+
+    reportFreeQuantity = freeQty
+    print("Report Free Quantity is :", reportFreeQuantity)
+    reportFreeQuantity = float(reportFreeQuantity)
+
+    reportTotalQuantity = totalQty
+    print("Report Totals Quantity is :", reportTotalQuantity)
+    reportTotalQuantity = float(reportTotalQuantity)
+    print(reportTotalQuantity)
+
+    reportTotalTax = totalTax
+    print("Total Tax of the Report is :", reportTotalTax)
+    reportTotalTax = float(reportTotalTax)
+
+    reportOtherCharge = otherCharge
+    print("CC charge of the item is ", reportOtherCharge)
+    reportOtherCharge = float(reportOtherCharge)
+    print(reportOtherCharge)
+
+    reportDiscountAmount = disAmt
+    print("report Discount amount is ", reportDiscountAmount)
+    reportDiscountAmount = float(reportDiscountAmount)
+
+    reportTotalAmount = totalAmount
+    print("Report Total Amount is :", reportTotalAmount)
+    reportTotalAmount = float(reportTotalAmount)
+
+    reportCostPricePerUnit = cpPerUnit
+    print("Report cost per item is :", reportCostPricePerUnit)
+    reportCostPricePerUnit = float(reportCostPricePerUnit)
+
+    reportStockValue = stockValue
+    print("report Stock Value is :", reportStockValue)
+    reportStockValue = float(reportStockValue)
+
+    reportSaleValue = salesValue
+    print("report Sales Value is :", reportSaleValue)
+    reportSaleValue = float(reportSaleValue)
+
+    reportProfit = profit
+    print("report profit is :", reportProfit)
+    reportProfit = float(reportProfit)
+
+    reportProfitPercentage = profitPer
+    print("Report Profit Percentage is :", reportProfitPercentage)
+    reportProfitPercentage = float(reportProfitPercentage)
+
+    reportROIPercentage = roiPer
+    print("Report ROI percentage is :", reportROIPercentage)
+    reportROIPercentage = float(reportROIPercentage)
+    print(reportROIPercentage)
+
+    subTotal = float(itemQty) * itemRate
+    print("calculated SubTotal is :", subTotal)
+
+    DiscountAmount = subTotal * (discountPer/100)
+    print("Discount Amount is :", DiscountAmount)
+
+    RateAfterDiscountPerItem = itemRate - (itemRate * (discountPer/100))
+    print("Rate After Discount Per Item is :", RateAfterDiscountPerItem)
+
+    RateAfterDiscount = subTotal - DiscountAmount
+    print("Rate After Discount is :", RateAfterDiscount)
+
+    VatAmount = (vatPer/100) * RateAfterDiscount
+    print("Vat amount is :", VatAmount)
+
+    amtAfterDiscountAndVAT = RateAfterDiscount + VatAmount
+    print("Amount After Discount and vat is :", amtAfterDiscountAndVAT)
+
+    ccChargeAmount = (cc/100) * freeQty * grPrice
+    print("CC Charge Amount is :", ccChargeAmount)
+
+    TotalAmount = amtAfterDiscountAndVAT + ccChargeAmount
+    print("Total Amount is :", TotalAmount)
+    TotalAmount = float(TotalAmount)
+    print(type(TotalAmount))
+
+    TotalQuantity = itemQty + freeQty
+    print("Total Quantity is :", TotalQuantity)
+
+    costPricePerItem = TotalAmount / TotalQuantity
+    print("Cost Price Per Item is :", costPricePerItem)
+    costPricePerItem = float("{0:.4f}".format(costPricePerItem))
+    print(costPricePerItem)
+
+    StockValue = TotalQuantity * costPricePerItem
+    print("Stock Value of the item is :", StockValue)
+
+    SalesPrice = grPrice + (float(grPrice) * Margin)
+    print("Sales Price of the Item is :", SalesPrice)
+
+    SalesValue = TotalQuantity * SalesPrice
+    print("Sales Value of the item is :", SalesValue)
+
+    Profit = SalesValue - StockValue
+    print("Profit of the Item is :", Profit)
+
+    ProfitPercent = (Profit / SalesValue) * 100.00
+    print("Profit Percentage of the Item is :", ProfitPercent)
+    ProfitPercent = float("{0:.4f}".format(ProfitPercent))
+
+    ReturnOnInvestment = Profit / StockValue
+    print("Return On Investment (ROI) is :", ReturnOnInvestment)
+
+    ReturnOnInvestmentPercentage = ReturnOnInvestment * 100
+    print("return on investment percentage is :", ReturnOnInvestmentPercentage)
+    ReturnOnInvestmentPercentage = float("{0:.4f}".format(ReturnOnInvestmentPercentage))
+    print(ReturnOnInvestmentPercentage)
+
+    assert reportItemName == DrugName
+    assert reportInvoiceQty == itemQty
+    assert reportTotalTax == VatAmount
+    assert reportDiscountAmount == DiscountAmount
+    assert reportTotalAmount == TotalAmount
+    assert reportCostPricePerUnit == costPricePerItem
+    assert reportStockValue == StockValue
+    assert reportSaleValue == SalesValue
+    assert reportProfit == Profit
+    assert reportProfitPercentage == ProfitPercent
+    assert reportROIPercentage == ReturnOnInvestmentPercentage
+    assert reportFreeQuantity == freeItemQty
 
 
 def __str__():

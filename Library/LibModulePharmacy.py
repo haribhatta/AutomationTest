@@ -5,6 +5,8 @@ import random
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 ########
 AppName = GSV.appName
@@ -234,7 +236,7 @@ def addPharmacyGRfromPO(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//input[@value='Receipt']").click()
 
 
-def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, NepaliReceipt):
+def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, grPrice, Margin, cc, discountPer, vatPer, NepaliReceipt):
     print("START>>createPharmacyGoodsReceipt")
     global goodsReceiptNo
     time.sleep(2)
@@ -242,8 +244,10 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(5)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+    element = WebDriverWait(danpheEMR, 20).until(
+        EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
+    )
+    element.click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(supplier)
@@ -254,39 +258,39 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Invoice No']").send_keys(Keys.TAB)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "btn_AddNew").click()
-    time.sleep(7)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "txt_ItemName").send_keys(DrugName)
     danpheEMR.find_element(By.ID, "txt_ItemName").send_keys(Keys.TAB)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "txt_BatchNo").send_keys(gRNo)
-    danpheEMR.find_element(By.ID, "ItemQTy").send_keys(qty)
+    danpheEMR.find_element(By.ID, "ItemQTy").send_keys(itemQty)
     print("grPrice", grPrice)
-    grPrice = int(grPrice)
+    grPrice = float(grPrice)
+    freeQuantity = danpheEMR.find_element(By.ID, "FreeQuantity")
+    freeQuantity.send_keys(freeQty)
     danpheEMR.find_element(By.ID, "GRItemPrice").send_keys(grPrice)
-    danpheEMR.find_element(By.ID, "Margin").send_keys(14)
-    #danpheEMR.find_element(By.ID, "VATPercentage").send_keys(13): removing VAT amount fr drug sale.
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "Margin").send_keys(Margin)
+    sellingPrice = danpheEMR.find_element(By.ID, "MRP").text
+    print("The Selling Price / Marked Price of the item is :", sellingPrice)
+    time.sleep(2)
+    ccCharge = danpheEMR.find_element(By.ID, "CCCharge")
+    ccCharge.send_keys(cc)
+    time.sleep(2)
+    discount = danpheEMR.find_element(By.ID, "DiscountPercentage")
+    discount.send_keys(discountPer)
+    time.sleep(2)
+    vat = danpheEMR.find_element(By.ID, "VATPercentage")
+    vat.send_keys(vatPer)
     time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_Save").click()
-    # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
-    danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
-    time.sleep(5)
-    if AppName == 'RTM' or AppName == "SNCH":
-        # danpheEMR.find_element(By.ID, "saveGr").click()
-        time.sleep(3)
-        # assert danpheEMR.switch_to.alert.text == "Similar GR found with these Invoices: \n Invoice No.: 262049\n Invoice No.: 303568\n Invoice No.: 99999999\n Want to continue?"
-        danpheEMR.switch_to.alert.accept()
-        time.sleep(3)
-    else:
-        # danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE) ## not working @LPH
-        # danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE) ## working @LPH
-        danpheEMR.switch_to.alert.accept()  ## to close alert msg box for similiar GR items already entered.
-    time.sleep(2)
-    # obj = danpheEMR.switch_to.alert
-    # obj.accept()
-    time.sleep(2)
+    printGr = WebDriverWait(danpheEMR, 15).until(
+        EC.element_to_be_clickable((By.XPATH, "//button[@id='saveGr']"))
+    )
+    printGr.click()
+    time.sleep(4)
     if NepaliReceipt == "true":
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
-        # goodsReceiptNo = goodsReceiptNo.replace("-", "")
         goodsReceiptNo = goodsReceiptNo.partition(": ")[2]
         print("goodsReceiptNo:", goodsReceiptNo)
         danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
@@ -298,6 +302,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, qty, DrugName, grPrice, Nepa
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
     return gRNo
+
 
 def editPharmacyGoodsReceipt(danpheEMR, grNo, qty):
     print("START>>editPharmacyGoodsReceipt")
@@ -324,6 +329,7 @@ def editPharmacyGoodsReceipt(danpheEMR, grNo, qty):
     qty = str(qty)
     assert sysQuantity == qty
     print("END>>editPharmacyGoodsReceipt")
+
 
 def createPharmacyGrwithSameInvoiceNumberAfterGrCancel(danpheEMR, invoiceNumber, supplier, qty, DrugName, grPrice, NepaliReceipt):
     print("START>>Good Receipt after GR cancel with previously cancelled Invoice Number")
@@ -373,6 +379,7 @@ def createPharmacyGrwithSameInvoiceNumberAfterGrCancel(danpheEMR, invoiceNumber,
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
     return invoiceNumber
+
 
 def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliReceipt):
     print("START>>verifyPharmacyGoodsReceipt")
@@ -469,7 +476,6 @@ def getPharmacyGoodsReceiptListAmount(danpheEMR):
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(5)
-    #danpheEMR.find_element(By.LINK_TEXT, "Order").click()
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
@@ -477,12 +483,15 @@ def getPharmacyGoodsReceiptListAmount(danpheEMR):
     SubTotal = danpheEMR.find_element(By.XPATH,
                                       "(//b[contains(text(),'Sub Total')]//parent::span//parent::td//following-sibling::td)[1]").text
     print("SubTotal", SubTotal)
+    SubTotal = float(SubTotal)
     DiscountTotal = danpheEMR.find_element(By.XPATH,
                                            "(//b[contains(text(),'Discount Total')]//parent::span//parent::td//following-sibling::td)[1]").text
     print("DiscountTotal", DiscountTotal)
+    DiscountTotal = float(DiscountTotal)
     TotalAmount = danpheEMR.find_element(By.XPATH,
                                          "(//b[contains(text(),' Total Amount ')]//parent::span//parent::td//following-sibling::td)[1]").text
     print("TotalAmount", TotalAmount)
+    TotalAmount = float(TotalAmount)
     print("END>>getPharmacyGoodsReceiptListAmount")
 
 
@@ -490,22 +499,26 @@ def XgetPharmacyGoodsReceiptListAmount():
     global xSubTotal
     global xDiscountTotal
     global xTotalAmount
-    xSubTotal = SubTotal
-    xDiscountTotal = DiscountTotal
-    xTotalAmount = TotalAmount
+    xSubTotal = float(SubTotal)
+    print("Stored Subtotal is :", xSubTotal)
+    xDiscountTotal = float(DiscountTotal)
+    print("Stored Discount Total is :", xDiscountTotal)
+    xTotalAmount = float(TotalAmount)
+    print("Stored total amount is :", xTotalAmount)
 
 
 def verifygetPharmacyGoodsReceiptListAmount(amount, discount):
-    x = float(xSubTotal) + amount
+    x = xSubTotal + amount - discount
     print("x", x)
+    x = float(x)
     print("amount", amount)
     print("xSubTotal", xSubTotal)
     print("SubTotal", SubTotal)
-    assert float(SubTotal) == float(x)
-    assert float(DiscountTotal) == float(xDiscountTotal) + discount
-    calTotalAmount = float(xTotalAmount) + amount - discount
+    assert SubTotal == x
+    assert DiscountTotal == xDiscountTotal + discount
+    calTotalAmount = xTotalAmount + amount - discount
     print("calculation Total Amount", calTotalAmount)
-    assert float(TotalAmount) == calTotalAmount
+    assert TotalAmount == calTotalAmount
 
 
 def closePopupApplication(danpheEMR):
@@ -542,9 +555,7 @@ def return_to_supplier(danpheEMR, grno, rqty):
     returnstatus.select_by_visible_text("Breakage")
     danpheEMR.find_element(By.XPATH, "//input[@value= 'Return']").click()
     time.sleep(6)
-    #danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]/a").click()
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success']").click()
-
     time.sleep(2)
     #vatamount = danpheEMR.find_element(By.XPATH, "//*[@id='print-credit-note']/div/div[9]/div[1]/div/table/tbody/tr[3]/td[2]/b").text
     vatamount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='VATAmount'])[2]").text
@@ -689,12 +700,8 @@ def editPharmacyGoodsReceiptContent(danpheEMR, supplier, qty, DrugName, grPrice)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     time.sleep(3)
-    # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
     time.sleep(5)
-    #danpheEMR.switch_to.alert.accept()  ## to close alert msg box for similiar GR items already entered.
-    #time.sleep(2)
-
     if AppName == 'LPH':
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
         # goodsReceiptNo = goodsReceiptNo.replace("-", "")
@@ -709,6 +716,7 @@ def editPharmacyGoodsReceiptContent(danpheEMR, supplier, qty, DrugName, grPrice)
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
     return gRNo
+
 
 def editPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
     print("START>>edit PharmacyGoodsReceipt")
@@ -740,12 +748,8 @@ def editPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
     time.sleep(3)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     time.sleep(3)
-    # danpheEMR.find_element(By.XPATH, "//select[contains(.,'Main Store')]").send_keys("Main Store") Temporary disable due to issue.
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
     time.sleep(5)
-    #danpheEMR.switch_to.alert.accept()  ## to close alert msg box for similiar GR items already entered.
-    #time.sleep(2)
-
     if AppName == 'LPH':
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
         # goodsReceiptNo = goodsReceiptNo.replace("-", "")
@@ -759,7 +763,7 @@ def editPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
         danpheEMR.find_element(By.ID, "printButton").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
-    return gRNo
+    return goodsReceiptNo
 
 
 
