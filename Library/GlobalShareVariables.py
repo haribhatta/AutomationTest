@@ -122,7 +122,7 @@ if appName == "LPH":
       doctor2 = "Mr. admin admin"
 
 # Dispensary Credit Organization
-      creditOrganization = "Arogin Care Home"
+      creditOrganization = "LPH-Default Cr. Organization"
 ###############################################################################
 ########Defining Variables for SNCH
 if appName == "SNCH":
