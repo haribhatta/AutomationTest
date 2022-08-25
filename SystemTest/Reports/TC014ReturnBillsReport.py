@@ -35,7 +35,7 @@ LBR.getReturnBillReport(EMR)
 LBR.verifyReturnBillReport(returnamt=opdRate, returnDiscount=discountPct)
 '''
 #Credit Bill Return
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal")
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType="Normal", case='+ve')
 LBR.preReturnBillReprot()
 LB.returnBillingInvoice(EMR, InvoiceNo1, "TestReturn")
 LBR.getReturnBillReport(EMR)

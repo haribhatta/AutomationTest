@@ -7,7 +7,6 @@ import Library.GlobalShareVariables as GSV
 # print("DanpheEMR", danpheEMR)
 AppName = GSV.appName
 
-
 ##########################
 def collectLabSample(danpheEMR, HospitalNo, testname):
     global barcodeno
@@ -32,15 +31,13 @@ def collectLabSample(danpheEMR, HospitalNo, testname):
     print(barcodeno)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Close')]").click()
 
-
 def addLabResult(danpheEMR):
     print("Starting>Adding Lab Report")
     danpheEMR.find_element(By.LINK_TEXT, "Laboratory").click()
     time.sleep(1)
     danpheEMR.find_element(By.LINK_TEXT, "Add Results").click()
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(barcodeno)
-    time.sleep(2)
-    time.sleep(2)
+    time.sleep(7)
     danpheEMR.find_element(By.LINK_TEXT, "Add Result").click()
     time.sleep(7)
     # ---------------this is hardcoded for TFT test-----------

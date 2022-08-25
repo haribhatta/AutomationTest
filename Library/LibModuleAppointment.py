@@ -24,7 +24,7 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         danpheEMR.find_element(By.LINK_TEXT, "Registration").click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Appointment").click()
-    time.sleep(4)
+    time.sleep(7)
     danpheEMR.find_element(By.ID, "btnNewPatient").click()
     time.sleep(4)
     if AppName == "LPH" and priceCategoryType == "EHS":

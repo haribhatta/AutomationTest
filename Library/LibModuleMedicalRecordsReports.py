@@ -28,6 +28,7 @@ def getHospitalServiceSummaryReport(danpheEMR):
         print("actualTotalPatientsAdmitted:", actualTotalPatientsAdmitted)
         actualTotalLabSeriveProvided = danpheEMR.find_element(By.XPATH,
                                                               "//td[contains(text(),'Total Laboratory Service Provided')]/following-sibling::td[2]").text
+        print("actualTotalLabSeriveProvided:", actualTotalLabSeriveProvided)
         actualTotalLabSeriveProvided = int(actualTotalLabSeriveProvided)
         print("actualTotalLabSeriveProvided:", actualTotalLabSeriveProvided)
     print("<<END: getHospitalServiceSummaryReport")
@@ -71,10 +72,10 @@ def getInpatientMorbidityReport(danpheEMR):
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Show Report ')]").click()
         time.sleep(4)
-        femaleDeath = danpheEMR.find_element(By.XPATH, "//*[@id='dvPrintPage_IpMorbidityRpt']/div/table/tbody/tr[4]/td[23]").text
+        femaleDeath = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'TOTAL')]/following-sibling::td[21]").text
         femaleDeath = int(femaleDeath)
         print("Total Female Death is :", femaleDeath)
-        maleDeath = danpheEMR.find_element(By.XPATH, "//*[@id='dvPrintPage_IpMorbidityRpt']/div/table/tbody/tr[4]/td[24]").text
+        maleDeath = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'TOTAL')]/following-sibling::td[22]").text
         maleDeath = int(maleDeath)
         print("Total Male Death is :", maleDeath)
     print("<<END: getInpatientMorbidityReport")

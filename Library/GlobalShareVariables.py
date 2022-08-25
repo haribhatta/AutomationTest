@@ -34,7 +34,7 @@ if appName == "LPH":
       #pharmacy user
       pharmacyUserID = 'Admin' #'padam'
       pharmacyUserPwD = 'DanpheHIMS@123'
-      pharmacyUserName = 'padam'
+      pharmacyUserName = 'admin admin'
       #pharmacyUserName = 'Ms. Debika'
       #nurse user
       nurseUserID = 'Admin'
