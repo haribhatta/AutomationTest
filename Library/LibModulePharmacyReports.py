@@ -612,7 +612,7 @@ def getPharmacyUserCollectionReport(danpheEMR, user):
     actualNetSales = float(actualNetSales)
     print("actualNetSales", actualNetSales)
     # 8
-    if AppName != 'RTM':
+    if AppName == 'RTM':
         actualVATAmount = danpheEMR.find_element(By.XPATH, "//td[contains(text(),'VAT Amount')]/following-sibling::td").text
         actualVATAmount = float(actualVATAmount)
         print("actualVATAmount", actualVATAmount)
@@ -678,7 +678,7 @@ def preSystemPharmacyUserCollectionReport():
     preReturnDiscount = actualReturnDiscount
     preReturnAmount = actualReturnAmount
     preNetSales = actualNetSales
-    if AppName != "RTM":
+    if AppName == "RTM":
         preVATAmount = actualVATAmount
     preLessCreditAmount = actualLessCreditAmount
     preAddDepositReceived = actualAddDepositReceived
@@ -718,7 +718,7 @@ def verifySystemPharmacyUserCollectionReport(cash, cashreturn, credit, creditret
     expectedNetSales = preNetSales + cash - cashreturn + credit - creditreturn
     assert actualNetSales == expectedNetSales
     # 8
-    if AppName != 'RTM':
+    if AppName == 'RTM':
         expectedVATAmount = preVATAmount
         assert actualVATAmount == expectedVATAmount
     # 9

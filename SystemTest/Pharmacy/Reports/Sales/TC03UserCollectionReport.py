@@ -51,7 +51,8 @@ print("AppName", AppName)
 ######## Create anonymous pharmacy sale
 LD.createDispensarySaleRandomPatient(danpheEMR=EMR, drugname=drugname, qty=qty, paymentmode='Cash')
 LPR.getPharmacyUserCollectionReport(danpheEMR=EMR, user=pharmacyUserName)
-LP.getPharmacyStockDetail(danpheEMR=EMR, drugname=drugname)
+#LP.getPharmacyStockDetail(danpheEMR=EMR, drugname=drugname)
+#LD.getDispensaryStockDetail(danpheEMR=EMR, drugname=drugname)
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugname, qty=qty, paymentmode='Cash')
 LPR.preSystemPharmacyUserCollectionReport()
