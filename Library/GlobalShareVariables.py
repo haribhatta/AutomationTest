@@ -233,32 +233,32 @@ if appName == "MPH":
 ###TestAction>>LogIn:
       #admin user
       adminUserID = 'admin'
-      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'admin' #bandana
-      foUserPwD = 'DanpheEMR@123'
+      foUserPwD = 'DanpheHIMS@123'
       foUserName = 'Ms. Bandana Harmel'
       #IT user
-      itUserID = 'alina'
-      itUserPwD = 'DanpheEMR@123'
+      itUserID = 'admin' #'alina'
+      itUserPwD = 'DanpheHIMS@123'
       #Lab user
-      labUserID = 'supriya'
-      labUserPwD = 'DanpheEMR@123'
+      labUserID = 'admin' #'supriya'
+      labUserPwD = 'DanpheHIMS@123'
       #ER Lab user
-      ERlabUserID = 'erlab'
-      ERlabUserPwD = 'DanpheEMR@123'
+      ERlabUserID = 'admin' #'erlab'
+      ERlabUserPwD = 'DanpheHIMS@123'
       #radiologist user
-      radioUserID = 'basudev'
-      radioUserPwD = 'DanpheEMR@123'
+      radioUserID = 'admin' #'basudev'
+      radioUserPwD = 'DanpheHIMS@123'
       #pharmacy user
-      pharmacyUserID = 'kishor'
-      pharmacyUserPwD = 'DanpheEMR@123'
+      pharmacyUserID = 'admin' #'kishor'
+      pharmacyUserPwD = 'DanpheHIMS@123'
       #nurse user
       nurseUserID = 'admin'
-      nurseUserPwD = 'DanpheEMR@123'
+      nurseUserPwD = 'DanpheHIMS@123'
       #store user
-      storeUserID = 'radha'
-      storeUserPwD = 'DanpheEMR@123'
+      storeUserID = 'admin' #'radha'
+      storeUserPwD = 'DanpheHIMS@123'
 ###TestAction>>BillingItems:
       opdRate = 660
       deposit = 1000
@@ -282,6 +282,7 @@ if appName == "MPH":
       LabType = "ER"
       discountCommunityName = "Hospital"
       discountSchemeName = "Staff Family (30%)"
+      creditOrganization = "MEDIPLUS"
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = 'NIKO DROP 15ML BOTTLE'
       drug1GenericName = 'PARACETAMOL 150MG/ML ORAL DROP 15ML BOTTLE'
