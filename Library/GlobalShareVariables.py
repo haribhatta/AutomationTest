@@ -620,6 +620,9 @@ if appName == "Hope":
       doctorGyno = "Dr. Sunita Bhandari"
       departmentGyno = "GYNAECOLOGY/OBS"
       departmentNephro = "Nephrology"
+###TestAction>>Accounting:
+      Ledger_1 = "Dr. Sunita Bhandari"
+      Ledger_2 = "Cash"
 
 
 
