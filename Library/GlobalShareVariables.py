@@ -7,7 +7,8 @@ appName = input("Please enter project/application name:\n"
                 "MPH\n"
                 "RTM\n"
                 "RCH\n"
-                "Core\n")
+                "Core\n"
+                "Hope\n")
 
 if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
@@ -339,25 +340,25 @@ if appName == "RTM":
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
-      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'mamata'
-      foUserPwD = 'DanpheEMR@123'
+      foUserPwD = 'DanpheHIMS@123'
       foUserName = 'Ms. Mamata Gartaula'
       #IT user
       itUserID = 'admin'
-      itUserPwD = 'DanpheEMR@123'
+      itUserPwD = 'DanpheHIMS@123'
       #pharmacy user
       pharmacyUserID = 'admin'
-      pharmacyUserPwD = 'DanpheEMR@123'
+      pharmacyUserPwD = 'DanpheHIMS@123'
       #pharmacyUserName = 'Ms. Prekshya Adhikari'
       pharmacyUserName = 'Prekshya Adhikari' # Ms. is removed due to Rhythm 'User Collection Report' not having salutation field.
       #laboratory user
       labUserID = 'muna'
-      labUserPwD = 'DanpheEMR@123'
+      labUserPwD = 'DanpheHIMS@123'
       #Inventory user
       storeUserID = 'admin'
-      storeUserPwD = 'DanpheEMR@123'
+      storeUserPwD = 'DanpheHIMS@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
@@ -426,7 +427,6 @@ if appName == "RTM":
       doctorGyno = "Dr. Lata Gautam"
       departmentGyno = "PSYCHIATRIC"
       departmentNephro = "Nephro"
-
 ###############################################################################
 ########Defining Variables for Radian Skin Care
 ###############################################################################
@@ -435,25 +435,25 @@ if appName == "RSC":
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'admin'
-      adminUserPwD = 'DanpheEMR@123'    # '28A7hi0jvH0='
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
       #billing user
       foUserID = 'admin'
-      foUserPwD = 'DanpheEMR@123'
+      foUserPwD = 'DanpheHIMS@123'
       foUserName = 'Admin admin'
       #IT user
       itUserID = 'admin'
-      itUserPwD = 'DanpheEMR@123'
+      itUserPwD = 'DanpheHIMS@123'
       #pharmacy user
       pharmacyUserID = 'admin'
-      pharmacyUserPwD = 'DanpheEMR@123'
+      pharmacyUserPwD = 'DanpheHIMS@123'
       #pharmacyUserName = 'Ms. Prekshya Adhikari'
       pharmacyUserName = 'Admin admin'
       #laboratory user
       labUserID = 'admin'
-      labUserPwD = 'DanpheEMR@123'
+      labUserPwD = 'DanpheHIMS@123'
       #Inventory user
       storeUserID = 'admin'
-      storeUserPwD = 'DanpheEMR@123'
+      storeUserPwD = 'DanpheHIMS@123'
 ###TestAction>>BillingItems:
       opdRate = 500
       deposit = 200
@@ -521,6 +521,105 @@ if appName == "RSC":
       doctorGyno = "Dr. Lata Gautam"
       departmentGyno = "GYNAE & OBS"
       departmentNephro = "Nephro"
+
+###############################################################################
+########Defining Variables for Hope Hospital
+###############################################################################
+if appName == "Hope":
+      appURL = "http://202.51.74.168:85/"
+###TestAction>>LogIn:
+      # admin user
+      adminUserID = 'admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'admin'
+      foUserPwD = 'DanpheHIMS@123'
+      foUserName = 'Admin admin'
+      #IT user
+      itUserID = 'admin'
+      itUserPwD = 'DanpheHIMS@123'
+      #pharmacy user
+      pharmacyUserID = 'admin'
+      pharmacyUserPwD = 'DanpheHIMS@123'
+      #pharmacyUserName = 'Ms. Prekshya Adhikari'
+      pharmacyUserName = 'Admin admin'
+      #laboratory user
+      labUserID = 'admin'
+      labUserPwD = 'DanpheHIMS@123'
+      #radiologist user
+      radioUserID = 'admin' #'basudev'
+      radioUserPwD = 'DanpheHIMS@123'
+      #Inventory user
+      storeUserID = 'admin'
+      storeUserPwD = 'DanpheHIMS@123'
+###TestAction>>BillingItems:
+      opdRate = 500
+      deposit = 200
+      CBC = "CBC (COMPLETE BLOOD COUNT))"
+      TFT = "TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      T3 = "T3"
+      T4 = "T4"
+      TSH = "HORMONE TSH"
+      TFTRate = 1000
+      LDH = "LDH"
+      UrineRE = "INS URINE ROUTINE EXAM" # this gets changed on V1.49.3
+      BTCT = "BT / CT"
+      btctRate = 175
+      USG = "USG GUIDED DIAGNOSTIC PLEURAL TAPPING "
+      usgRate = 1575
+      admitRate = 1200
+      discountCommunityName = ""
+      discountSchemeName = 'PCR Discount scheme (10%)'
+      creditOrganization = "Muna"
+###TestAction>>Pharmacy/Store+DispensaryItems:
+      drug1BrandName = "Frusix 20 mg"
+      drug1GenericName = "FRUSEMIDE"
+      drug1Rate = 1.2
+      drug2BrandName = 'ALCAL D 500 MG'
+      drug2BrandRate = 4.906
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      drugSinexName = 'tafco 250 mg'
+      drugSinexRate = 10.34
+      drugAasma = 'AASMA 150 XR TAB'
+      supplier = "AARATI MEDITCHA PVT"
+      drug1NarcoticName = "LOZ 1 MG"
+      drug1NarcoticRate ="2"
+      drugType = 'ABDOMINAL'
+      drugCompany = 'HIMALAYA'
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AARATI MEDITCHA PVT"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "General"
+      subStoreName2 = "PostOps"
+      A4Paper = 'Paper A4'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      storeItem1Name = "Tumb Pin"
+      storeItem1Rate = 10
+      # stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Sanitizer"
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy"
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      bedFeature = "General"
+      admitWard = "General Ward"
+      admitBed = "Pediatric Bed Charge"
+###TestAction>>Settings:
+      user = "admin"
+      doctorGyno = "Dr. Sunita Bhandari"
+      departmentGyno = "GYNAECOLOGY/OBS"
+      departmentNephro = "Nephrology"
 
 
 
