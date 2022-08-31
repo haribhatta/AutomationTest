@@ -155,19 +155,14 @@ def followUpAppointment(danpheEMR):
         time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "List Visits").click()
     time.sleep(5)
-    x = range(1, 2, 1)
-    for n in x:
-        try:
-            print(n)
-            danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Next')]").click()
-            danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'followup')])[1]").click()
-            print("test1")
-            time.sleep(3)
-            danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Add Followup Visit ')]").click()
-            time.sleep(3)
-            danpheEMR.find_element(By.ID, "btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
-        except:
-            pass
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Next')]").click()
+    time.sleep(7)
+    danpheEMR.find_element(By.XPATH, "(//a[@danphe-grid-action='followup' and contains(text(),'followup')])[5]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Add Followup Visit ')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
+
     print("END>>followUpAppointment")
 
 
