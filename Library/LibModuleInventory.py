@@ -532,7 +532,10 @@ def selectInventory(danpheEMR, inventory):
     print("START>>selectInventory")
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
     time.sleep(5)
-    danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    try:
+        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    except:
+        pass
     time.sleep(3)
     print("END>>selectInventory")
 
