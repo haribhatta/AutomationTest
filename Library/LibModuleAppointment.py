@@ -157,12 +157,18 @@ def followUpAppointment(danpheEMR):
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Next')]").click()
     time.sleep(7)
-    danpheEMR.find_element(By.XPATH, "(//a[@danphe-grid-action='followup' and contains(text(),'followup')])[5]").click()
+    doctorName = danpheEMR.find_element(By.XPATH,"(//div[@col-id='PerformerName'])[7]").text
+    print("doctorName:", doctorName)
+    danpheEMR.find_element(By.XPATH, "(//a[@danphe-grid-action='followup' and contains(text(),'followup')])[7]").click()
     time.sleep(3)
+    doctorName1 = danpheEMR.find_element(By.XPATH, "//td[contains(text(),' Doctor : ')]").text
+    print("doctorName1:", doctorName1)
+    doctorName2 = doctorName1.partition("Doctor : ")[2]
+    print("doctorName2:", doctorName2)
+    assert doctorName == doctorName2
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Add Followup Visit ')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "btnPrintOpdSticker").send_keys(Keys.ESCAPE)  # LPH-932
-
     print("END>>followUpAppointment")
 
 
