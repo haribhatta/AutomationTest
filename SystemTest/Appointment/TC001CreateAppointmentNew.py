@@ -20,15 +20,11 @@ foUserPwd = GSV.foUserPwD
 departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 priceCategoryType = "Normal"
-#discountScheme = GSV.discountSchemeName
+discountValue = GSV.discountSchemeName
+
 #############
 EMR = AC.openBrowser()
 AC.login(admUserId, admUserPwd)
-a, b = LS.checkCoreCFGdiscountMembership(EMR)
-discountValue = a + b
-
-AC.logout()
-AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 # 1. Create an appointment for new patient.
 #Scenario: Cash Payment

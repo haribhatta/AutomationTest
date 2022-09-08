@@ -244,11 +244,16 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
         danpheEMR.find_element(By.LINK_TEXT, "Store").click()
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    element = WebDriverWait(danpheEMR, 20).until(
-        EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
-    )
-    element.click()
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
+    #element = WebDriverWait(danpheEMR, 20).until(
+    #    EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
+    #)
+    #element.click()
+
     time.sleep(2)
+    #danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
+    time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(supplier)
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(Keys.TAB)
@@ -265,7 +270,7 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
     danpheEMR.find_element(By.ID, "txt_BatchNo").send_keys(gRNo)
     danpheEMR.find_element(By.ID, "ItemQTy").send_keys(itemQty)
     print("grPrice", grPrice)
-    grPrice = float(grPrice)
+    grPrice = int(grPrice)
     freeQuantity = danpheEMR.find_element(By.ID, "FreeQuantity")
     freeQuantity.send_keys(freeQty)
     danpheEMR.find_element(By.ID, "GRItemPrice").send_keys(grPrice)
@@ -275,13 +280,13 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
     print("The Selling Price / Marked Price of the item is :", sellingPrice)
     time.sleep(2)
     ccCharge = danpheEMR.find_element(By.ID, "CCCharge")
-    ccCharge.send_keys(cc)
+    #ccCharge.send_keys(cc)
     time.sleep(2)
     discount = danpheEMR.find_element(By.ID, "DiscountPercentage")
-    discount.send_keys(discountPer)
+    #discount.send_keys(discountPer)
     time.sleep(2)
     vat = danpheEMR.find_element(By.ID, "VATPercentage")
-    vat.send_keys(vatPer)
+    #vat.send_keys(vatPer)
     time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     printGr = WebDriverWait(danpheEMR, 15).until(
@@ -388,7 +393,8 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliRe
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
-    danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    #danpheEMR.find_element(By.LINK_TEXT, "Order").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
     time.sleep(5)
     # danpheEMR.find_element(By.LINK_TEXT, "View").click()  ## not working on LPH

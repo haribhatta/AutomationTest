@@ -36,7 +36,7 @@ LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplier, DrugName=drugnam
 # Item Wise Purchase Start
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.preItemWisePurchaseReport()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplier, DrugName=drugname, itemQty=qty, freeQty=5, grPrice=rate, Margin=100, cc=7.5, discountPer=10, vatPer=13, NepaliReceipt=NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplier, DrugName=drugname, itemQty=qty, freeQty=5, grPrice=rate, Margin=10, cc=7.5, discountPer=10, vatPer=13, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=GSV.drug1BrandName, genericName=GSV.drug1GenericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LMPR.getItemWisePurchaseReport(EMR)
 LMPR.verifyItemWisePurchaseReport(qty=2, purchaseValue=totalamount, VatAmount=VatAmount)

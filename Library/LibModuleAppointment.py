@@ -36,8 +36,11 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(department)
         time.sleep(2)
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)
+        time.sleep(2)
         danpheEMR.find_element(By.ID, "doctorName").send_keys(doctor)
         time.sleep(3)
+        danpheEMR.find_element(By.ID, "doctorName").send_keys(Keys.TAB)
+        time.sleep(2)
     elif AppName == "LPH" and priceCategoryType == "Normal":
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(department)
         time.sleep(2)
@@ -49,6 +52,8 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)
         time.sleep(3)
         danpheEMR.find_element(By.ID, "doctorName").send_keys(doctor)
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "doctorName").send_keys(Keys.TAB)
         time.sleep(3)
     danpheEMR.find_element(By.ID, "aptPatFirstName").send_keys("auto")
     danpheEMR.find_element(By.XPATH, "(//input[@type='text'])[2]").send_keys("test")
@@ -75,40 +80,16 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         discountPercentage = 0
     if discountScheme != 0:
         print("discountScheme:", discountScheme)
-        ### Community flag
-        communityTypeDiscountFlag = discountScheme.partition('ShowCommunity":')[2]
-        communityTypeDiscountFlag = communityTypeDiscountFlag.partition(',"IsMandatory')[0]
-        print("communityTypeDiscountFlag:", communityTypeDiscountFlag)
-        ### Scheme flag
-        schemeTypeDiscountFlag = discountScheme.partition("{")[0]
-        print("schemeTypeDiscountFlag:", schemeTypeDiscountFlag)
-        ### Label-Community
-        discountCommunityLabel = discountScheme.partition('CommunityLabel":"')[2]
-        discountCommunityLabel = discountCommunityLabel.partition('"')[0]
-        print("discountCommunityLabel:", discountCommunityLabel)
-        ### Label-Scheme
-        discountSchemeLabel = discountScheme.partition('SchemeLabel":"')[2]
-        discountSchemeLabel = discountSchemeLabel.partition('"')[0]
-        print("discountSchemeLabel:", discountSchemeLabel)
-        #
-        communityName = GSV.discountCommunityName
-        schemeName = GSV.discountSchemeName
-        #
-        if communityTypeDiscountFlag == "true":
-            dropdown = Select(danpheEMR.find_element(By.XPATH,
-                                                     "//span[contains(text(),'" + discountCommunityLabel + "')]/child::select"))
-            time.sleep(3)
-            dropdown.select_by_visible_text(communityName)
-        if schemeTypeDiscountFlag == "true":
-            dropdown1 = Select(danpheEMR.find_element(By.ID, "Scheme"))
-            time.sleep(3)
-            print("dropdown1:", dropdown1)
-            dropdown1.select_by_visible_text(schemeName)
+        dropdown1 = Select(danpheEMR.find_element(By.ID, "Scheme"))
+        time.sleep(3)
+        print("dropdown1:", dropdown1)
+        dropdown1.select_by_visible_text(discountScheme)
         discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute(
             "value")
         print("discountPercentage:", discountPercentage)
         discountPercentage = int(discountPercentage)
         print("discountPercentage:", discountPercentage)
+        assert discountPercentage == GSV.DiscountPercent
     if paymentmode == 'Credit':
         paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select[@id='pay_mode']"))
         paymentoptions.select_by_visible_text("Credit")

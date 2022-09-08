@@ -1,11 +1,14 @@
+   #################Test Action: DB Connection###########
 import pyodbc
+import pandas as pd
+
 conn = pyodbc.connect("Driver={SQL Server};"
-                      "Server=DESKTOP-LCQ7JSQ;"
-                      "Database=Danphe_LPH_V1.9.0;"
-                      "Trusted_Connection=yes;")
+                    "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
+                    "Database=TEST_LIVE_DanpheEMR_MMH_NewV2;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
+                    "Trusted_Connection=yes;")
 
-cursor = conn.cursor()
-cursor.execute('select * from PAT_Patient where PatientCode = 2105000198')
 
-for row in cursor:
-    print('row = %r' % (row,))
+query = "select WardName from ADT_MST_Ward where WardID = (select TOP(1) WardId from ADT_Bed where IsReserved = 0)"
+df = pd.read_sql(query, conn)
+WardName = df.at[0, 'WardName']
+print("WardName Name:", WardName)
