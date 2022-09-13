@@ -52,7 +52,7 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode, NepaliRe
     return BillNo
 
 
-def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno, NepaliReceipt):
+def verifyGoodReceiptNumberInGridAndShow(danpheEMR, billno, totalAmount, NepaliReceipt):
     print("Start Verifying the Goods Receipt Number in Grid and View Page")
     time.sleep(1)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(billno)
@@ -69,10 +69,19 @@ def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno, NepaliReceipt):
         print(type(goodReceiptNo))
         assert grno == goodReceiptNo
     else:
-        text = "2078/2079-"
+        text = "2079/2080-"
         grno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
         grno = text+grno
         print("Good Receipt Number in Grid is :", grno)
+        vendor = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
+        print("Vendor Name in the grid is ", vendor)
+        vendorContact = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]").text
+        print("Vendor contact in the Grid is :", vendorContact)
+        totalAmt = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[8]").text
+        print("Total amount in the grid is ", totalAmt)
+        totalAmt = int(totalAmt)
+        print(totalAmt)
+        assert totalAmt == totalAmount
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'View')]").click()
         time.sleep(2)
         billNumber = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[4]/p[3]/b").text
@@ -81,6 +90,12 @@ def verifyGoodReceiptNUmberInGridAndShow(danpheEMR, billno, NepaliReceipt):
         goodReceiptNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[3]/p[1]/b").text
         print("Good Receipt Number is :", goodReceiptNo)
         print(type(goodReceiptNo))
+        vendorName = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[3]/p[3]/b").text
+        print("Vendor name in the view is :", vendorName)
+        vendorNo = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[3]/p[5]/b").text
+        print("Vendor contact in View page is ", vendorNo)
+        assert vendorNo == vendorContact
+        assert vendor == vendorName
         assert billno == billNumber
         assert grno == goodReceiptNo
 
