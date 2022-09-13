@@ -17,6 +17,7 @@ itemname = GSV.stationaryItem1
 print("itemName:", itemname)
 qty = 1
 rate = 1
+amount = qty * rate
 storeName = GSV.subStoreName1
 inventory1 = GSV.inventoryName1
 EMR = AC.openBrowser()
@@ -24,6 +25,6 @@ AC.login(storeUserId, storeUserPwd)
 NepaliReceipt = LS.CheckNepaliReceiptValue(EMR)
 LI.selectInventory(danpheEMR=EMR, inventory=inventory1)
 billno = LI.createInventoryGoodReceipt(danpheEMR=EMR, qty=qty, item=itemname, rate=rate, paymentMode='Credit', NepaliReceipt=NepaliReceipt)
-LI.verifyGoodReceiptNUmberInGridAndShow(danpheEMR=EMR, billno=billno, NepaliReceipt=NepaliReceipt)
+LI.verifyGoodReceiptNumberInGridAndShow(danpheEMR=EMR, billno=billno, totalAmount=amount, NepaliReceipt=NepaliReceipt)
 AC.logout()
 AC.closeBrowser()
