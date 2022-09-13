@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver import ActionChains
 
 ########
 AppName = GSV.appName
@@ -763,6 +764,35 @@ def editPharmacyGoodsReceipt(danpheEMR, grNo, NepaliReceipt):
     time.sleep(3)
     print("END>>createPharmacyGoodsReceipt")
     return goodsReceiptNo
+
+
+def transferReceive(danpheEMR, drugname, qty, remarks):
+    print("START>>Receive Transfer Items ")
+    time.sleep(2)
+    if AppName == 'LPH':
+        danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    else:
+        danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Store").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Receive Items')]").click()
+    time.sleep(2)
+    # drug = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div/div/div[1]/table/tbody/tr/td[1]/text()[1]").text
+    # assert drug == drugname need to assert after drug name and gereric name import from db
+    incomingQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div/div/div[1]/table/tbody/tr/td[5]/b").text
+    print("Incoming Quantity is :", incomingQuantity)
+    incomingQuantity = int(incomingQuantity)
+    print(incomingQuantity)
+    assert incomingQuantity == qty
+    transferredRemarks = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div/div/div[2]/div[1]/span").text
+    print("Transferred Remarks is ", transferredRemarks)
+    assert transferredRemarks == remarks
+    receivingRemarks = danpheEMR.find_element(By.ID, 'remarks')
+    receivingRemarks.send_keys("Items is received verified with Item name , quantity and transferred remarks")
+    receive = danpheEMR.find_element(By.ID, 'btn_Save')
+    action = ActionChains(danpheEMR)
+    action.double_click(receive).perform()
 
 
 
