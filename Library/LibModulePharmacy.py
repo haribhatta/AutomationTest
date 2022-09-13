@@ -394,7 +394,8 @@ def verifyPharmacyGoodsReceipt(danpheEMR, brandName, genericName, grno, NepaliRe
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(3)
     #danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
+    #danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
+    danpheEMR.find_element(By.XPATH, "(//a[@href='#/Pharmacy/Order'])[2]").click()
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt List").click()
     time.sleep(5)
     # danpheEMR.find_element(By.LINK_TEXT, "View").click()  ## not working on LPH
