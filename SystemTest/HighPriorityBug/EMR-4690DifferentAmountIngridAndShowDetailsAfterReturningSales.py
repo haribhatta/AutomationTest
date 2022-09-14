@@ -17,6 +17,7 @@ phuserpwd = GSV.pharmacyUserPwD
 drug1Name = GSV.drug1BrandName
 drug1Rate = GSV.drug1Rate
 paymentMode = 'Credit'
+creditOrganization = GSV.creditOrganization
 ########
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
@@ -25,12 +26,12 @@ AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
-pInvoiceNo, tender = LD.createDispensarySaleMultipleItems(danpheEMR=EMR, HospitalNo=HospitalNo, drugname=drug1Name, drugname1=GSV.drug2BrandName, qty1=5, qty2=4, paymentmode=paymentMode)
+pInvoiceNo, tender = LD.createDispensarySaleMultipleItems(danpheEMR=EMR, HospitalNo=HospitalNo, drugname=drug1Name, drugname1=GSV.drug2BrandName, qty1=5, qty2=4, creditOrganization=creditOrganization, paymentmode=paymentMode)
 print(pInvoiceNo)
 print(tender)
 totalamount = LD.getDetailsFromSalesList(danpheEMR=EMR, invoiceNumber=pInvoiceNo)
-LD.getgridAndViewDetailsCreditSettelment(danpheEMR=EMR, HospitalNo=HospitalNo, creditamount=totalamount)
+LD.getgridAndViewDetailsCreditSettelment(danpheEMR=EMR, creditOrganization=creditOrganization, HospitalNo=HospitalNo, creditamount=totalamount)
 LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=1, returnremark="Wrong entry")
-LD.getgridAndViewDetailsCreditSettlementAfterPartialReturn(danpheEMR=EMR, HospitalNo=HospitalNo, creditamount=totalamount)
+LD.getgridAndViewDetailsCreditSettlementAfterPartialReturn(danpheEMR=EMR, creditOrganization=creditOrganization, HospitalNo=HospitalNo, creditamount=totalamount)
 AC.logout()
 AC.closeBrowser()

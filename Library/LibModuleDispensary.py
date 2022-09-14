@@ -146,7 +146,7 @@ def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     print("END>> Create Pharmacy OPD Invoice.", pInvoiceNo)
 
 # This is to check the Multiple sales and to return all the items by choosing check box
-def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1, qty1, qty2, paymentmode):
+def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1, qty1, qty2, creditOrganization, paymentmode):
     print("<<START: Create Dispensary sales to random customer.")
     global pInvoiceNo
     global tender
@@ -179,15 +179,17 @@ def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1
     tender = danpheEMR.find_element(By.NAME, "tender").text
     print("Tender amount to verify the total amount", tender)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
+        creditOrg = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrg.select_by_visible_text(creditOrganization)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys(Keys.TAB)
 
     time.sleep(4)
-    #danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
-    danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip' and @title='ALT+N']").click()
+    danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+    # danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip' and @title='ALT+N']").click()
     time.sleep(5)
     pInvoiceNo = danpheEMR.find_element(By.XPATH, "//div[4]/div/div/p").text
     pInvoiceNo = pInvoiceNo.partition("PH")[2]
@@ -203,8 +205,11 @@ def getDetailsFromSalesList(danpheEMR, invoiceNumber):
     danpheEMR.find_element(By.LINK_TEXT, "Sale List").click()
     danpheEMR.find_element(By.XPATH, "//*[contains(text(), 'Load Invoices')]").click()
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNumber)
-    totalamount = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[7]").text
+    totalamount = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]").text
     print("Total amount is :", totalamount)
+    totalamount = float(totalamount)
+    totalamount = round(totalamount, 2)
+    print("Total Amount after round up up to 2 decimal is :", totalamount)
     return totalamount
 
 
@@ -341,39 +346,52 @@ def settleDispensaryCreditInvoice(danpheEMR, HospitalNo, InvoiceNo):
     time.sleep(3)
 
 
-def getgridAndViewDetailsCreditSettelment(danpheEMR, HospitalNo, creditamount):
+def getgridAndViewDetailsCreditSettelment(danpheEMR, creditOrganization, HospitalNo, creditamount):
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
     danpheEMR.find_element(By.LINK_TEXT, "Settlement").click()
     time.sleep(3)
+    creditOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
+    creditOrg.select_by_visible_text(creditOrganization)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(3)
     credit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
     print("Credit of the given Patient is :", credit)
+    credit = float(credit)
+    print(credit)
     assert creditamount == credit
     danpheEMR.find_element(By.XPATH, "//a[@danphe-grid-action='showDetails']").click()
     time.sleep(2)
     netAmount = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(7)").text
     print("Net Amount to be Paid is :", netAmount)
+    netAmount = float(netAmount)
+    netAmount = round(netAmount, 2)
+    print("Net amount after round up is :", netAmount)
     assert creditamount == netAmount == credit
 
 
-def getgridAndViewDetailsCreditSettlementAfterPartialReturn(danpheEMR, HospitalNo, creditamount):
+def getgridAndViewDetailsCreditSettlementAfterPartialReturn(danpheEMR, creditOrganization, HospitalNo, creditamount):
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
     danpheEMR.find_element(By.LINK_TEXT, "Settlement").click()
+    creditOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
+    creditOrg.select_by_visible_text(creditOrganization)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(3)
     credit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
     print("Credit of the given Patient is :", credit)
+    credit = float(credit)
+    print(credit)
     assert creditamount > credit
     danpheEMR.find_element(By.XPATH, "//a[@danphe-grid-action='showDetails']").click()
     time.sleep(2)
     netAmount = danpheEMR.find_element(By.CSS_SELECTOR, "td:nth-child(7)").text
     print("Net Amount to be Paid is :", netAmount)
+    netAmount = float(netAmount)
+    print(netAmount)
     assert creditamount > netAmount
 
 
