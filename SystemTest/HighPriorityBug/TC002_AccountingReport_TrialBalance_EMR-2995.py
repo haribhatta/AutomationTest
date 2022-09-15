@@ -10,7 +10,7 @@ import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleAppointment as LA
 #import Library.LibModuleBilling as LB
 import Library.LibModuleBilling as LB
-import Library.LibModuleAccounting as ACC
+import Library.LibModuleAccounting as LA
 
 # front desk user login
 foUserId = GSV.foUserID
@@ -20,10 +20,16 @@ foUserPwd = GSV.foUserPwD
 admUserId = GSV.adminUserID
 admUserPwd = GSV.adminUserPwD
 
+ledger1 = GSV.Ledger_1
+ledger2 = GSV.Ledger_2
+
 #-------------Script Owner: Hari---------------- Log-log-log (333)
 #Scripted on: 29.01.2078
 
 EMR = AC.openBrowser()
 #add voucher in ledger
 AC.login(admUserId, admUserPwd)
-ACC.createManualVoucher(EMR)
+voucherNo = LA.createManualVoucher(danpheEMR=EMR, ledger1=ledger1, ledger2=ledger2)
+LA.verifyVoucherReport(danpheEMR=EMR, voucherNo=voucherNo)
+AC.logout()
+AC.closeBrowser()

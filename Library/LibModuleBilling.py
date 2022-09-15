@@ -281,10 +281,11 @@ def createLabInvoice(danpheEMR, HospitalNo, labtest):
     time.sleep(5)
     danpheEMR.find_element(By.ID, "srch_PatientList").click()
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
-    time.sleep(2)
+    time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
     time.sleep(5)
     if AppName == 'LPH':
