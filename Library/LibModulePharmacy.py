@@ -246,13 +246,11 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
-    #element = WebDriverWait(danpheEMR, 20).until(
-    #    EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
-    #)
-    #element.click()
-
-    time.sleep(5)
+    # danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+    element = WebDriverWait(danpheEMR, 20).until(
+       EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
+    )
+    element.click()
     #danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
     time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
@@ -369,8 +367,6 @@ def createPharmacyGrwithSameInvoiceNumberAfterGrCancel(danpheEMR, invoiceNumber,
     time.sleep(2)
     danpheEMR.find_element(By.ID, "btn_Save").click()
     danpheEMR.find_element(By.XPATH, "//button[@class='btn green btn-success tooltip']").click()
-    time.sleep(5)
-    danpheEMR.switch_to.alert.accept()
     time.sleep(2)
     if NepaliReceipt == "true":
         goodsReceiptNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'दाखिला प्रतिवेदन नम्बर')]").text
