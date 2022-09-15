@@ -1133,12 +1133,12 @@ def verifyReferDoctorinInvoice(danpheEMR, HospitalNo, imagingtest, labtest, Refe
     )
     # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
-    Refer = danpheEMR.find_element(By.XPATH, "//div[@id='divBilInvoicePrintPage']/div/div[10]/div").text
-    Refer = str(Refer)
-    print(Refer)
-    refer = str('Referred By:' + " " + ReferDoctor)
+    Presciber = danpheEMR.find_element(By.XPATH, "//div[@id='divBilInvoicePrintPage']/div/div[9]/div").text
+    Presciber = str(Presciber)
+    print(Presciber)
+    refer = str('Prescribed By:' + " " + ReferDoctor)
     print(refer)
-    assert Refer == refer
+    assert Presciber == refer
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
