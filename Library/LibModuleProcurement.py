@@ -6,6 +6,19 @@ from selenium.webdriver.common.by import By
 AppName = gSV.appName
 
 # Since System Use the default value 1 the Quantity is Removed
+
+
+def activateInventory(danpheEMR, inventory='General Inventory' or 'Medical Inventory'):
+    print("Inventory Selection Start")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    time.sleep(5)
+    if inventory == 'General Inventory':
+        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    else:
+        danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'Medical Inventory')]").click()
+    print("Inventory Selection End")
+
 def createPurchaseOrder(danpheEMR, itemName1, rate, itemName2, NepaliReceipt):
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
@@ -84,7 +97,26 @@ def cancelInventoryGoodsReceipt(danpheEMR, BillNo):
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Yes')]").click()
     time.sleep(2)
 
-
+def CreateGoodsArrivalNotification(danpheEMR, itemName1, rate, itemName2):
+    print("START>> Create new goods arrival notification")
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Create Goods Receipt").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "VendorName").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "VendorName").send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.ID, "poItemName0").send_keys(itemName1)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "poItemName0").send_keys(Keys.ENTER)
+    # danpheEMR.find_element(By.ID, "ipqty0").send_keys(Keys.CLEAR)
+    # danpheEMR.find_element(By.ID, "ipqty0").send_keys(qty)
+    danpheEMR.find_element(By.ID, "ipstdrate0").send_keys(rate)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Add New Row')]").click()
+    danpheEMR.find_element(By.ID, "poItemName1").send_keys(itemName2)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "poItemName1").send_keys(Keys.ENTER)
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles

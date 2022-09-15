@@ -76,16 +76,20 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     gender.select_by_visible_text("Female")
     phoneNo = random.randint(9111111111, 9999999999)
     danpheEMR.find_element(By.ID, "txtPhone").send_keys(phoneNo)
+    time.sleep(3)
+    #Community =danpheEMR.find_element(By.XPATH, "//select[@id='Membership']").click()
+    #Community.select_by_visible_text("Social Service Unit")
+    time.sleep(3)
     if discountScheme == 0:
         discountPercentage = 0
     if discountScheme != 0:
         print("discountScheme:", discountScheme)
         dropdown1 = Select(danpheEMR.find_element(By.ID, "Scheme"))
-        time.sleep(3)
+        time.sleep(5)
         print("dropdown1:", dropdown1)
         dropdown1.select_by_visible_text(discountScheme)
-        discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute(
-            "value")
+        time.sleep(3)
+        discountPercentage = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Discount %']").get_attribute("value")
         print("discountPercentage:", discountPercentage)
         discountPercentage = int(discountPercentage)
         print("discountPercentage:", discountPercentage)

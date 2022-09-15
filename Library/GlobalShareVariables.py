@@ -227,6 +227,10 @@ if appName == "SNCH":
       departmentNephro = "Nephro"
 # Dispensary Credit Organization
       creditOrganization = "SCH Staff Account"
+
+      ###TestAction>>Accounting:
+      Ledger_1 = "Sunita Karki"
+      Ledger_2 = "Cash"
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":

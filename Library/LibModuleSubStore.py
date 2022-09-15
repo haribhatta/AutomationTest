@@ -16,7 +16,7 @@ def selectSubStore(danpheEMR, substore='Administration' or 'Emergency Store'):
     elif substore == 'Emergency Store':
         danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Emergency Store')]").click()
     else:
-        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Emergency Store')]").click()
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'ACCOUNT')]").click()
     print("End<<selectSubStore")
 
 
@@ -29,7 +29,7 @@ def createSubStoreRequisition(danpheEMR, InventoryName, ItemName, Qty):
         danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Administration Store')]").click()
         time.sleep(2)
     elif AppName == "LPH":
-        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'ADMINISTRATION')]").click()
+        danpheEMR.find_element(By.XPATH, "//html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ul/li[2]/a").click()
         time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory Requisition')]").click()
     time.sleep(5)
@@ -40,6 +40,7 @@ def createSubStoreRequisition(danpheEMR, InventoryName, ItemName, Qty):
     danpheEMR.find_element(By.ID, "activeInventory").send_keys(Keys.TAB)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "itemName0").send_keys(ItemName)
+    time.sleep(3)
     danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.TAB)
     danpheEMR.find_element(By.ID, "qtyip0").send_keys(Qty)
     time.sleep(3)

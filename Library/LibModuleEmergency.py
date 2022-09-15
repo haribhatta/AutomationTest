@@ -12,7 +12,7 @@ AppName = GSV.appName
 def EmergencyRegistration(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Emergency").click()
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'New patient')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'New patients')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'New Registration ')]").click()
     time.sleep(5)

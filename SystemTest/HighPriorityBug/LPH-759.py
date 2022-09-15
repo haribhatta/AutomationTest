@@ -19,12 +19,14 @@ StoreUserId = GSV.storeUserID
 StoreUserPwd = GSV.storeUserPwD
 
 #Declaring store values
-Store1 = GSV.SubStore1
+subStoreName1 = GSV.subStoreName1
 Inventory1 = GSV.inventoryName1
 ItemName1 = GSV.stationaryItem1
 Qty1 = 3
 
 EMR = AC.openBrowser()
 AC.login(StoreUserId, StoreUserPwd)
-LSS.selectSubStore(danpheEMR=EMR, substore=Store1)
+LSS.selectSubStore(danpheEMR=EMR, substore=subStoreName1)
 LSS.createSubStoreRequisition(danpheEMR=EMR, InventoryName=Inventory1, ItemName=ItemName1, Qty=Qty1)
+AC.logout()
+AC.closeBrowser()
