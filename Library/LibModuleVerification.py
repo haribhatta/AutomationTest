@@ -13,6 +13,7 @@ def substoreRequisitionVerification(danpheEMR, reqno, itemname, qty):
     # danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(reqno)
+    time.sleep(4)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'View')]").click()
     time.sleep(2)
     item = danpheEMR.find_element(By.XPATH, "//*[@id='itemRow']/td[3]").text

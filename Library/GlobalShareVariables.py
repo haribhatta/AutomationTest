@@ -8,7 +8,9 @@ appName = input("Please enter project/application name:\n"
                 "RTM\n"
                 "RCH\n"
                 "Core\n"
-                "Hope\n")
+                "Hope\n"
+                "APF\n"
+                "Charak\n")
 
 if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
@@ -174,10 +176,30 @@ if appName == "SNCH":
       discountCommunityName = "Hospital"
       discountSchemeName = "Referal (10%)"
       ReferredBy = "Dr. Amit Chaturbedi"
+
+      #################Test Action: DB Connection###########
+      import pyodbc
+      import pandas as pd
+
+      conn = pyodbc.connect("Driver={SQL Server};"
+                            "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
+                            "Database=DanpheEMR_SNCH_UAT;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
+                            "Trusted_Connection=yes;")
+
+      ##### Getting pharmacy item rate #####################
+      query = "select CostPrice, MRP from PHRM_MST_Stock where ItemId = (select ItemId from PHRM_MST_Item where ItemName = 'SINEX TAB')"
+      df = pd.read_sql(query, conn)
+      print("df:", df)
+      rate = df.at[0, 'MRP']
+      print("Drug Rate:", rate)
+      CostPrice = df.at[0, 'CostPrice']
+      print("Drug CostPrice:", CostPrice)
+
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "PARACETAMOL"
-      drug1Rate = float(3)
+      drug1Rate = rate
+      drug1CostPrice = CostPrice
       drug2BrandName = 'ASTHALIN 2.5ml'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
@@ -622,7 +644,7 @@ if appName == "Hope":
       Ledger_1 = "Dr. Sunita Bhandari"
       Ledger_2 = "Cash"
 ###############################################################################
-########Defining Variables for APF Hospital
+########Defining Variables for MMH Hospital
 ###############################################################################
 if appName == "MMH":
       appURL = "http://localhost:88/"
@@ -888,6 +910,475 @@ if appName == "MMH":
 
       Ledger_1 = ledgerName1
       Ledger_2 = ledgerName2
+
+###############################################################################
+########Defining Variables for APF Hospital
+###############################################################################
+if appName == "APF":
+      appURL = "http://172.16.30.62:107/"
+###TestAction>>LogIn:
+      # admin user
+      adminUserID = 'admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'admin'
+      foUserPwD = 'DanpheHIMS@123'
+      foUserName = 'Admin admin'
+      #IT user
+      itUserID = 'admin'
+      itUserPwD = 'DanpheHIMS@123'
+      #pharmacy user
+      pharmacyUserID = 'admin'
+      pharmacyUserPwD = 'DanpheHIMS@123'
+      #pharmacyUserName = 'Ms. Prekshya Adhikari'
+      pharmacyUserName = 'Admin admin'
+      #laboratory user
+      labUserID = 'admin'
+      labUserPwD = 'DanpheHIMS@123'
+      #radiologist user
+      radioUserID = 'admin' #'basudev'
+      radioUserPwD = 'DanpheHIMS@123'
+      #Inventory user
+      storeUserID = 'admin'
+      storeUserPwD = 'DanpheHIMS@123'
+
+#################Test Action: DB Connection###########
+      import pyodbc
+      import pandas as pd
+
+      conn = pyodbc.connect("Driver={SQL Server};"
+                            "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
+                            "Database=DanpheEMR_LIVE_APF_HOSPITAL;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
+                            "Trusted_Connection=yes;")
+
+##### Getting Lab Test Data #####################
+      #query = "SELECT TOP(10) ItemName, Price FROM BIL_CFG_BillItemPrice where Price > 0 and IsActive = 1 and ServiceDepartmentId = (select ServiceDepartmentId from BIL_MST_ServiceDepartment where ServiceDepartmentName = 'biochemistry')"
+      ##TFT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'TFT'"
+      df = pd.read_sql(query, conn)
+      print("df:", df)
+      nameTFT = df.at[0, 'ItemName']
+      print("TFT Name:", nameTFT)
+      rateTFT = df.at[0, 'Price']
+      print("TFT Rate:", rateTFT)
+
+      ##CBC##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'CBC'"
+      df = pd.read_sql(query, conn)
+      nameCBC = df.at[0, 'ItemName']
+      print("CBC Name:", nameCBC)
+      rateCBC = df.at[0, 'Price']
+      print("CBC Rate:", rateCBC)
+
+      ##T3##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'T3'"
+      df = pd.read_sql(query, conn)
+      nameT3 = df.at[0, 'ItemName']
+      print("T3 Name:", nameT3)
+      rateT3 = df.at[0, 'Price']
+      print("T3 Rate:", rateT3)
+
+      ##T4##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'T4'"
+      df = pd.read_sql(query, conn)
+      nameT4 = df.at[0, 'ItemName']
+      print("T4 Name:", nameT4)
+      rateT4 = df.at[0, 'Price']
+      print("T4 Rate:", rateT4)
+
+      ##TSH##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'TSH'"
+      df = pd.read_sql(query, conn)
+      nameTSH = df.at[0, 'ItemName']
+      print("TSH Name:", nameTSH)
+      rateTSH = df.at[0, 'Price']
+      print("TSH Rate:", rateTSH)
+
+      ##LDH##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'LDH'"
+      df = pd.read_sql(query, conn)
+      nameLDH = df.at[0, 'ItemName']
+      print("LDH Name:", nameLDH)
+      rateLDH = df.at[0, 'Price']
+      print("LDH Rate:", rateLDH)
+
+      ##Urine RE/ME##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'Urine RE/ME'"
+      df = pd.read_sql(query, conn)
+      nameUrineRE = df.at[0, 'ItemName']
+      print("Urine RE/ME Name:", nameUrineRE)
+      rateUrineRE = df.at[0, 'Price']
+      print("Urine RE/ME Rate:", rateUrineRE)
+
+      ##BT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'BT'"
+      df = pd.read_sql(query, conn)
+      nameBT = df.at[0, 'ItemName']
+      print("BT Name:", nameBT)
+      rateBT = df.at[0, 'Price']
+      print("BT Rate:", rateBT)
+
+      ##CT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'CT'"
+      df = pd.read_sql(query, conn)
+      nameCT = df.at[0, 'ItemName']
+      print("CT Name:", nameCT)
+      rateCT = df.at[0, 'Price']
+      print("CT Rate:", rateCT)
+
+##### Getting Imaging Test Data #####################
+      ##USG##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'USG'"
+      df = pd.read_sql(query, conn)
+      nameUSG = df.at[0, 'ItemName']
+      print("USG Name:", nameUSG)
+      rateUSG = df.at[0, 'Price']
+      print("USG Rate:", rateUSG)
+
+##### Getting Other Billing Test Data #####################
+
+      ##Billing Department Name##
+      query = "select DepartmentName from MST_Department where Description = 'Gynaecology Ward'"
+      df = pd.read_sql(query, conn)
+      DepartmentGyno = df.at[0, 'DepartmentName']
+      print("Gyno Department Name:", DepartmentGyno)
+
+      ##Billing Doctor Name##
+      query = "select FirstName from EMP_Employee where DepartmentId = (select DepartmentId from MST_Department where Description = 'Gynaecology Ward')"
+      df = pd.read_sql(query, conn)
+      DoctorGyno = df.at[0, 'FirstName']
+      print("Gyno Doctor Name:", DoctorGyno)
+
+########################################################
+
+###TestAction>>BillingItems:
+      opdRate = 500
+      deposit = 200
+      CBC = nameCBC
+      #TFT = "TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      TFT = nameTFT
+      T3 = nameT3
+      T4 = nameT4
+      TSH = nameTSH
+      #TFTRate = 1000
+      TFTRate = rateTFT
+      LDH = nameLDH
+      UrineRE = nameUrineRE
+      BT = nameBT
+      CT = nameCT
+      btRate = rateBT
+      ctRate = rateCT
+      #USG = "USG GUIDED DIAGNOSTIC PLEURAL TAPPING "
+      #usgRate = 1575
+      USG = nameUSG
+      usgRate = rateUSG
+      #admitRate = rateAdmission
+
+      ###Getting discount name and scheme ###
+      query = "select MembershipTypeName, DiscountPercent, CommunityName from PAT_CFG_MembershipType where DiscountPercent > 0"
+      df = pd.read_sql(query, conn)
+      MembershipTypeName = df.at[0, 'MembershipTypeName']
+      print("MembershipTypeName:", MembershipTypeName)
+      DiscountPercent = df.at[0, 'DiscountPercent']
+      print("DiscountPercent:", DiscountPercent)
+      DiscountPercent = int(DiscountPercent)
+      print("DiscountPercent:", DiscountPercent)
+      CommunityName = df.at[0, 'CommunityName']
+      print("CommunityName:", CommunityName)
+      discountSchemeName = MembershipTypeName + " (" + str(DiscountPercent) + "%)"
+      print("discountSchemeName:", discountSchemeName)
+      discountCommunityName = CommunityName
+      discountSchemeName = discountSchemeName
+
+###TestAction>>Pharmacy/Store+DispensaryItems:
+      ##### Getting Pharmacy Billing Test Data ##############
+      ##Drug Name and Rate##
+      query = "select i.ItemName, ss.AvailableQuantity, ss.MRP from PHRM_TXN_StoreStock ss inner join PHRM_MST_Item i on ss.ItemId = i.ItemId where  AvailableQuantity >100 and storeid = ( select StoreId from PHRM_MST_Store where Name = 'MainDispensary (Pharmacy)')"
+      df = pd.read_sql(query, conn)
+      drug1BrandNameName = df.at[0, 'ItemName']
+      print("Drug Item Name:", drug1BrandNameName)
+      drugAvailableQuantity = df.at[0, 'AvailableQuantity']
+      print("Drug Available Quantity:", drugAvailableQuantity)
+      drugRate = df.at[0, 'MRP']
+      print("drug Rate:", drugRate)
+
+      ########################################################
+
+      drug1BrandName = drug1BrandNameName
+      drug1GenericName = "dfdfd"
+      drug1Rate = drugRate
+      drug2BrandName = 'ALCAL D 500 MG'
+      drug2BrandRate = 4.906
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      drugSinexName = 'tafco 250 mg'
+      drugSinexRate = 10.34
+      drugAasma = 'AASMA 150 XR TAB'
+      supplier = "AARATI MEDITCHA PVT"
+      drug1NarcoticName = "LOZ 1 MG"
+      drug1NarcoticRate ="2"
+      drugType = 'ABDOMINAL'
+      drugCompany = 'HIMALAYA'
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AARATI MEDITCHA PVT"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "General"
+      subStoreName2 = "PostOps"
+      A4Paper = 'Paper A4'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      storeItem1Name = "Tumb Pin"
+      storeItem1Rate = 10
+      # stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Sanitizer"
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy"
+
+###TestAction>>ADT:
+      generalWard = "General"
+      bedFeature = "BED CHARGE (GENERAL WARD)"
+      admitWard = "Pediatric"
+      admitBed = "BED CHARGE (PAEDIATRIC WARD)"
+###TestAction>>Settings:
+      user = "admin"
+      doctorGyno = DoctorGyno
+      departmentGyno = DepartmentGyno
+      #departmentNephro = doctorNephro
+###TestAction>>Accounting:
+      query = "select LedgerName from ACC_Ledger"
+      df = pd.read_sql(query, conn)
+      ledgerName1 = df.at[0, 'LedgerName']
+      print("ledger1 Name:", ledgerName1)
+      ledgerName2 = df.at[1, 'LedgerName']
+      print("ledger2 Name:", ledgerName2)
+
+      Ledger_1 = ledgerName1
+      Ledger_2 = ledgerName2
+
+###############################################################################
+########Defining Variables for Charak
+if appName == "Charak":
+      #appURL = "http://172.16.30.129:108/"
+      appURL = "http://202.51.74.168:85/"
+###TestAction>>LogIn:
+      # admin user
+      adminUserID = 'Admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'Admin' #'sabitri'
+      foUserPwD = 'DanpheHIMS@123'
+      foUserName = 'Mr. admin admin' #'Ms. Sabitri Sharma Adhikari'
+      #IT user
+      itUserID = 'Admin' #'rn'
+      itUserPwD = 'DanpheHIMS@123'
+      #pharmacy user
+      pharmacyUserID = 'Admin' #'shivraj'
+      pharmacyUserPwD = 'DanpheHIMS@123'
+      pharmacyUserName = 'admin admin' #'shiv raj'
+      #laboratory user
+      labUserID = 'Admin'
+      labUserPwD = 'DanpheHIMS@123'
+      # Radiology user
+      radioUserID = 'Admin'
+      radioUserPwD = 'DanpheHIMS@123'
+      #Inventory user
+      storeUserID = 'Admin'
+      storeUserPwD = 'DanpheHIMS@123'
+      #Medical Record user
+      MRUserID = 'Admin' #'haris'
+      MRUserPwD = 'DanpheHIMS@123'
+
+#################Test Action: DB Connection###########
+      import pyodbc
+      import pandas as pd
+
+      conn = pyodbc.connect("Driver={SQL Server};"
+                            "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
+                            "Database=DanpheHIMS_Charak_MergeVersion;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
+                            "Trusted_Connection=yes;")
+
+##### Getting Lab Test Data #####################
+      #query = "SELECT TOP(10) ItemName, Price FROM BIL_CFG_BillItemPrice where Price > 0 and IsActive = 1 and ServiceDepartmentId = (select ServiceDepartmentId from BIL_MST_ServiceDepartment where ServiceDepartmentName = 'biochemistry')"
+      ##TFT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'TFT'"
+      df = pd.read_sql(query, conn)
+      print("df:", df)
+      nameTFT = df.at[0, 'ItemName']
+      print("TFT Name:", nameTFT)
+      rateTFT = df.at[0, 'Price']
+      print("TFT Rate:", rateTFT)
+
+      ##CBC##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'CBC'"
+      df = pd.read_sql(query, conn)
+      nameCBC = df.at[0, 'ItemName']
+      print("CBC Name:", nameCBC)
+      rateCBC = df.at[0, 'Price']
+      print("CBC Rate:", rateCBC)
+
+      ##T3##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'T3'"
+      df = pd.read_sql(query, conn)
+      nameT3 = df.at[0, 'ItemName']
+      print("T3 Name:", nameT3)
+      rateT3 = df.at[0, 'Price']
+      print("T3 Rate:", rateT3)
+
+      ##T4##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'T4'"
+      df = pd.read_sql(query, conn)
+      nameT4 = df.at[0, 'ItemName']
+      print("T4 Name:", nameT4)
+      rateT4 = df.at[0, 'Price']
+      print("T4 Rate:", rateT4)
+
+      ##TSH##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'TSH'"
+      df = pd.read_sql(query, conn)
+      nameTSH = df.at[0, 'ItemName']
+      print("TSH Name:", nameTSH)
+      rateTSH = df.at[0, 'Price']
+      print("TSH Rate:", rateTSH)
+
+      ##LDH##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'LDH'"
+      df = pd.read_sql(query, conn)
+      nameLDH = df.at[0, 'ItemName']
+      print("LDH Name:", nameLDH)
+      rateLDH = df.at[0, 'Price']
+      print("LDH Rate:", rateLDH)
+
+      ##Urine RE/ME##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'Urine RE/ME'"
+      df = pd.read_sql(query, conn)
+      nameUrineRE = df.at[0, 'ItemName']
+      print("Urine RE/ME Name:", nameUrineRE)
+      rateUrineRE = df.at[0, 'Price']
+      print("Urine RE/ME Rate:", rateUrineRE)
+
+      ##BT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'BT'"
+      df = pd.read_sql(query, conn)
+      nameBT = df.at[0, 'ItemName']
+      print("BT Name:", nameBT)
+      rateBT = df.at[0, 'Price']
+      print("BT Rate:", rateBT)
+
+      ##CT##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'BT'"
+      df = pd.read_sql(query, conn)
+      nameCT = df.at[0, 'ItemName']
+      print("CT Name:", nameCT)
+      rateCT = df.at[0, 'Price']
+      print("CT Rate:", rateCT)
+
+##### Getting Imaging Test Data #####################
+      ##USG##
+      query = "select ItemName, Price from BIL_CFG_BillItemPrice where Description = 'USG'"
+      df = pd.read_sql(query, conn)
+      nameUSG = df.at[0, 'ItemName']
+      print("USG Name:", nameUSG)
+      rateUSG = df.at[0, 'Price']
+      print("USG Rate:", rateUSG)
+
+##### Getting Other Billing Test Data #####################
+
+      ##Billing Department Name##
+      query = "select DepartmentName from MST_Department where Description = 'Gynaecology Ward'"
+      df = pd.read_sql(query, conn)
+      DepartmentGyno = df.at[0, 'DepartmentName']
+      print("Gyno Department Name:", DepartmentGyno)
+
+      ##Billing Doctor Name##
+      query = "select FirstName from EMP_Employee where DepartmentId = (select DepartmentId from MST_Department where Description = 'Gynaecology Ward')"
+      df = pd.read_sql(query, conn)
+      DoctorGyno = df.at[0, 'FirstName']
+      print("Gyno Doctor Name:", DoctorGyno)
+
+########################################################
+
+###TestAction>>BillingItems:
+      opdRate = 500
+      deposit = 200
+      CBC = nameCBC
+      #TFT = "TFT"   #TFT(FT3,FT4,TSH) CLLEA
+      TFT = nameTFT
+      T3 = nameT3
+      T4 = nameT4
+      TSH = nameTSH
+      #TFTRate = 1000
+      TFTRate = rateTFT
+      LDH = nameLDH
+      UrineRE = nameUrineRE
+      BT = nameBT
+      CT = nameCT
+      btRate = rateBT
+      ctRate = rateCT
+      #USG = "USG GUIDED DIAGNOSTIC PLEURAL TAPPING "
+      #usgRate = 1575
+      USG = nameUSG
+      usgRate = rateUSG
+      #admitRate = rateAdmission
+
+      ###Getting discount name and scheme ###
+      query = "select MembershipTypeName, DiscountPercent, CommunityName from PAT_CFG_MembershipType where DiscountPercent > 0"
+      df = pd.read_sql(query, conn)
+      MembershipTypeName = df.at[0, 'MembershipTypeName']
+      print("MembershipTypeName:", MembershipTypeName)
+      DiscountPercent = df.at[0, 'DiscountPercent']
+      print("DiscountPercent:", DiscountPercent)
+      DiscountPercent = int(DiscountPercent)
+      print("DiscountPercent:", DiscountPercent)
+      CommunityName = df.at[0, 'CommunityName']
+      print("CommunityName:", CommunityName)
+      discountSchemeName = MembershipTypeName + " (" + str(DiscountPercent) + "%)"
+      print("discountSchemeName:", discountSchemeName)
+      discountCommunityName = CommunityName
+      discountSchemeName = discountSchemeName
+
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "General"
+      subStoreName2 = "PostOps"
+      A4Paper = 'Paper A4'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      storeItem1Name = "Tumb Pin"
+      storeItem1Rate = 10
+      # stationaryItem1 = "DOTPEN"
+      stationaryItem1 = "Sanitizer"
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy"
+
+###TestAction>>ADT:
+      generalWard = "General"
+      bedFeature = "BED CHARGE (GENERAL WARD)"
+      admitWard = "Pediatric"
+      admitBed = "BED CHARGE (PAEDIATRIC WARD)"
+###TestAction>>Settings:
+      user = "admin"
+      doctorGyno = DoctorGyno
+      departmentGyno = DepartmentGyno
+      #departmentNephro = doctorNephro
+###TestAction>>Accounting:
+      query = "select LedgerName from ACC_Ledger"
+      df = pd.read_sql(query, conn)
+      ledgerName1 = df.at[0, 'LedgerName']
+      print("ledger1 Name:", ledgerName1)
+      ledgerName2 = df.at[1, 'LedgerName']
+      print("ledger2 Name:", ledgerName2)
+
+      Ledger_1 = ledgerName1
+      Ledger_2 = ledgerName2
+
+###############################################################################
 
 
    #def __str__():

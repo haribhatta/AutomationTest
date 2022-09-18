@@ -35,18 +35,18 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
         time.sleep(3)
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(department)
         time.sleep(2)
-        danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)
+        danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.ENTER)
         time.sleep(2)
         danpheEMR.find_element(By.ID, "doctorName").send_keys(doctor)
         time.sleep(3)
         danpheEMR.find_element(By.ID, "doctorName").send_keys(Keys.TAB)
         time.sleep(2)
-    elif AppName == "LPH" and priceCategoryType == "Normal":
+    elif (AppName == "LPH" or AppName == "APF") and priceCategoryType == "Normal":
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(department)
         time.sleep(2)
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)
         time.sleep(3)
-    elif AppName != "LPH" and priceCategoryType == "Normal":
+    elif (AppName != "LPH" or AppName != "APF") and priceCategoryType == "Normal":
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(department)
         time.sleep(3)
         danpheEMR.find_element(By.ID, "txtDepartment").send_keys(Keys.TAB)

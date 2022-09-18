@@ -33,7 +33,9 @@ departmentGynae = GSV.departmentGyno
 doctorGynae = GSV.doctorGyno
 
 opdticket = GSV.opdRate
-discountpct = 50
+discountValue = GSV.discountSchemeName
+discountpct = GSV.DiscountPercent
+print("discountpct:", discountpct)
 #discountamount = (discountpct*opdticket/100)
 returnamount = opdticket
 usgtest = GSV.USG
@@ -74,7 +76,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=returnamount, credit
 # 3. Cash Discount Invoice
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=50, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountValue, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=opdticket, discountpc=discountpct, cashReturn=0, credit=0, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -109,7 +111,7 @@ LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
 HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve') #credit=opdticket
 LBR.getBillingDashboard(EMR)
-LB.creditPayment(danpheEMR=EMR, HospitalNo=HospitalNo3)     #settlement=credit
+LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip="No", cashdiscount=0)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement="CREDIT", provisional=0, provisionalcancel=0)
 

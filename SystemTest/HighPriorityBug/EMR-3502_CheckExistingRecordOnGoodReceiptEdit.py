@@ -28,7 +28,7 @@ brandName = GSV.drug1BrandName
 genericName = GSV.drug1GenericName
 tqty = 1
 rate = GSV.drug1Rate
-costPrice = 20
+costPrice = GSV.drug1CostPrice
 amount = qty * costPrice
 print("amount", amount)
 supplierName = GSV.pharmacySupplierName1
@@ -44,11 +44,11 @@ print(NepaliReceipt)
 #cpgr.verifyPharmacyItem()
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.XgetPharmacyGoodsReceiptListAmount()
-goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, DrugName=brandName, itemQty=qty, freeQty=0, grPrice=rate, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
+goodsReceiptNo = LP.createPharmacyGoodsReceipt(danpheEMR=EMR, supplier=supplierName, DrugName=brandName, itemQty=qty, freeQty=0, grPrice=costPrice, Margin=0, cc=0, discountPer=0, vatPer=0, NepaliReceipt=NepaliReceipt)
 LP.verifyPharmacyGoodsReceipt(danpheEMR=EMR, brandName=brandName, genericName=genericName, grno=goodsReceiptNo, NepaliReceipt=NepaliReceipt)
 LP.getPharmacyGoodsReceiptListAmount(EMR)
 LP.verifygetPharmacyGoodsReceiptListAmount(amount=amount, discount=0)
-LP.editPharmacyGoodsReceipt(danpheEMR=EMR, grNo=goodsReceiptNo, qty=qty)
+LP.editPharmacyGoodsReceipt(danpheEMR=EMR, grNo=goodsReceiptNo, NepaliReceipt=0)
 
 AC.logout()
 AC.closeBrowser()

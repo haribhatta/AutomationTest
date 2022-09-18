@@ -26,7 +26,7 @@ def getBillingDashboard(danpheEMR):
     danpheEMR.find_element(By.CSS_SELECTOR, ".fa-home").click()
     time.sleep(9)
 
-    if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
+    if AppName != "Tilganga": #"SNCH" or AppName == "MPH" or AppName == "LPH":
         sysgrosstotal = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'i. Subtotal :')]").text
         print("sysgrosstotal:", sysgrosstotal)
         syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
@@ -986,7 +986,7 @@ def getUserCollectionReport(danpheEMR, user):
     global actualMaternityPayment
     global actualTotalCollection
     danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
-    time.sleep(3)
+    time.sleep(7)
     danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//i[contains(.,'User Collection')]").click()
