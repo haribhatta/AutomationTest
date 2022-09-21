@@ -173,6 +173,7 @@ if appName == "SNCH":
       admitRate = 1500
       discountCommunityName = "Hospital"
       discountSchemeName = "Referal (10%)"
+      DiscountPercent = 10
       ReferredBy = "Dr. Amit Chaturbedi"
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"
