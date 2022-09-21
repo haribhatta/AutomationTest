@@ -58,17 +58,14 @@ LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 # 2. Get Dispensary quantity.
 print("START >>> Verifying Narcotic Stock Report>>")
 danpheEMR = EMR
-if AppName == "LPH":
-    print("Ï am inside test drive.")
-    danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
-    danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
-    danpheEMR.find_element(By.LINK_TEXT, "Stock Details List").click()
 
-
-else:
-    danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
+danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
+danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
+danpheEMR.find_element(By.LINK_TEXT, "Stock Details List").click()
 time.sleep(9)
-danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("THYROXINE 75 MCG")
+drugName = GSV.drug1BrandName
+print("drugName:", drugName)
+danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(drugName)
 time.sleep(3)
 availableQty = danpheEMR.find_element(By.XPATH, "(//div[@col-id='AvailableQuantity'])[2]").text
 print("available quantity:", availableQty)
@@ -78,7 +75,7 @@ danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
 time.sleep(3)
 danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
 time.sleep(3)
-danpheEMR.find_element(By.ID, "item-box0").send_keys("THYRONORM 75MCG(120TAB/BOT)")
+danpheEMR.find_element(By.ID, "item-box0").send_keys(drugName)
 time.sleep(3)
 danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.ENTER)
 time.sleep(3)
