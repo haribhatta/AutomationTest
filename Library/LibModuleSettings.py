@@ -175,6 +175,43 @@ def CheckNepaliReceiptValue(danpheEMR):
 #     assert CreditOrganizationMandatory == "true"
 #     print("END: Credit Organization Non Mandatory")
 
+def paymentModeOpBillingDisplaySequence(danpheEMR):
+    print("START: PaymentMode Sequence in Op Billing")
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'More...')]").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Payment Mode Settings").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("OPBilling")
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Edit')]").click()
+    time.sleep(1)
+    # Discount
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[12]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[12]").send_keys(1)
+    # Cash
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").send_keys(2)
+    # e-sewa
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").send_keys(3)
+    # FonePay
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[5]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[5]").send_keys(4)
+    # Khalthi
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[6]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[6]").send_keys(5)
+    # IPS Connect
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[7]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[7]").send_keys(6)
+    # POS-1
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").send_keys(7)
+    # update
+    danpheEMR.find_element(By.ID, "update").click()
+
+
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles

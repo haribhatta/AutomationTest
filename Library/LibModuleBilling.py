@@ -474,8 +474,8 @@ def opDepositDbiling(danpheEMR, HospitalNo, deposit, testname):
     SubTotal = itemAprice
     DepositBalance = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]").text
     assert deposit == int(DepositBalance)
-    BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
-    assert deposit == int(BalanceAmount)
+    # BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
+    # assert deposit == int(BalanceAmount)
     TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
     print("TotalAmount", TotalAmount)
     assert TotalAmount == SubTotal
@@ -488,17 +488,17 @@ def opDepositDbiling(danpheEMR, HospitalNo, deposit, testname):
     time.sleep(3)
     # Need to maintain the Display sequence from Setting > Payment Mode Settings make Pos m
     if int(DepositBalance) >= int(TotalAmount):
-        dep = danpheEMR.find_element(By.ID, "mode_8")
+        dep = danpheEMR.find_element(By.ID, "mode_0")
     # Use Java script executioner click instead of click method.
         danpheEMR.execute_script("arguments[0].click();", dep)
         time.sleep(2)
     else:
         remaining = int(TotalAmount) - int(DepositBalance)
         print("Remaining amount after deducting deposite is :", remaining)
-        dep = danpheEMR.find_element(By.ID, "mode_8")
+        dep = danpheEMR.find_element(By.ID, "mode_0")
         # Use Java script executioner click instead of click method.
         danpheEMR.execute_script("arguments[0].click();", dep)
-        danpheEMR.find_element(By.ID, "input_amount0").send_keys(remaining)
+        danpheEMR.find_element(By.ID, "input_amount1").send_keys(remaining)
         time.sleep(2)
     danpheEMR.find_element(By.ID, "Add").click()
     danpheEMR.find_element(By.NAME, "Remarks").send_keys("Deducted full from deposite")
