@@ -246,16 +246,23 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(3)
+<<<<<<< HEAD
         # danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
+=======
+    # danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
+>>>>>>> 2dbd67d667c99130c162c8ddcb278e117958f14d
     element = WebDriverWait(danpheEMR, 20).until(
        EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
     )
     element.click()
+<<<<<<< HEAD
     # danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
     #element = WebDriverWait(danpheEMR, 20).until(
     #    EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
     #)
     #element.click()
+=======
+>>>>>>> 2dbd67d667c99130c162c8ddcb278e117958f14d
     #danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
     time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
