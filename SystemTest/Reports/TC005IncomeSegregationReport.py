@@ -37,36 +37,43 @@ isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 AC.logout()
 AC.login(itUserId, itUserPwd)
 LB.counteractivation(EMR)
-#####Scenario: Cash Invoice with no Discount
+#####Scenario 1: Cash Invoice with no Discount
 LBR.getIncomeSegregation(EMR)
 LBR.preSystemIncomeSegregation()
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=rateOPD, cashReturn=0, credit=0, creditReturn=0, discount=0, provision=0)
-#####Scenario: Return Cash Invoice with no Discount
+#####Scenario 2: Return Cash Invoice with no Discount
 print(">>>>>>Start>Cash Return")
 LBR.preSystemIncomeSegregation()
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="this is bill return 1")
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=rateOPD, credit=0, creditReturn=0, discount=0, provision=0)
-#####Scenario: Credit Invoice with no Discount
+#####Scenario 3: Credit Invoice with no Discount
 HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LBR.preSystemIncomeSegregation()
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=rateOPD, creditReturn=0, discount=0, provision=0)
 LBR.preSystemIncomeSegregation()
-#####Scenario: Return Credit Invoice with no Discount
+#####Scenario 4: Return Credit Invoice with no Discount
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo1, returnmsg="this is bill return 2")
 LBR.getIncomeSegregation(EMR)
 LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=rateOPD, discount=0, provision=0)
-#####Scenario: Cash Invoice with Discount
-HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(danpheEMR=EMR, discountScheme=discountScheme, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
-LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0, deposit=0, HospitalNo=HospitalNo2, doctor=doctor, department=department, admittingDoctorMandatory=isDoctorMandatory)
-LBR.getIncomeSegregation(EMR)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo2, test=usgtest)
-LBR.preSystemIncomeSegregation()
-LBR.getIncomeSegregation(EMR)
-LBR.verifyIncomeSegregation(cash=0, cashReturn=0, credit=0, creditReturn=0, discount=0, provision=usgprice)
+
+#####Scenario: Cash Invoice with Discount          Remarks :: Need to get discount scheme from setting >core cfg
+# LBR.getIncomeSegregation(EMR)
+# LBR.preSystemIncomeSegregation()
+# HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=discountValue, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+# LBR.getIncomeSegregation(EMR)
+# LBR.verifyIncomeSegregation(cash=rateOPD, cashReturn=0, credit=0, creditReturn=0, discount=0, provision=0)
+
+
+#####################
+# 6.Provisional billing, 7.Cancel Provisional bill,
+# 8.Deposit, 9.Deduct Deposit, 10.Refund Deposit
+# 11.Repeat Scenarios 1-10 for different date.
+
+#######################
 AC.logout()
 AC.closeBrowser()
 

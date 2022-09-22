@@ -66,7 +66,7 @@ def patientquickentry(danpheEMR, discountScheme, paymentmode, department, doctor
     print("Sir name", sname1)
     FullName = fname + mname + sname1
     print("Full name of patient:", FullName)
-    age = random.randint(15, 60)
+    age = random.randint(15, 47)
     danpheEMR.find_element(By.CSS_SELECTOR, ".row > .form-control").send_keys(age)
     danpheEMR.find_element(By.CSS_SELECTOR, ".input-group > .ng-valid").click()  #
     dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".ng-dirty")  #

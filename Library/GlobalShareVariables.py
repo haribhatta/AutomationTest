@@ -179,28 +179,28 @@ if appName == "SNCH":
       ReferredBy = "Dr. Amit Chaturbedi"
 
       #################Test Action: DB Connection###########
-      import pyodbc
-      import pandas as pd
-
-      conn = pyodbc.connect("Driver={SQL Server};"
-                            "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
-                            "Database=DanpheEMR_SNCH_UAT;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
-                            "Trusted_Connection=yes;")
-
-      ##### Getting pharmacy item rate #####################
-      query = "select CostPrice, MRP from PHRM_MST_Stock where ItemId = (select ItemId from PHRM_MST_Item where ItemName = 'SINEX TAB')"
-      df = pd.read_sql(query, conn)
-      print("df:", df)
-      rate = df.at[0, 'MRP']
-      print("Drug Rate:", rate)
-      CostPrice = df.at[0, 'CostPrice']
-      print("Drug CostPrice:", CostPrice)
+      # import pyodbc
+      # import pandas as pd
+      #
+      # conn = pyodbc.connect("Driver={SQL Server};"
+      #                       "Server=DESKTOP-68UCKA5\SQLEXPRESS;"  # DESKTOP-68UCKA5\SQLEXPRESS
+      #                       "Database=DanpheEMR_SNCH_UAT;"  # TEST_LIVE_DanpheEMR_MMH_NewV2
+      #                       "Trusted_Connection=yes;")
+      #
+      # ##### Getting pharmacy item rate #####################
+      # query = "select CostPrice, MRP from PHRM_MST_Stock where ItemId = (select ItemId from PHRM_MST_Item where ItemName = 'SINEX TAB')"
+      # df = pd.read_sql(query, conn)
+      # print("df:", df)
+      # rate = df.at[0, 'MRP']
+      # print("Drug Rate:", rate)
+      # CostPrice = df.at[0, 'CostPrice']
+      # print("Drug CostPrice:", CostPrice)
 
 ###TestAction>>Pharmacy/Store+DispensaryItems:
       drug1BrandName = "SINEX TAB"
       drug1GenericName = "PARACETAMOL"
-      drug1Rate = rate
-      drug1CostPrice = CostPrice
+      drug1Rate = 3
+      drug1CostPrice = 2
       drug2BrandName = 'ASTHALIN 2.5ml'
       drug2BrandRate = 1.14
       drug3BrandName = "Sinex tab"
