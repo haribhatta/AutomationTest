@@ -329,13 +329,15 @@ def verifyReturnDispensaryInvoice(danpheEMR, InvoiceNo, paymentmode, returnRemar
 
     print(">>Verify Return Pharmacy Invoice: END")
 
-def settleDispensaryCreditInvoice(danpheEMR, HospitalNo, InvoiceNo):
+def settleDispensaryCreditInvoice(danpheEMR, creditOrganization, HospitalNo):
     print(">>Create Dispensary Sale to Hospital Patient: START")
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Sale").click()
     danpheEMR.find_element(By.LINK_TEXT, "Settlement").click()
     time.sleep(3)
+    creditOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
+    creditOrg.select_by_visible_text(creditOrganization)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//a[@danphe-grid-action='showDetails']").click()
@@ -493,7 +495,7 @@ def createDispensarySaleWithDiscount(danpheEMR, HospitalNo, qty, discountpercent
     danpheEMR.find_element(By.ID, "qty0").click()
     danpheEMR.find_element(By.ID, "qty0").clear()
     danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
-    danpheEMR.find_element(By.ID, "dis-per0").send_keys(discountpercentage)
+    danpheEMR.find_element(By.ID, "discountpercent").send_keys(discountpercentage)
     time.sleep(3)
     if discountpercentage > 100:
         text = 'Discount % Range: 0-100%'
@@ -501,6 +503,9 @@ def createDispensarySaleWithDiscount(danpheEMR, HospitalNo, qty, discountpercent
         print(spamtext)
         assert spamtext == text
         print("Discount % cannot be greater than 100 % so the case is closed")
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
+        time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Discard Changes')]").click()
     else:
         time.sleep(3)
