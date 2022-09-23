@@ -10,7 +10,8 @@ appName = input("Please enter project/application name:\n"
                 "Core\n"
                 "Hope\n"
                 "APF\n"
-                "Charak\n")
+                "Charak\n"
+                "matrika\n")
 
 if appName == "LPH":
       appURL = "http://202.51.74.168:453/"
@@ -1384,7 +1385,109 @@ if appName == "Charak":
       Ledger_2 = ledgerName2
 
 ###############################################################################
+# Matrika Eye Center
 
+if appName == "matrika":
+      appURL = "http://202.51.74.168:220/"
+###TestAction>>LogIn:
+      # admin user
+      adminUserID = 'Admin'
+      adminUserPwD = 'DanpheHIMS@123'    # '28A7hi0jvH0='
+      #billing user
+      foUserID = 'Admin' #'sabitri'
+      foUserPwD = 'DanpheHIMS@123'
+      foUserName = 'Mr. admin admin' #'Ms. Sabitri Sharma Adhikari'
+      #IT user
+      itUserID = 'Admin' #'rn'
+      itUserPwD = 'DanpheHIMS@123'
+      #pharmacy user
+      pharmacyUserID = 'Admin' #'shivraj'
+      pharmacyUserPwD = 'DanpheHIMS@123'
+      pharmacyUserName = 'admin admin' #'shiv raj'
+      #laboratory user
+      labUserID = 'Admin'
+      labUserPwD = 'DanpheHIMS@123'
+      # Radiology user
+      radioUserID = 'Admin'
+      radioUserPwD = 'DanpheHIMS@123'
+      #Inventory user
+      storeUserID = 'Admin'
+      storeUserPwD = 'DanpheHIMS@123'
+      #Medical Record user
+      MRUserID = 'Admin' #'haris'
+      MRUserPwD = 'DanpheHIMS@123'
+###TestAction>>BillingItems:
+      opdRate = 350
+      deposit = 200
+      CBC = "A scan"
+      TFT = "Yag Capsulotomy"   #TFT(FT3,FT4,TSH) CLLEA
+      TFTRate = 1500
+      LDH = "LDH"
+      UrineRE = "TRIA" # this gets changed on V1.49.3
+      BTCT = "B-SCAN"
+      btctRate = 500
+      USG = "BANDAGE CONTACT LENS"
+      usgRate = 1000
+      admitRate = 1500
+      discountCommunityName = "Hospital"
+      discountSchemeName = "Referal (10%)"
+      DiscountPercent = 10
+      ReferredBy = ""
+
+###TestAction>>Pharmacy/Store+DispensaryItems:
+      drug1BrandName = "SINEX TAB"
+      drug1GenericName = "PARACETAMOL"
+      drug1Rate = 3
+      drug1CostPrice = 2
+      drug2BrandName = 'ASTHALIN 2.5ml'
+      drug2BrandRate = 1.14
+      drug3BrandName = "Sinex tab"
+      drug4BrandName = "10 ML DIS.SYRINGE"
+      drug4BrandRate = 6.49
+      drug5BrandName = 'MONOTRATE-20MG TAB'
+      drug5BrandRate = 4.86
+      drugSinexName = 'SINEX TAB'
+      drugSinexRate = 3
+      drugAasma = 'AASMA 150 XR TAB'
+      drug1NarcoticName = "MORFIUM 1ML ING"
+      drug1NarcoticRate = 100
+      drugType = 'SURGICALS'
+      drugCompany = 'HIMALAYANS'
+      dispensaryName1 = "MainDispensary"
+      dispensaryName2 = "Insurance Dispensary"
+      pharmacySupplierName1 = "AAKAR ENTERPRISES"
+      supplier = "JOSHI TRADE CONCERN"
+      ###TestAction>>Inventory+Procurement+SubStore:
+      inventoryName1 = "General Inventory"
+      inventoryName2 = "Medical Inventory"
+      subStoreName1 = "ACCOUNT"
+      subStoreName2 = "ADMINISTRATION"
+      A4Paper = 'A4 PAPER'
+      storeItem1Name = 'A4 PAPER'
+      PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
+      photocopypaperRate = 2300
+      stationaryItem1 = "PENCIL"
+      stationaryItem2 = "DOTPEN"
+      File = "FILE"
+      SubStore1 = "General"
+      SubStore2 = "PostOps"
+      inventorySupplierName1 = "Shremad Tech."
+      salesCategoyType = "Pharmacy Unit"
+###TestAction>>Doctor:
+
+###TestAction>>ADT:
+      generalWard = "General Ward"
+      GeneralWard = "ICU"
+      bedFeature = "BED CHARGE General Ward"
+      admitWard = "Pediatric Ward"
+      admitBed = "Pediatric Bed Charge"
+###TestAction>>Settings:
+      user = "admin"
+      doctorGyno = "Dr. Ben Limbu"
+      departmentGyno = "OPHTHALMOLOGY"
+      departmentNephro = "OPHTHALMOLOGY"
+# Dispensary Credit Organization
+      creditOrganization = "Arogin Care Home"
 
    #def __str__():
     #  return

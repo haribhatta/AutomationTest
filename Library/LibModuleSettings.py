@@ -208,6 +208,9 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     # POS-1
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").clear()
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").send_keys(7)
+    #Cheque
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[3]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[9]").send_keys(7)
     # update
     danpheEMR.find_element(By.ID, "update").click()
 
