@@ -129,7 +129,7 @@ if appName == "LPH":
 ###############################################################################
 ########Defining Variables for SNCH
 if appName == "SNCH":
-      appURL = "http://202.51.74.168:168/"
+      appURL = "http://localhost:106/" #"http://202.51.74.168:168/"
 ###TestAction>>LogIn:
       # admin user
       adminUserID = 'Admin'
@@ -794,7 +794,7 @@ if appName == "MMH":
       DoctorGyno = df.at[1, 'FirstName']
       print("Gyno Doctor Name:", DoctorGyno)
 
-      query = "select FirstName from EMP_Employee where DepartmentId = (select DepartmentId from MST_Department where Description = 'Nephrology')"
+      query = "select FirstName from EMP_Employee where DepartmentId = (select DepartmentId from MST_Department where Description = 'Neurology')"
       df = pd.read_sql(query, conn)
       doctorNephro = df.at[0, 'FirstName']
       print("Nephro Doctor Name:", doctorNephro)
