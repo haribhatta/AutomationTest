@@ -975,7 +975,7 @@ def generateDischargeInvoice(danpheEMR, HospitalNo, paymentmode):
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[@type='button' and text()=' Confirm Discharge ']").click()
     time.sleep(7)
-    InvoiceNo = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'2078/2079-')]").text
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'2079/2080-')]").text
     print("InvoiceNo:", InvoiceNo)
     #InvoiceNo = InvoiceNo.partition("- ")[2] ## This is not working in RTM
     InvoiceNo = InvoiceNo.partition("BL")[2]
