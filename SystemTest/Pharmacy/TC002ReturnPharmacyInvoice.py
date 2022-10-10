@@ -8,10 +8,7 @@ To test below check points:
 import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleDispensary as LD
-import Library.LibModulePharmacy as LP
-import Library.LibModulePharmacyReports as LPR
 import Library.LibModuleAppointment as LA
-#import Library.LibModuleBilling as LB
 import Library.LibModuleBilling as LB
 
 # front desk user login
@@ -32,7 +29,7 @@ discountScheme = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-paymentmode = "CREDIT"
+paymentmode = "Credit"
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode=paymentmode, department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 AC.logout()
 
