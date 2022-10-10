@@ -174,17 +174,6 @@ def createPharmacyPurchaseOrder(danpheEMR, supplierName, drugName):
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
         time.sleep(3)
-        #danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Purchase')]").click()
-    # time.sleep(3)
-    # danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/ng-component/div/ul/li[1]/a").click()
-    # time.sleep(3)
-    # danpheEMR.find_element(By.LINK_TEXT, "Order").click()
-    # danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Order/PurchaseOrderItems')]").click()
-    # danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-9 > .form-control").click()
-    # time.sleep(9)
-    # dropdown = danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-9 > .form-control")
-    # time.sleep(3)
-    # dropdown.find_element(By.XPATH, "//option[. = 'Shremad Tech.']").click()
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(supplierName)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "SupplierName").send_keys(Keys.TAB)
@@ -246,24 +235,10 @@ def createPharmacyGoodsReceipt(danpheEMR, supplier, DrugName, itemQty, freeQty, 
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
         time.sleep(3)
-<<<<<<< HEAD
-        # danpheEMR.find_element(By.XPATH, "//a[contains(text(),' Purchase ')]").click()
-=======
-    # danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
->>>>>>> 2dbd67d667c99130c162c8ddcb278e117958f14d
     element = WebDriverWait(danpheEMR, 20).until(
        EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
     )
     element.click()
-<<<<<<< HEAD
-    # danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Order')]").click()
-    #element = WebDriverWait(danpheEMR, 20).until(
-    #    EC.presence_of_element_located((By.XPATH, "//a[contains(text(),'Order')]"))
-    #)
-    #element.click()
-=======
->>>>>>> 2dbd67d667c99130c162c8ddcb278e117958f14d
-    #danpheEMR.find_element(By.XPATH, "//a[@href='#/Pharmacy/Order/PurchaseOrderItems']").click()
     time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Receipt").click()
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Select Supplier']").send_keys(supplier)
