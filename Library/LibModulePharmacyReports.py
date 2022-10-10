@@ -867,7 +867,7 @@ def getSystemPharmacyBillWiseSalesReport(danpheEMR):
     time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Bill-wise Sales')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Invoice Billing')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(3)
@@ -906,15 +906,17 @@ def verifySystemPharmacyBillWiseSalesReport(danpheEMR, invoiceNo, cash, cashRetu
     time.sleep(4)
     danpheEMR.find_element(By.LINK_TEXT, "Sales").click()
     time.sleep(4)
-    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Bill-wise Sales')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Invoice Billing')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(15)  # Due to performance issue there is open bug in Jira: EMR-4775
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(invoiceNo)
     time.sleep(9)
-    sysInvoiceNo = danpheEMR.find_element(By.XPATH, "(/sale").text
+    sysInvoiceNo = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]").text
     print("sysInvoiceNo:", sysInvoiceNo)
+    sysInvoiceNo = int(sysInvoiceNo)
     print("invoiceNo:", invoiceNo)
+    invoiceNo = int(invoiceNo)
     assert sysInvoiceNo == invoiceNo
     sysTotalAmount = danpheEMR.find_element(By.XPATH, "(//div[@col-id='TotalAmount'])[2]").text
     sysTotalAmount = int(sysTotalAmount)
