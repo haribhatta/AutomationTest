@@ -1175,8 +1175,9 @@ def verifyPharmacyReturnFromCustomerReport(danpheEMR, invoiceNo, cashReturn, cre
 
 ########Supplier Reports:
 
-def getSupplierStockReport(danpheEMR, supplier):
-    global actualTotalAmount
+def getSupplierStockReport(danpheEMR, supplier, batchNumber):
+    global supplierPurchaseItemName
+    global supplierPurchaseQty
     time.sleep(3)
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
@@ -1185,7 +1186,7 @@ def getSupplierStockReport(danpheEMR, supplier):
     time.sleep(2)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
-    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Supplier Stock ')]").click()
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Supplier Wise Stock Report')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.ID, "supplierName").send_keys(supplier)
     time.sleep(2)
@@ -1193,26 +1194,32 @@ def getSupplierStockReport(danpheEMR, supplier):
     danpheEMR.find_element(By.ID, "supplierName").send_keys(Keys.ENTER)
     danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Show Report')]").click()
     time.sleep(2)
-    actualTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]").text
-    actualTotalAmount = int(actualTotalAmount)
-    print("Total Amount of selected date of given supplier is  : ", actualTotalAmount)
-
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(batchNumber)
+    # actualTotalAmount = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[1]/td[4]").text
+    # actualTotalAmount = int(actualTotalAmount)
+    # print("Total Amount of selected date of given supplier is  : ", actualTotalAmount)
+    time.sleep(2)
+    supplierPurchaseQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]").text
+    print("Purchase Quantity of the item is ", supplierPurchaseQty)
+    purchaseQty = int(supplierPurchaseQty)
+    print(purchaseQty)
+    supplierPurchaseItemName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
+    print("Item name of the item is ", supplierPurchaseItemName)
 
 def preSupplierStockReport():
-    global pretotalAmount
-    pretotalAmount = actualTotalAmount
-    print("pre Total Stock amount of given supplier is :", pretotalAmount)
+    global presupplierPurchaseQty
+    global presupplierPurchaseItemName
+    presupplierPurchaseQty = supplierPurchaseQty
+    print("Purchase Quantity of the item is :", presupplierPurchaseQty)
+    presupplierPurchaseQty = int(presupplierPurchaseQty)
+    print(presupplierPurchaseQty)
+    presupplierPurchaseItemName = supplierPurchaseItemName
+    print("Item name of the purchase item is ", presupplierPurchaseItemName)
 
-
-def verifysupplierStockReport(qtyGR, rateGR):
+def verifysupplierStockReport(purchaseQuantity, itemName):
     print("START>>verifying the Stock Summary Report")
-    newPurchaseAmount = qtyGR * rateGR
-    print("newPurchaseAmount:", newPurchaseAmount)
-    expectedTotalAmount = pretotalAmount + newPurchaseAmount
-    print("expectedTotalAmount:", expectedTotalAmount)
-    assert expectedTotalAmount == actualTotalAmount
-    print("END>> Verifying Stock Summary Report")
-
+    assert presupplierPurchaseQty == purchaseQuantity
+    assert presupplierPurchaseItemName == itemName
 
 ### Sales Statement ##
 
