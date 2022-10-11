@@ -74,7 +74,7 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
     print("Create Pharmacy OPD Invoice: END<<")
     return pInvoiceNo
 
-def createNarcoticDispensarySale(danpheEMR, HospitalNo, drugName, qty, paymentmode):
+def createNarcoticDispensarySale(danpheEMR, HospitalNo, drugName, qty, paymentmode, creditors):
     print(">>SRART:createNarcoticDispensarySale")
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
     time.sleep(3)
@@ -106,9 +106,11 @@ def createNarcoticDispensarySale(danpheEMR, HospitalNo, drugName, qty, paymentmo
     danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
     time.sleep(3)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-        paymentoptions.select_by_visible_text("credit")
+        paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+        paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
+        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrganization.select_by_visible_text(creditors)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
     time.sleep(5)

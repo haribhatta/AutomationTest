@@ -37,7 +37,7 @@ discountScheme = GSV.discountSchemeName
 ########
 AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve').HospitalNo
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 #can.verifyopdinvoice(deposit=0, billamt=500)
 drug = GSV.drug1BrandName
 rate = GSV.drug1Rate
@@ -46,10 +46,10 @@ amount = rate*qty
 print("Amount", amount)
 AC.logout()
 AC.login(phUserId, phUserPwd)
-LD.activateDispensaryCounter(EMR, GSV.dispensaryName)
+LD.activateDispensaryCounter(EMR, GSV.dispensaryName1)
 LPR.getPharmacyDashboard(EMR)
 LPR.preSystemPharmacyDashboard()
-InvoiceNo = LP.createDispensarySaleRandomPatient(danpheEMR=EMR, drugname=drug, qty=qty, paymentmode='Cash')
+pInvoiceNo = LD.createDispensarySaleRandomPatient(danpheEMR=EMR, drugname=drug, qty=qty, paymentmode='Cash')
 #LPR.createDispensarySaleRandomPatient(drugname=drug, qty=qty, paymentmode='Cash')
 LPR.getPharmacyDashboard(EMR)
 LPR.verifyPharmacyDashboard(cash=amount, cashreturn=0, credit=0, creditreturn=0, deposit=0, depositreturn=0, provisional=0, provisionacancel=0)
