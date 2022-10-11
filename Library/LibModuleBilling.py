@@ -190,9 +190,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     print("Total Price:", totalprice)
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
     InNo = WebDriverWait(danpheEMR, 10)
-    InNo.until(
-        EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]"))
-    )
+    InNo.until(EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]")))
     # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
@@ -401,7 +399,7 @@ def verifyDuplicateBill(danpheEMR, HospitalNo):
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
     time.sleep(2)
     #danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
-    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>verifyDuplicateBill")
 
