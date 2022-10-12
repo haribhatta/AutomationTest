@@ -1315,7 +1315,7 @@ def getStockTransferReport(danpheEMR):
     global totalStockQuantity
     global totalStockPurchaseValue
     global totalStockSalesValue
-
+    print("START :: Geting stock transfer report")
     time.sleep(3)
     if AppName == "LPH":
         danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
@@ -1328,30 +1328,32 @@ def getStockTransferReport(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Stock Transfers')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Show Report')]").click()
-
+    time.sleep(5)
     receivedStockQuantity = danpheEMR.find_element(By.XPATH,
                                                    "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
-    receivedStockQuantity = int(receivedStockQuantity)
+    print(receivedStockQuantity)
+    receivedStockQuantity = float(receivedStockQuantity)
     print("Transferred Stocks (Received Stocks) Quantity is : ", receivedStockQuantity)
 
     receivedStockPurchaseValue = danpheEMR.find_element(By.XPATH,
                                                         "//*[@id='print_summary']/table/tbody/tr[2]/td[3]/span").text
-    receivedStockPurchaseValue = int(str(receivedStockPurchaseValue).replace(",", ""))
+    receivedStockPurchaseValue = receivedStockPurchaseValue.replace(",", "")
+    receivedStockPurchaseValue = float(receivedStockPurchaseValue)
     print("Transferred Stocks (Received Stocks)Purchase value is : ", receivedStockPurchaseValue)
 
     receivedStockSalesValue = danpheEMR.find_element(By.XPATH,
                                                      "//*[@id='print_summary']/table/tbody/tr[2]/td[4]/span").text
-    receivedStockSalesValue = int(str(receivedStockSalesValue).replace(",", ""))
+    receivedStockSalesValue = float(str(receivedStockSalesValue).replace(",", ""))
     print("Transferred Stocks (Received Stocks) Sales Value is : ", receivedStockSalesValue)
 
     notReceivedStockQuantity = danpheEMR.find_element(By.XPATH,
                                                       "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
-    notReceivedStockQuantity = int(notReceivedStockQuantity)
+    notReceivedStockQuantity = float(notReceivedStockQuantity)
     print("In-Transition Stocks (Not Received Stocks) Quantity is :  ", notReceivedStockQuantity)
 
     notReceivedStockPurchaseValue = danpheEMR.find_element(By.XPATH,
                                                            "//*[@id='print_summary']/table/tbody/tr[3]/td[3]/span").text
-    notReceivedStockPurchaseValue = int(str(notReceivedStockPurchaseValue).replace(",", ""))
+    notReceivedStockPurchaseValue = float(str(notReceivedStockPurchaseValue).replace(",", ""))
     print("In-Transition Stocks (Not Received Stocks) Purchase value is :  ", notReceivedStockPurchaseValue)
 
     notReceivedSalesValue = danpheEMR.find_element(By.XPATH,
@@ -1360,12 +1362,12 @@ def getStockTransferReport(danpheEMR):
     print("In-Transition Stocks (Not Received Stocks) Sales value is :  ", notReceivedSalesValue)
 
     totalStockQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[4]/td[2]/span").text
-    totalStockQuantity = int(totalStockQuantity)
+    totalStockQuantity = float(totalStockQuantity)
     print("Total Stocks is : ", totalStockQuantity)
 
     totalStockPurchaseValue = danpheEMR.find_element(By.XPATH,
                                                      "//*[@id='print_summary']/table/tbody/tr[4]/td[3]/span").text
-    totalStockPurchaseValue = int(str(totalStockPurchaseValue).replace(",", ""))
+    totalStockPurchaseValue = float(str(totalStockPurchaseValue).replace(",", ""))
     print("Total Purchase Value is : ", totalStockPurchaseValue)
 
     totalStockSalesValue = danpheEMR.find_element(By.XPATH,
@@ -1386,49 +1388,49 @@ def preStockTransferReport():
     global pretotalStockPurchaseValue
     global pretotalStockSalesValue
 
-    prereceivedStockQuantity = receivedStockQuantity
+    prereceivedStockQuantity = float(receivedStockQuantity)
     print("let Transferred Stocks(Received Stock) Quantity be : ", prereceivedStockQuantity)
 
-    prereceivedStockPurchaseValue = receivedStockPurchaseValue
+    prereceivedStockPurchaseValue = float(receivedStockPurchaseValue)
     print("let Transferred Stocks(Received Stock) Purchase Value be : ", prereceivedStockPurchaseValue)
 
-    prereceivedStockSalesValue = receivedStockSalesValue
+    prereceivedStockSalesValue = float(receivedStockSalesValue)
     print("let Transferred Stocks(Received Stock) Sales Value be : ", prereceivedStockSalesValue)
 
-    prenotReceivedStockQuantity = notReceivedStockQuantity
+    prenotReceivedStockQuantity = float(notReceivedStockQuantity)
     print("let In -Transition Stocks(Not Received Stock) Quantity be : ", prenotReceivedStockQuantity)
 
-    prenotReceivedStockPurchaseValue = notReceivedStockPurchaseValue
+    prenotReceivedStockPurchaseValue = float(notReceivedStockPurchaseValue)
     print("let In -Transition Stocks(Not Received Stock) Purchase Value be : ", prenotReceivedStockPurchaseValue)
 
-    prenotReceivedSalesValue = notReceivedSalesValue
+    prenotReceivedSalesValue = float(notReceivedSalesValue)
     print("let In -Transition Stocks(Not Received Stock) Sales Value be : ", prenotReceivedSalesValue)
 
-    pretotalStockQuantity = totalStockQuantity
+    pretotalStockQuantity = float(totalStockQuantity)
     print("let Total Stocks Quantity be : ", pretotalStockQuantity)
 
-    pretotalStockPurchaseValue = totalStockPurchaseValue
+    pretotalStockPurchaseValue = float(totalStockPurchaseValue)
     print("let Total Stocks Purchase Value be : ", pretotalStockPurchaseValue)
 
-    pretotalStockSalesValue = totalStockSalesValue
+    pretotalStockSalesValue = float(totalStockSalesValue)
     print("let Total Stocks Sales Value be : ", pretotalStockSalesValue)
 
 
 def verifyStockSummaryReportBeforeReceiving(qty):
     print("START>> Verifying Stock Stock Summary Report Before Item Receiving")
-    assert notReceivedStockQuantity == float(prenotReceivedStockQuantity + qty)
-    assert totalStockQuantity == receivedStockQuantity + notReceivedStockQuantity
-    assert totalStockPurchaseValue == receivedStockPurchaseValue + notReceivedStockPurchaseValue
-    assert totalStockSalesValue == receivedStockSalesValue + notReceivedSalesValue
+    assert float(notReceivedStockQuantity) == float(prenotReceivedStockQuantity + qty)
+    assert float(totalStockQuantity) == float(receivedStockQuantity + notReceivedStockQuantity)
+    assert float(totalStockPurchaseValue) == float(receivedStockPurchaseValue + notReceivedStockPurchaseValue)
+    assert float(totalStockSalesValue) == float(receivedStockSalesValue + notReceivedSalesValue)
     print("END>> Verifying Stock Stock Summary Report Before Item  Receiving")
 
 
 def verifyStockSummaryReportAfterReceiving(qty):
     print("START>> Verifying Stock Stock Summary Report After item Receiving")
-    assert receivedStockQuantity == prereceivedStockQuantity + qty
-    assert totalStockQuantity == receivedStockQuantity + notReceivedStockQuantity
+    assert float(receivedStockQuantity) == float(prereceivedStockQuantity + qty)
+    assert float(totalStockQuantity) == float(receivedStockQuantity + notReceivedStockQuantity)
     assert totalStockPurchaseValue == receivedStockPurchaseValue + notReceivedStockPurchaseValue
-    assert totalStockSalesValue == receivedStockSalesValue + notReceivedSalesValue
+    assert float(totalStockSalesValue) == float(receivedStockSalesValue + notReceivedSalesValue)
     print("END>> Verifying Stock Stock Summary Report After item Receiving")
 
 def getReturnToSupplierReport(danpheEMR, creditno):
