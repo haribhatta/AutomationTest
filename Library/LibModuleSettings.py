@@ -192,7 +192,10 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[12]").send_keys(1)
     # Cash
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").clear()
-    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").send_keys(2)
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").send_keys(1)
+    # Credit
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[2]").clear()
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[2]").send_keys(2)
     # e-sewa
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").clear()
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").send_keys(3)
@@ -210,7 +213,7 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").send_keys(7)
     #Cheque
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[3]").clear()
-    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[9]").send_keys(7)
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[9]").send_keys(8)
     # update
     danpheEMR.find_element(By.ID, "update").click()
 

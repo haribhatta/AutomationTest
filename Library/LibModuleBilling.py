@@ -401,7 +401,7 @@ def verifyDuplicateBill(danpheEMR, HospitalNo):
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
     time.sleep(2)
     #danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
-    danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    danpheEMR.find_element(By.ID, "btnPrintDischargeInvoice").send_keys(Keys.ESCAPE)
     time.sleep(3)
     print("END>>verifyDuplicateBill")
 
