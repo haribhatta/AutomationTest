@@ -13,9 +13,9 @@ AppName = GSV.appName
 def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doctor, department, admittingDoctorMandatory):
     print("START>>admitDisTrans")
     if admit == 1:
-        time.sleep(1)
-        danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
         time.sleep(3)
+        danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
+        time.sleep(5)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(3)
         danpheEMR.find_element(By.LINK_TEXT, "Admit").click()
@@ -81,6 +81,8 @@ def admitDisTrans(danpheEMR, admit, discharge, trasfer, HospitalNo, deposit, doc
         time.sleep(5)
         danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
         time.sleep(2)
+        #danpheEMR.find_element(By.XPATH, "///html/body/my-app/div/div/div[3]/div[2]/div/div/my-app/ng-component/div/pat-ip-bill-summary/div/div[3]/div/div/div/div[2]/button").click()
+        time.sleep(4)
         danpheEMR.find_element(By.XPATH, "//div[3]/textarea").send_keys("Patient discharging")
         danpheEMR.find_element(By.XPATH, "(//button[@type='button'])[5]").click()
         time.sleep(3)

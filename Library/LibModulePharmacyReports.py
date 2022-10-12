@@ -1323,6 +1323,7 @@ def getStockTransferReport(danpheEMR):
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
+    time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
     danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Stock Transfers')]").click()
     time.sleep(3)
