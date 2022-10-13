@@ -3,6 +3,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
+import Library.LibModuleSettings as LS
 
 #AC.applicationSelection()
 EMR = AC.openBrowser()
@@ -17,6 +18,7 @@ radioTestUSG = GSV.USG
 priceCategoryType = 'Normal'
 #############
 AC.login(foUserId, foUserPwd)
+LS.paymentModeOpBillingDisplaySequence(EMR)
 LB.counteractivation(EMR)
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LB.opDeposit(EMR, HospitalNo, GSV.deposit)
