@@ -536,7 +536,7 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
     assert int(deposit) == int(DepositBalance)
     BalanceAmount = danpheEMR.find_element(By.XPATH, "//td[2]/span").text
     print("BalanceAmount", BalanceAmount)
-    assert int(deposit) == int(BalanceAmount)
+    # assert int(deposit) == int(BalanceAmount)
     TotalAmount = danpheEMR.find_element(By.XPATH, "//tr[4]/td[2]/input").get_attribute("value")
     print("TotalAmount", TotalAmount)
     assert TotalAmount == SubTotal
@@ -550,17 +550,21 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
     time.sleep(3)
     # Need to maintain the Display sequence from Setting > Payment Mode Settings make Pos m
     if int(DepositBalance) >= int(TotalAmount):
-        dep = danpheEMR.find_element(By.ID, "mode_8")
+        dep = danpheEMR.find_element(By.ID, "mode_1")
         # Use Java script executioner click instead of click method.
         danpheEMR.execute_script("arguments[0].click();", dep)
         time.sleep(2)
     else:
         remaining = int(TotalAmount) - int(DepositBalance)
+        dep0 = danpheEMR.find_element(By.ID, "mode_0")
+        # Use Java script executioner click instead of click method.
+        danpheEMR.execute_script("arguments[0].click();", dep0)
+        time.sleep(2)
         print("Remaining amount after deducting deposite is :", remaining)
-        dep = danpheEMR.find_element(By.ID, "mode_8")
+        dep = danpheEMR.find_element(By.ID, "mode_1")
         # Use Java script executioner click instead of click method.
         danpheEMR.execute_script("arguments[0].click();", dep)
-        danpheEMR.find_element(By.ID, "input_amount0").send_keys(remaining)
+        danpheEMR.find_element(By.ID, "input_amount1").send_keys(remaining)
         time.sleep(2)
     danpheEMR.find_element(By.ID, "Add").click()
     danpheEMR.find_element(By.NAME, "Remarks").send_keys("Deducted full from deposite")
@@ -898,11 +902,14 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
     print("End>>verifyDischargeInvoice")
 
 
-def creditSettlements(danpheEMR, HospitalNo, ProvisionalSlip, cashdiscount):
+def creditSettlements(danpheEMR, creditOrganization, HospitalNo, ProvisionalSlip, cashdiscount):
     print("Start: creditSettlements")
     if ProvisionalSlip == "Yes":
         danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
         danpheEMR.find_element(By.LINK_TEXT, "Settlements").click()
+        time.sleep(2)
+        crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
+        crOrg.select_by_visible_text(creditOrganization)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
@@ -915,6 +922,9 @@ def creditSettlements(danpheEMR, HospitalNo, ProvisionalSlip, cashdiscount):
     else:
         danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
         danpheEMR.find_element(By.LINK_TEXT, "Settlements").click()
+        time.sleep(2)
+        crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
+        crOrg.select_by_visible_text(creditOrganization)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(5)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click() ## Jira has existing bug: EMR-4898
@@ -945,7 +955,7 @@ def verifyCreditSettlement(danpheEMR, HospitalNo, itemRate):
     print("END>>verifyCreditSettlement")
 
 
-def generateDischargeInvoice(danpheEMR, HospitalNo, paymentmode):
+def generateDischargeInvoice(danpheEMR, creditOrganization, HospitalNo, paymentmode):
     print(">>START: generateDischargeInvoice")
     global InvoiceNo
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -957,9 +967,12 @@ def generateDischargeInvoice(danpheEMR, HospitalNo, paymentmode):
     danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
     time.sleep(7)
     if paymentmode == "CREDIT":
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH,
-            "//select[@class='form-control ng-untouched ng-pristine ng-valid']"))
-        paymentoptions.select_by_visible_text("CREDIT")
+        paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+        paymentoptions.select_by_visible_text("Credit")
+        time.sleep(2)
+        crOrg = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        crOrg.select_by_visible_text(creditOrganization)
+        time.sleep(1)
         danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
     if paymentmode == "CREDIT":

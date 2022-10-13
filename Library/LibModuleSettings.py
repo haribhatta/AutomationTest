@@ -192,10 +192,10 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[12]").send_keys(1)
     # Cash
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").clear()
-    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").send_keys(1)
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[1]").send_keys(2)
     # Credit
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[2]").clear()
-    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[2]").send_keys(2)
+    danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[2]").send_keys(3)
     # e-sewa
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").clear()
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[4]").send_keys(3)
