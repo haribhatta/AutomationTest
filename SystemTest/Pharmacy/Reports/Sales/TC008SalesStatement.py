@@ -47,3 +47,13 @@ LPR.presalesstatementreport()
 ######## Create pharmacy cash sale
 pInvoiceNo = LD.createDispensarySale(danpheEMR=EMR, HospitalNo=HospitalNo, drugName=drugName, qty=qty, paymentmode='Cash')
 LPR.getsalesstatementreport(danpheEMR=EMR)
+LPR.verifySalesStatementReport(saleAmount=totalAmount, salesReturn=0, isReturned=0)
+# Create Pharmacy Return
+LPR.getsalesstatementreport(danpheEMR=EMR)
+LPR.presalesstatementreport()
+LD.returnDispensaryInvoice(danpheEMR=EMR, pInvoiceNo=pInvoiceNo, qty=qty, returnremark=remark)
+LPR.getsalesstatementreport(danpheEMR=EMR)
+LPR.verifySalesStatementReport(saleAmount=totalAmount, salesReturn=totalAmount, isReturned=1)
+AC.logout()
+AC.closeBrowser()
+
