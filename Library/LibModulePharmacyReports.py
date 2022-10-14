@@ -1223,7 +1223,7 @@ def verifysupplierStockReport(purchaseQuantity, itemName):
 
 ### Sales Statement ##
 
-def getStockTransferReport(danpheEMR):
+def getsalesstatementreport(danpheEMR):
     global actualSalesValue
     global actualSalesCost
     global actualSalesReturnCost
@@ -1244,21 +1244,21 @@ def getStockTransferReport(danpheEMR):
     time.sleep(2)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Show Report')]").click()
     time.sleep(3)
-    actualSalesValue = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[2]").text
+    actualSalesValue = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[2]").text
     actualSalesValue = float(actualSalesValue)
     print("actualSalesValue", actualSalesValue)
-    actualSalesCost = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[3])").text
+    actualSalesCost = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[3]").text
     actualSalesCost = float(actualSalesCost)
     print("actualSalesCost", actualSalesCost)
     actualSalesReturnValue = danpheEMR.find_element(By.XPATH,
-                                                    "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[4])").text
+                                                    "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[4]").text
     actualSalesReturnValue = float(actualSalesReturnValue)
     print("actualSalesReturnValue", actualSalesReturnValue)
     actualSalesReturnCost = danpheEMR.find_element(By.XPATH,
-                                                   "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
+                                                   "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
     actualSalesReturnCost = float(actualSalesReturnCost)
     print("actualSalesReturnCost", actualSalesReturnCost)
-    actualProfit = danpheEMR.find_element(By.XPATH, "(//div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]").text
+    actualProfit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[6]").text
     actualProfit = float(actualProfit)
     print("actualProfit", actualProfit)
     print("END>>> Get Sales Statement >>>")
@@ -1280,6 +1280,22 @@ def presalesstatementreport():
 
     print("END>>> Pre Sales Statement Report >>>")
 
+
+def verifySalesStatementReport(saleAmount, salesReturn, isReturned):
+    print("START: Verifying Sales Statement Report")
+    expectedProfit = None
+
+    time.sleep(3)
+    if isReturned == 1:
+        assert actualSalesValue == presalesvalue
+        assert actualSalesReturnValue == presalesreturnvalue + salesReturn
+    else:
+        assert actualSalesValue == presalesvalue + saleAmount
+    time.sleep(1)
+    expectedProfit = (actualSalesValue - actualSalesReturnValue) - (actualSalesCost - actualSalesReturnCost)
+    expectedProfit = format(round(expectedProfit, 4))
+    print("The Expected Profit is ", expectedProfit)
+    assert float(expectedProfit) == float(actualProfit)
 
 ### Narcotic Stock Report ###
 
@@ -1321,7 +1337,7 @@ def getStockTransferReport(danpheEMR):
         danpheEMR.find_element(By.LINK_TEXT, 'Store').click()
     elif AppName == "SNCH" or AppName == "MPH":
         danpheEMR.find_element(By.LINK_TEXT, "Pharmacy").click()
-    time.sleep(5)
+    time.sleep(9)
     danpheEMR.find_element(By.LINK_TEXT, 'Report').click()
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/Pharmacy/Report/Stock')]").click()
@@ -1331,6 +1347,7 @@ def getStockTransferReport(danpheEMR):
     time.sleep(5)
     receivedStockQuantity = danpheEMR.find_element(By.XPATH,
                                                    "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
+    receivedStockQuantity = receivedStockQuantity.replace(",", "")
     print(receivedStockQuantity)
     receivedStockQuantity = float(receivedStockQuantity)
     print("Transferred Stocks (Received Stocks) Quantity is : ", receivedStockQuantity)
@@ -1348,6 +1365,7 @@ def getStockTransferReport(danpheEMR):
 
     notReceivedStockQuantity = danpheEMR.find_element(By.XPATH,
                                                       "//*[@id='print_summary']/table/tbody/tr[3]/td[2]/span").text
+    notReceivedStockQuantity = notReceivedStockQuantity.replace(",", "")
     notReceivedStockQuantity = float(notReceivedStockQuantity)
     print("In-Transition Stocks (Not Received Stocks) Quantity is :  ", notReceivedStockQuantity)
 
@@ -1362,6 +1380,7 @@ def getStockTransferReport(danpheEMR):
     print("In-Transition Stocks (Not Received Stocks) Sales value is :  ", notReceivedSalesValue)
 
     totalStockQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='print_summary']/table/tbody/tr[4]/td[2]/span").text
+    totalStockQuantity = totalStockQuantity.replace(",", "")
     totalStockQuantity = float(totalStockQuantity)
     print("Total Stocks is : ", totalStockQuantity)
 
