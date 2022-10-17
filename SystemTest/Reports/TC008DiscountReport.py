@@ -20,7 +20,7 @@ priceCategoryType = "Normal"
 EMR = AC.openBrowser()
 AC.login(admUserId, admUserPwd)
 a, b = LS.checkCoreCFGdiscountMembership(EMR)  #membershipTypeDiscountValue, membershipSchemeSettingsValue
-discountValue = a + b
+discountValue = GSV.discountSchemeName
 opdRate = GSV.opdRate
 ###
 LB.counteractivation(EMR)
