@@ -379,6 +379,60 @@ def createProvisionalBill(danpheEMR, HospitalNo, usgtest):
     time.sleep(2)
     print("END>>createProvisionalBill")
 
+def createIPprovisionalBill(danpheEMR, HospitalNo, usgtest):
+        print("START>>createIPprovisionalBill")
+        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+        danpheEMR.find_element(By.ID, "srchIP_PatientList").click()
+        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(HospitalNo)
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.RETURN)
+        time.sleep(3)
+        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.TAB)
+        time.sleep(3)
+        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(usgtest)
+        time.sleep(1)
+        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Print Provisional Slip ')]").click()
+        time.sleep(5)
+        danpheEMR.find_element(By.ID, "btnPrintProvisionalSlip").send_keys(Keys.ESCAPE)
+        time.sleep(2)
+        print("END>>createIPprovisionalBill")
+
+
+
+def verifyEstimationBill(danpheEMR, HospitalNo):
+    print("START>>verifyEstimationBill")
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(5)
+    ToBePaid= danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/my-app/ng-component/div/pat-ip-bill-summary/div/div/div/div/div[2]/div/div[2]/div/table/tbody/tr[7]/td[2]/label").text
+    ToBePaid= ToBePaid.replace(",", "")
+    ToBePaid = int(ToBePaid)
+    print("ToBePaidAmt", ToBePaid)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Estimation Bill')]").click()
+    time.sleep(3)
+    EstimationBill= danpheEMR.find_element(By.XPATH, "//*[@id='divEstimationBillPrintPage']/div/table/tbody/tr/td/div/div[5]/div[2]/div/div").text
+    EstimationBill =EstimationBill.replace("GRAND TOTAL: ", "")
+    print("Estimation Bill Amount", EstimationBill)
+    EstimationBill = EstimationBill.replace(",", "")
+    print("Estimation Bill Amount", EstimationBill)
+    EstimationBill = int(EstimationBill)
+    print(EstimationBill)
+    assert EstimationBill == ToBePaid
+    danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/my-app/ng-component/div/pat-ip-bill-summary/div/div[2]/div/div/div/div/a").click()
+    print("END>>verified Estimation Bill")
+
+
 
 def verifyDuplicateBill(danpheEMR, HospitalNo):
     print("START>>verifyDuplicateBill")
@@ -672,8 +726,8 @@ def createUSGinvoice(danpheEMR, HospitalNo, USGtest):
     print("END>>createUSGinvoice")
 
 
-# Module:Billing_IP -----------------
-def createIPprovisionalBill(danpheEMR, HospitalNo, test):
+# Module:Billing_IP ----------------
+def createIPprovisionalBillInIPbilling(danpheEMR, HospitalNo, test):
     global testrate
     print(">>START: Cancel Admitted Provisional bill")
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
