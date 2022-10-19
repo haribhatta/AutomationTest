@@ -690,7 +690,7 @@ def createIPprovisionalBill(danpheEMR, HospitalNo, test):
     testrate = int(danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value"))
     print("testrate", testrate)
     danpheEMR.find_element(By.XPATH, "//input[@value='Request']").click()
-    time.sleep(9)
+    time.sleep(5)
     print("<<END")
 
 
@@ -910,6 +910,7 @@ def creditSettlements(danpheEMR, creditOrganization, HospitalNo, ProvisionalSlip
         time.sleep(2)
         crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
         crOrg.select_by_visible_text(creditOrganization)
+        time.sleep(2)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
@@ -925,6 +926,7 @@ def creditSettlements(danpheEMR, creditOrganization, HospitalNo, ProvisionalSlip
         time.sleep(2)
         crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
         crOrg.select_by_visible_text(creditOrganization)
+        time.sleep(2)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(5)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click() ## Jira has existing bug: EMR-4898
