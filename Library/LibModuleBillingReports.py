@@ -28,6 +28,7 @@ def getBillingDashboard(danpheEMR):
 
     if AppName != "Tilganga": #"SNCH" or AppName == "MPH" or AppName == "LPH":
         sysgrosstotal = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'i. Subtotal :')]").text
+        time.sleep(5)
         print("sysgrosstotal:", sysgrosstotal)
         syssubtotal = sysgrosstotal.partition("Subtotal : ")[2]
         print("System subTotal-1:", syssubtotal)
@@ -45,7 +46,7 @@ def getBillingDashboard(danpheEMR):
         # sysreturnamount = sysreturnamount.partition(".")[0]
         # sysreturnamount = sysreturnamount.replace(',', '')
         print("System returnAmount:", sysreturnamount)
-
+        time.sleep(3)
         systotalamount = danpheEMR.find_element(By.XPATH, "//div[@id='totalsales']/div[5]/b").text
         print(systotalamount)
         systotalamount = systotalamount.partition("Rs. ")[2]
@@ -88,7 +89,7 @@ def preSystemDataBillingDashboard():
     global presysunpaidcreditinvoices
 
     presyssubtotal = float(syssubtotal)
-    presyssubtotal = int(syssubtotal)
+    # presyssubtotal = int(syssubtotal)
     print("presyssubtotal", presyssubtotal)
     presysdiscountamount = float(sysdiscountamount)
     print("presysdiscountamount", presysdiscountamount)
@@ -117,20 +118,21 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
     print("Provisional:", provisional)
     print("Provisionalcancel:", provisionalcancel)
 
-    cash = int(cash)
-    discountpc = int(discountpc)
-    cashReturn = int(cashReturn)
-    credit = int(credit)
-    creditReturn = int(creditReturn)
-    settlement = int(settlement)
-    provisional = int(provisional)
-    provisionalcancel = int(provisionalcancel)
+    cash = float(cash)
+    discountpc = float(discountpc)
+    cashReturn = float(cashReturn)
+    credit = float(credit)
+    creditReturn = float(creditReturn)
+    settlement = float(settlement)
+    provisional = float(provisional)
+    provisionalcancel = float(provisionalcancel)
 
     # 1. Cash Invoice (Check subTotal & totalAmount is increased in Total Sales area).
     if cash > 0 and cashReturn == 0 and discountpc == 0 and credit == 0 and creditReturn == 0:
-        expectedsubtotal = presyssubtotal + cash
-        print("expectedsubtotal", expectedsubtotal)
-        print("syssubtotal", syssubtotal)
+        time.sleep(2)
+        expectedsubtotal = presyssubtotal + float(cash)
+        print("expectedsubtotal", float(expectedsubtotal))
+        print("syssubtotal", float(syssubtotal))
         assert float(syssubtotal) == expectedsubtotal
         assert float(systotalamount) == presystotalamount + cash
         assert float(sysnetcashcollection) == presysnetcashcollection + cash
@@ -152,10 +154,10 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
     # 3. Cash Discount Invoice (Check Billing Dashboard for discount in OPD cash sale invoice).
     elif cash > 0 and cashReturn == 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
         time.sleep(3)
-        assert int(syssubtotal) == presyssubtotal + cash
+        assert float(syssubtotal) == presyssubtotal + cash
         calctemp = presysdiscountamount + (discountpc * cash / 100)
-        print("calctemp", calctemp)
-        print("sysdiscountamount", sysdiscountamount)
+        print("calctemp", float(calctemp))
+        print("sysdiscountamount", float(sysdiscountamount))
         assert float(sysdiscountamount) == calctemp
         assert float(sysreturnamount) == presysreturnamount
         assert float(systotalamount) == presystotalamount + cash - (discountpc * cash / 100)
@@ -163,14 +165,15 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
 
     # 4. Return Cash Discount Invoice (Check Billing Dashboard for return of discounted OPD cash sale invoice).
     elif cash == 0 and cashReturn > 0 and discountpc > 0 and credit == 0 and creditReturn == 0:
-        assert int(syssubtotal) == presyssubtotal
-        assert int(sysdiscountamount) == presysdiscountamount
+        assert float(syssubtotal) == presyssubtotal
+        assert float(sysdiscountamount) == presysdiscountamount
         print("sysreturnamount", sysreturnamount)
         print("presysreturnamount", presysreturnamount)
-        print("cashReturn*discountpc", cashReturn * discountpc)
-        assert int(sysreturnamount) == presysreturnamount + (cashReturn * (100 - discountpc) / 100)
-        assert int(systotalamount) == presystotalamount - (cashReturn * (100 - discountpc) / 100)
-        assert int(sysnetcashcollection) == presysnetcashcollection - (cashReturn * (100 - discountpc) / 100)
+        returnAmt = cashReturn - (cashReturn * (discountpc/100))
+        print("Return after discount is ", float(returnAmt))
+        assert float(sysreturnamount) == presysreturnamount + cashReturn #(cashReturn * (100 - discountpc) / 100)
+        assert float(systotalamount) == presystotalamount - returnAmt #(cashReturn * (100 - discountpc) / 100)
+        assert float(sysnetcashcollection) == presysnetcashcollection - returnAmt  #- (cashReturn * (100 - discountpc) / 100)
 
     # 5. Credit Invoice
     elif cash == 0 and cashReturn == 0 and discountpc == 0 and credit > 0 and creditReturn == 0:
@@ -185,13 +188,13 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         #    assert int(sysnetcashcollection) == presysnetcashcollection
         #    print("End of credit invoice check")
         if AppName == "SNCH" or AppName == "MPH" or AppName == "LPH":
-            assert int(syssubtotal) == presyssubtotal + credit
-            assert int(sysdiscountamount) == presysdiscountamount
-            assert int(sysreturnamount) == presysreturnamount
-            assert int(systotalamount) == presystotalamount + credit
+            assert float(syssubtotal) == presyssubtotal + credit
+            assert float(sysdiscountamount) == presysdiscountamount
+            assert float(sysreturnamount) == presysreturnamount
+            assert float(systotalamount) == presystotalamount + credit
             print("presysnetcashcollection", presysnetcashcollection)
             print("sysnetcashcollection", sysnetcashcollection)
-            assert int(sysnetcashcollection) == presysnetcashcollection
+            assert float(sysnetcashcollection) == presysnetcashcollection
             print("End of credit invoice check")
 
     # 6. Return Credit Invoice (Check ReturnAmount is increased and TotalAmount is decreased on returning opd cash invoice).
@@ -199,17 +202,17 @@ def verifyBillingDashboard(cash, discountpc, cashReturn, credit, creditReturn, s
         time.sleep(3)
         print(syssubtotal)
         print(presyssubtotal)
-        assert int(syssubtotal) == presyssubtotal
+        assert float(syssubtotal) == presyssubtotal
         print("sysreturnamount", sysreturnamount)
         print("presysreturnamount", presysreturnamount)
         print("creditReturn", creditReturn)
-        assert int(sysreturnamount) == presysreturnamount + creditReturn
-        assert int(systotalamount) == presystotalamount - creditReturn
-        assert int(sysnetcashcollection) == presysnetcashcollection
+        assert float(sysreturnamount) == presysreturnamount + creditReturn
+        assert float(systotalamount) == presystotalamount - creditReturn
+        assert float(sysnetcashcollection) == presysnetcashcollection
 
     # 7. Credit Payment/Settlement
-    elif credit > 0 and settlement == "CREDIT":
-        assert int(sysnetcashcollection) == presysnetcashcollection + credit
+    elif credit > 0 and settlement == "Credit":
+        assert float(sysnetcashcollection) == presysnetcashcollection + credit
 
     # 8. Provisional bill
     elif cash == 0 and credit == 0 and discountpc == 0 and cashReturn == 0 and provisional > 0:
