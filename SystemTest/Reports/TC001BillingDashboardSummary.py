@@ -61,8 +61,7 @@ LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')  # cash = opdticket
 LBR.getBillingDashboard(EMR)
-LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
-                            settlement=0, provisional=0, provisionalcancel=0)
+LBR.verifyBillingDashboard(cash=opdticket, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0, provisional=0, provisionalcancel=0)
 
 # 2. Return Cash Invoice
 print("2. Return Cash Invoice")
@@ -93,7 +92,7 @@ LBR.verifyBillingDashboard(cash=0, discountpc=discountpct, cashReturn=returnamou
 print("##### Credit Invoice #####")
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='CREDIT', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
+HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
                             settlement=0, provisional=0, provisionalcancel=0)
@@ -109,11 +108,11 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditR
 # 7. Credit Payment
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve') #credit=opdticket
+HospitalNo3, InvoiceNo3, discountPercentage3 = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Credit', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve') #credit=opdticket
 LBR.getBillingDashboard(EMR)
-LB.creditSettlements(danpheEMR=EMR, HospitalNo=HospitalNo, ProvisionalSlip="No", cashdiscount=0)
+LB.creditSettlements(danpheEMR=EMR, creditOrganization=GSV.creditOrganization, HospitalNo=HospitalNo3, ProvisionalSlip="No", cashdiscount=0)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=opdticket, creditReturn=0,
-                            settlement="CREDIT", provisional=0, provisionalcancel=0)
+                            settlement=500, provisional=0, provisionalcancel=0)
 
 # 8.1 Provisional Bill
 LBR.getBillingDashboard(EMR)
@@ -132,7 +131,7 @@ LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo5, admit=1, trasfer=0, di
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                           settlement=0, provisional=admisioncharge, provisionalcancel=0)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo1, test=usgtest)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, test=usgtest)
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
@@ -141,13 +140,11 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditR
 
 # 9. Cancel Provisional Bill
 LBR.getBillingDashboard(EMR)
-LB.cancelIPprovisionalBill(EMR, HospitalNo, usgtest)
+LB.cancelIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, canceltest=usgtest)
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0, settlement=0,
                             provisional=0, provisionalcancel=usgprice)
-
-print(" EMR-2571: is existing bug to cancel provisional bill")
 AC.logout()
 AC.closeBrowser()
 #End of the test case

@@ -744,7 +744,7 @@ def createIPprovisionalBillInIPbilling(danpheEMR, HospitalNo, test):
     testrate = int(danpheEMR.find_element(By.XPATH, "//input[@name='price']").get_attribute("value"))
     print("testrate", testrate)
     danpheEMR.find_element(By.XPATH, "//input[@value='Request']").click()
-    time.sleep(9)
+    time.sleep(5)
     print("<<END")
 
 
@@ -964,6 +964,7 @@ def creditSettlements(danpheEMR, creditOrganization, HospitalNo, ProvisionalSlip
         time.sleep(2)
         crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
         crOrg.select_by_visible_text(creditOrganization)
+        time.sleep(2)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click()
@@ -979,6 +980,7 @@ def creditSettlements(danpheEMR, creditOrganization, HospitalNo, ProvisionalSlip
         time.sleep(2)
         crOrg = Select(danpheEMR.find_element(By.ID, "id_creditOrganization"))
         crOrg.select_by_visible_text(creditOrganization)
+        time.sleep(2)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
         time.sleep(5)
         danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Show Details')]").click() ## Jira has existing bug: EMR-4898
@@ -1270,6 +1272,35 @@ def createlabxrayinvoiceOtherPayment(danpheEMR, HospitalNo, labtest, imagingtest
     print("InvoiceNo", InvoiceNo)
     return totalprice
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+
+
+def verifyEstimationBill(danpheEMR, HospitalNo):
+    print("START>>verifyEstimationBill")
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "IPBilling").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "View Details").click()
+    time.sleep(5)
+    ToBePaid = danpheEMR.find_element(By.XPATH, "//tr[7]/td[2]/label").text
+    ToBePaid = ToBePaid.replace(",", "")
+    ToBePaid = int(ToBePaid)
+    ToBePaid = round(ToBePaid, 2)
+    print("ToBePaidAmt", ToBePaid)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),'Estimation Bill')]").click()
+    time.sleep(3)
+    EstimationBill = danpheEMR.find_element(By.XPATH, "//*[@id='divEstimationBillPrintPage']/div/table/tbody/tr/td/div/div[5]/div[2]/div/div").text
+    EstimationBill = EstimationBill.replace("GRAND TOTAL:", "")
+    print(EstimationBill)
+    EstimationBill = EstimationBill.replace(",", "")
+    EstimationBill = float(EstimationBill)
+    print(EstimationBill)
+    assert EstimationBill == ToBePaid
+    danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/my-app/ng-component/div/pat-ip-bill-summary/div/div[2]/div/div/div/div/a").click()
+    print("END>>verified Estimation Bill")
 
 
 def wait_for_window(danpheEMR, timeout=2):
