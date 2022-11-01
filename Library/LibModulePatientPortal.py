@@ -29,17 +29,42 @@ def patientRegistration(danpheEMR):
     gender = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname='Gender']"))
     gender.select_by_visible_text("Female")
     time.sleep(5)
+    dropdown = danpheEMR.find_element(By.ID, "Membership")
+    dd = Select(dropdown)
+    dd.select_by_visible_text("Social Service Unit")
+    dropdown2 = danpheEMR.find_element(By.ID, "Scheme")
+    dd2 = Select(dropdown2)
+    dd2.select_by_visible_text("Gender Based Voilence (0%)")
+
+    danpheEMR.find_element(By.XPATH,"//select[@id='Membership']")
+
+
     danpheEMR.find_element(By.ID, "regPatientSubmitBtn").click()
     time.sleep(7)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(contactno)
     time.sleep(5)
+
     assert str(contactno) == danpheEMR.find_element(By.XPATH, "//ag-grid-angular[@id='myGrid']"
-                                                              "/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
+                                                     "/div/div/div/div[3]/div[2]/div/div/div/div[5]").text
     global HospitalNo
     HospitalNo = danpheEMR.find_element(By.XPATH, "//ag-grid-angular[@id='myGrid']"
-                                                  "/div/div/div/div[3]/div[2]/div/div/div/div").text
+                                                    "/div/div/div/div[3]/div[2]/div/div/div/div").text
     print("HospitalNo:", HospitalNo)
+    time.sleep(5)
+    danpheEMR.find_element(By.CLASS_NAME,"grid-action").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID,"editPatientRecordSubmitBtn").click()
+
+
+    #global HospitalNo
+    #HospitalNo = danpheEMR.find_element(By.XPATH, "//ag-grid-angular[@id='myGrid']"
+                                                 # "/div/div/div/div[3]/div[2]/div/div/div/div").text
+    #print("HospitalNo:", HospitalNo)
+
+
     return HospitalNo
+
+
 
 
 def patientRegistrationMultipleClick(danpheEMR):
