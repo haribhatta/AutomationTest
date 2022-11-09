@@ -2,6 +2,7 @@ import time
 import Library.GlobalShareVariables as gSV
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
 
 AppName = gSV.appName
 
@@ -117,6 +118,31 @@ def CreateGoodsArrivalNotification(danpheEMR, itemName1, rate, itemName2):
     danpheEMR.find_element(By.ID, "poItemName1").send_keys(itemName2)
     time.sleep(1)
     danpheEMR.find_element(By.ID, "poItemName1").send_keys(Keys.ENTER)
+
+
+def enablePatientConsumptionApplicable(danpheEMR, itemname):
+    print("START: enabling item for patient consumption")
+    time.sleep(1)
+    source = danpheEMR.find_element(By.LINK_TEXT, "Procurement")
+    action = ActionChains(danpheEMR)
+    action.double_click(source).perform()
+    time.sleep(5)
+    danpheEMR.find_element(By.CSS_SELECTOR, ".page-breadcrumb > li:nth-child(5) > a").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(itemname)
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Edit')]").click()
+    checkbox = danpheEMR.find_element(By.ID, "IsPatConsumptionApplicable")
+    print(checkbox.is_selected())
+    time.sleep(2)
+    if checkbox.is_selected == "False":
+        danpheEMR.find_element(By.CSS_SELECTOR, ".col-md-5 .ng-tns-c12-0:nth-child(2)").click()
+        danpheEMR.find_element(By.ID, "AddItem").click()
+    else:
+        danpheEMR.find_element(By.ID, "AddItem").click()
+    print("END: Items Enabled for Patient consumption")
+
+
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
