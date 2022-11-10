@@ -159,7 +159,7 @@ def verifyStockSub(qty):
     print("End of Verifying Stock")
 
 
-def createNewConsumption(danpheEMR, substore, itemName):
+def createNewConsumption(danpheEMR, substore, itemName, isBackDate):
     print(">>Start : Consumption of item by Staff")
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(2)
@@ -174,6 +174,13 @@ def createNewConsumption(danpheEMR, substore, itemName):
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/WardSupply/Inventory/Consumption')]").click()
     danpheEMR.find_element(By.XPATH, " //a[contains(text(),'New Consumption')]").click()
     time.sleep(2)
+    if isBackDate == "yes":
+        date = danpheEMR.find_element(By.ID, "inputDay").text
+        print("date is :", int(date))
+        backdate = date-1
+        print(backdate)
+        danpheEMR.find_element(By.ID, "inputDay").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.ID, "inputDay").send_keys(backdate)
     danpheEMR.find_element(By.ID, "itemName0").click()
     danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
     time.sleep(2)
@@ -209,6 +216,33 @@ def createPatientConsumption(danpheEMR, substore, hospitalNumber, itemName):
     danpheEMR.find_element(By.ID, "save").click()
     danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-sign-out']").click()
     print("END: Patient Consumption")
+
+
+def getConsumptionReports(danpheEMR, substore, isBackDate, itemName):
+    print("START: get consumption report")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
+    time.sleep(2)
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Dispensary/Reports']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(), 'Consumption Report')]").click()
+    if isBackDate == 'yes':
+        currentDate = danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").text
+        print("Current date is :", int(currentDate))
+        backdate = currentDate - 1
+        print("back date is :", backdate)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[1]").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[1]").send_keys(backdate)
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").send_keys(backdate)
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(itemName)
+
 
 
 def wait_for_window(danpheEMR, timeout=2):
