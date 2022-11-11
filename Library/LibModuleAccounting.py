@@ -123,6 +123,25 @@ def PosttoAccounting(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//button[@title='save selected to accounting'][1]").click()
 
 
+def getTrialBalanceReport(danpheEMR):
+    print("START: Getting Trial Balance Report with basic Debit and Credit Amount verofying")
+    danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "(//a[contains(@href, '#/Accounting/Reports')])[2]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(), 'Trial Balance')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Load')]").click()
+    time.sleep(2)
+    debit = danpheEMR.find_element(By.XPATH, "//*[@id='exportTable_trialbal']/tfoot/tr/td[4]/span").text
+    print("Total Debit amount is :", debit)
+    debit = debit.replace(",", " ")
+    time.sleep(2)
+    credit = danpheEMR.find_element(By.XPATH, "//*[@id='exportTable_trialbal']/tfoot/tr/td[5]/span").text
+    print("Total Credit amount is :", credit)
+    credit = credit.replace(",", " ")
+    assert debit == credit
+
+
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
