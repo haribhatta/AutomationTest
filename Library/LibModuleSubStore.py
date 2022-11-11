@@ -122,37 +122,44 @@ def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
     print("<<END: verifyReceivedInventoryDispatch")
 
 
-def countStockSub(danpheEMR, itemname):
+def countStockSub(danpheEMR, substore, itemname):
     print(">>START: Counting Sub-store's Stock of :", itemname)
-    time.sleep(5)
+    global stock
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory')]").click()
-    # danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(3)
+    # since store is choosen no need to choose this
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
     time.sleep(2)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(itemname)
     time.sleep(2)
     stock = danpheEMR.find_element(By.CSS_SELECTOR, "span > div").text
     print("Stock of item is :", stock)
+    danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-sign-out']").click()
     print(">>END: End of Sub-store stock count")
     return stock
 
 
-def prestockcountSub(stock):
+def prestockcountSub():
+    global preStock
     preStock = int(stock)
     print("previous Stock of Item is :", preStock)
     return preStock
 
 
-def verifyStockSub(qty, preStock, stock):
+def verifyStockSub(qty):
     time.sleep(2)
     print("Start to Verify Stock")
     print("Prestock of substore's item  is :", int(preStock))
     print("Substore's Item Stock is :", int(stock))
-    assert int(qty) == int(stock) - int(preStock)
+    assert int(qty) == int(preStock) - int(stock)
     print("End of Verifying Stock")
 
 
-def createNewConsumption(danpheEMR, substore, itemName):
+def createNewConsumption(danpheEMR, substore, itemName, isBackDate):
     print(">>Start : Consumption of item by Staff")
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(2)
@@ -167,12 +174,75 @@ def createNewConsumption(danpheEMR, substore, itemName):
     danpheEMR.find_element(By.XPATH, "//a[contains(@href, '#/WardSupply/Inventory/Consumption')]").click()
     danpheEMR.find_element(By.XPATH, " //a[contains(text(),'New Consumption')]").click()
     time.sleep(2)
+    if isBackDate == "yes":
+        date = danpheEMR.find_element(By.ID, "inputDay").text
+        print("date is :", int(date))
+        backdate = date-1
+        print(backdate)
+        danpheEMR.find_element(By.ID, "inputDay").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.ID, "inputDay").send_keys(backdate)
     danpheEMR.find_element(By.ID, "itemName0").click()
     danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
     time.sleep(2)
     danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
     danpheEMR.find_element(By.ID, "remark").send_keys("Consumption by  user name Sabitri")
     danpheEMR.find_element(By.ID, "save").click()
+
+
+def createPatientConsumption(danpheEMR, substore, hospitalNumber, itemName):
+    print("START:: Patient Consumption ")
+    time.sleep(2)
+    # since store is choosen no need to choose this
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Patient Consumption").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.NAME, "name").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(hospitalNumber)
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(itemName)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
+    # danpheEMR.find_element(By.ID, "qtyip0").send_keys(Keys.CLEAR)
+    # danpheEMR.find_element(By.ID, "qtyip0").send_keys(quantity)
+    time.sleep(1)
+    danpheEMR.find_element(By.NAME, "remark").send_keys("consumed by Patient")
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "save").click()
+    danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-sign-out']").click()
+    print("END: Patient Consumption")
+
+
+def getConsumptionReports(danpheEMR, substore, isBackDate, itemName):
+    print("START: get consumption report")
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
+    time.sleep(2)
+    try:
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'" + substore + "')]").click()
+    except:
+        pass
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Dispensary/Reports']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(text(), 'Consumption Report')]").click()
+    if isBackDate == 'yes':
+        currentDate = danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").text
+        print("Current date is :", int(currentDate))
+        backdate = currentDate - 1
+        print("back date is :", backdate)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[1]").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[1]").send_keys(backdate)
+        time.sleep(2)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").send_keys(Keys.CLEAR)
+        danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").send_keys(backdate)
+        time.sleep(2)
+        danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(itemName)
+
 
 
 def wait_for_window(danpheEMR, timeout=2):

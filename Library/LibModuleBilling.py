@@ -722,8 +722,13 @@ def createUSGinvoice(danpheEMR, HospitalNo, USGtest):
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
     time.sleep(3)
+    InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
+    print("InvoiceNoTemp", InvoiceNo)
+    InvoiceNo = InvoiceNo.partition("BL")[2]
+    print("InvoiceNo", InvoiceNo)
     print("END>>createUSGinvoice")
+    return InvoiceNo
 
 
 # Module:Billing_IP ----------------

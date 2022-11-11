@@ -35,7 +35,7 @@ RequsitionNo = LI.createInventoryDirectDispatch(danpheEMR=EMR, itemname=item, qt
 if flagReceivedItemInSubstore == "true":
     LSS.receiveInventoryDispatch(danpheEMR=EMR, substore=subStore1, ssReqNo=RequsitionNo)
 ###TestAction: Create SubStore Consumption
-LSS.createNewConsumption(danpheEMR=EMR, substore=subStore1, itemName=item)
+LSS.createNewConsumption(danpheEMR=EMR, substore=subStore1, itemName=item, isBackDate="No")
 LI.getInventorySummaryReport(danpheEMR=EMR)
 LI.verifyInventorySummaryReport(purchaseqty=1, purchaseamount=costAmount, consumeqty=1, consumeamount=costAmount, manageinqty=0, manageinamount=0, manageoutqty=0, manageoutamount=0)
 AC.logout()

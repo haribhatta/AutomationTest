@@ -1752,6 +1752,66 @@ def verifyPaymentWiseReport(totalPrice):
     print("Verified Payment Wise Report")
 
 
+def getItemSummaryReport(danpheEMR):
+    print("START:: Item Summary Report")
+    global totalQuantity
+    global grossTotal
+    global totalDiscount
+    global netTotal
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Billing Reports").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//i[contains(.,'Items Summary')]").click()
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
+    time.sleep(5)
+    totalQuantity = danpheEMR.find_element(By.XPATH, "//*[@id='calc-summary']/div[2]/table/tbody/tr[1]/th[2]").text
+    print("Total Quantity if the item is", float(totalQuantity))
+    grossTotal = danpheEMR.find_element(By.XPATH, "//*[@id='calc-summary']/div[2]/table/tbody/tr[2]/th[2]").text
+    print("Gross Total of the item is ", float(grossTotal))
+    totalDiscount = danpheEMR.find_element(By.XPATH, "//*[@id='calc-summary']/div[2]/table/tbody/tr[3]/th[2]").text
+    print("Total Discount of the item is :", float(totalDiscount))
+    netTotal = danpheEMR.find_element(By.XPATH, "//*[@id='calc-summary']/div[2]/table/tbody/tr[4]/th[2]").text
+    print("Net Total of the item is :", float(netTotal))
+    print("END: Item Summary Report")
+
+def storeItemSummaryReport():
+    print("START: Storing Item Summary Report")
+    global preTotalQuantity
+    global preGrossTotal
+    global preTotalDiscount
+    global preNetTotal
+
+    preTotalQuantity = float(totalQuantity)
+    print("Stored total quantity is :", preTotalQuantity)
+
+    preGrossTotal = float(grossTotal)
+    print("Stored Gross Total is :", preGrossTotal)
+
+    preTotalDiscount = float(totalDiscount)
+    print("Stored total discount is ", preTotalDiscount)
+
+    preNetTotal = float(netTotal)
+    print("Stored Net total is :", preNetTotal)
+    print("END: Storing Item Summary Report")
+
+
+def verifyItemSummaryReport(Return, qty, grossAmount, discount, netAmount):
+    print("START: Verifying Item Summary Report")
+    if Return == 'Yes':
+        assert preTotalQuantity == float(totalQuantity)
+        assert preGrossTotal == float(grossTotal)
+        assert preTotalDiscount == float(totalDiscount)
+        assert preNetTotal == float(netTotal)
+    else:
+        assert float(totalQuantity) == preTotalQuantity + float(qty)
+        assert float(grossTotal) == preGrossTotal + grossAmount
+        assert float(totalDiscount) == preTotalDiscount + discount
+        assert float(netTotal) == preNetTotal + netAmount
+    print("End of verfiyng item summary report")
+
+
 def wait_for_window(danpheEMR, timeout = 2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
