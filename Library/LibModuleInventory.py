@@ -199,6 +199,7 @@ def createInventoryDirectDispatch(danpheEMR, itemname, qty, inventory, store):
     else:
         RequsitionNo = danpheEMR.find_element(By.XPATH,  "//div[contains(text(),'Requisition No:')]/child::b").text
     print("Requisition Number is :", RequsitionNo)
+    time.sleep(3)
     danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Back to Requisition List')]").click()
     return RequsitionNo
     print("END>>createInventoryDirectDispatch")
@@ -337,6 +338,49 @@ def createPurchaseRequest(danpheEMR, ItemName, qty):
     return PRNo
     print("END>>createPurchaseRequest")
 
+def createPurchaseRequestByAddingNewItem(danpheEMR, qty):
+    print("START>>createPurchaseRequest")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(9)
+    # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Purchase Request").click()
+    time.sleep(2)
+    PRNo = int(danpheEMR.find_element(By.XPATH,  "(//div[@col-id='PRNumber'])[2]").text)
+    danpheEMR.find_element(By.XPATH,  "//button[contains(.,'Create Purchase Request')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH,  "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/div/ng-component/ng-component/div/div/div[2]/div/div[3]/table/tbody/tr/td[3]/div/form/a").click()
+    time.sleep(3)
+    ItemCategory = Select(danpheEMR.find_element(By.ID, "ddlItemCategory"))
+    ItemCategory.select_by_visible_text("Consumables")
+    print("PR Category While Creating New Item =", ItemCategory)
+    time.sleep(4)
+    Iname = str(random.randint(1111, 9999))
+    danpheEMR.find_element(By.ID, "ItemName").send_keys("auto", Iname)
+    time.sleep(3)
+    ItemSubCategory = Select(danpheEMR.find_element(By.ID, "ddlSubItemCategory"))
+    ItemSubCategory.select_by_visible_text("Consumables")
+    time.sleep(3)
+    UnitOfMeasurement = Select(danpheEMR.find_element(By.ID, "ddlUnitOfMeasurement"))
+    UnitOfMeasurement.select_by_visible_text("N/A")
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "MinStockQuantity").send_keys("25")
+    time.sleep(3)
+    ItemCompany = Select(danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/div/ng-component/ng-component/item-add/div/div/div/div/div/form/div/div[1]/div[2]/div[2]/div[2]/div/div/select"))
+    ItemCompany.select_by_visible_text("N/A")
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "AddItem").click()
+    time.sleep(3)
+    AfterAdding = danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/div/ng-component/ng-component/div/div/div[2]/div/div[3]/table/tbody/tr/td[2]/select")
+    print("PR Category After Adding New Item =", AfterAdding)
+    time.sleep(4)
+    danpheEMR.find_element(By.ID, "RequestPORequisition").click()
+    PRNo = PRNo + 1
+    return PRNo
+    print("PRNo:", PRNo)
+    assert ItemCategory == AfterAdding
 
 def verifyPurchaseRequest(danpheEMR, PRNo, ItemName, qty):
     print("START>>verifyPurchaseRequest")
