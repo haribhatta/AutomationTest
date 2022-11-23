@@ -24,20 +24,24 @@ Deposit1 = GSV.deposit
 Department1 = GSV.departmentGyno
 Doctor1 = GSV.doctorGyno
 
-EMR=AC.openBrowser()
+usgtest = GSV.USG
+usgprice = GSV.usgRate
+
+priceCategoryType = "Normal"
+discountScheme = GSV.discountSchemeName
+
+EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 AC.logout()
 AC.login(foUserId, foUserPwd)
 # 9. Cancel Provisional Bill
 # 8.2 Provisional IP Bill
-HospitalNo = LPP.patientRegistration(EMR)
 LB.counteractivation(EMR)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode='Cash', department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LADT.dischargeRandomPatient(danpheEMR=EMR)
-LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo, admit=1, discharge=0, trasfer=0, deposit=Deposit1, doctor=Doctor1, department=Department1, admittingDoctorMandatory=isDoctorMandatory)
-usgtest = GSV.USG
-usgprice = GSV.usgRate
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, test=usgtest)
+LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo, admit=1, discharge=0, transfer=0, deposit=Deposit1, doctor=Doctor1, department=Department1, admittingDoctorMandatory=isDoctorMandatory)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, usgtest=usgtest)
 LB.cancelIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, canceltest=usgtest)
 AC.logout()
 AC.closeBrowser()
