@@ -28,7 +28,7 @@ AC.login(adminUserId, adminUserPwd)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 LB.counteractivation(EMR)
 for x in range(2):
-    ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, trasfer=0, deposit=0, HospitalNo='Auto Test',
+    ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, transfer=0, deposit=0, HospitalNo='Auto Test',
                       department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 
 AC.logout()

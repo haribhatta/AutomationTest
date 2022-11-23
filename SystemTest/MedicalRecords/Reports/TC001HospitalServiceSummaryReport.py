@@ -42,7 +42,7 @@ LMRR.getHospitalServiceSummaryReport(EMR)
 LMRR.verifyHospitalServiceSummaryReport(danpheEMR=EMR, labBill=1, admit=0)
 ### Check for 'Total Patients Admitted'
 LMRR.preHospitalServiceSummaryReport(EMR)
-ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, deposit=0, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
+ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, transfer=0, deposit=0, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 LMRR.getHospitalServiceSummaryReport(EMR)
 LMRR.verifyHospitalServiceSummaryReport(danpheEMR=EMR, labBill=0, admit=1)
 time.sleep(2)
