@@ -29,7 +29,7 @@ isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 #AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
 HospitalNo = LPP.patientRegistration(EMR)
-LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, trasfer=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, transfer=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
 InvoiceNo = LB.generateDischargeInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode="Cash")
 LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="Discharge bill return")
 #LADT.cancelDischarge(danpheEMR=EMR, HospitalNo=HospitalNo) ## Cancel Discharge from ADT feature is no more available, need to return discharge bill.
