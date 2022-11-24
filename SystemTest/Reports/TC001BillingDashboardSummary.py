@@ -131,7 +131,7 @@ LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo5, admit=1, transfer=0, d
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                           settlement=0, provisional=admisioncharge, provisionalcancel=0)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, test=usgtest)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, usgtest=usgtest)
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,

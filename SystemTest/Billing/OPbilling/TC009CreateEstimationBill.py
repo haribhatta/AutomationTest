@@ -26,7 +26,7 @@ LB.counteractivation(EMR)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo, admit=1, transfer=0, discharge=0, deposit=0, doctor=doctorGynae, department=departmentGynae, admittingDoctorMandatory=isDoctorMandatory)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, test=GSV.USG)  #provisional=usgprice
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo, usgtest=GSV.USG)  #provisional=usgprice
 LB.verifyEstimationBill(danpheEMR=EMR, HospitalNo=HospitalNo)
 AC.logout()
 AC.closeBrowser()
