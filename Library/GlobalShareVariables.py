@@ -356,9 +356,9 @@ if appName == "MPH":
       UserBilling = 'Mr. Bhagawati Pandey'
       doctorNephro = "Dr. Eva Gauchan"
       departmentNephro = "Pediatrics "
-      doctor2 = "Dr. Junu Shrestha"
-      doctorGyno = "Dr. Anjali Subedi"
-      departmentGyno = "OBG Gynae"
+      doctor2 = "Dr. Alisha Surkheti"
+      doctorGyno = "Dr. Pravin Baniya"
+      departmentGyno = "Dermatology & Cosmatology"
 ###############################################################################
 ########Defining Variables for Rhythm
 ###############################################################################

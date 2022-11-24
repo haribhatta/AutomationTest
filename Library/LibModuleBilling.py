@@ -1147,7 +1147,7 @@ def createCreditLabInvoice(danpheEMR, HospitalNo, labtest):
     paymode = Select(danpheEMR.find_element(By.ID, "pay_mode"))
     paymode.select_by_visible_text("Credit")
     time.sleep(2)
-    creditorganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class = 'form-control mb-8']"))
+    creditorganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class = 'form-control mb-8 ng-untouched ng-pristine ng-valid']"))
     creditorganization.select_by_visible_text(GSV.creditOrganization)
     time.sleep(1)
     danpheEMR.find_element(By.NAME, "Remarks").send_keys("This is Credit bill on demand of CEO")

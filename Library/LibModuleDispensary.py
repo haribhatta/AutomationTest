@@ -62,7 +62,7 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
         #creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
-        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8 ng-untouched ng-pristine ng-valid']"))
         creditOrganization.select_by_visible_text("SCH Staff Account")
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
