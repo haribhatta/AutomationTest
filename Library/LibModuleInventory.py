@@ -14,12 +14,12 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode, NepaliRe
     global BillNo
     #if AppName == 'SNCH':
     danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
-    time.sleep(5)
+    time.sleep(6)
     danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
     time.sleep(5)
-    danpheEMR.find_element(By.XPATH,  "//a[contains(.,' Create Goods Receipt')]").click()
+    danpheEMR.find_element(By.XPATH,"//a[contains(.,' Create Goods Receipt')]").click()
     time.sleep(2)
-    danpheEMR.find_element(By.XPATH,  "//input[@onclick='this.select();']").click()
+    danpheEMR.find_element(By.XPATH,"//input[@onclick='this.select();']").click()
     time.sleep(2)
     danpheEMR.find_element(By.CSS_SELECTOR,   ".danphe-auto-complete-wrapper > .form-control").send_keys(Keys.RETURN)
     BillNo = random.randint(100, 99999)
@@ -38,14 +38,19 @@ def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode, NepaliRe
     danpheEMR.find_element(By.XPATH,  "//input[@value='Receipt']").click()
     time.sleep(3)
     if NepaliReceipt == 'false':
-        totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[9]/div/table/tbody/tr/td[12]").text
+        totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[1]/div/div[9]/div/table/tbody/tr/td[11]").text
         totalrate = float(totalrate)
         print(totalrate)
+        rate = float(rate)
+        print(rate)
+
     else:
         totalrate = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div[2]/table/tbody/tr[1]/td[11]").text
-        totalrate = float(totalrate)
         print(totalrate)
-    assert float(rate) == totalrate
+        rate = float(rate)
+        print(rate)
+        totalrate = float(totalrate)
+    assert rate == totalrate
     #danpheEMR.find_element(By.XPATH,  "//button[contains(text(),'Back to Goods Receipt List')]").click()
     danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Cancel GR ')]").send_keys(Keys.ESCAPE)
     print("<<END: createGoodReceipt")
@@ -98,6 +103,74 @@ def verifyGoodReceiptNumberInGridAndShow(danpheEMR, billno, totalAmount, NepaliR
         assert vendor == vendorName
         assert billno == billNumber
         assert grno == goodReceiptNo
+
+
+def RetunToVendor(danpheEMR, vendorName, billNo, GRno, item, purchaseQuantity, returnqty, purchaseRate, returnRate):
+    time.sleep(2)
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(5)
+    #click on Stock
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Stock')]").click()
+    time.sleep(4)
+    #click on good receipt list
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(), 'Goods Receipt List')]").click()
+
+    #search by using bill no.
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(billNo)
+    time.sleep(5)
+    #click on receive view
+    danpheEMR.find_element(By.XPATH, "//a[@title='View']").click()
+    #Add the remark
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//textarea[@id='ReceivedRemarks']").send_keys("receive")
+    danpheEMR.find_element(By.XPATH, "//i[@class='fa fa-check-square-o']").click()
+    time.sleep(5)
+    #GRNno. can be taken from Good receipt list aswell
+    danpheEMR.find_element(By.LINK_TEXT, "Procurement").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.LINK_TEXT, "Goods Arrival Notification").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(billNo)
+    GRno = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[1]").text
+    print(GRno)
+    print("Good Receipt number :", GRno)
+    time.sleep(5)
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Return To Vendor')]").click()
+    danpheEMR.find_element(By.XPATH, "//a[@class='btn primary-btn btn-sm m1']").click()
+    danpheEMR.find_element(By.XPATH, "//input[@id='vendor']").send_keys(vendorName)
+    danpheEMR.find_element(By.XPATH, "//input[@id='GrNo']").send_keys(GRno)
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//button[@id='searchBtn']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(item)
+    time.sleep(7)
+    danpheEMR.find_element(By.ID, "itemName0").send_keys(Keys.ENTER)
+    time.sleep(6)
+    danpheEMR.find_element(By.XPATH, "//input[@id='returnrate0']").send_keys(returnRate)
+    if returnRate > purchaseRate:
+        actual_RateMessage = danpheEMR.find_element(By.XPATH,"//span[normalize-space()='must be less than Standard Rate']").text
+        print("Actual Error message is :", actual_RateMessage)
+        expected_RateMessage = "must be less than Standard Rate"
+        assert actual_RateMessage == expected_RateMessage
+        print("The return rate is grater than available rate")
+        danpheEMR.find_element(By.XPATH, "//input[@value='Cancel']").click()
+        return
+
+    danpheEMR.find_element(By.XPATH, "//input[@id='qtyip0']").send_keys(returnqty)
+    if returnqty > purchaseQuantity:
+        actual_QTYmessage = danpheEMR.find_element(By.XPATH, "//span[normalize-space()='No more Qty is Available']").text
+        print("Actual Error messge is :", actual_QTYmessage)
+        expected_QtyMessage = "No more Qty is Available"
+        assert actual_QTYmessage == expected_QtyMessage
+        print("The return quantity is grater than available quantity")
+        danpheEMR.find_element(By.XPATH, "//input[@value='Cancel']").click()
+        return
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//input[@id='remark0']").send_keys("return to vendor")
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//input[@id='Request']").click()
+
 
 
 def editInventoryGoodsReceipt(danpheEMR, BillNo):
