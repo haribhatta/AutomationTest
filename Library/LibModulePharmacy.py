@@ -69,8 +69,10 @@ def verifyPharmacyItem(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Setting").click()
     time.sleep(5)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName)
-    time.sleep(9)
-    assert DrugName == danpheEMR.find_element(By.XPATH, "//div[3]/div[2]/div/div/div/div").text
+    time.sleep(3)
+    medicineName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]").text
+    print(medicineName)
+    assert DrugName == medicineName
     print("End>>verifyPharmacyItem")
 
 
