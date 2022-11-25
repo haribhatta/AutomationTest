@@ -224,9 +224,10 @@ if appName == "SNCH":
       inventoryName1 = "General Inventory"
       inventoryName2 = "Medical Inventory"
       subStoreName1 = "ACCOUNT"
-      subStoreName2 = "ADMINISTRATION"
+      subStoreName2 = "Administration Store"
       A4Paper = 'A4 PAPER'
       storeItem1Name = 'A4 PAPER'
+      storeItem2Name = 'Paper Roll'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
