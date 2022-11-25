@@ -21,6 +21,7 @@ adminUserPwd = GSV.adminUserPwD
 Deposit = GSV.deposit
 Doctor = GSV.doctorGyno
 Department = GSV.departmentGyno
+priceCategoryType = "Normal"
 ########
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
@@ -28,10 +29,10 @@ isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 #AC.logout()
 #AC.login(foUserId, foUserPwd)
 LB.counteractivation(EMR)
-HospitalNo = LPP.patientRegistration(EMR)
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, transfer=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
-InvoiceNo = LB.generateDischargeInvoice(danpheEMR=EMR, HospitalNo=HospitalNo, paymentmode="Cash")
-LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=InvoiceNo, returnmsg="Discharge bill return")
+invoiceNo = LB.generateDischargeInvoice(danpheEMR=EMR, creditOrganization=GSV.creditOrganization, HospitalNo=HospitalNo, paymentmode="Cash")
+LB.returnBillingInvoice(danpheEMR=EMR, InvoiceNo=invoiceNo, returnmsg="Discharge bill return")
 #LADT.cancelDischarge(danpheEMR=EMR, HospitalNo=HospitalNo) ## Cancel Discharge from ADT feature is no more available, need to return discharge bill.
 # Test script is failing due to bug: EMR-2769
 
