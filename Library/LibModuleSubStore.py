@@ -7,12 +7,12 @@ AppName = GSV.appName
 
 
 # Module: SubStore Test Actions
-def selectSubStore(danpheEMR, substore='Administration' or 'Emergency Store'):
+def selectSubStore(danpheEMR, substore='Administration Store' or 'Emergency Store'):
     print("Start>> selectSubStore")
     danpheEMR.find_element(By.LINK_TEXT, "SubStore").click()
     time.sleep(5)
-    if substore == "Administration":
-        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'ADMINISTRATION')]").click()
+    if substore == "Administration Store":
+        danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Administration Store')]").click()
     elif substore == 'Emergency Store':
         danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Emergency Store')]").click()
     else:
@@ -67,8 +67,8 @@ def verifySubStoreRequisition(danpheEMR, ssReqNo, InventoryName, ItemName, Qty):
     # time.sleep(5)
     # danpheEMR.find_element(By.XPATH,  "//a[contains(text(),'Inventory Requisition')]").click()
     time.sleep(5)
-    ReqNo = danpheEMR.find_element(By.XPATH, "(//div[@col-id='RequisitionNo'])[2]").text
-    assert ReqNo == ssReqNo
+    ssReqNo = danpheEMR.find_element(By.XPATH, "(//div[@col-id='RequisitionNo'])[2]").text
+    assert ssReqNo == ssReqNo
     # danpheEMR.find_element(By.XPATH,  "//label[2]/span").click()
     # time.sleep(3)
     # ssReqNo1 =
@@ -86,7 +86,7 @@ def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
         pass
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory')]").click()
     # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'Administration Store')]").click()
-    # time.sleep(5)
+    time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Inventory Requisition')]").click()
     time.sleep(5)
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(ssReqNo)
@@ -94,9 +94,9 @@ def receiveInventoryDispatch(danpheEMR, substore, ssReqNo):
     danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Receive Items')]").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "ReceiveButton").click()
-    time.sleep(5)
-    # danpheEMR.find_element(By.ID, "backToList").click()
-    danpheEMR.find_element(By.XPATH, "(//button[@class='btn btn-primary btn-sm'])[1]").click()
+    #time.sleep(5)
+    #danpheEMR.find_element(By.ID, "backToList").click()
+    danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[3]/ng-component/div[2]/app-inventory-ward-receive-stock/div/div/div[1]/div[1]/button").click()
 
 
 def verifyReceivedInventoryDispatch(danpheEMR, ssReqNo):
@@ -242,6 +242,32 @@ def getConsumptionReports(danpheEMR, substore, isBackDate, itemName):
         danpheEMR.find_element(By.XPATH, "(//input[@id='inputDay'])[2]").send_keys(backdate)
         time.sleep(2)
         danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(itemName)
+
+def RequisitionandDispatchReport(danpheEMR, Itemname, qty):
+    print("START: Requisition and Dispatch Report")
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Reports')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[3]/ng-component/div[2]/ng-component/div/div[1]/a/div/span[2]/i[1]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[contains(.,' Show Report')]").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(Itemname)
+    time.sleep(3)
+    sysItemname = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
+    print("Itemname in System is :", sysItemname)
+    assert sysItemname == Itemname
+    sysrequestedQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[4]").text
+    print("sysrequestedQty in System is :", sysrequestedQty)
+    sysrequestedQty = int(sysrequestedQty)
+    assert sysrequestedQty == qty
+    sysreceivedQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
+    print("sysreceivedQty in System is :", sysreceivedQty)
+    sysreceivedQty = int(sysreceivedQty)
+    assert sysreceivedQty == qty
+    sysdispatchedQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[7]").text
+    print("sysdispatchedQty in System is :", sysdispatchedQty)
+    sysdispatchedQty = int(sysdispatchedQty)
+    assert sysdispatchedQty == qty
 
 
 

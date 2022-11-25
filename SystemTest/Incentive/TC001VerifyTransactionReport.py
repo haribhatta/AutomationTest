@@ -34,13 +34,13 @@ AC.login(adminUserId, adminUserPwd)
 
 LB.counteractivation(EMR)
 ###Pre-Condition:
-HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
+HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal", case='+ve')
 LI.synchBilingIncentive(EMR)
 ###Read Transaction Report
 LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctorGynae)
 LI.preIncentiveTransactionReport()
 ###Consultation Charge
-HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal")
+HospitalNo1, InvoiceNo1, discountPercentage1 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal", case='+ve')
 LI.synchBilingIncentive(EMR)
 LI.getIncentiveTransactionReport(danpheEMR=EMR, doctorName=doctorGynae)
 LI.verifyIncentiveTransactionReport(cash=itemprice, credit=0)
