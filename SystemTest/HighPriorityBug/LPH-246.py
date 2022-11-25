@@ -27,7 +27,7 @@ AC.login(GSV.foUserID, GSV.foUserPwD)
 ########
 HospitalNo = LPP.patientRegistration(EMR)
 LB.counteractivation(EMR)
-LADT.admitDisTrans(danpheEMR=EMR, admit=1, trasfer=0, discharge=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
+LADT.admitDisTrans(danpheEMR=EMR, admit=1, transfer=0, discharge=0, HospitalNo=HospitalNo, deposit=0, doctor=GSV.doctorGyno, department=GSV.departmentGyno, admittingDoctorMandatory=isDoctorMandatory)
 AC.logout()
 AC.closeBrowser()
 print("patient has been add successfully")

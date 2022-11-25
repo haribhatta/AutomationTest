@@ -127,11 +127,11 @@ LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditR
 HospitalNo5 = LP.patientRegistration(EMR)
 LBR.getBillingDashboard(EMR)
 LBR.preSystemDataBillingDashboard()
-LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo5, admit=1, trasfer=0, discharge=0, deposit=deposit, doctor=doctorGynae, department=departmentGynae, admittingDoctorMandatory=isDoctorMandatory)
+LADT.admitDisTrans(danpheEMR=EMR, HospitalNo=HospitalNo5, admit=1, transfer=0, discharge=0, deposit=deposit, doctor=doctorGynae, department=departmentGynae, admittingDoctorMandatory=isDoctorMandatory)
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
                           settlement=0, provisional=admisioncharge, provisionalcancel=0)
-LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, test=usgtest)
+LB.createIPprovisionalBill(danpheEMR=EMR, HospitalNo=HospitalNo5, usgtest=usgtest)
 LBR.preSystemDataBillingDashboard()
 LBR.getBillingDashboard(EMR)
 LBR.verifyBillingDashboard(cash=0, discountpc=0, cashReturn=0, credit=0, creditReturn=0,
