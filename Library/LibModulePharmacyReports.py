@@ -1344,7 +1344,7 @@ def getStockTransferReport(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//i[contains(text(),'Stock Transfers')]").click()
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//span[contains(text(),'Show Report')]").click()
-    time.sleep(5)
+    time.sleep(7)
     receivedStockQuantity = danpheEMR.find_element(By.XPATH,
                                                    "//*[@id='print_summary']/table/tbody/tr[2]/td[2]/span").text
     receivedStockQuantity = receivedStockQuantity.replace(",", "")
@@ -1452,6 +1452,7 @@ def verifyStockSummaryReportAfterReceiving(qty):
     assert float(totalStockSalesValue) == float(receivedStockSalesValue + notReceivedSalesValue)
     print("END>> Verifying Stock Stock Summary Report After item Receiving")
 
+
 def getReturnToSupplierReport(danpheEMR, creditno):
     print("START>> Return to supplier report")
     if AppName == "LPH":
@@ -1466,7 +1467,7 @@ def getReturnToSupplierReport(danpheEMR, creditno):
     time.sleep(3)
     danpheEMR.find_element(By.ID, 'quickFilterInput').send_keys(creditno)
     time.sleep(2)
-    suppliercredit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[11]").text
+    suppliercredit = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[12]").text
     suppliercredit = int(suppliercredit)
     print(suppliercredit)
     assert creditno == suppliercredit

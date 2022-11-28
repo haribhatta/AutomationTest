@@ -62,7 +62,7 @@ def createDispensarySale(danpheEMR, HospitalNo, qty, drugName, paymentmode):
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
         #creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
-        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8 ng-untouched ng-pristine ng-valid']"))
+        creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
         creditOrganization.select_by_visible_text("SCH Staff Account")
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
@@ -109,7 +109,7 @@ def createNarcoticDispensarySale(danpheEMR, HospitalNo, drugName, qty, paymentmo
         paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
-        creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
         creditOrganization.select_by_visible_text(creditors)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
@@ -136,8 +136,8 @@ def createDispensarySaleRandomPatient(danpheEMR, drugname, qty, paymentmode):
     danpheEMR.find_element(By.XPATH, "//input[@formcontrolname= 'Quantity']").send_keys(qty)
     time.sleep(3)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-        paymentoptions.select_by_visible_text("credit")
+        paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+        paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
     danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
@@ -184,7 +184,7 @@ def createDispensarySaleMultipleItems(danpheEMR, HospitalNo, drugname, drugname1
         paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
-        creditOrg = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        creditOrg = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
         creditOrg.select_by_visible_text(creditOrganization)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys(Keys.TAB)
@@ -255,7 +255,7 @@ def createDispensaryOPDBilling(danpheEMR, qty, DrugName, paymentmode):
     danpheEMR.find_element(By.ID, "qty-box0").send_keys(qty)
     time.sleep(3)
     if paymentmode == 'Credit':
-        paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
+        paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text(paymentmode)
         time.sleep(2)
         danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
@@ -416,6 +416,7 @@ def getDispensaryStockDetail(danpheEMR, drugname):
     print("drugqtySS:", drugqtySS)
     print("End>>getDispensaryStockDetail")
 
+
 def transferMainDispensary2MainStore(danpheEMR, drugname, qty):
     print(">>Start: transferMainDispensary2MainStore")
     global drugqtySS
@@ -438,6 +439,7 @@ def transferMainDispensary2MainStore(danpheEMR, drugname, qty):
     danpheEMR.find_element(By.ID, "stockTransfer").click()
     print("End>>transferMainDispensary2MainStore")
 
+
 def verifyDispensaryStockDetail(danpheEMR, drugname):
     print(">>Start: verifyDispensaryStockDetail")
     danpheEMR.find_element(By.LINK_TEXT, "Dispensary").click()
@@ -457,8 +459,11 @@ def verifyDispensaryStockDetail(danpheEMR, drugname):
     assert int(drugqtySS) == int(sysdrugqty)
     print("End>>: verifyStockDetail")
 
+
 # quantity is for Varifying the Requested Quantity
-def receiveItem(danpheEMR,qty):
+
+
+def receiveItem(danpheEMR, qty):
     danpheEMR.find_element(By.LINK_TEXT, "Stock").click()
     danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
     time.sleep(3)
@@ -471,6 +476,7 @@ def receiveItem(danpheEMR,qty):
     remark = danpheEMR.find_element(By.ID, "remarks")
     remark.send_keys("Received a Quantity of ", +qty)
     danpheEMR.find_element(By.ID, "btn_Add").click()
+
 
 def createDispensarySaleWithDiscount(danpheEMR, HospitalNo, qty, discountpercentage, drugName, paymentmode):
     print(">>Create Dispensary Sale With Discount to Hospital Patient: START")
@@ -512,8 +518,10 @@ def createDispensarySaleWithDiscount(danpheEMR, HospitalNo, qty, discountpercent
     else:
         time.sleep(3)
         if paymentmode == 'Credit':
-            paymentoptions = Select(danpheEMR.find_element(By.XPATH, "//select"))
-            paymentoptions.select_by_visible_text("credit")
+            paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
+            paymentoptions.select_by_visible_text("Credit")
+            creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
+            creditOrganization.select_by_visible_text("SCH Staff Account")
             time.sleep(2)
             danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")
         danpheEMR.find_element(By.XPATH, "//button[@title='ALT + P']").click()
@@ -596,7 +604,7 @@ def createDispensarySaleRegisterOutdoorPatient(danpheEMR, HospitalNo, qty, drugN
         lastname = "Basnet"
         print("lastname:", lastname)
         danpheEMR.find_element(By.ID, "newPatLastName").send_keys(lastname)
-        gender = Select(danpheEMR.find_element(By.ID,"newPatGender"))
+        gender = Select(danpheEMR.find_element(By.ID, "newPatGender"))
         gender.select_by_visible_text("Female")
         danpheEMR.find_element(By.ID, "Age").click()
         age = random.randint(1,99)
@@ -611,22 +619,16 @@ def createDispensarySaleRegisterOutdoorPatient(danpheEMR, HospitalNo, qty, drugN
         time.sleep(3)
         danpheEMR.find_element(By.ID, "item-box0").send_keys(Keys.TAB)
         time.sleep(5)
-        #drugavlqty = danpheEMR.find_element(By.XPATH, "(//input[@value=''])[6]").get_attribute("Value")
-        #print("Drug Available qty:", drugavlqty)
         danpheEMR.find_element(By.ID, "qty0").click()
         danpheEMR.find_element(By.ID, "qty0").clear()
         danpheEMR.find_element(By.ID, "qty0").send_keys(qty)
         time.sleep(3)
         if paymentmode == 'Credit':
             time.sleep(2)
-            #paymentoptions = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(4) > td:nth-child(2) > div > select"))
             paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
-            #paymentoptions.select_by_visible_text("credit")
             paymentoptions.select_by_visible_text("Credit")
             time.sleep(2)
-            #creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, " tr:nth-child(5) > td:nth-child(2) > div > select"))
-            #creditOrganization.select_by_index(0)
-            creditOrganization = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+            creditOrganization = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
             creditOrganization.select_by_visible_text("SCH Staff Account")
             time.sleep(3)
             danpheEMR.find_element(By.XPATH, "//input[@name='Remarks']").send_keys("This is credit bill")

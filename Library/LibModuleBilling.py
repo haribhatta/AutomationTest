@@ -1025,7 +1025,7 @@ def generateDischargeInvoice(danpheEMR, creditOrganization, HospitalNo, paymentm
         paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
-        crOrg = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        crOrg = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
         crOrg.select_by_visible_text(creditOrganization)
         time.sleep(1)
         danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
