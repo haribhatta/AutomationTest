@@ -1199,11 +1199,11 @@ def getSupplierStockReport(danpheEMR, supplier, batchNumber):
     # actualTotalAmount = int(actualTotalAmount)
     # print("Total Amount of selected date of given supplier is  : ", actualTotalAmount)
     time.sleep(2)
-    supplierPurchaseQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]").text
+    supplierPurchaseQty = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[7]").text
     print("Purchase Quantity of the item is ", supplierPurchaseQty)
     purchaseQty = int(supplierPurchaseQty)
     print(purchaseQty)
-    supplierPurchaseItemName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
+    supplierPurchaseItemName = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[6]").text
     print("Item name of the item is ", supplierPurchaseItemName)
 
 def preSupplierStockReport():
@@ -1315,7 +1315,8 @@ def verifynarcoticstockreport(danpheEMR, qty, DrugName, grNo):
     danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(DrugName, " ", qty, " ", grNo)
     time.sleep(9)
     print("Good Receipt Number / Batch Number: ", grNo)
-    batchNo = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[2]").text
+    batchNo = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
+    print(batchNo)
     batchNo = int(batchNo)
     print("Batch number of Given medicine is :", batchNo)
     assert batchNo == grNo

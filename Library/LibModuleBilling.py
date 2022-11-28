@@ -358,8 +358,10 @@ def verifySampleCollectionDuplicateEntry():
 def createProvisionalBill(danpheEMR, HospitalNo, usgtest):
     print("START>>createProvisionalBill")
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-    danpheEMR.find_element(By.ID, "srch_PatientList").click()
-    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(2)
+    # danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    searchPatient = danpheEMR.find_element(By.ID, "srch_PatientList")
+    searchPatient.send_keys(HospitalNo)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
