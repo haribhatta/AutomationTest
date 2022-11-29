@@ -213,6 +213,7 @@ def verifyIncentivePatientVsServiceReport(self, amount):
     assert float(NetPayable) == float(IncentiveAmt) - float(TDSAmt)
     assert float(NetPayable) == xNetPayable + float(calcIncentive) - float(calcTDS)  # incentive after deducting TDS
 
+
 def transactionInvoice(danpheEMR, HospitalNo, ReferralName, Performer):
     print(">>START: TransactionInvoice")
     danpheEMR.find_element(By.LINK_TEXT, "Incentive").click()
@@ -228,29 +229,31 @@ def transactionInvoice(danpheEMR, HospitalNo, ReferralName, Performer):
     danpheEMR.find_element(By.ID, 'srch_invoiceList').send_keys(Keys.ENTER)
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Load')]").click()
+    danpheEMR.find_element(By.ID, 'srch_invoiceList').send_keys(Keys.ENTER)
     time.sleep(5)
-    print("test1")
-    # Source = danpheEMR.find_element(By.XPATH, "//i[@class = 'fa fa-eye']")
-    # action = ActionChains(danpheEMR)
-    # action.double_click(Source).perform()
-    test = danpheEMR.find_element(By.XPATH, "//*[@class='fa fa-eye']")
-    print(test.is_displayed())
-    danpheEMR.find_element(By.XPATH, "//*[@class='fa fa-eye']").click()
-    #time.sleep(5)
-    print("test2")
-    time.sleep(5)
-    danpheEMR.find_element(By.XPATH, "//*[@id='id_referral_chkbox_inctv']").click()
-    print("test3")
+    # js = "var aa=document.getElementsByClassName('tooltip')[0];aa.parentNode.removeChild(aa)"
+    # danpheEMR.execute_script(js)
+    Source = danpheEMR.find_element(By.XPATH, "//*[@class='fa fa-eye']/ancestor :: td")
+    danpheEMR.execute_script("arguments[0].click();", Source)
+    time.sleep(2)
+    referCheckBox = danpheEMR.find_element(By.ID, "id_referral_chkbox_inctv")
+    print("is Displayed", referCheckBox.is_displayed())
+    print("is Selected", referCheckBox.is_selected())
+    danpheEMR.execute_script("arguments[0].click();", referCheckBox)
+    print("after click is Selected: ", referCheckBox.is_selected())
     time.sleep(3)
-    danpheEMR.find_element(By.ID, 'id_referral_employee_inctv').send.keys(ReferralName)
+    danpheEMR.find_element(By.XPATH, "//input[@name = 'referralEmployee']").click()
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//input[@name = 'referralEmployee']").send_keys(ReferralName)
+    danpheEMR.find_element(By.XPATH, "//input[@name = 'referralEmployee']").send_keys(Keys.ENTER)
     time.sleep(3)
-    danpheEMR.find_element(By.ID,'id_referral_percent_inctv').send.keys(10)
+    danpheEMR.find_element(By.ID, "id_referral_percent_inctv").send_keys(10)
     time.sleep(3)
-    danpheEMR.find_element(By.ID,'empIp_0').send.keys(Performer)
+    danpheEMR.find_element(By.ID, "empIp_0").send_keys(Performer)
     time.sleep(3)
-    danpheEMR.find_element(By.ID, 'percentip0').send.keys(20)
+    danpheEMR.find_element(By.ID, 'percentip0').send_keys(20)
     time.sleep(3)
-    danpheEMR.find_element(By.ID,'btn_SaveFraction').click()
+    danpheEMR.find_element(By.ID, 'btn_SaveFraction').click()
     print(">>END: TransactionInvoice")
 
 def ReferralSummaryReport(danpheEMR, doctorName):
@@ -263,8 +266,6 @@ def ReferralSummaryReport(danpheEMR, doctorName):
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Search Doctor Name']").send_keys(Keys.ARROW_DOWN)
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Search Doctor Name']").send_keys(Keys.TAB)
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Show Report')]").click()
-
-
     print(">>END Referral Summary Report")
 
 

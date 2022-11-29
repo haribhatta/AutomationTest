@@ -9,7 +9,7 @@ storeUserId = GSV.storeUserID
 storeUserPwd = GSV.storeUserPwD
 
 itemname1 = GSV.stationaryItem1
-itemname2 = GSV.stationaryItem2
+# itemname2 = GSV.stationaryItem2
 print("itemName:", itemname1)
 qty = 1
 rate = 1
