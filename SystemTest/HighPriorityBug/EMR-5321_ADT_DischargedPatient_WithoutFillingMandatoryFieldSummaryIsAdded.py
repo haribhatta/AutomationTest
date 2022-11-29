@@ -25,6 +25,7 @@ adminUserPwd = GSV.adminUserPwD
 ###
 doctor = GSV.doctorGyno
 department = GSV.departmentGyno
+doctor2 = GSV.doctor2
 ########
 priceCategoryType = "Normal"
 discountScheme = GSV.discountSchemeName
@@ -41,12 +42,9 @@ admitCharge = GSV.admitRate
 
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
+LB.counteractivation(EMR)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 LS.checkAutoAddItems(danpheEMR=EMR)
-AC.logout()
-AC.login(foUserId, foUserPwd)
-HospitalNo = LPP.patientRegistration(danpheEMR=EMR)
-LB.counteractivation(EMR)
 LS.paymentModeOpBillingDisplaySequence(EMR)
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(danpheEMR=EMR, discountScheme=0, paymentmode="Cash", department=GSV.departmentGyno, doctor=GSV.doctorGyno, priceCategoryType=priceCategoryType, case='+ve')
 LB.createlabxrayinvoice(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labitem, imagingtest=imagingitem)
@@ -54,5 +52,6 @@ ADT.admitDisTrans(danpheEMR=EMR, admit=1, discharge=0, transfer=0, deposit=depos
 print("Patient admitted successfully")
 ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, transfer=0, deposit=deposit, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 print("Patient Discharged successfully")
-ADT.AddSummaryOfDischargedPatient(EMR, HospitalNo=HospitalNo, doctorName=doctor)
-
+ADT.AddSummaryOfDischargedPatient(EMR, HospitalNo=HospitalNo, doctorName=doctor,doctor2=doctor2)
+AC.logout()
+AC.closeBrowser()

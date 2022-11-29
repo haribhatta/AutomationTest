@@ -17,7 +17,7 @@ store2 = "Accounting Store"
 EMR = AC.openBrowser()
 AC.login(storeUserId, storeUserPwd)
 NepaliReceipt = LS.CheckNepaliReceiptValue(EMR)
-LI.activateInventory(EMR, 'General Inventory')
+#LI.activateInventory(EMR, 'General Inventory')
 BillNo = LI.createInventoryGoodReceipt(danpheEMR=EMR, item=item, rate=rate, paymentMode="Credit", NepaliReceipt=NepaliReceipt)
 print("Bill Number of Given Good Receipt is :", BillNo)
 LP.cancelInventoryGoodsReceipt(EMR, BillNo=BillNo)

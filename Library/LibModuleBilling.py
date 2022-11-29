@@ -169,14 +169,12 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     element.until(
         EC.element_to_be_clickable((By.ID, "btn_billRequest"))
     ).click()
-    # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-    wait = WebDriverWait(danpheEMR, 20)
-    wait.until(
-        EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
-    ).click()
-    # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    element.until(
+        EC.presence_of_element_located((By.ID, "srchbx_ItemName_0"))
+    )
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
-    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.ENTER)
     price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
     danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)

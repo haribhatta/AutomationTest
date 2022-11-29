@@ -175,7 +175,7 @@ def checkAutoAddItems(danpheEMR):
     # assert autoaddbillitemvalue == "autoaddbillitemvalue   False"      rework needed
     # assert autoaddBeditemvalue == "autoaddBeditemvalue   True"        rework needed
 
-def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName):
+def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName, doctor2):
     print("START>>AddingSummary")
     danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
     time.sleep(3)
@@ -189,6 +189,8 @@ def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName):
     DischargeType.select_by_visible_text("Referred")
     time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(doctorName)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(doctor2)
     time.sleep(3)
     danpheEMR.find_element(By.XPATH,"/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/ng-component/div/div[2]/discharge-summary-add/div/form/div/div[2]/div/div[2]/div[2]/input").click()
 
