@@ -255,7 +255,7 @@ if appName == "SNCH":
       creditOrganization = "SCH Staff Account"
 
       ###TestAction>>Accounting:
-      Ledger_1 = "Sunita Karki"
+      Ledger_1 = "Sunita "
       Ledger_2 = "Cash"
 ###############################################################################
 ########Defining Variables for Medi Plus
@@ -304,6 +304,7 @@ if appName == "MPH":
       LDHRate = 600
       USG = "USG ABDOMEN AND PELVIS"
       usgRate = 1300
+      USG2 = "USG (ABDOMEN / PELVIS)"
       admitRate = 30
       UrineRE = "URINE R/E "
       UrineRERare = 125
@@ -361,6 +362,9 @@ if appName == "MPH":
       doctor2 = "Dr. Alisha Surkheti"
       doctorGyno = "Dr. Pravin Baniya"
       departmentGyno = "Dermatology & Cosmatology"
+#       Accounting LedgerName
+      Ledger_1 = "Vehicle"
+      Ledger_2 = "SIDDARTHA BANK LIMITED "
 ###############################################################################
 ########Defining Variables for Rhythm
 ###############################################################################
