@@ -42,7 +42,7 @@ admitCharge = GSV.admitRate
 
 EMR = AC.openBrowser()
 AC.login(adminUserId, adminUserPwd)
-LB.counteractivation(EMR)
+#LB.counteractivation(EMR)
 isDoctorMandatory = LS.checkCoreCFGadmitDocMandatory(danpheEMR=EMR)
 LS.checkAutoAddItems(danpheEMR=EMR)
 LS.paymentModeOpBillingDisplaySequence(EMR)
