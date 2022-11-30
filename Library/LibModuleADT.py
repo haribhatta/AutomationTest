@@ -188,11 +188,17 @@ def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName, doctor2):
     DischargeType = Select(danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/ng-component/div/div[2]/discharge-summary-add/div/form/div/div[2]/div/div[2]/div[1]/div[1]/div[1]/div/select"))
     DischargeType.select_by_visible_text("Referred")
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(doctorName)
+    Consultantdoctor = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(doctorName)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(Keys.ENTER)
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(doctor2)
+    print("primary doctor", Consultantdoctor)
+    DoctorIncharge = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(doctor2)
     time.sleep(3)
+    print("Doctor Incharge", DoctorIncharge)
     danpheEMR.find_element(By.XPATH,"/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/ng-component/div/div[2]/discharge-summary-add/div/form/div/div[2]/div/div[2]/div[2]/input").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-primary btn-sm']").click()
+
 
 def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
