@@ -250,7 +250,7 @@ if appName == "SNCH":
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
-      doctor2 = "Dr. Amit Chaturbedi"
+      doctor2 = "Amit Chaturbedi"
 # Dispensary Credit Organization
       creditOrganization = "SCH Staff Account"
 
