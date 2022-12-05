@@ -10,7 +10,8 @@ AppName = GSV.appName
 
 
 # Module:ADT -----------------------------
-def admitDisTrans(danpheEMR, admit, discharge, transfer, HospitalNo, deposit, doctor, department, admittingDoctorMandatory):
+def admitDisTrans(danpheEMR, admit, discharge, transfer, HospitalNo, deposit, doctor, department,
+                  admittingDoctorMandatory):
     print("START>>admitDisTrans")
     if admit == 1:
         time.sleep(3)
@@ -53,7 +54,7 @@ def admitDisTrans(danpheEMR, admit, discharge, transfer, HospitalNo, deposit, do
         time.sleep(2)
         danpheEMR.find_element(By.ID, "BedId").send_keys(Keys.ENTER)
         time.sleep(2)
-        #danpheEMR.find_element(By.ID, "SaveAdmission").click()
+        # danpheEMR.find_element(By.ID, "SaveAdmission").click()
         time.sleep(2)
         danpheEMR.find_element(By.ID, "SaveAdmission").click()
         time.sleep(5)
@@ -175,7 +176,8 @@ def checkAutoAddItems(danpheEMR):
     # assert autoaddbillitemvalue == "autoaddbillitemvalue   False"      rework needed
     # assert autoaddBeditemvalue == "autoaddBeditemvalue   True"        rework needed
 
-def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName, doctor2):
+
+def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, consultantDr, inchargeDr):
     print("START>>AddingSummary")
     danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
     time.sleep(3)
@@ -185,19 +187,74 @@ def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, doctorName, doctor2):
     time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Add Summary").click()
     time.sleep(3)
-    DischargeType = Select(danpheEMR.find_element(By.XPATH, "/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/ng-component/div/div[2]/discharge-summary-add/div/form/div/div[2]/div/div[2]/div[1]/div[1]/div[1]/div/select"))
+    DischargeType = Select(danpheEMR.find_element(By.XPATH, "//select[@formcontrolname='DischargeTypeId']"))
     DischargeType.select_by_visible_text("Referred")
     time.sleep(3)
-    Consultantdoctor = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(doctorName)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(consultantDr)
     danpheEMR.find_element(By.XPATH, "//input[@placeholder='Consultant name']").send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(inchargeDr)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(Keys.ENTER)
+    time.sleep(1)
+    specialNotes = danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Special Notes']")
+    specialNotes.send_keys("This is Special Notes")
+    history = danpheEMR.find_element(By.XPATH, "//textarea[@placeholder='Presenting Illness']")
+    history.send_keys("No any history found.")
+    time.sleep(1)
+    save = danpheEMR.find_element(By.XPATH, "(//input[@value='Save'])[2]")
+    save.click()
     time.sleep(3)
-    print("primary doctor", Consultantdoctor)
-    DoctorIncharge = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name'] ").send_keys(doctor2)
+    hospitalNumber = danpheEMR.find_element(By.XPATH, "//*[@id='printpage']/div/div/div[1]/div[2]/div/p[1]").text
+    print("Hospital Number of Patient is :", hospitalNumber)
+    hospitalNumber = hospitalNumber.replace("Hospital No.: ", "")
+    assert hospitalNumber == HospitalNo
+    dischargeType = danpheEMR.find_element(By.XPATH, "//span[normalize-space()='Referred']").text
+    print("Discharge Type f the Patient is :", dischargeType)
+    assert dischargeType == "Referred"
+    medicalOfficer = danpheEMR.find_element(By.XPATH,
+                                            "//*[@id='printpage']/div/div/div[4]/div/div/div/div[1]/p[2]/strong").text
+    print("Medical Officer of given Patient is :", medicalOfficer)
+    medicalOfficer = str(medicalOfficer)
+    assert inchargeDr == medicalOfficer
+    consultantDoctor = danpheEMR.find_element(By.XPATH,
+                                              "//*[@id='printpage']/div/div/div[4]/div/div/div/div[2]/p[2]/strong").text
+    print("Consultant Doctor is :", consultantDoctor)
+    # consultantDoctor = str(consultantDoctor)
+    # assert consultantDoctor == consultantDr
+    print("END: Summary Report")
+
+
+def updateAndViewSummaryOfDischargedPatient(danpheEMR, HospitalNo):
+    print("START>>updating summary")
+    global incDr
+    danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
     time.sleep(3)
-    print("Doctor Incharge", DoctorIncharge)
-    danpheEMR.find_element(By.XPATH,"/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/ng-component/div/div[2]/discharge-summary-add/div/form/div/div[2]/div/div[2]/div[2]/input").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Discharged Patients").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.XPATH, "//a[normalize-space()='View Summary']").click()
+    time.sleep(2)
+    incharge = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name']")
+    incDr = incharge.get_attribute('value')
+    print("Incharge Doctor is:", incDr)
+    danpheEMR.find_element(By.XPATH, "//input[@value='Update']").click()
+    print("END: Updating")
+    return incDr
+
+
+def verifyInchargeDoctorAfterUpdate(danpheEMR, HospitalNo):
+    print("START>>Verifying Doctor")
+    danpheEMR.find_element(By.LINK_TEXT, "ADT").click()
     time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//button[@class='btn btn-primary btn-sm']").click()
+    danpheEMR.find_element(By.LINK_TEXT, "Discharged Patients").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+    danpheEMR.find_element(By.XPATH, "//a[normalize-space()='View Summary']").click()
+    time.sleep(2)
+    incharge = danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Incharge name']")
+    inchDr = incharge.get_attribute('value')
+    print("Incharge Doctor is:", inchDr)
+    assert inchDr == inchDr
+    print("Verify End")
 
 
 def wait_for_window(danpheEMR, timeout=2):
