@@ -189,6 +189,26 @@ def addBirthDetailsFromMRInpatientList(danpheEMR, HospitalNo, babyWeight):
 
 
 # this is to assert the edited weight for bug EMR-4580
+
+
+def OutpatientList(danpheEMR, HospitalNo, DoctorName):
+   time.sleep(5)
+   danpheEMR.find_element(By.XPATH, "//span[normalize-space()='MedicalRecords']").click()
+   time.sleep(5)
+   danpheEMR.find_element(By.XPATH, "//a[contains(text(),'MR Outpatient List')]").click()
+   time.sleep(2)
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(DoctorName)
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(Keys.ENTER)
+   time.sleep(2)
+   danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
+   time.sleep(3)
+   doctorname = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div[1]/div[5]").text
+   print("doctor name is :", doctorname)
+   doctorname = str(doctorname)
+   print(doctorname)
+   assert doctorname == DoctorName
+
+
 def editBirthDetailsfromMRInpatientList(danpheEMR, editedWeight):
    time.sleep(3)
    print("Editing birth details from MR Inpatient List")
