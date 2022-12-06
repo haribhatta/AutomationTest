@@ -1,13 +1,3 @@
-''''
-Scripted by: Alina Shrestha
-The objective of this test case is to test below issue:
-Headline:
-ADT | Discharged patient > Without filling mandatory field summary is Added .
-
-Description:
-Without filling mandatory field summary is Added
-'''
-
 from Library import ApplicationConfiguration as AC
 from Library import LibModuleBilling as LB
 from Library import LibModuleADT as ADT
@@ -48,5 +38,7 @@ print("Patient admitted successfully")
 ADT.admitDisTrans(danpheEMR=EMR, admit=0, discharge=1, transfer=0, deposit=deposit, HospitalNo=HospitalNo, department=GSV.departmentGyno, doctor=GSV.doctorGyno, admittingDoctorMandatory=isDoctorMandatory)
 print("Patient Discharged successfully")
 ADT.AddSummaryOfDischargedPatient(EMR, HospitalNo=HospitalNo, consultantDr=doctor, inchargeDr=doctor2)
+ADT.updateAndViewSummaryOfDischargedPatient(danpheEMR=EMR, HospitalNo=HospitalNo)
+ADT.verifyInchargeDoctorAfterUpdate(danpheEMR=EMR, HospitalNo=HospitalNo)
 AC.logout()
 AC.closeBrowser()

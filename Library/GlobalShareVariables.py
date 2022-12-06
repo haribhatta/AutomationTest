@@ -224,9 +224,10 @@ if appName == "SNCH":
       inventoryName1 = "General Inventory"
       inventoryName2 = "Medical Inventory"
       subStoreName1 = "ACCOUNT"
-      subStoreName2 = "ADMINISTRATION"
+      subStoreName2 = "Administration Store"
       A4Paper = 'A4 PAPER'
       storeItem1Name = 'A4 PAPER'
+      storeItem2Name = 'Paper Roll'
       PhotocopyPaper = 'PHOTOCOPY PAPER (CUTTING)'
       photocopypaperRate = 2300
       stationaryItem1 = "PENCIL"
@@ -249,11 +250,12 @@ if appName == "SNCH":
       doctorGyno = "Dr. Jyoti Rana"
       departmentGyno = "Gynecology"
       departmentNephro = "Nephro"
+      doctor2 = "Amit Chaturbedi"
 # Dispensary Credit Organization
       creditOrganization = "SCH Staff Account"
 
       ###TestAction>>Accounting:
-      Ledger_1 = "Sunita Karki"
+      Ledger_1 = "Sunita "
       Ledger_2 = "Cash"
 ###############################################################################
 ########Defining Variables for Medi Plus
@@ -302,6 +304,7 @@ if appName == "MPH":
       LDHRate = 600
       USG = "USG ABDOMEN AND PELVIS"
       usgRate = 1300
+      USG2 = "USG (ABDOMEN / PELVIS)"
       admitRate = 30
       UrineRE = "URINE R/E "
       UrineRERare = 125
@@ -359,6 +362,9 @@ if appName == "MPH":
       doctor2 = "Dr. Alisha Surkheti"
       doctorGyno = "Dr. Pravin Baniya"
       departmentGyno = "Dermatology & Cosmatology"
+#       Accounting LedgerName
+      Ledger_1 = "Vehicle"
+      Ledger_2 = "SIDDARTHA BANK LIMITED "
 ###############################################################################
 ########Defining Variables for Rhythm
 ###############################################################################

@@ -18,7 +18,5 @@ LB.counteractivation(EMR)
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=GSV.discountSchemeName, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType="Normal", case="+ve")
 print("hospitalNo", HospitalNo)
 InvoiceNo1 = LB.multiplebillingclick(danpheEMR=EMR, HospitalNo=HospitalNo, labtest=labTestTFT, imagingtest=radioTestUSG, discountScheme=GSV.discountSchemeName)
-LB.verifymultipleclickbilling(EMR, InvoiceNo1)
 AC.logout()
 AC.closeBrowser()
-

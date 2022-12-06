@@ -104,6 +104,7 @@ def returnBillingInvoicePartial(danpheEMR, InvoiceNo, returnmsg):
     danpheEMR.find_element(By.XPATH,
         "//a[@class='btn btn-danger del-btn']").click()  # This is to close print window.
 
+
 def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
     print("START>>verifyReturnBillingInvoice")
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -127,6 +128,7 @@ def verifyReturnBillingInvoice(danpheEMR, InvoiceNo, itemRate):
     danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']").click()
     time.sleep(2)
     print("END>>verifyReturnBillingInvoice")
+
 
 def verifyCreditNoteDuplicateInvoice(danpheEMR, InvoiceNo):
     print("Verify partial return of bill invoice")
@@ -167,16 +169,12 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     element.until(
         EC.element_to_be_clickable((By.ID, "btn_billRequest"))
     ).click()
-
-    # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-    wait = WebDriverWait(danpheEMR, 20)
-    wait.until(
-        EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
-    ).click()
-
-    # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    element.until(
+        EC.presence_of_element_located((By.ID, "srchbx_ItemName_0"))
+    )
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
-    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.ENTER)
     price1 = danpheEMR.find_element(By.XPATH, "//input[@name='total']").get_attribute('value')
     danpheEMR.find_element(By.CSS_SELECTOR, "a > .btn-success").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_1").send_keys(labtest)
@@ -200,7 +198,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
 
 
-def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
+def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest, discountScheme):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -212,7 +210,13 @@ def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-    time.sleep(5)
+    time.sleep(3)
+    select = Select(
+        danpheEMR.find_element(By.XPATH, "(//select[@id='Scheme'])[1]"))
+    selected_option = select.first_selected_option
+    print(selected_option.text)
+    assert selected_option.text == discountScheme
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
@@ -237,7 +241,6 @@ def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
     print("InvoiceNo", InvoiceNo)
@@ -306,7 +309,6 @@ def createLabInvoice(danpheEMR, HospitalNo, labtest):
     # InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]/child::span").text
     InvoiceNo = danpheEMR.find_element(By.XPATH, "//p[contains(text(), 'Invoice No:')]").text
     danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
     print("InvoiceNo", InvoiceNo)
@@ -360,8 +362,10 @@ def verifySampleCollectionDuplicateEntry():
 def createProvisionalBill(danpheEMR, HospitalNo, usgtest):
     print("START>>createProvisionalBill")
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-    danpheEMR.find_element(By.ID, "srch_PatientList").click()
-    danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(HospitalNo)
+    time.sleep(2)
+    # danpheEMR.find_element(By.ID, "srch_PatientList").click()
+    searchPatient = danpheEMR.find_element(By.ID, "srch_PatientList")
+    searchPatient.send_keys(HospitalNo)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.RETURN)
     time.sleep(3)
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
@@ -379,29 +383,29 @@ def createProvisionalBill(danpheEMR, HospitalNo, usgtest):
     time.sleep(2)
     print("END>>createProvisionalBill")
 
-def createIPprovisionalBill(danpheEMR, HospitalNo, usgtest):
-        print("START>>createIPprovisionalBill")
-        danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
-        danpheEMR.find_element(By.ID, "srchIP_PatientList").click()
-        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(HospitalNo)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.RETURN)
-        time.sleep(3)
-        danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.TAB)
-        time.sleep(3)
-        danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-        time.sleep(2)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(usgtest)
-        time.sleep(1)
-        danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
-        time.sleep(2)
-        danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Print Provisional Slip ')]").click()
-        time.sleep(5)
-        danpheEMR.find_element(By.ID, "btnPrintProvisionalSlip").send_keys(Keys.ESCAPE)
-        time.sleep(2)
-        print("END>>createIPprovisionalBill")
 
+def createIPprovisionalBill(danpheEMR, HospitalNo, usgtest):
+    print("START>>createIPprovisionalBill")
+    danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
+    danpheEMR.find_element(By.ID, "srchIP_PatientList").click()
+    danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(HospitalNo)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.RETURN)
+    time.sleep(3)
+    danpheEMR.find_element(By.ID, "srchIP_PatientList").send_keys(Keys.TAB)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(usgtest)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//button[contains(text(),' Print Provisional Slip ')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "btnPrintProvisionalSlip").send_keys(Keys.ESCAPE)
+    time.sleep(2)
+    print("END>>createIPprovisionalBill")
 
 
 def verifyEstimationBill(danpheEMR, HospitalNo):
@@ -433,7 +437,6 @@ def verifyEstimationBill(danpheEMR, HospitalNo):
     print("END>>verified Estimation Bill")
 
 
-
 def verifyDuplicateBill(danpheEMR, HospitalNo):
     print("START>>verifyDuplicateBill")
     time.sleep(3)
@@ -447,7 +450,6 @@ def verifyDuplicateBill(danpheEMR, HospitalNo):
     time.sleep(3)
     #sysHospitalNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'" + HospitalNo + "')]").text
     sysHospitalNo = danpheEMR.find_element(By.XPATH, "//div[contains(text(),'" + HospitalNo + "')]").text
-
     assert HospitalNo == sysHospitalNo  # to check double click issue on invoice creation.
     # danpheEMR.find_element(By.LINK_TEXT, "Show Details").click()
     danpheEMR.find_element(By.XPATH, "(//a[contains(text(),'Show Details')])[1]").click()
@@ -698,7 +700,6 @@ def opDepositDbilingTenderCashReturn(danpheEMR, HospitalNo, deposit, testname):
     #     print("NewDepositBalance", NewDepositBalance)
     #     assert DepositBalance == NewDepositBalance
     # danpheEMR.find_element(By.ID, "btnPrintRecipt").send_keys(Keys.ESCAPE)
-
 
 
 def createUSGinvoice(danpheEMR, HospitalNo, USGtest):
@@ -954,7 +955,6 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
         tender = float(tender)
         assert tender == actualTender
         '''
-
     element = danpheEMR.find_element(By.XPATH, "//a[@class='btn btn-danger del-btn']")
     time.sleep(2)
     danpheEMR.execute_script("arguments[0].click();", element)
@@ -1031,7 +1031,7 @@ def generateDischargeInvoice(danpheEMR, creditOrganization, HospitalNo, paymentm
         paymentoptions = Select(danpheEMR.find_element(By.ID, "pay_mode"))
         paymentoptions.select_by_visible_text("Credit")
         time.sleep(2)
-        crOrg = Select(danpheEMR.find_element(By.XPATH, "//select[@class='form-control mb-8']"))
+        crOrg = Select(danpheEMR.find_element(By.CSS_SELECTOR, "tr:nth-child(2) .mb-8"))
         crOrg.select_by_visible_text(creditOrganization)
         time.sleep(1)
         danpheEMR.find_element(By.XPATH, "//textarea").send_keys("This is credit bill")
@@ -1184,7 +1184,6 @@ def verifyReferDoctorinInvoice(danpheEMR, HospitalNo, imagingtest, labtest, Refe
     wait.until(
         EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
     ).click()
-
     # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
@@ -1233,13 +1232,11 @@ def createlabxrayinvoiceOtherPayment(danpheEMR, HospitalNo, labtest, imagingtest
     element.until(
         EC.element_to_be_clickable((By.ID, "btn_billRequest"))
     ).click()
-
     # danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
     wait = WebDriverWait(danpheEMR, 20)
     wait.until(
         EC.element_to_be_clickable((By.ID, "srchbx_ItemName_0"))
     ).click()
-
     # danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.TAB)
@@ -1275,8 +1272,8 @@ def createlabxrayinvoiceOtherPayment(danpheEMR, HospitalNo, labtest, imagingtest
     print("InvoiceNoTemp", InvoiceNo)
     InvoiceNo = InvoiceNo.partition("BL")[2]
     print("InvoiceNo", InvoiceNo)
-    return totalprice
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
+    return totalprice
 
 
 def verifyEstimationBill(danpheEMR, HospitalNo):

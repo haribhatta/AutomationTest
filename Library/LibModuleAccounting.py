@@ -68,6 +68,30 @@ def verifyVoucherReport(danpheEMR, voucherNo):
     assert sysVoucherNo == voucherNo
 
 
+
+def createLedger(danpheEMR):
+    danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
+    time.sleep(5)
+    setting = danpheEMR.find_element(By.XPATH, "(//a[@href = '#/Accounting/Settings'])[2]")
+    setting.click()
+    time.sleep(5)
+    createLedger = danpheEMR.find_element(By.XPATH, "//a[@name = 'name']")
+    createLedger.click()
+    primaryGrp = Select(danpheEMR.find_element(By.ID, "PrimaryGroup"))
+    primaryGrp.select_by_visible_text("Assets")
+    time.sleep(5)
+    ledgerGrp = danpheEMR.find_element(By.XPATH, "//input[@placeholder = 'Ledger GroupName']")
+    ledgerGrp.click()
+    ledgerGrp.send_keys("Bank")
+    ledgerGrp.send_keys(Keys.ENTER)
+    danpheEMR.find_element(By.XPATH, "//input[@placeholder='Ledger Name']").send_keys('    ')
+    danpheEMR.find_element(By.XPATH, "//button[@class='btn primary-btn']").click()
+
+
+
+
+
+
 def createLedgerGroup(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Accounting").click()
     time.sleep(3)

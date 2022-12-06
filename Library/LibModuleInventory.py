@@ -369,7 +369,7 @@ def dispatchRequisition(danpheEMR, ssReqNo, dispatchQuantity):
     danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
     # time.sleep(5)
     # danpheEMR.find_element(By.XPATH,  "//i[contains(text(),'General Inventory')]").click()
-    # time.sleep(3)
+    time.sleep(3)
     danpheEMR.find_element(By.LINK_TEXT, "Internal").click()
     time.sleep(5)
     danpheEMR.find_element(By.LINK_TEXT, "Requisition").click()
