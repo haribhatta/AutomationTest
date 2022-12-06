@@ -198,7 +198,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     print("Create OPD Invoice: 1 Lab + 1 Xray Items: END<<")
 
 
-def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
+def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest, discountScheme):
     print(">>Create OPD Invoice: 1 Lab + 1 Xray Items: START")
     print("Hospital Number:", HospitalNo)
     danpheEMR.find_element(By.LINK_TEXT, "Billing").click()
@@ -210,7 +210,13 @@ def multiplebillingclick(danpheEMR, HospitalNo, labtest, imagingtest):
     danpheEMR.find_element(By.ID, "srch_PatientList").send_keys(Keys.TAB)
     time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//button[@id='btn_billRequest']").click()
-    time.sleep(5)
+    time.sleep(3)
+    select = Select(
+        danpheEMR.find_element(By.XPATH, "(//select[@id='Scheme'])[1]"))
+    selected_option = select.first_selected_option
+    print(selected_option.text)
+    assert selected_option.text == discountScheme
+    time.sleep(2)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     time.sleep(2)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
