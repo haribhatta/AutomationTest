@@ -172,6 +172,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     element.until(
         EC.presence_of_element_located((By.ID, "srchbx_ItemName_0"))
     )
+    time.sleep(5)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").click()
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(imagingtest)
     danpheEMR.find_element(By.ID, "srchbx_ItemName_0").send_keys(Keys.ENTER)
@@ -186,6 +187,7 @@ def createlabxrayinvoice(danpheEMR, HospitalNo, labtest, imagingtest):
     price2 = danpheEMR.find_element(By.XPATH, "(//input[@name='total'])[2]").get_attribute('value')
     totalprice = int(price1) + int(price2)
     print("Total Price:", totalprice)
+    time.sleep(3)
     danpheEMR.find_element(By.XPATH, "//input[@value='Print INVOICE']").click()
     InNo = WebDriverWait(danpheEMR, 10)
     InNo.until(EC.visibility_of_element_located((By.XPATH, "//p[contains(text(), 'Invoice No:')]")))
@@ -891,6 +893,7 @@ def verifyConfirmDischarge(danpheEMR, HospitalNo, paymentmode):
         creditOrganization.select_by_visible_text(GSV.creditOrganization)
         time.sleep(3)
         danpheEMR.find_element(By.XPATH, "//td[contains(text(),'Billing Remarks')]/following-sibling::td/child::textarea").send_keys("This is credit bill")
+        time.sleep(5)
     danpheEMR.find_element(By.XPATH, "//button[contains(.,'Discharge')]").click()
     time.sleep(3)
     if paymentmode == "CREDIT":
@@ -935,13 +938,26 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
     GrandTotal = GRANDTOTAL.replace(',', '')
     GrandTotal = float(GrandTotal)
     print("GRANDTOTAL:", GRANDTOTAL)
+    ReceivedAmount = danpheEMR.find_element(By.XPATH, "//*[@id='dvDischargeBillPrintPage']/table/tbody/tr/td/div[2]/div[3]/div[2]/div/div[4]").text
+    print("RECEIVEDAMOUNT", ReceivedAmount)
+    ReceivedAmount = ReceivedAmount.partition(": ")[2]
+    ReceivedAmount = ReceivedAmount.partition(".")[0]
+    ReceivedAmount = ReceivedAmount.replace(',', '')
+    ReceivedAmount = float(ReceivedAmount)
+    print("ReceivedAmount:", ReceivedAmount)
+    if paymentmode =='Credit':
+     assert ReceivedAmount == 0
+
     if paymentmode == "Cash":
         TOBEPAID = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'To Be Paid:')]//parent::div").text
         print("TOBEPAID:", TOBEPAID)
         TOBEPAID = TOBEPAID.partition(": ")[2]
         TOBEPAID = TOBEPAID.partition(".")[0]
         TOBEPAID = TOBEPAID.replace(',', '')
+        TOBEPAID = float(TOBEPAID)
         print("TOBEPAID:", TOBEPAID)
+        assert TOBEPAID == ReceivedAmount
+
         ''' # commenting this due to removal of Tender/Change field in IP Invoice.
         tender = danpheEMR.find_element(By.XPATH, 
             "//td/strong[text()='Tender']//parent::td//following-sibling::td").text
