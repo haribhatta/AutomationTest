@@ -9,6 +9,35 @@ AppName = GSV.appName
 
 
 # Module:Inventory---------------------------------------------------------
+
+def getpurchaseitemreport(danpheEMR):
+    print("START: Purchase Item report")
+    danpheEMR.find_element(By.LINK_TEXT, "Inventory").click()
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "(//a[@href='#/Inventory/Reports'])[2]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[@href='#/Inventory/Reports/Purchase']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//*[text()='Purchase Items']").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//span[contains(text(), 'Load')]").click()
+    time.sleep(2)
+    btn = danpheEMR.find_element(By.XPATH, "//input[@value = 'Capital Goods']")
+    print(btn.is_selected())
+    danpheEMR.execute_script("arguments[0].click();", btn)
+    time.sleep(2)
+    check = danpheEMR.find_element(By.XPATH, "//input[@value = 'Capital Goods']")
+    print(check.is_selected())
+    time.sleep(3)
+    if check.is_selected:
+        danpheEMR.find_element(By.XPATH, "//span[contains(text(), 'Load')]").click()
+        time.sleep(5)
+    check_after_update = danpheEMR.find_element(By.XPATH, "//input[@value = 'Capital Goods']")
+    if check_after_update.get_attribute("checked") != "True":
+        danpheEMR.execute_script("arguments[0].click();", check_after_update)
+        time.sleep(5)
+
+
 def createInventoryGoodReceipt(danpheEMR, qty, item, rate, paymentMode, NepaliReceipt):
     print(">>START: createGoodReceipt")
     global BillNo
@@ -103,6 +132,12 @@ def verifyGoodReceiptNumberInGridAndShow(danpheEMR, billno, totalAmount, NepaliR
         assert vendor == vendorName
         assert billno == billNumber
         assert grno == goodReceiptNo
+#def PurchaseItemReport (danpheEMR):
+#danpheEMR.find_element(By.LINK_TEXT, "Reports").click()
+#time.sleep(2)
+#click on Purchase
+#danpheEMR.find_element(By. LINK_TEXT, "Purchase").click()
+#danpheEMR.find_element(By. XPATH,"/html/body/my-app/div/div/div[3]/div[2]/div/div/ng-component/div[2]/div/ng-component/div[2]/app-inv-purchase-report-main/div/div/div[3]/a/div/span[2]/i[1]").click()
 
 
 def RetunToVendor(danpheEMR, vendorName, billNo, GRno, item, purchaseQuantity, returnqty, purchaseRate, returnRate):
@@ -557,6 +592,8 @@ def verifyInventoryDailyItemDispatchReport(danpheEMR, itemname, qty, storeName):
     print(element2)
     print(qty)
     assert element2 == str(qty)
+
+
 
 
 def getInventoryStoreCurrentStockLevelReport(danpheEMR, inventory, store):
