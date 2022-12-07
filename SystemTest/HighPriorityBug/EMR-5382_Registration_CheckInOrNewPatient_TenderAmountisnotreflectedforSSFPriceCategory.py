@@ -31,7 +31,8 @@ LB.counteractivation(EMR)
 
 HospitalNo2, InvoiceNo2, discountPercentage2 = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')
 print("Status:Passed || TestAction:NewAppointment|| SSF Patient")
-
+AC.logout()
+AC.closeBrowser()
 
 
 
