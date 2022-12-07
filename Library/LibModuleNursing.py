@@ -72,20 +72,6 @@ def inPatientOverview(danpheEMR, wardName, hospitalNumber):
     danpheEMR.find_element(By.XPATH, "//i[@title = 'overview']").click()
     print("END:Inpatient Overview Opened")
 
-def inPatientVerifyDoctorColumn(danpheEMR,):
-    print("Start: Verify the new column for doctor")
-    danpheEMR.find_element(By.LINK_TEXT, "Nursing").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'In Patient')]").click()
-    time.sleep(3)
-    danpheEMR.find_element(By.XPATH, "//i[normalize-space()='Emergency Ward']").click()
-    time.sleep(2)
-    Expected_text = "Doctor Name"
-    Actual_text = danpheEMR.find_element(By.XPATH, "//span[normalize-space()='Doctor Name']").text
-    print(Actual_text)
-    assert Expected_text == Actual_text
-
-
 
 def addNotes(danpheEMR, Template):
     print("START: Adding Notes")
