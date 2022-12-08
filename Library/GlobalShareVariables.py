@@ -257,6 +257,10 @@ if appName == "SNCH":
       ###TestAction>>Accounting:
       Ledger_1 = "Sunita "
       Ledger_2 = "Cash"
+
+#       Medical Record Diagnosis
+      dianosis1 = "Measles"
+      dianosis2 = "Diptheria"
 ###############################################################################
 ########Defining Variables for Medi Plus
 if appName == "MPH":

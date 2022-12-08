@@ -196,9 +196,9 @@ def OutpatientList(danpheEMR, HospitalNo, DoctorName):
    danpheEMR.find_element(By.XPATH, "//span[normalize-space()='MedicalRecords']").click()
    time.sleep(5)
    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'MR Outpatient List')]").click()
-   time.sleep(2)
-   danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(DoctorName)
-   danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(Keys.ENTER)
+   # time.sleep(2)
+   # danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(DoctorName)
+   # danpheEMR.find_element(By.XPATH, "//input[@placeholder='Doctor Name']").send_keys(Keys.ENTER)
    time.sleep(2)
    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(HospitalNo)
    time.sleep(3)
@@ -206,7 +206,33 @@ def OutpatientList(danpheEMR, HospitalNo, DoctorName):
    print("doctor name is :", doctorname)
    doctorname = str(doctorname)
    print(doctorname)
-   assert doctorname == DoctorName
+   # assert doctorname == DoctorName
+
+
+def addFinalDiagnosisOutPatient(danpheEMR, isReferredOutpatient, diagnosis):
+   print("Start Adding Final Diagnosis of OutPatient")
+   danpheEMR.find_element(By.LINK_TEXT, "Add Final Diagnosis").click()
+   if isReferredOutpatient == 'yes':
+      danpheEMR.find_element(By.ID, "referredOutoutpatient").click()
+      time.sleep(5)
+      danpheEMR.find_element(By.XPATH, "//label[@for='ReferredBy']/following-sibling::input").click()
+      danpheEMR.find_element(By.XPATH, "//label[@for='ReferredBy']/following-sibling::input").send_keys("Dr.Buddha Karki")
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").click()
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").send_keys(diagnosis)
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").send_keys(Keys.ENTER)
+   danpheEMR.find_element(By.XPATH, "(//button[normalize-space()='Submit'])[1]").click()
+   print("END: Adding Final Diagnosis of OutPatient")
+
+
+def editFinalDiagnosisOutPatient(danpheEMR, diagnosis):
+   print("Editing the Final Diagnosis of OutPatient:")
+   danpheEMR.find_element(By.XPATH, "(//a[normalize-space()='Edit Final Diagnosis'])[1]").click()
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").click()
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").send_keys(diagnosis)
+   danpheEMR.find_element(By.XPATH, "//input[@placeholder='ICD-11']").send_keys(Keys.ENTER)
+   danpheEMR.find_element(By.XPATH, "(//button[normalize-space()='Update'])[1]").click()
+   print("END: Editing final Diagnosis of OutPatient")
+
 
 
 def editBirthDetailsfromMRInpatientList(danpheEMR, editedWeight):
