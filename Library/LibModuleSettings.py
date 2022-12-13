@@ -6,6 +6,8 @@ import random
 ########
 AppName = GSV.appName
 ########
+
+
 def Setting_add_employee(danpheEMR):
     global randomnum
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
@@ -23,6 +25,39 @@ def Setting_add_employee(danpheEMR):
     # danpheEMR.find_element(By.ID, "isApptApplicable").click()
     danpheEMR.find_element(By.ID, "Add").click()
 
+def addLongSignatureOfEmployee(danpheEMR, doctor, doctor2):
+    print("Start : Adding long Signature of Employee")
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Employee')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Add Employee')]").click()
+    time.sleep(5)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(doctor)
+    time.sleep(3)
+    element = danpheEMR.find_element(By.XPATH, "//div[@col-id=0]/a")
+    time.sleep(1)
+    danpheEMR.execute_script("arguments[0].click();", element)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//textarea[@formcontrolname = 'LongSignature']").clear()
+    danpheEMR.find_element(By.XPATH, "//textarea[@formcontrolname = 'LongSignature']").send_keys(doctor)
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "Add").click()
+    danpheEMR.find_element(By.ID, "quickFilterInput").clear()
+    time.sleep(1)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys(doctor2)
+    time.sleep(3)
+    element2 = danpheEMR.find_element(By.XPATH, "//div[@col-id=0]/a")
+    time.sleep(1)
+    danpheEMR.execute_script("arguments[0].click();", element2)
+    time.sleep(3)
+    danpheEMR.find_element(By.XPATH, "//textarea[@formcontrolname = 'LongSignature']").clear()
+    time.sleep(1)
+    danpheEMR.find_element(By.XPATH, "//textarea[@formcontrolname = 'LongSignature']").send_keys(doctor2)
+    danpheEMR.find_element(By.ID, "Add").click()
+    print("END: Employee long signature added")
+
+
 def Setting_Adding_User(danpheEMR):
     global randomnum
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
@@ -38,7 +73,9 @@ def Setting_Adding_User(danpheEMR):
     Email = danpheEMR.find_element(By.ID, "EmailId")
     Email.send_keys("ankit", randomnum, "@gmail.com")
     password = danpheEMR.find_element(By.ID, "Password").send_keys("pass123")
+    print(password)
     danpheEMR.find_element(By.ID, "Addbtn").click()
+
 
 def checkAutoAddItems(danpheEMR):
     danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
@@ -53,7 +90,10 @@ def checkAutoAddItems(danpheEMR):
     print("autoaddbillitemvalue", autoaddbillitemvalue)
     print("autoaddBeditemvalue", autoaddBeditemvalue)
 
-######## Check Core CFG Parameter Value
+
+# Check Core CFG Parameter Value
+
+
 def checkCoreCFGadmitDocMandatory(danpheEMR):
     print("START>>checkCoreCFGadmitDocMandatory")
     global admittingDoctorMandatory
@@ -68,6 +108,7 @@ def checkCoreCFGadmitDocMandatory(danpheEMR):
     admittingDoctorMandatory = admittingDoctorMandatory.partition(":")[2]
     print("checkCoreCFGadmitDocMandatory:", admittingDoctorMandatory)
     return admittingDoctorMandatory
+
 
 def checkCoreLabReportVerify(danpheEMR):
     print("START>>checkCoreLabReportVerify")
@@ -86,6 +127,7 @@ def checkCoreLabReportVerify(danpheEMR):
     print("END>>checkCoreLabReportVerify")
     return labReportVerify
 
+
 def checkCoreCFGdiscountMembership(danpheEMR):
     print("START>>checkCoreCFGdiscountMembership")
     global admittingDoctorMandatory
@@ -103,7 +145,10 @@ def checkCoreCFGdiscountMembership(danpheEMR):
     print("END>>checkCoreCFGdiscountMembership")
     return membershipTypeDiscountValue, membershipSchemeSettingsValue
 
-###Dispensary
+
+# Dispensary
+
+
 def EnableReceiveItemsInDispensary(danpheEMR):
     print("START:EnableReceiveItemsInDispensary")
     global EnableReceiveItemsInDispensary
@@ -117,7 +162,8 @@ def EnableReceiveItemsInDispensary(danpheEMR):
     print("END:EnableReceiveItemsInDispensary")
     return EnableReceiveItemsInDispensary
 
-###Laboratory
+
+# Laboratory
 def ChangePaymentLabelSettingstoMaternityPayment(danpheEMR):
     print("START: changing UserCollectionPaymentLabelSetting to  Maternity Payment (Net)")
     time.sleep(2)
@@ -134,7 +180,10 @@ def ChangePaymentLabelSettingstoMaternityPayment(danpheEMR):
     danpheEMR.find_element(By.XPATH, "//input[@class = 'form-control ng-pristine ng-valid ng-touched']").send_keys("Maternity Payment (Net)")
     danpheEMR.find_element(By.XPATH, "//button[contains(text(), 'Update')]").click()
 
-###Inventory
+
+# Inventory
+
+
 def EnableReceivedItemInSubstore(danpheEMR):
     print("START:EnableReceivedItemInSubstore")
     global EnableReceiveItemsInDispensary
@@ -148,6 +197,7 @@ def EnableReceivedItemInSubstore(danpheEMR):
     print("END:EnableReceivedItemInSubstore")
     return EnableReceiveItemsInDispensary
 
+
 def CheckNepaliReceiptValue(danpheEMR):
     print("START:Checking that Nepali Receipt is Enable or Not")
     global NepaliReceipt
@@ -159,6 +209,7 @@ def CheckNepaliReceiptValue(danpheEMR):
     NepaliReceipt = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[3]").text
     print("Nepali Receipt is Enable :", NepaliReceipt)
     return NepaliReceipt
+
 
 # def CheckCreditOrganizationMandatory(danpheEMR):  This Features is being Changing so this script is onHold
 #     print("START: Checking credit Organization Mandatory")
@@ -174,6 +225,7 @@ def CheckNepaliReceiptValue(danpheEMR):
 #     print("Parameter Value for Credit Organization is :", CreditOrganizationMandatory)
 #     assert CreditOrganizationMandatory == "true"
 #     print("END: Credit Organization Non Mandatory")
+
 
 def paymentModeOpBillingDisplaySequence(danpheEMR):
     print("START: PaymentMode Sequence in Op Billing")
@@ -211,19 +263,20 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     # POS-1
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").clear()
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[8]").send_keys(7)
-    #Cheque
+    # Cheque
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[3]").clear()
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[9]").send_keys(8)
     # update
     danpheEMR.find_element(By.ID, "update").click()
 
 
-def wait_for_window(danpheEMR, timeout = 2):
+def wait_for_window(danpheEMR, timeout=2):
     time.sleep(round(timeout / 1000))
     wh_now = danpheEMR.window_handles
     wh_then = vars("window_handles")
     if len(wh_now) > len(wh_then):
         return set(wh_now).difference(set(wh_then)).pop()
+
 
 def __str__():
     return
