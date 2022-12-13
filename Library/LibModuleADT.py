@@ -218,8 +218,8 @@ def AddSummaryOfDischargedPatient(danpheEMR, HospitalNo, consultantDr, inchargeD
     consultantDoctor = danpheEMR.find_element(By.XPATH,
                                               "//*[@id='printpage']/div/div/div[4]/div/div/div/div[2]/p[2]/strong").text
     print("Consultant Doctor is :", consultantDoctor)
-    # consultantDoctor = str(consultantDoctor)
-    # assert consultantDoctor == consultantDr
+    consultantDoctor = str(consultantDoctor)
+    assert consultantDoctor == consultantDr
     print("END: Summary Report")
 
 
