@@ -943,16 +943,16 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
     GRANDTOTAL = GRANDTOTAL.partition(".")[0]
     GrandTotal = GRANDTOTAL.replace(',', '')
     GrandTotal = float(GrandTotal)
-    print("GRANDTOTAL:", GRANDTOTAL)
-    ReceivedAmount = danpheEMR.find_element(By.XPATH, "//*[@id='dvDischargeBillPrintPage']/table/tbody/tr/td/div[2]/div[3]/div[2]/div/div[4]").text
-    print("RECEIVEDAMOUNT", ReceivedAmount)
-    ReceivedAmount = ReceivedAmount.partition(": ")[2]
-    ReceivedAmount = ReceivedAmount.partition(".")[0]
-    ReceivedAmount = ReceivedAmount.replace(',', '')
-    ReceivedAmount = float(ReceivedAmount)
-    print("ReceivedAmount:", ReceivedAmount)
-    if paymentmode =='Credit':
-     assert ReceivedAmount == 0
+    print("GRANDTOTAL:", GrandTotal)
+    # ReceivedAmount = danpheEMR.find_element(By.XPATH, "//*[@id='dvDischargeBillPrintPage']/table/tbody/tr/td/div[2]/div[3]/div[2]/div/div[4]").text
+    # print("RECEIVEDAMOUNT", ReceivedAmount)
+    # ReceivedAmount = ReceivedAmount.partition(": ")[2]
+    # ReceivedAmount = ReceivedAmount.partition(".")[0]
+    # ReceivedAmount = ReceivedAmount.replace(',', '')
+    # ReceivedAmount = float(ReceivedAmount)
+    # print("ReceivedAmount:", ReceivedAmount)
+    # if paymentmode =='Credit':
+    #  assert ReceivedAmount == 0
 
     if paymentmode == "Cash":
         TOBEPAID = danpheEMR.find_element(By.XPATH, "//span[contains(text(),'To Be Paid:')]//parent::div").text
@@ -962,7 +962,7 @@ def verifyDischargeInvoice(danpheEMR, paymentmode):
         TOBEPAID = TOBEPAID.replace(',', '')
         TOBEPAID = float(TOBEPAID)
         print("TOBEPAID:", TOBEPAID)
-        assert TOBEPAID == ReceivedAmount
+        assert TOBEPAID == GrandTotal
 
         ''' # commenting this due to removal of Tender/Change field in IP Invoice.
         tender = danpheEMR.find_element(By.XPATH, 
