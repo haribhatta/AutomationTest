@@ -8,6 +8,7 @@ import Library.GlobalShareVariables as GSV
 import Library.ApplicationConfiguration as AC
 import Library.LibModuleBilling as LB
 import Library.LibModuleAppointment as LA
+import Library.LibModuleSettings as LS
 from datetime import datetime
 # from colorama import Fore, Back, Style
 
@@ -28,6 +29,7 @@ discountValue = GSV.discountSchemeName
 EMR = AC.openBrowser()
 AC.login(admUserId, admUserPwd)
 LB.counteractivation(EMR)
+LS.makeReferalMembershipActive(danpheEMR=EMR)
     # 1. Create an appointment for new patient.
     #Scenario: Cash Payment
 HospitalNo, InvoiceNo, discountPercentage = LA.patientquickentry(EMR, discountScheme=0, paymentmode='Cash', department=departmentGynae, doctor=doctorGynae, priceCategoryType=priceCategoryType, case='+ve')

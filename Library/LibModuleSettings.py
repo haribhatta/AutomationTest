@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 import Library.GlobalShareVariables as GSV
 from selenium.webdriver.common.keys import Keys
 import random
+from selenium.common.exceptions import NoSuchElementException
 ########
 AppName = GSV.appName
 ########
@@ -24,6 +25,7 @@ def Setting_add_employee(danpheEMR):
     danpheEMR.find_element(By.ID, "EmployeeDepartment").send_keys("admin")
     # danpheEMR.find_element(By.ID, "isApptApplicable").click()
     danpheEMR.find_element(By.ID, "Add").click()
+
 
 def addLongSignatureOfEmployee(danpheEMR, doctor, doctor2):
     print("Start : Adding long Signature of Employee")
@@ -268,6 +270,48 @@ def paymentModeOpBillingDisplaySequence(danpheEMR):
     danpheEMR.find_element(By.XPATH, "(//input[@type='number'])[9]").send_keys(8)
     # update
     danpheEMR.find_element(By.ID, "update").click()
+
+# Check and make Billing Membership Referral Active
+
+
+def makeReferalMembershipActive(danpheEMR):
+    print("Checking the Referal Membership Active")
+    danpheEMR.find_element(By.LINK_TEXT, "Settings").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[contains(text(),'Billing')]").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.XPATH, "//a[normalize-space()='Memberships']").click()
+    time.sleep(2)
+    danpheEMR.find_element(By.ID, "quickFilterInput").send_keys("Referal")
+    try:
+        status = danpheEMR.find_element(By.XPATH, "//*[@id='myGrid']/div/div[1]/div/div[3]/div[2]/div/div/div/div[5]").text
+        print("current status of Referral is :", status)
+        status = str(status)
+        print(status)
+        if status == "true":
+            print("Membership Referal is Active")
+        else:
+            danpheEMR.find_element(By.XPATH, "(//a[normalize-space()='Edit'])[1]").click()
+            time.sleep(2)
+            isActive = danpheEMR.find_element(By.XPATH, "//label[@class='mt-checkbox mt-checkbox-outline']//span")
+            isActive.is_selected()
+            isActive.click()
+            time.sleep(2)
+            afterSelect = danpheEMR.find_element(By.XPATH, "//label[@class='mt-checkbox mt-checkbox-outline']//span")
+            afterSelect.is_selected()
+            danpheEMR.find_element(By.ID, "savebtn").click()
+    except NoSuchElementException:
+        try:
+            danpheEMR.find_element(By.XPATH, "//a[normalize-space()='Add Membership']").click()
+            danpheEMR.find_element(By.XPATH, "//input[@id='CommunityName']").send_keys("Hospital")
+            danpheEMR.find_element(By.XPATH, "//input[@id='CommunityName']").send_keys(Keys.ENTER)
+            danpheEMR.find_element(By.XPATH, "//input[@id='MembershipTypeName']").send_keys("Referal")
+            danpheEMR.find_element(By.XPATH, "//input[@id='MembershipTypeName']").send_keys(Keys.ENTER)
+            danpheEMR.find_element(By.XPATH, "//input[@id='Discount']").send_keys(10)
+            danpheEMR.find_element(By.XPATH, "//input[@id='savebtn']").click()
+        except:
+            print("Please Add a Referal membership")
+    print("Added Membership Referal Active")
 
 
 def wait_for_window(danpheEMR, timeout=2):
