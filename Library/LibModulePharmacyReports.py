@@ -873,14 +873,17 @@ def getSystemPharmacyBillWiseSalesReport(danpheEMR):
     time.sleep(3)
     actualSubTotalAmount = danpheEMR.find_element(By.XPATH,
                                                   "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[1]").text
+    actualSubTotalAmount = actualSubTotalAmount.replace(",", "")
     actualSubTotalAmount = float(actualSubTotalAmount)
     print("actualSubTotalAmount:", actualSubTotalAmount)
     actualDiscountAmount = danpheEMR.find_element(By.XPATH,
                                                   "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[2]").text
+    actualDiscountAmount = actualDiscountAmount.replace(",", "")
     actualDiscountAmount = float(actualDiscountAmount)
     print("actualDiscountAmount:", actualDiscountAmount)
-    actualTotalAmount = danpheEMR.find_element(By.XPATH,
+    actualTotal = danpheEMR.find_element(By.XPATH,
                                                "(//td[contains(text(),'MainDispensary')]/following-sibling::td)[3]").text
+    actualTotalAmount = actualTotal.replace(",", "")
     actualTotalAmount = float(actualTotalAmount)
     print("actualTotalAmount:", actualTotalAmount)
 
