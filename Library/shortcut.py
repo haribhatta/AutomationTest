@@ -45,8 +45,8 @@ def fillGreenColor(file, sheetName, rownum, columnnum):
 def fillYellowColor(file, sheetName, rownum, columnnum):
     workbook = openpyxl.load_workbook(file)
     sheet = workbook.get_sheet_by_name(sheetName)
-    greenFill = PatternFill(start_color='FFFF00',
+    yellowFill = PatternFill(start_color='FFFF00',
                             end_color='FFFF00',
                             fill_type='solid')
-    sheet.cell(rownum, columnnum).fill = greenFill
+    sheet.cell(rownum, columnnum).fill = yellowFill
     workbook.save(file)

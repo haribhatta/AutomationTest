@@ -9,7 +9,8 @@ pharmacyTestCases = "PharmacyReportExcel/excelTestCasesTestPackPharmacyReports_"
 pharmacyTestCasesResult = "PharmacyReportExcel/excelResultTestPackPharmacyReports_"
 scheduletype = input("Enter '1' to schedule new run and '2' to restart previous run")
 appVersion = input("Please entry version for Test Summary Report")
-#AppName = input("Please entry (Application Name) for Test Summary Report")
+# AppName = input("Please entry (Application Name) for Test Summary Report")
+
 AppName = GSV.appName
 print("app name test", AppName)
 
@@ -24,6 +25,7 @@ duplicatefile = pharmacyTestCasesResult + AppName + appVersion + ".xlsx"
 print("This is test", duplicatefile)
 print("This is original file", Originalfile)
 rows = sc.getTotalrows(Originalfile, 'test')
+
 
 def files(file, file1, rows, *args):
     global runEnv
@@ -45,8 +47,10 @@ def files(file, file1, rows, *args):
             try:
                 exec(open(Pythonfilepath).read())
                 sc.writeData(file1, 'test', r, 2, 'Passed')
+                sc.fillGreenColor(file1, 'test', r, 2)
             except:
                 sc.writeData(file1, 'test', r, 2, 'UnderAnalysis')
+                sc.fillYellowColor(file1, 'test', r, 2)
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
 files(Originalfile, duplicatefile, rows)

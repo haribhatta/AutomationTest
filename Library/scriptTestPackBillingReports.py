@@ -45,8 +45,10 @@ def files(file, file1, rows, *args):
             try:
                 exec(open(Pythonfilepath).read())
                 sc.writeData(file1, 'test', r, 2, 'Passed')
+                sc.fillGreenColor(file1, 'test', r, 2)
             except:
                 sc.writeData(file1, 'test', r, 2, 'UnderAnalysis')
+                sc.fillYellowColor(file1, 'test', r, 2)
                 sc.writeData(file1, 'test', r, 4, RunNoR + 1)
 
 files(Originalfile, duplicatefile, rows)
